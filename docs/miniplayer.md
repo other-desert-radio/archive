@@ -50,8 +50,10 @@ add all the buttons or complete the pictured UI without further direction.
 
 ### Shared playback store (implemented)
 
-`src/audio/audio-store.ts` exports `AudioStore`, the shared `audioStore`, and
-readonly `AudioTrack` / `AudioState` types. Track metadata currently consists
+`src/audio/audio-store.ts` exports the `AudioStore` class and readonly
+`AudioTrack` / `AudioState` types. `src/stores.ts` owns shared instance creation
+and exports `stores.audioStore` plus `createStores()` for independent instances.
+Track metadata currently consists
 of `title` and `source: "mixcloud" | "samcast"`; source identifiers and playback
 adapters will be added in the integration chunk.
 
@@ -69,9 +71,17 @@ adapters will be added in the integration chunk.
 - `getServerSnapshot()` always returns the same idle snapshot so Astro HTML
   and initial hydration agree, without accessing browser audio APIs.
 
-Both views use `useAudioState()` / `useSyncExternalStore`. Fullscreen visibility
-is local React state, separate from playback. The store is a module singleton,
-not created during component rendering; full document reloads start idle.
+Both views use `useAudioState()` / `useSyncExternalStore`, which resolves the
+audio store through `useStores()`. The context defaults to application stores.
+Tests can wrap a React tree in `<StoresProvider stores={createStores()}>` to
+inject independent stores into both views. Create that store set once per test
+or mounted tree, not during each render. Context overrides apply within one
+React tree; separate Astro islands use the same default module instance.
+Do not pass class instances as hydrated props from Astro.
+
+Fullscreen visibility is local React state, separate from playback. The
+application store set is a module singleton, not created during component
+rendering; full document reloads start idle.
 No new playback buttons, automatic selection, or sample track are introduced.
 The site therefore starts with no visible miniplayer until future source
 controls call the store. These methods record state only and do not produce

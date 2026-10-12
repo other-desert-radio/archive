@@ -1,7 +1,8 @@
 import { useSyncExternalStore } from "react";
-import { audioStore } from "./audio-store";
+import { useStores } from "../stores-context";
 
 export function useAudioState() {
+	const { audioStore } = useStores();
 	return useSyncExternalStore(
 		audioStore.subscribe,
 		audioStore.getSnapshot,

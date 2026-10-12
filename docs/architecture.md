@@ -43,8 +43,12 @@ The site still builds to static HTML; initial visits load a full document.
 `Navigation.astro` mounts `Miniplayer.tsx` with `client:load` and the stable
 `transition:persist="miniplayer"` name across all pages using `BaseLayout`.
 Only the island persists; navigation links and page titles still update.
-`src/audio/audio-store.ts` exports a single shared store with immutable idle,
-playing, and paused snapshots. `use-audio-state.ts` subscribes via React's
+`src/audio/audio-store.ts` defines the store class with immutable idle,
+playing, and paused snapshots. `src/stores.ts` creates the application's shared
+instances and exports `createStores()` for isolated instances. React consumers
+read dependencies through `useStores()` in `src/stores-context.tsx`, which
+defaults to the application stores and supports `StoresProvider` overrides.
+`use-audio-state.ts` subscribes via React's
 `useSyncExternalStore`, with a stable idle server snapshot for static HTML and
 hydration. Both player views read this store. The miniplayer is hidden while
 idle and shows the selected track while playing or paused. Clearing the track

@@ -62,6 +62,3 @@ export class AudioStore {
 		}
 	}
 }
-
-// One shared instance per browser module graph, retained across ClientRouter navigation.
-export const audioStore = new AudioStore();
