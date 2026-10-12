@@ -22,8 +22,8 @@ test("every built page hosts one hydrated, persisted miniplayer in its navigatio
 			`${page}: missing hydration`,
 		);
 		assert.ok(
-			navigation.includes("data-miniplayer"),
-			`${page}: missing container`,
+			!navigation.includes("data-miniplayer"),
+			`${page}: idle player should have no visible container`,
 		);
 	}
 });

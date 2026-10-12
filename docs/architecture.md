@@ -16,6 +16,7 @@ This repository is a small static Astro site. The current implementation is inte
 ```text
 src/
 ├── layouts/            Shared page shells; `BaseLayout.astro` owns global CSS
+├── audio/              Shared playback state store and React subscription hook
 ├── pages/              File-based routes; `index.astro` is `/`
 ├── styles/             Global stylesheet and shared design tokens
 └── utils/              Build-time data readers and validators
@@ -42,7 +43,13 @@ The site still builds to static HTML; initial visits load a full document.
 `Navigation.astro` mounts `Miniplayer.tsx` with `client:load` and the stable
 `transition:persist="miniplayer"` name across all pages using `BaseLayout`.
 Only the island persists; navigation links and page titles still update.
-The current player renders an empty container for incremental UI development.
+`src/audio/audio-store.ts` exports a single shared store with immutable idle,
+playing, and paused snapshots. `use-audio-state.ts` subscribes via React's
+`useSyncExternalStore`, with a stable idle server snapshot for static HTML and
+hydration. Both player views read this store. The miniplayer is hidden while
+idle and shows the selected track while playing or paused. Clearing the track
+unmounts the visible player and resets fullscreen visibility. Source playback
+adapters are not implemented; store methods currently update state only.
 
 The archive listings use `src/pages/index.astro` for SHOWS and
 `src/pages/djs.astro` for DJs. Both use `CategoryTabs.astro` to select the

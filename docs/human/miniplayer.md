@@ -34,3 +34,24 @@ class AudioStore extends Observable<unknown> {
     }
 }
 ```
+
+
+```ts
+type MiniPlayerParams = {
+    audioStore: AudioStore;
+}
+const MiniPlayer = (params: MiniPlayerParams) => {
+    params.audioStore.addListener(this.handleAudio);
+
+    const handleAudio = (event: AudioEvent) => {
+        switch(event.kind) {
+            case "play": {
+                // ...
+            }
+            case "pause": {
+                // ...
+            }
+        }
+    }
+}
+```

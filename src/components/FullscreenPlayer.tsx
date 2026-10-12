@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useAudioState } from "../audio/use-audio-state";
 import styles from "./FullscreenPlayer.module.css";
 
 type Props = {
@@ -7,10 +8,13 @@ type Props = {
 
 export default function FullscreenPlayer({ onClose }: Props) {
 	const dialogRef = useRef<HTMLDialogElement>(null);
+	const audio = useAudioState();
 
 	useEffect(() => {
 		dialogRef.current?.showModal();
 	}, []);
+
+	if (audio.status === "idle") return null;
 
 	return (
 		<dialog
@@ -31,6 +35,7 @@ export default function FullscreenPlayer({ onClose }: Props) {
 					Close
 				</button>
 			</div>
+			<p>{audio.track.title}</p>
 		</dialog>
 	);
 }

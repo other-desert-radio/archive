@@ -10,9 +10,9 @@
 Chunk 1 created `src/components/Miniplayer.tsx` and
 `src/components/FullscreenPlayer.tsx` as empty components returning `null`.
 The navigation integration now mounts `Miniplayer` as a hydrated, persisted
-island after the navigation title. It renders an empty `data-miniplayer`
-container inside a right-aligned, width-constrained navigation slot; the user
-has added the placeholder text “MUSIC GOES HERE”.
+island after the navigation title. It renders a `data-miniplayer` container
+inside a right-aligned, width-constrained navigation slot only when the shared
+audio store has a playing or paused track; the title comes from that track.
 The miniplayer's Fullscreen button mounts `FullscreenPlayer` with an `onClose`
 callback. The view uses a native modal `dialog`, opened via `showModal()`,
 with a Close button and native Escape dismissal. It covers the viewport with
@@ -20,7 +20,7 @@ a black background and white text, uses shared spacing tokens, and permits
 scrolling when future player content exceeds the viewport. Native modal
 behavior manages focus and makes the background inert.
 
-The compact player now uses a flex column containing a controls row (placeholder
+The compact player now uses a flex column containing a controls row (track
 title and the user's `F` fullscreen button), followed by a decorative progress
 track. The future play/pause control belongs before the title; it is not added
 in this chunk. The track has no elapsed value or interaction until audio is
@@ -47,6 +47,41 @@ The user wants to add the UI incrementally and hand it back when ready; do not
 add all the buttons or complete the pictured UI without further direction.
 
 ## Intended integration
+
+### Shared playback store (implemented)
+
+`src/audio/audio-store.ts` exports `AudioStore`, the shared `audioStore`, and
+readonly `AudioTrack` / `AudioState` types. Track metadata currently consists
+of `title` and `source: "mixcloud" | "samcast"`; source identifiers and playback
+adapters will be added in the integration chunk.
+
+- `play(track)` selects a track and records playing state; `play()` resumes the
+  current track. With no selected track, it is a no-op.
+- `pause()` keeps the track and records paused state. Idle/paused calls are
+  no-ops. Both playing and paused tracks keep fullscreen accessible.
+- `clear()` returns to idle, hides the visible player, and unmounts fullscreen.
+  Selecting another track afterward starts with fullscreen closed.
+- `subscribe(callback)` returns an unsubscribe function; callbacks read the
+  updated snapshot through `getSnapshot()`. Snapshots stay referentially stable
+  until state changes and track metadata is copied/frozen at the boundary.
+  Internally each subscription is a listener object with a `notify()` method;
+  the public callback API remains compatible with `useSyncExternalStore`.
+- `getServerSnapshot()` always returns the same idle snapshot so Astro HTML
+  and initial hydration agree, without accessing browser audio APIs.
+
+Both views use `useAudioState()` / `useSyncExternalStore`. Fullscreen visibility
+is local React state, separate from playback. The store is a module singleton,
+not created during component rendering; full document reloads start idle.
+No new playback buttons, automatic selection, or sample track are introduced.
+The site therefore starts with no visible miniplayer until future source
+controls call the store. These methods record state only and do not produce
+sound; real playback success/failure handling remains deferred.
+
+Store tests cover idle commands, selection, pause/resume, clearing, source
+changes, late readers, stable server snapshots, immutable metadata, and
+subscription cleanup. The generated-page test checks that the persistent
+island still exists but idle UI is absent. Interactive synchronization and
+clear/reopen behavior require manual review; do not use agent-browser.
 
 The player belongs in the existing navigation, in this order:
 
