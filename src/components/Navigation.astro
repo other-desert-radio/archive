@@ -1,4 +1,6 @@
 ---
+import Miniplayer from "./Miniplayer";
+
 type Props = {
   page: "shows" | "djs" | "dj_page" | "show_page";
   returning_page: "shows" | "djs" | "home";
@@ -43,6 +45,9 @@ const title = (() => {
   </a>
 
   <span>OTHER DESERT RADIO / {title.toUpperCase()}</span>
+  <div class="miniplayer-slot">
+    <Miniplayer client:load transition:persist="miniplayer" />
+  </div>
 </nav>
 
 <style>
@@ -68,6 +73,12 @@ const title = (() => {
   nav > span {
     min-width: 0;
     max-width: 100%;
+  }
+
+  .miniplayer-slot {
+    min-width: 0;
+    max-width: 100%;
+    margin-inline-start: auto;
   }
 
   .leading-box {
