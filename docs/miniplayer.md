@@ -20,6 +20,18 @@ a black background and white text, uses shared spacing tokens, and permits
 scrolling when future player content exceeds the viewport. Native modal
 behavior manages focus and makes the background inert.
 
+The compact player now uses a flex column containing a controls row (placeholder
+title and the user's `F` fullscreen button), followed by a decorative progress
+track. The future play/pause control belongs before the title; it is not added
+in this chunk. The track has no elapsed value or interaction until audio is
+wired, and is hidden from assistive technology. `Miniplayer.module.css` owns
+the layout and reuses shared spacing and border tokens.
+
+For the later hover chunk, React and CSS should own the layout; do not manually
+reparent React-owned DOM nodes. The expanded panel places controls first, then
+title, tags, artwork, progress, and DJ information as described below. Hover
+behavior and these additional sections are not implemented yet.
+
 `FullscreenPlayer.module.css` locks scrolling on `html` and `body` while a
 `dialog[data-fullscreen-player][open]` exists. Closing or unmounting it removes
 the matching condition and restores existing page styles without inline-style
