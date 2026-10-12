@@ -111,6 +111,39 @@ notes that persisted iframes can still reload during navigation. The island
 persistence therefore does not establish uninterrupted Mixcloud playback;
 test and resolve that integration when audio is added.
 
+### Mixcloud visibility and continuous playback requirements
+
+Host one Mixcloud widget in the miniplayer and keep it visibly rendered in
+the compact state. The existing sticky navigation should keep the widget
+visible while the user scrolls. Hover expansion may reveal additional artwork
+and information, but must not be required to show or mount the widget. Provide
+keyboard-focus and tap access to the expanded view as well.
+
+The [Mixcloud widget API documentation](https://www.mixcloud.com/developers/widget/)
+requires the widget to be visible on the page for the API to work; it does not
+define whether scrolling offscreen counts as hidden. Do not hide the playing
+widget with CSS or render it only inside the hover panel.
+
+Playback must continue without restarting or interrupting when switching
+between SHOWS and DJs, visiting show or DJ detail pages, or using browser
+Back/Forward within the archive. Keep the same iframe mounted and attached,
+with a stable `src` during playback; opening hover or fullscreen views must
+not replace, reparent, or create a second iframe. Both views control the same
+playback owner.
+
+`transition:persist="miniplayer"` alone does not satisfy this requirement:
+Astro documents iframe reloads during view transitions even with persistence.
+Verify the real embed before relying on the current navigation mechanism. If
+the normal page swap reloads the iframe, use a navigation approach that keeps
+the player attached while replacing page content, such as a persistent page
+shell. The exact approach remains an integration decision.
+
+Manual acceptance for the audio integration: start a show, scroll the archive,
+expand and collapse the miniplayer, open and close fullscreen, navigate through
+SHOWS, DJs, and their detail pages, then use Back/Forward. Audio must continue
+without a gap or position reset, and the widget must not reload. Full document
+reloads and leaving the archive are outside this continuity requirement.
+
 Future audio sources are Mixcloud widgets for archive shows and a SAMCast live
 broadcast with now-playing metadata. Source adapters, metadata contracts,
 playback controls, and persistence wiring are deferred; no integration choices
