@@ -2,18 +2,35 @@
 
 ## Review checkpoints
 
-1. Create empty React components and preserve design references (current chunk).
-2. Add the miniplayer container scaffold, then stop for review.
-3. Add the fullscreen container scaffold, then stop for review.
+1. Create empty React components and preserve design references (complete).
+2. Add the miniplayer container scaffold (complete).
+3. Add the fullscreen container scaffold (current review chunk).
 4. Add audio integration only after the scaffolds have been reviewed.
 
 Chunk 1 created `src/components/Miniplayer.tsx` and
 `src/components/FullscreenPlayer.tsx` as empty components returning `null`.
 The navigation integration now mounts `Miniplayer` as a hydrated, persisted
 island after the navigation title. It renders an empty `data-miniplayer`
-container inside a right-aligned, width-constrained navigation slot.
-`FullscreenPlayer` still returns `null` and remains unmounted. No props,
-controls, playback behavior, or dependencies have been introduced.
+container inside a right-aligned, width-constrained navigation slot; the user
+has added the placeholder text “MUSIC GOES HERE”.
+The miniplayer's Fullscreen button mounts `FullscreenPlayer` with an `onClose`
+callback. The view uses a native modal `dialog`, opened via `showModal()`,
+with a Close button and native Escape dismissal. It covers the viewport with
+a black background and white text, uses shared spacing tokens, and permits
+scrolling when future player content exceeds the viewport. Native modal
+behavior manages focus and makes the background inert.
+
+`FullscreenPlayer.module.css` locks scrolling on `html` and `body` while a
+`dialog[data-fullscreen-player][open]` exists. Closing or unmounting it removes
+the matching condition and restores existing page styles without inline-style
+mutation. `overscroll-behavior: contain` keeps player scrolling from chaining
+to the page. Content layout and audio remain deferred.
+
+Scroll-lock verification requires a browser layout engine; lint, Astro checks,
+and build validate the source only. Browser automation is disabled at the
+user's request. Manual acceptance: open fullscreen on a scrolled archive page,
+attempt background scrolling, close via Close or Escape, and confirm normal
+scrolling resumes without losing the page position. Repeat open/close.
 The user wants to add the UI incrementally and hand it back when ready; do not
 add all the buttons or complete the pictured UI without further direction.
 
@@ -145,3 +162,9 @@ checks every generated page for exactly one persisted, load-hydrated island
 inside navigation, with the player container present. This verifies the
 rendered integration; runtime state and audio continuity need browser checks
 once state and audio are introduced.
+
+The fullscreen scaffold passed lint and Astro checks. A temporary browser
+mount confirmed black background and exact viewport coverage at 1280 × 633
+and 320 × 700; the temporary mount was removed afterward. No automated behavior
+test was added for this empty, unmounted presentation container. Add interaction
+tests when opening and closing are implemented.
