@@ -1,6 +1,10 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CategoryTabs from "../components/CategoryTabs.astro";
+import { fetchTags } from "../utils/fetch-tags";
+import { pathToFileURL } from "node:url";
+
+const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
 ---
 
 <BaseLayout
