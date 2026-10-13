@@ -64,12 +64,12 @@ read dependencies through `useStores()` in `src/stores/stores-context.tsx`, whic
 defaults to the application stores and supports `StoresProvider` overrides.
 `use-audio-state.ts` subscribes via React's
 `useSyncExternalStore`, with a stable idle server snapshot for static HTML and
-hydration. Both player views read this store. The miniplayer is hidden while
+hydration. The miniplayer reads this store. The miniplayer is hidden while
 idle and shows the selected track in every other state. Clearing the track
-unmounts the visible player and resets fullscreen visibility. The compact
+unmounts the visible player. The compact
 Mixcloud branch renders one visible widget and owns its adapter lifecycle;
-the SAMCast branch retains its title/progress/fullscreen scaffold. Mixcloud
-fullscreen is disabled until the shared iframe presentation is implemented.
+the SAMCast branch retains its title/progress scaffold. Fullscreen components,
+controls, and modal state have been removed; fullscreen presentation is deferred.
 `src/components/mixcloud/mixcloud-adapter.ts` now provides an independent
 adapter with request subscription, readiness gating, serialized show loads and
 play/pause commands, error reporting, and disposal. It requests a pause on clear,

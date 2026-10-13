@@ -23,7 +23,7 @@ test("idle miniplayer renders no widget", () => {
 	assert.equal(renderToStaticMarkup(<Miniplayer />), "");
 });
 
-test("Mixcloud renders one widget and the selected title inside its hover expansion", () => {
+test("Mixcloud renders one widget and one title without hover expansion", () => {
 	const html = selectedMarkup({
 		title: "Selected show",
 		source: { kind: "mixcloud", cloudcastKey: "/dj/show/" },
@@ -33,25 +33,22 @@ test("Mixcloud renders one widget and the selected title inside its hover expans
 	assert.ok(
 		html.includes("mini=1&amp;hide_cover=1&amp;hide_artwork=1&amp;light=0"),
 	);
-	assert.ok(
-		/data-miniplayer-expansion="true"><p[^>]*>Selected show<\/p><\/div>/.test(
-			html,
-		),
-	);
+	assert.equal(html.includes("data-miniplayer-expansion"), false);
 
 	assert.equal(html.includes("<button"), false);
-	assert.equal((html.match(/Selected show/g) ?? []).length, 2);
+	assert.equal((html.match(/Selected show/g) ?? []).length, 1);
 	assert.equal(html.includes("<dialog"), false);
 });
 
-test("SAMCast keeps its title and enabled fullscreen scaffold without a widget", () => {
+test("SAMCast keeps its title and progress without fullscreen controls or a widget", () => {
 	const html = selectedMarkup({
 		title: "Live broadcast",
 		source: { kind: "samcast", streamUrl: "https://example.com/live" },
 	});
 	assert.ok(html.includes("Live broadcast"));
 	assert.equal(html.includes("<iframe"), false);
-	assert.equal(html.includes("disabled"), false);
+	assert.equal(html.includes("<button"), false);
+	assert.equal(html.includes("<dialog"), false);
 	assert.ok(html.includes('aria-hidden="true"'));
 });
 

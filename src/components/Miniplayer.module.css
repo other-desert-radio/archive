@@ -18,9 +18,10 @@
 
 .title {
 	flex: 1;
-	min-width: 0;
+	min-width: min(100%, 20rem);
+	box-sizing: border-box;
 	overflow-wrap: anywhere;
-	padding-inline: var(--nav-inline-padding);
+	padding: var(--space-xs) var(--nav-inline-padding);
 }
 
 .widget-slot {
@@ -33,75 +34,6 @@
 	height: var(--border-secondary);
 	background: currentColor;
 	opacity: 0.5;
-}
-
-.hover-player {
-	position: relative;
-}
-
-.expansion {
-	position: absolute;
-	top: 100%;
-	right: 0;
-	width: min(100%, 40rem);
-	height: min(50dvh, calc(var(--density-unit) * 50));
-	box-sizing: border-box;
-	padding: var(--space-lg);
-	overflow-y: auto;
-	isolation: isolate;
-	visibility: hidden;
-	pointer-events: none;
-	transition: visibility 0s linear 140ms;
-}
-
-.expansion::before {
-	content: "";
-	position: absolute;
-	inset: 0;
-	z-index: -1;
-	box-sizing: border-box;
-	background: black;
-	border-left: var(--border-secondary) solid white;
-	border-bottom: var(--border-secondary) solid white;
-	transform-origin: top;
-	transform: scaleY(0);
-	transition: transform 140ms ease-out;
-}
-
-.expansion > * {
-	visibility: hidden;
-}
-
-.hover-player:hover .expansion,
-.hover-player:focus-within .expansion {
-	visibility: visible;
-	pointer-events: auto;
-	transition-delay: 0s;
-}
-
-.hover-player:hover .expansion::before,
-.hover-player:focus-within .expansion::before {
-	transform: scaleY(1);
-}
-
-.hover-player:hover .expansion > *,
-.hover-player:focus-within .expansion > * {
-	visibility: visible;
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.expansion,
-	.expansion::before {
-		transition: none;
-	}
-}
-
-.expanded-title {
-	margin: 0;
-	color: white;
-	font-size: var(--font-title);
-	line-height: 1.2;
-	overflow-wrap: anywhere;
 }
 
 @media (max-width: 750px) {

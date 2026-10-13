@@ -1,7 +1,5 @@
-import { useState } from "react";
 import type { AudioTrack } from "../stores/audio";
 import { useAudioState } from "../stores/audio";
-import FullscreenPlayer from "./FullscreenPlayer";
 import styles from "./Miniplayer.module.css";
 import MixcloudWidget from "./mixcloud";
 
@@ -15,15 +13,10 @@ export default function Miniplayer() {
 }
 
 function ActiveMiniplayer({ track }: { track: AudioTrack }) {
-	const [fullscreenOpen, setFullscreenOpen] = useState(false);
-
 	switch (track.source.kind) {
 		case "mixcloud":
 			return (
-				<div
-					className={`${styles["miniplayer"]} ${styles["hover-player"]}`}
-					data-miniplayer
-				>
+				<div className={styles["miniplayer"]} data-miniplayer>
 					<div className={styles["controls"]}>
 						<span className={styles["title"]}>{track.title}</span>
 						<div className={styles["widget-slot"]}>
@@ -38,9 +31,6 @@ function ActiveMiniplayer({ track }: { track: AudioTrack }) {
 							/>
 						</div>
 					</div>
-					<div className={styles["expansion"]} data-miniplayer-expansion>
-						<p className={styles["expanded-title"]}>{track.title}</p>
-					</div>
 				</div>
 			);
 		case "samcast":
@@ -51,19 +41,8 @@ function ActiveMiniplayer({ track }: { track: AudioTrack }) {
 		<div className={styles["miniplayer"]} data-miniplayer>
 			<div className={styles["controls"]}>
 				<span className={styles["title"]}>{track.title}</span>
-				<button
-					type="button"
-					aria-label="Open fullscreen player"
-					aria-haspopup="dialog"
-					onClick={() => setFullscreenOpen(true)}
-				>
-					F
-				</button>
 			</div>
 			<div className={styles["progress-track"]} aria-hidden="true" />
-			{fullscreenOpen && (
-				<FullscreenPlayer onClose={() => setFullscreenOpen(false)} />
-			)}
 		</div>
 	);
 }

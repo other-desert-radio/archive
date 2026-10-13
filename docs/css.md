@@ -53,5 +53,7 @@ Navigation vertical padding belongs to the return link and title text only.
 The shared sticky header contains the navigation followed by a full-width
 miniplayer bar using `--miniplayer-background` (#25292C). The bar has no minimum height and collapses completely while idle;
 only the active player supplies the widget height. Selected titles align with navigation text;
-the iframe sits flush right with a maximum width of 40rem. At 750px and below,
+the iframe sits flush right with a maximum width of 40rem. The title has a
+20rem minimum width capped at 100%, so controls wrap before the title becomes
+a narrow column. At 750px and below,
 title and widget stack to fit narrow screens without horizontal overflow.

@@ -1,6 +1,15 @@
 # Miniplayer
 
-## Current design direction
+## Current implementation
+
+The player is a compact, full-width bar only. Hover expansion and fullscreen
+presentation have been removed at the user's request. There is no fullscreen
+button, component, modal state, or scroll-lock styling for either source.
+Fullscreen will be reconsidered later. The design references and earlier chunk
+notes below preserve historical context and do not describe current fullscreen
+behavior.
+
+## Design history
 
 The latest three screenshots supplied by the user replace the original custom
 controls for **Mixcloud** playback. Compact Mixcloud UI uses a full-width #25292C bar below navigation, with the
@@ -165,7 +174,7 @@ wired, and is hidden from assistive technology. `Miniplayer.module.css` owns
 the layout and reuses shared spacing and border tokens.
 
 The previous hover-layout implementation was explicitly undone at the user's
-request. An empty Mixcloud hover expansion is now implemented; its content is deferred. React and CSS should own the layout; do not
+request. The Mixcloud hover expansion has also been removed. React and CSS should own the layout; do not
 manually reparent React-owned DOM nodes. Use the latest source-specific layouts
 below when that chunk is requested.
 
@@ -674,30 +683,17 @@ select another card. Check 320px, 332px, 750px, 1440px, and wide desktop artwork
 layout and touch visibility. Browser automation remains disabled; actual
 playback and CSS layout have not been verified by these headless tests.
 
-## Hover expansion scaffold
+## Compact miniplayer interaction
 
-The Mixcloud miniplayer opens a black panel directly below its controls
-on hover or focus within. The panel extends from the compact player's left edge to the viewport's right
-edge, with white borders on its left and bottom only. It animates open/closed
-(background and borders only, over 140ms, disabled for reduced motion), stays
-open while the pointer is over either area, and collapses when hover/focus leave.
-It overlays page content without changing navigation or listing geometry.
-Its temporary height is capped at half the viewport and 50 density units.
-The existing widget stays attached and visible in its original position; there
-is no new widget, playback command, or touch toggle in this chunk.
-The panel contains the selected show title in large white text. Content appears
-without scaling, movement, or fading; only the background layer animates. Further content,
-touch interaction, and final sizing await the user's next instructions.
-
-Review: select a show, hover the widget, move into the panel, then move
-outside the player. Confirm the panel opens/stays/collapses and page content
-and iframe identity remain unchanged. Keyboard focus within also opens it.
+The miniplayer has no hover or focus expansion. It renders only the selected
+show title and the visible widget; the expansion panel, duplicate title,
+hover/focus selectors, and animation styles have been removed. Historical
+expanded design references above are not implemented behavior.
 
 The compact Mixcloud embed uses `player-widget.mixcloud.com` with both
 `hide_cover=1` and `hide_artwork=1`, matching the artwork-free mini embed.
 
 The latest widescreen bar supersedes compact placement within navigation.
-The hover panel remains right aligned beneath the bar, capped at 40rem.
 The persisted island and iframe lifecycle are unchanged. Focused generated-page
 tests check that the island is below navigation inside the shared header.
 
@@ -708,3 +704,8 @@ real playback were not browser-verified; browser automation remains disabled.
 When no track is selected (idle), the miniplayer returns no content and its
 outer bar reserves no height, so no charcoal strip appears. Clearing a selection
 collapses the bar again; paused selections retain their player for resuming.
+
+The compact title reserves at least 20rem (capped at the available width),
+so the right-aligned iframe wraps naturally before the title is squeezed.
+Agent-browser confirmed the title and iframe occupy separate rows at 763px,
+share one row at 1440px, and fit at 320px without horizontal overflow.
