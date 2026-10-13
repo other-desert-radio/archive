@@ -1,0 +1,34 @@
+.tags-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-lg);
+	width: 100%;
+	padding-bottom: var(--container-grid-padding-bottom);
+	overflow-wrap: anywhere;
+}
+
+.explore-tag {
+	cursor: pointer;
+	font-size: min(calc(var(--density-unit) * 6), 8.5vw);
+	color: white;
+	font-weight: bold;
+	padding: var(--space-lg);
+	border: 0.625rem transparent solid;
+}
+
+@media (max-width: 600px) {
+	.tags-container {
+		gap: var(--space-sm);
+	}
+
+	.explore-tag {
+		padding: var(--space-sm);
+	}
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.explore-tag:hover {
+		font-style: italic;
+		border-color: white;
+	}
+}
