@@ -21,6 +21,10 @@ browser("wait", "button[aria-label^='Play ']");
 // A same-origin fixture lets us check the iframe document, independently of
 // Mixcloud availability. Moving it would reload it even if DOM identity survived.
 evaluate(`(() => {
+	// Exercise the compatibility swap even in browsers supporting moveBefore().
+	Object.defineProperty(document.documentElement, 'moveBefore', {
+		value: undefined, configurable: true
+	});
 	window.playerHeader = document.querySelector('[data-site-header]');
 	window.lastPlayerPageLoad = location.pathname;
 	document.addEventListener('astro:page-load', () => {
