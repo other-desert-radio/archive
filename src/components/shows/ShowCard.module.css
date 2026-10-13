@@ -135,13 +135,15 @@
 }
 
 @media (max-width: 600px) {
-	/*
+	.artwork {
+		width: min(40%, var(--show-artwork-min));
+	}
+}
+@media (max-width: 300px) {
 	.show-card {
 		flex-direction: column;
 	}
-  */
-
 	.artwork {
-		width: min(40%, var(--show-artwork-min));
+		width: 100%;
 	}
 }
