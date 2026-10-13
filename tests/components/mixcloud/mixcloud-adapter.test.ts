@@ -25,7 +25,7 @@ function fixture() {
 		autoplay: boolean;
 		result: ReturnType<typeof deferred<void>>;
 	}[] = [];
-	let playbackCommands = 0;
+	const playbackCommands: string[] = [];
 	const event = { on: () => {}, off: () => {} };
 	const widget: MixcloudWidget = {
 		load: (key, autoplay) => {
@@ -34,10 +34,10 @@ function fixture() {
 			return result.promise;
 		},
 		play: async () => {
-			playbackCommands++;
+			playbackCommands.push("play");
 		},
 		pause: async () => {
-			playbackCommands++;
+			playbackCommands.push("pause");
 		},
 		events: { play: event, pause: event, error: event },
 	};
@@ -74,7 +74,7 @@ test("late mounting and readiness use the latest selection without confirming pl
 	f.store.play();
 	await setImmediate();
 	assert.equal(f.calls.length, 1);
-	assert.equal(f.commands(), 0);
+	assert.deepEqual(f.commands(), ["pause", "play"]);
 	adapter.dispose();
 });
 
@@ -172,5 +172,152 @@ test("readiness failure reports the current Mixcloud selection", async () => {
 	f.ready.reject(new Error("not ready"));
 	await setImmediate();
 	assert.equal(f.store.getSnapshot().status, "error");
+	adapter.dispose();
+});
+
+test("selection plays after loading but does not confirm playback", async () => {
+	const f = fixture();
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	f.ready.resolve(f.widget);
+	f.select("first");
+	await setImmediate();
+	assert.deepEqual(f.commands(), []);
+	f.calls[0]?.result.resolve();
+	await setImmediate();
+	assert.deepEqual(f.commands(), ["play"]);
+	assert.equal(f.store.getSnapshot().status, "loading");
+	adapter.dispose();
+});
+
+test("pause during loading replaces the original play intent", async () => {
+	const f = fixture();
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	f.select("first");
+	f.ready.resolve(f.widget);
+	await setImmediate();
+	f.store.pause();
+	f.calls[0]?.result.resolve();
+	await setImmediate();
+	assert.ok(f.commands().includes("pause"));
+	assert.equal(f.commands().includes("play"), false);
+	assert.equal(f.calls.length, 1);
+	adapter.dispose();
+});
+
+test("clear and source changes pause immediately and after pending play settles", async () => {
+	for (const action of ["clear", "samcast"] as const) {
+		const f = fixture();
+		const playing = deferred<void>();
+		f.widget.play = () => playing.promise;
+		const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+		f.select("first");
+		f.ready.resolve(f.widget);
+		await setImmediate();
+		f.calls[0]?.result.resolve();
+		await setImmediate();
+		if (action === "clear") {
+			f.store.clear();
+		} else {
+			f.store.select({
+				title: "Live",
+				source: { kind: "samcast", streamUrl: "https://example.com/live" },
+			});
+		}
+		assert.deepEqual(f.commands(), ["pause"]);
+		playing.resolve();
+		await setImmediate();
+		assert.deepEqual(f.commands(), ["pause", "pause"]);
+		assert.equal(f.calls.length, 1);
+		assert.equal(
+			f.store.getSnapshot().status,
+			action === "clear" ? "idle" : "loading",
+		);
+		adapter.dispose();
+	}
+});
+
+test("pause reverses pending play and resume reuses the loaded show", async () => {
+	const f = fixture();
+	const playing = deferred<void>();
+	let plays = 0;
+	f.widget.play = () => {
+		plays++;
+		return plays === 1 ? playing.promise : Promise.resolve();
+	};
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	f.select("first");
+	f.ready.resolve(f.widget);
+	await setImmediate();
+	f.calls[0]?.result.resolve();
+	await setImmediate();
+	f.store.pause();
+	assert.deepEqual(f.commands(), ["pause"]);
+	playing.resolve();
+	await setImmediate();
+	assert.deepEqual(f.commands(), ["pause", "pause"]);
+	f.store.play();
+	await setImmediate();
+	assert.equal(plays, 2);
+	assert.equal(f.calls.length, 1);
+	adapter.dispose();
+});
+
+test("failed playback can retry without reloading the show", async () => {
+	const f = fixture();
+	f.widget.play = async () => {
+		throw new Error("autoplay blocked");
+	};
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	f.select("first");
+	f.ready.resolve(f.widget);
+	await setImmediate();
+	f.calls[0]?.result.resolve();
+	await setImmediate();
+	assert.equal(f.store.getSnapshot().status, "error");
+	let retries = 0;
+	f.widget.play = async () => {
+		retries++;
+	};
+	f.store.play();
+	await setImmediate();
+	assert.equal(retries, 1);
+	assert.equal(f.calls.length, 1);
+	assert.equal(f.store.getSnapshot().status, "loading");
+	adapter.dispose();
+});
+
+test("disposal pauses immediately and after pending play settles", async () => {
+	const f = fixture();
+	const playing = deferred<void>();
+	f.widget.play = () => playing.promise;
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	f.select("first");
+	f.ready.resolve(f.widget);
+	await setImmediate();
+	f.calls[0]?.result.resolve();
+	await setImmediate();
+	adapter.dispose();
+	assert.deepEqual(f.commands(), ["pause"]);
+	playing.resolve();
+	await setImmediate();
+	assert.deepEqual(f.commands(), ["pause", "pause"]);
+});
+
+test("uses the initial selection and latest requests across readiness and pending loads", async () => {
+	const f = fixture();
+	f.select("initial");
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	f.ready.resolve(f.widget);
+	await setImmediate();
+	assert.equal(f.calls[0]?.key, "/dj/initial/");
+	f.select("latest");
+	f.store.pause();
+	f.calls[0]?.result.resolve();
+	await setImmediate();
+	assert.equal(f.calls[1]?.key, "/dj/latest/");
+	f.calls[1]?.result.resolve();
+	await setImmediate();
+	assert.equal(f.commands().includes("play"), false);
+	assert.ok(f.commands().includes("pause"));
 	adapter.dispose();
 });

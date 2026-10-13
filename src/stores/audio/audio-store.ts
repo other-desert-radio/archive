@@ -22,12 +22,15 @@ export type PlaybackRequest =
 
 const initialState: AudioState = Object.freeze({ status: "idle" });
 
-type Listener = {
-	notify: () => void;
+type Listener<Args extends unknown[] = []> = {
+	notify: (...args: Args) => void;
 };
 
-function subscribeTo(listeners: Set<Listener>, notify: () => void) {
-	const listener: Listener = { notify };
+function subscribeTo<Args extends unknown[]>(
+	listeners: Set<Listener<Args>>,
+	notify: (...args: Args) => void,
+) {
+	const listener: Listener<Args> = { notify };
 	listeners.add(listener);
 	return () => {
 		listeners.delete(listener);
@@ -39,7 +42,7 @@ export class AudioStore {
 	private request: PlaybackRequest | undefined;
 	private requestId = 0;
 	private listeners = new Set<Listener>();
-	private requestListeners = new Set<Listener>();
+	private requestListeners = new Set<Listener<[PlaybackRequest]>>();
 
 	getSnapshot = (): AudioState => this.state;
 
@@ -48,9 +51,9 @@ export class AudioStore {
 
 	subscribe = (notify: () => void) => subscribeTo(this.listeners, notify);
 
-	// Adapters read the latest intent here, including after mounting or becoming ready.
+	// Seed late-mounting adapters; subsequent notifications carry the latest intent.
 	getRequestSnapshot = (): PlaybackRequest | undefined => this.request;
-	subscribeRequests = (notify: () => void) =>
+	subscribeRequests = (notify: (request: PlaybackRequest) => void) =>
 		subscribeTo(this.requestListeners, notify);
 
 	select(track: AudioTrack) {
@@ -124,7 +127,11 @@ export class AudioStore {
 	}
 
 	private notifyRequests() {
-		for (const listener of this.requestListeners) listener.notify();
+		for (const listener of this.requestListeners) {
+			if (this.request) {
+				listener.notify(this.request);
+			}
+		}
 	}
 
 	private update(state: AudioState) {

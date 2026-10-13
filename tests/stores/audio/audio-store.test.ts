@@ -66,8 +66,8 @@ test("confirmation notifies state subscribers without publishing another playbac
 	const unsubscribeState = store.subscribe(() =>
 		statuses.push(store.getSnapshot().status),
 	);
-	const unsubscribeRequests = store.subscribeRequests(() =>
-		actions.push(store.getRequestSnapshot()?.action ?? "none"),
+	const unsubscribeRequests = store.subscribeRequests((request) =>
+		actions.push(request.action),
 	);
 	store.select(track);
 	const selected = selectedTrack(store);

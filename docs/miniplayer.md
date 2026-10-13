@@ -27,8 +27,8 @@ Audio integration review chunks:
 1. Source contracts, playback requests, and confirmed store state (implemented;
    stop for review before the next chunk).
 2. Integrate the Mixcloud widget independently (API loader and standalone host
-   subchunks implemented; adapter scaffold and loading implemented, playback
-   commands and confirmations not started).
+   subchunks implemented; adapter loading and playback commands implemented,
+   event confirmations not started).
 3. Connect the widget to the miniplayer (not started).
 
 Stop for review after each chunk. SAMCast playback and navigation continuity
@@ -58,21 +58,30 @@ Widget integration is split into smaller review checkpoints:
    `MixcloudWidget`'s `iframeParams` prop. Both the key and options initialize
    the iframe URL once at mount.
 3. Shared-store request adapter:
-   - Scaffold and loading (implemented; stop for review).
+   - Scaffold and loading (implemented).
      `src/components/mixcloud/mixcloud-adapter.ts` exports `MixcloudAdapter`.
      Construct it with an `AudioStore` and a ready-widget promise, then call
-     `dispose()` on teardown. It subscribes to requests and reads the latest
-     selection after readiness, including a late mount with play/pause intent.
+     `dispose()` on teardown. It seeds the latest request once at construction and caches subscription
+     payloads for readiness, then rereads the store after async commands.
      Loads are serialized; intermediate selections are skipped, and the same
      selected track is not reloaded for play/pause requests. Each new selection
      identity loads through `widget.load(key, false)` without changing iframe
      `src`. Current loading failures report an error; stale/disposed failures
      are ignored. A newer request can retry a failed load. Disposal unsubscribes
      and ignores pending results; widget promises cannot be physically canceled.
-   - Play/pause commands, stopping on clear/source changes, and widget event
-     confirmations (not started). Successful loading leaves store state
-     unconfirmed; it does not mean audio is playing or paused. This loading-only
-     adapter is not yet suitable for mounting as the playback owner.
+   - Playback commands (implemented; stop for review). After loading with
+     autoplay disabled, the adapter applies the latest intent: `load`/`play`
+     calls `widget.play()`, while `pause` calls `widget.pause()`. Pause during
+     loading replaces the initial play intent. Clear, source changes, and
+     disposal request a pause immediately and after pending commands settle.
+     A newer show is loaded after pausing the previous one. Current command
+     failures report an error, and playback retries reuse the loaded show.
+     Cleanup/source-change pauses are best effort; failures from an old or
+     cleared source are not assigned to a new track. Fake-widget tests cover
+     pending intent reversal, clear/source changes, failures/retry, and disposal.
+   - Widget event confirmations (not started). Command success leaves store
+     state unconfirmed; it does not mean audio is playing or paused. Event
+     wiring is required before mounting the adapter as the playback owner.
 
 The standalone host is not mounted in the site yet. The loader is called only
 when that host mounts. The adapter is exported but not connected to the host
@@ -165,13 +174,13 @@ a playable stream URL; its metadata endpoint is separate future work.
   until state changes and track metadata is copied/frozen at the boundary.
   Internally each subscription is a listener object with a `notify()` method;
   the public callback API remains compatible with `useSyncExternalStore`.
-- `subscribeRequests(callback)` is the separate adapter subscription; read
-  `getRequestSnapshot()` for the latest immutable `{ id, action, track }`
-  request (`clear` has no track). IDs increase with requests, so an adapter
+- `subscribeRequests(callback)` passes the latest immutable `{ id, action, track }`
+  request to the adapter callback (`clear` has no track).
+  `getRequestSnapshot()` supplies the initial request for late-mounting adapters. IDs increase with requests, so an adapter
   can reject stale asynchronous completions. Before any request, it is
-  `undefined`. Late-mounting adapters must read the latest request after
-  subscribing, and again after widget readiness, rather than replaying an old
-  load. For a latest pause/play intent, load its selected source if necessary
+  `undefined`. Adapters seed their cached request at construction and update it from
+  subscription payloads. Use that cache at readiness and reread the store after each async command
+  to avoid replaying an old load. For a latest pause/play intent, load its selected source if necessary
   before applying that intent. Confirmations do not change this snapshot.
 - `getServerSnapshot()` always returns the same idle snapshot so Astro HTML
   and initial hydration agree, without accessing browser audio APIs.
