@@ -21,7 +21,10 @@ test("fresh store sets have independent playback and subscriptions", () => {
 	assert.notEqual(first.audioStore, stores.audioStore);
 	let secondNotifications = 0;
 	const unsubscribe = second.audioStore.subscribe(() => secondNotifications++);
-	first.audioStore.play({ title: "First show", source: "mixcloud" });
+	first.audioStore.select({
+		title: "First show",
+		source: { kind: "mixcloud", cloudcastKey: "/dj/first/" },
+	});
 	assert.deepEqual(second.audioStore.getSnapshot(), { status: "idle" });
 	assert.equal(secondNotifications, 0);
 	unsubscribe();
@@ -30,8 +33,14 @@ test("fresh store sets have independent playback and subscriptions", () => {
 test("React providers inject the selected store without affecting other trees", () => {
 	const first = createStores();
 	const second = createStores();
-	first.audioStore.play({ title: "First show", source: "mixcloud" });
-	second.audioStore.play({ title: "Second show", source: "samcast" });
+	first.audioStore.select({
+		title: "First show",
+		source: { kind: "mixcloud", cloudcastKey: "/dj/first/" },
+	});
+	second.audioStore.select({
+		title: "Second show",
+		source: { kind: "samcast", streamUrl: "https://example.com/live" },
+	});
 	const markup = renderToStaticMarkup(
 		<StoresProvider stores={first}>
 			<TrackProbe />
@@ -57,7 +66,10 @@ test("components without an override use the application stores", () => {
 
 test("injected playback does not change the idle server hydration snapshot", () => {
 	const injected = createStores();
-	injected.audioStore.play({ title: "Selected show", source: "mixcloud" });
+	injected.audioStore.select({
+		title: "Selected show",
+		source: { kind: "mixcloud", cloudcastKey: "/dj/selected/" },
+	});
 	assert.equal(
 		renderToStaticMarkup(
 			<StoresProvider stores={injected}>

@@ -44,16 +44,20 @@ The site still builds to static HTML; initial visits load a full document.
 `transition:persist="miniplayer"` name across all pages using `BaseLayout`.
 Only the island persists; navigation links and page titles still update.
 `src/audio/audio-store.ts` defines the store class with immutable idle,
-playing, and paused snapshots. `src/stores.ts` creates the application's shared
+loading, playing, paused, and error snapshots. Mixcloud sources identify a
+cloudcast key; SAMCast sources identify a stream URL. A separate subscription
+publishes load/play/pause/clear requests to future source adapters. Adapter
+confirmations update display state without republishing playback commands;
+callbacks from old selections are ignored. `src/stores.ts` creates the application's shared
 instances and exports `createStores()` for isolated instances. React consumers
 read dependencies through `useStores()` in `src/stores-context.tsx`, which
 defaults to the application stores and supports `StoresProvider` overrides.
 `use-audio-state.ts` subscribes via React's
 `useSyncExternalStore`, with a stable idle server snapshot for static HTML and
 hydration. Both player views read this store. The miniplayer is hidden while
-idle and shows the selected track while playing or paused. Clearing the track
+idle and shows the selected track in every other state. Clearing the track
 unmounts the visible player and resets fullscreen visibility. Source playback
-adapters are not implemented; store methods currently update state only.
+adapters are not implemented; requests do not yet produce audio.
 
 The archive listings use `src/pages/index.astro` for SHOWS and
 `src/pages/djs.astro` for DJs. Both use `CategoryTabs.astro` to select the
