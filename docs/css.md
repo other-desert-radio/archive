@@ -48,7 +48,7 @@ tags, at 320px, 332px, 750px, 1440px, and wide desktop widths.
 
 Category tabs stay on one row, with smaller fluid text, reduced gaps and no
 extra inline padding at 750px and below. They spread across the available width
-at 600px and below and form a centered group on larger screens.
+at 600px and below and form a left-aligned group on larger screens.
 Navigation items wrap naturally when
 their combined widths exceed the available space. Keep the return link together, and
 allow the navigation title to wrap within its own line on tiny screens.
