@@ -26,11 +26,33 @@ Audio integration review chunks:
 
 1. Source contracts, playback requests, and confirmed store state (implemented;
    stop for review before the next chunk).
-2. Integrate the Mixcloud widget independently (not started).
+2. Integrate the Mixcloud widget independently (API loader subchunk implemented;
+   widget host and adapter not started).
 3. Connect the widget to the miniplayer (not started).
 
 Stop for review after each chunk. SAMCast playback and navigation continuity
 remain later integration work.
+
+Widget integration is split into smaller review checkpoints:
+
+1. `src/audio/mixcloud-api.ts`: typed playback API boundary and browser-only
+   script loader (implemented). Concurrent callers share one load; failures
+   reject and allow retry. Existing API globals are checked before reuse.
+   Importing the module does not access browser globals. Focused tests cover
+   shared loading, existing API reuse, network failure/retry, and invalid API.
+2. Visible standalone iframe host and widget readiness (not started).
+3. Shared-store request adapter and widget event confirmations (not started).
+
+The loader is not mounted or called by the site yet and produces no playback.
+Stop for review after each subchunk before connecting the miniplayer.
+
+Latest fullscreen direction: Mixcloud fullscreen must include the widget.
+Stretching the existing miniplayer into fullscreen may preserve its iframe;
+the separate component versus shared host decision remains for that chunk.
+A persistent Astro shell is possible using a custom `astro:before-swap`
+implementation that replaces page content while keeping the player attached.
+See [Astro custom swap guidance](https://docs.astro.build/en/guides/view-transitions/#building-a-custom-swap-function).
+Navigation changes and real playback continuity verification remain separate.
 
 Chunk 1 created `src/components/Miniplayer.tsx` and
 `src/components/FullscreenPlayer.tsx` as empty components returning `null`.
