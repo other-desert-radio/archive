@@ -71,10 +71,11 @@ fullscreen is disabled until the shared iframe presentation is implemented.
 `src/components/mixcloud/mixcloud-adapter.ts` now provides an independent
 adapter with request subscription, readiness gating, serialized show loads and
 play/pause commands, error reporting, and disposal. It requests a pause on clear,
-source changes, and disposal. It does not listen for playback confirmations
-yet. `MixcloudWidget` creates it using the context's `audioStore` and the widget
-readiness promise, then disposes it on cleanup. Store playback state remains
-unconfirmed even when audio starts. Show-selection controls and uninterrupted
+source changes, and disposal. Widget play/pause events confirm the loaded
+selection, and error events report playback failure. Events during loads are
+ignored; disposal removes listeners. `MixcloudWidget` creates it using the
+context's `audioStore` and the widget readiness promise, then disposes it on
+cleanup. Command completion alone does not confirm playback. Show-selection controls and uninterrupted
 iframe navigation remain future work.
 
 The archive listings use `src/pages/index.astro` for SHOWS and

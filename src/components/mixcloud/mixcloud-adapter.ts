@@ -19,7 +19,7 @@ import type { MixcloudWidget } from "./mixcloud-api";
  *
  * Loads with autoplay disabled, then applies the latest play/pause intent.
  * Clear, source changes, and disposal pause the widget. Command completion
- * does not confirm playing or paused state; widget events remain future work.
+ * does not confirm playing or paused state; widget events confirm the loaded track.
  */
 export class MixcloudAdapter {
 	private widget: MixcloudWidget | undefined;
@@ -73,6 +73,9 @@ export class MixcloudAdapter {
 					return;
 				}
 				this.widget = widget;
+				widget.events.play.on(this.onPlay);
+				widget.events.pause.on(this.onPause);
+				widget.events.error.on(this.onError);
 				// Includes requests made before mounting or during widget initialization.
 				void this.processRequests();
 			},
@@ -107,10 +110,41 @@ export class MixcloudAdapter {
 		}
 		this.disposed = true;
 		this.unsubscribe();
+		if (this.widget) {
+			this.widget.events.play.off(this.onPlay);
+			this.widget.events.pause.off(this.onPause);
+			this.widget.events.error.off(this.onError);
+		}
 		void this.pauseGently();
 		this.widget = undefined;
 		this.loadedTrack = undefined;
 	}
+
+	// Events have no show identity. Ignore them during loads and use the store's
+	// identity check to reject callbacks after selection changes or clear.
+	private onPlay = () => {
+		if (this.disposed || !this.loadedTrack) {
+			return;
+		}
+		this.store.confirmPlaying(this.loadedTrack);
+	};
+
+	private onPause = () => {
+		if (this.disposed || !this.loadedTrack) {
+			return;
+		}
+		this.store.confirmPaused(this.loadedTrack);
+	};
+
+	private onError = () => {
+		if (this.disposed || !this.loadedTrack) {
+			return;
+		}
+		this.store.reportError(
+			this.loadedTrack,
+			"Mixcloud playback failed. Try the widget controls.",
+		);
+	};
 
 	/**
 	 * Drains new requests through one load at a time, skipping intermediate selections.
@@ -148,6 +182,7 @@ export class MixcloudAdapter {
 						}
 					}
 					try {
+						this.loadedTrack = undefined;
 						// Do not autoplay a selection that could be superseded while loading.
 						await widget.load(request.track.source.cloudcastKey, false);
 						if (this.disposed) {

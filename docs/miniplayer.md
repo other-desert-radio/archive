@@ -29,9 +29,9 @@ Audio integration review chunks:
    stop for review before the next chunk).
 2. Integrate the Mixcloud widget independently (API loader and standalone host
    subchunks implemented; adapter loading and playback commands implemented,
-   event confirmations not started).
+   event confirmations implemented).
 3. Connect the widget to the miniplayer (compact UI and adapter lifecycle
-   implemented for review; fullscreen and event confirmations deferred).
+   implemented for review; fullscreen deferred).
 
 Stop for review after each chunk. SAMCast playback and navigation continuity
 remain later integration work.
@@ -81,10 +81,18 @@ Widget integration is split into smaller review checkpoints:
      Cleanup/source-change pauses are best effort; failures from an old or
      cleared source are not assigned to a new track. Fake-widget tests cover
      pending intent reversal, clear/source changes, failures/retry, and disposal.
-   - Widget event confirmations (not started). Command success leaves store
-     state unconfirmed; it does not mean audio is playing or paused. Event
-     wiring remains the next playback chunk. At the user's request, compact
-     UI and the existing adapter are mounted first for review.
+   - Widget event confirmations (implemented; stop for review). After readiness,
+     the adapter subscribes to `play`, `pause`, and `error`, including changes
+     made through the visible widget controls. Events confirm the loaded track
+     or report a generic playback error without publishing another request.
+     Command success alone never confirms playback. Events during loading are
+     ignored because Mixcloud supplies no show identity; the store rejects old
+     selection callbacks. Disposal removes the exact listeners and ignores
+     queued callbacks. Load failures still use the rejected load promise.
+     Events arriving after a new load completes cannot be independently
+     attributed to an old show by this API. Focused fake-widget tests cover
+     confirmations, error recovery, selection changes, clear, and cleanup.
+     See the [Mixcloud widget event API](https://www.mixcloud.com/developers/widget/).
 
 The miniplayer now switches on source kind. Mixcloud renders the visible dark
 mini widget without a duplicate application title or decorative progress bar.
@@ -98,8 +106,8 @@ with the readiness promise, and disposes it during effect cleanup. Changing
 Mixcloud shows keeps the component/iframe mounted with its original `src`;
 the adapter changes shows through `load()`. Clear or a source-kind change
 unmounts the host and requests a pause. No show-selection buttons are added yet.
-Playback may start, but store state remains loading until future widget event
-confirmations. Real embed readiness, layout, and audio need manual review;
+Playback state is confirmed by widget play/pause events; widget errors retain
+selection with an error state. Real embed readiness, layout, and audio need manual review;
 headless rendering tests do not execute React effects or browser layout.
 
 For manual review on the dev server, select a real show from the browser console:
@@ -114,7 +122,9 @@ stores.audioStore.select({
 
 Replace the key with a real selected-show path. Check compact sizing at narrow
 and desktop widths, use the visible widget to pause/resume, select another show
-and confirm the iframe DOM identity and `src` stay unchanged, then call
+and confirm the iframe DOM identity and `src` stay unchanged. Check
+`stores.audioStore.getSnapshot().status` becomes `playing`/`paused` when using
+the widget controls, then call
 `stores.audioStore.clear()` and confirm playback stops and the player disappears.
 Navigation continuity is still unverified and remains a separate shell chunk.
 

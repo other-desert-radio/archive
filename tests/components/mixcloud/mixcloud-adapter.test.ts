@@ -26,7 +26,24 @@ function fixture() {
 		result: ReturnType<typeof deferred<void>>;
 	}[] = [];
 	const playbackCommands: string[] = [];
-	const event = { on: () => {}, off: () => {} };
+	const event = () => {
+		const listeners = new Set<() => void>();
+		return {
+			on: (listener: () => void) => {
+				listeners.add(listener);
+			},
+			off: (listener: () => void) => {
+				listeners.delete(listener);
+			},
+			emit: () => {
+				for (const listener of listeners) {
+					listener();
+				}
+			},
+			listeners,
+		};
+	};
+	const events = { play: event(), pause: event(), error: event() };
 	const widget: MixcloudWidget = {
 		load: (key, autoplay) => {
 			const result = deferred<void>();
@@ -39,7 +56,7 @@ function fixture() {
 		pause: async () => {
 			playbackCommands.push("pause");
 		},
-		events: { play: event, pause: event, error: event },
+		events,
 	};
 	const select = (name: string) =>
 		store.select({
@@ -48,6 +65,7 @@ function fixture() {
 		});
 	return {
 		store,
+		events,
 		ready,
 		widget,
 		calls,
@@ -320,4 +338,80 @@ test("uses the initial selection and latest requests across readiness and pendin
 	assert.equal(f.commands().includes("play"), false);
 	assert.ok(f.commands().includes("pause"));
 	adapter.dispose();
+});
+
+test("widget controls confirm playback and recover from widget errors without new requests", async () => {
+	const f = fixture();
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	f.select("first");
+	f.ready.resolve(f.widget);
+	await setImmediate();
+	f.events.play.emit();
+	assert.equal(f.store.getSnapshot().status, "loading");
+	f.calls[0]?.result.resolve();
+	await setImmediate();
+	const request = f.store.getRequestSnapshot();
+	f.events.play.emit();
+	assert.equal(f.store.getSnapshot().status, "playing");
+	f.events.pause.emit();
+	assert.equal(f.store.getSnapshot().status, "paused");
+	f.events.error.emit();
+	assert.equal(f.store.getSnapshot().status, "error");
+	f.events.play.emit();
+	assert.equal(f.store.getSnapshot().status, "playing");
+	assert.equal(f.store.getRequestSnapshot(), request);
+	adapter.dispose();
+});
+
+test("events from the old show or an in-flight load cannot confirm a newer selection", async () => {
+	const f = fixture();
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	f.select("first");
+	f.ready.resolve(f.widget);
+	await setImmediate();
+	f.calls[0]?.result.resolve();
+	await setImmediate();
+	f.select("next");
+	for (const event of Object.values(f.events)) {
+		event.emit();
+	}
+	assert.equal(f.store.getSnapshot().status, "loading");
+	await setImmediate();
+	for (const event of Object.values(f.events)) {
+		event.emit();
+	}
+	assert.equal(f.store.getSnapshot().status, "loading");
+	f.calls[1]?.result.resolve();
+	await setImmediate();
+	f.events.play.emit();
+	assert.equal(f.store.getSnapshot().status, "playing");
+	f.store.clear();
+	for (const event of Object.values(f.events)) {
+		event.emit();
+	}
+	assert.equal(f.store.getSnapshot().status, "idle");
+	adapter.dispose();
+});
+
+test("disposal removes exact listeners and queued callbacks cannot update state", async () => {
+	const f = fixture();
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	f.select("first");
+	f.ready.resolve(f.widget);
+	await setImmediate();
+	f.calls[0]?.result.resolve();
+	await setImmediate();
+	const callbacks = Object.values(f.events).flatMap((event) => [
+		...event.listeners,
+	]);
+	assert.equal(callbacks.length, 3);
+	adapter.dispose();
+	adapter.dispose();
+	for (const event of Object.values(f.events)) {
+		assert.equal(event.listeners.size, 0);
+	}
+	for (const callback of callbacks) {
+		callback();
+	}
+	assert.equal(f.store.getSnapshot().status, "loading");
 });
