@@ -6,7 +6,12 @@ import MixcloudWidget, {
 	waitForMixcloudWidget,
 } from "../../../src/components/mixcloud";
 
-const miniParams = { mini: true, hide_cover: true, light: false };
+const miniParams = {
+	mini: true,
+	hide_cover: true,
+	hide_artwork: true,
+	light: false,
+};
 
 function playbackApi() {
 	const event = { on: () => {}, off: () => {} };
@@ -52,9 +57,11 @@ test("rejects missing readiness, failed readiness, and incomplete playback APIs"
 test("embed URL preserves encoded show keys and uses the dark mini widget", () => {
 	const key = "/otherdesertradio/show-%C3%B6/";
 	const url = new URL(mixcloudEmbedUrl(key, miniParams));
-	assert.equal(url.origin, "https://www.mixcloud.com");
+	assert.equal(url.origin, "https://player-widget.mixcloud.com");
 	assert.equal(url.searchParams.get("feed"), key);
 	assert.equal(url.searchParams.get("mini"), "1");
+	assert.equal(url.searchParams.get("hide_cover"), "1");
+	assert.equal(url.searchParams.get("hide_artwork"), "1");
 	assert.equal(url.searchParams.get("light"), "0");
 	assert.equal(url.searchParams.has("autoplay"), false);
 });
@@ -64,11 +71,13 @@ test("embed options serialize explicitly supplied boolean values", () => {
 		mixcloudEmbedUrl("/dj/show/", {
 			mini: false,
 			hide_cover: false,
+			hide_artwork: false,
 			light: true,
 		}),
 	);
 	assert.equal(url.searchParams.get("mini"), "0");
 	assert.equal(url.searchParams.get("hide_cover"), "0");
+	assert.equal(url.searchParams.get("hide_artwork"), "0");
 	assert.equal(url.searchParams.get("light"), "1");
 });
 

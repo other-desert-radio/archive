@@ -56,7 +56,7 @@ Widget integration is split into smaller review checkpoints:
    sizing still require manual verification when the host is mounted; these
    tests do not run a browser or connect to Mixcloud.
    `mixcloudEmbedUrl(key, params)` accepts typed boolean `mini`, `hide_cover`,
-   and `light` options with no defaults. Callers pass all three explicitly via
+   `hide_artwork`, and `light` options with no defaults. Callers pass all four explicitly via
    `MixcloudWidget`'s `iframeParams` prop. Both the key and options initialize
    the iframe URL once at mount.
 3. Shared-store request adapter:
@@ -689,3 +689,6 @@ touch interaction, and final sizing await the user's next instructions.
 Review: select a show, hover the widget, move into the blank panel, then move
 outside the player. Confirm the panel opens/stays/collapses and page content
 and iframe identity remain unchanged. Keyboard focus within also opens it.
+
+The compact Mixcloud embed uses `player-widget.mixcloud.com` with both
+`hide_cover=1` and `hide_artwork=1`, matching the artwork-free mini embed.

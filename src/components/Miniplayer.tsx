@@ -28,7 +28,12 @@ function ActiveMiniplayer({ track }: { track: AudioTrack }) {
 						<div className={styles["widget-slot"]}>
 							<MixcloudWidget
 								initialCloudcastKey={track.source.cloudcastKey}
-								iframeParams={{ mini: true, hide_cover: true, light: false }}
+								iframeParams={{
+									mini: true,
+									hide_cover: true,
+									hide_artwork: true,
+									light: false,
+								}}
 							/>
 						</div>
 						<button type="button" aria-label="Open fullscreen player" disabled>
