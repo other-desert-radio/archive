@@ -105,23 +105,56 @@ browser("click", `a[href='${basePath}/']`);
 browser("wait", "button[aria-label^='Play ']");
 verifyPlayer(basePath);
 
-for (const width of [320, 332, 750, 1440]) {
-	browser("set", "viewport", String(width), "800");
+for (const [width, height] of [[320, 800], [332, 600], [750, 800], [1440, 800], [844, 390]]) {
+	browser("set", "viewport", String(width), String(height));
+	browser("scroll", "down", "10000");
 	const layout = evaluate(`(() => {
-		const background = getComputedStyle(document.body, '::before');
+		const layer = document.querySelector('.site-background');
+		const background = getComputedStyle(layer);
+		const rect = layer.getBoundingClientRect();
 		return {
 			overflow: document.documentElement.scrollWidth > innerWidth,
 			position: background.position,
-			height: parseFloat(background.height),
-			viewportHeight: innerHeight
+			top: rect.top,
+			bottom: rect.bottom,
+			viewportHeight: innerHeight,
+			attachment: background.backgroundAttachment,
+			zIndex: background.zIndex,
+			canvasImage: getComputedStyle(document.documentElement).backgroundImage,
+			viewport: document.querySelector('meta[name="viewport"]').content,
+			touchAction: getComputedStyle(document.querySelector('.tabs a')).touchAction
 		};
 	})()`);
 	assert.equal(layout.overflow, false, `${width}px horizontal overflow`);
 	assert.equal(layout.position, "fixed");
-	assert.ok(layout.height >= layout.viewportHeight);
+	assert.equal(layout.top, 0);
+	assert.ok(layout.bottom >= layout.viewportHeight);
+	assert.equal(layout.attachment, "scroll");
+	assert.equal(layout.zIndex, "0");
+	assert.ok(layout.canvasImage.includes("background.jpeg"));
+	assert.ok(layout.viewport.includes("viewport-fit=cover"));
+	assert.equal(layout.touchAction, "manipulation");
 }
+browser("scroll", "up", "10000");
 
-// Removing the player restores normal navigation on the very next swap.
+// Touch emulation must not expose the inactive tab's desktop hover border.
+browser("set", "device", "iPhone 12");
+browser("hover", `a[href='${basePath}/djs']`);
+const touchTab = evaluate(`(() => {
+	const tab = document.querySelector('.tabs a:not([aria-current])');
+	return {
+		hover: matchMedia('(hover: hover)').matches,
+		border: getComputedStyle(tab).borderBottomWidth,
+		touchAction: getComputedStyle(tab).touchAction,
+		highlight: getComputedStyle(tab).webkitTapHighlightColor
+	};
+})()`);
+assert.equal(touchTab.hover, false);
+assert.equal(touchTab.border, "0px");
+assert.equal(touchTab.touchAction, "manipulation");
+assert.equal(touchTab.highlight, "rgba(0, 0, 0, 0)");
+
+// Removing the player restores Astro's default swap on the next click.
 evaluate("window.playerProbe.remove(); true");
 rememberIdlePage();
 browser("click", `a[href='${basePath}/djs']`);

@@ -46,7 +46,8 @@ to avoid circular dependencies through the barrels.
 ## Request and rendering flow
 
 `BaseLayout.astro` includes Astro's `ClientRouter` for client-side navigation
-between internal pages, with the default body transition animation disabled.
+between internal pages, with root and body transition animations disabled
+and an immediate swap fallback.
 The site still builds to static HTML; initial visits load a full document.
 
 `Navigation.astro` mounts `Miniplayer.tsx` with `client:load` and the stable

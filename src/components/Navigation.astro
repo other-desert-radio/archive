@@ -105,9 +105,11 @@ const title = (() => {
     text-decoration: none;
   }
 
-  .leading-box:hover {
-    font-weight: bold;
-    text-decoration: underline;
+  @media (hover: hover) and (pointer: fine) {
+    .leading-box:hover {
+      font-weight: bold;
+      text-decoration: underline;
+    }
   }
   @media (max-width: 750px) {
     header { --nav-inline-padding: var(--page-gutter); }

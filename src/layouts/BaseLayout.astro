@@ -18,14 +18,15 @@ import Navigation from "../components/Navigation.astro";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" transition:animate="none">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
-    <ClientRouter />
+    <ClientRouter fallback="swap" />
   </head>
   <body transition:animate="none">
+    <div class="site-background" aria-hidden="true"></div>
     <Navigation page={page} returning_page={returning_page} />
     <main>
       <slot />
@@ -39,6 +40,8 @@ import Navigation from "../components/Navigation.astro";
 
 <style>
   main {
+    position: relative;
+    z-index: 1;
     width: 100%;
     max-width: var(--page-max-width);
     margin-inline: auto;

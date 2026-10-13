@@ -17,8 +17,10 @@
 	text-decoration: none;
 }
 
-.show-title:hover {
-	text-decoration: underline;
+@media (hover: hover) and (pointer: fine) {
+	.show-title:hover {
+		text-decoration: underline;
+	}
 }
 
 .show-date {
@@ -65,7 +67,6 @@
 	height: var(--space-lg);
 }
 
-.show-card:hover .playback-button,
 .playback-button:focus-visible,
 .playback-button[data-selected="true"] {
 	opacity: 1;
@@ -109,9 +110,15 @@
 	text-decoration: none;
 }
 
-.dj-container:hover {
-	border-color: black;
-	background-color: white;
+@media (hover: hover) and (pointer: fine) {
+	.show-card:hover .playback-button {
+		opacity: 1;
+	}
+
+	.dj-container:hover {
+		border-color: black;
+		background-color: white;
+	}
 }
 
 .dj-image {
