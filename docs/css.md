@@ -50,7 +50,8 @@ Category tabs and navigation items wrap naturally when their combined widths
 exceed the available space. Keep each tab and the return link together, and
 allow the navigation title to wrap within its own line on tiny screens.
 Navigation vertical padding belongs to the return link and title text only.
-The navigation container and miniplayer slot have no vertical padding, so the
-Mixcloud widget does not add padding above and below its height.
-The miniplayer slot reserves its width and 3.75rem widget height while idle,
-keeping selection from adding height or a new wrapped navigation row.
+The shared sticky header contains the navigation followed by a full-width
+miniplayer bar using `--miniplayer-background` (#25292C). The bar has no minimum height and collapses completely while idle;
+only the active player supplies the widget height. Selected titles align with navigation text;
+the iframe sits flush right with a maximum width of 40rem. At 750px and below,
+title and widget stack to fit narrow screens without horizontal overflow.

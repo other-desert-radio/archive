@@ -3,7 +3,7 @@ import { execFileSync } from "node:child_process";
 import { readdir, readFile } from "node:fs/promises";
 import test from "node:test";
 
-test("every built page hosts one hydrated, persisted miniplayer in its navigation", async () => {
+test("every built page hosts one hydrated, persisted miniplayer below its navigation", async () => {
 	execFileSync("bun", ["run", "build"], { stdio: "pipe", timeout: 30_000 });
 	const files = await readdir("dist", { recursive: true });
 	const pages = files.filter((file) => file.endsWith(".html"));
@@ -12,7 +12,17 @@ test("every built page hosts one hydrated, persisted miniplayer in its navigatio
 		const html = await readFile(`dist/${page}`, "utf8");
 		const navigation = html.match(/<nav\b[^>]*>[\s\S]*?<\/nav>/)?.[0];
 		assert.ok(navigation, `${page}: missing navigation`);
-		const islands = navigation.match(/<astro-island\b[^>]*>/g) ?? [];
+		const header = html.match(/<header\b[^>]*>[\s\S]*?<\/header>/)?.[0];
+		assert.ok(header, `${page}: missing shared header`);
+		assert.ok(
+			!navigation.includes("<astro-island"),
+			`${page}: player must be outside navigation`,
+		);
+		assert.ok(
+			/<\/nav>\s*<div[^>]*data-miniplayer-bar/.test(header),
+			`${page}: missing player bar below navigation`,
+		);
+		const islands = header.match(/<astro-island\b[^>]*>/g) ?? [];
 		const players = islands.filter((island) =>
 			island.includes('data-astro-transition-persist="miniplayer"'),
 		);
@@ -22,7 +32,7 @@ test("every built page hosts one hydrated, persisted miniplayer in its navigatio
 			`${page}: missing hydration`,
 		);
 		assert.ok(
-			!navigation.includes("data-miniplayer"),
+			!header.includes('data-miniplayer="'),
 			`${page}: idle player should have no visible container`,
 		);
 	}

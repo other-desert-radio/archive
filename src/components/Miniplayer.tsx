@@ -25,6 +25,7 @@ function ActiveMiniplayer({ track }: { track: AudioTrack }) {
 					data-miniplayer
 				>
 					<div className={styles["controls"]}>
+						<span className={styles["title"]}>{track.title}</span>
 						<div className={styles["widget-slot"]}>
 							<MixcloudWidget
 								initialCloudcastKey={track.source.cloudcastKey}
@@ -36,9 +37,6 @@ function ActiveMiniplayer({ track }: { track: AudioTrack }) {
 								}}
 							/>
 						</div>
-						<button type="button" aria-label="Open fullscreen player" disabled>
-							F
-						</button>
 					</div>
 					<div className={styles["expansion"]} data-miniplayer-expansion>
 						<p className={styles["expanded-title"]}>{track.title}</p>

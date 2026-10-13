@@ -8,7 +8,7 @@ This repository is a small static Astro site. The current implementation is inte
 - `astro.config.mjs` sets `output: "static"`, so production output is pre-rendered into `dist/` and does not require a server runtime.
 - `.github/workflows/deploy-pages.yml` builds the static site with Bun and deploys `dist/` to GitHub Pages on pushes to `main`.
 - `@astrojs/react` supports server-rendered archive components and the hydrated
-  miniplayer island in the shared navigation.
+  miniplayer island below the shared navigation.
 - The project targets Node.js `>=22.12.0` and uses Bun for package scripts and lockfile management.
 
 ## Source layout
@@ -51,7 +51,8 @@ The site still builds to static HTML; initial visits load a full document.
 
 `Navigation.astro` mounts `Miniplayer.tsx` with `client:load` and the stable
 `transition:persist="miniplayer"` name across all pages using `BaseLayout`.
-Only the island persists; navigation links and page titles still update.
+The island sits in a full-width charcoal bar below the navigation, inside the
+shared sticky header. Only the island persists; navigation links and page titles still update.
 `src/stores/audio/audio-store.ts` defines the store class with immutable idle,
 loading, playing, paused, and error snapshots. Mixcloud sources identify a
 cloudcast key; SAMCast sources identify a stream URL. A separate subscription

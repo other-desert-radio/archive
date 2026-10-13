@@ -18,6 +18,7 @@
 	--border-secondary: calc(var(--density-unit) * 0.125);
 	--border-primary: calc(var(--density-unit) * 0.1875);
 	--border-heavy: calc(var(--density-unit) * 0.375);
+	--miniplayer-background: #25292c;
 	--nav-height: calc(var(--density-unit) * 4.4375);
 	--container-grid-padding-bottom: calc(var(--density-unit) * 7.5);
 	--dj-artwork-size: calc(var(--density-unit) * 12.5);

@@ -3,8 +3,10 @@
 ## Current design direction
 
 The latest three screenshots supplied by the user replace the original custom
-controls for **Mixcloud** playback. Compact Mixcloud UI shows the visible mini
-widget beside the fullscreen button; expanded and fullscreen UI keep that same
+controls for **Mixcloud** playback. Compact Mixcloud UI uses a full-width #25292C bar below navigation, with the
+selected title on the left and the mini iframe aligned flush right (up to 40rem).
+On phones/tablets through 750px, title and iframe stack. The disabled Mixcloud
+fullscreen placeholder is removed; expanded and fullscreen UI keep that same
 widget visible and add custom metadata/progress presentation. Retain the
 original custom playback controls for **SAMCast** live streaming (called
 “samcloud” in the user's latest message; the source discriminator remains
@@ -693,3 +695,16 @@ and iframe identity remain unchanged. Keyboard focus within also opens it.
 
 The compact Mixcloud embed uses `player-widget.mixcloud.com` with both
 `hide_cover=1` and `hide_artwork=1`, matching the artwork-free mini embed.
+
+The latest widescreen bar supersedes compact placement within navigation.
+The hover panel remains right aligned beneath the bar, capped at 40rem.
+The persisted island and iframe lifecycle are unchanged. Focused generated-page
+tests check that the island is below navigation inside the shared header.
+
+Verification for the widescreen bar: four focused tests passed (including a
+production build), lint and Astro check passed. Responsive visual layout and
+real playback were not browser-verified; browser automation remains disabled.
+
+When no track is selected (idle), the miniplayer returns no content and its
+outer bar reserves no height, so no charcoal strip appears. Clearing a selection
+collapses the bar again; paused selections retain their player for resuming.

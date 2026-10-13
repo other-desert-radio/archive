@@ -39,7 +39,8 @@ test("Mixcloud renders one widget and the selected title inside its hover expans
 		),
 	);
 
-	assert.ok(/<button[^>]*disabled/.test(html));
+	assert.equal(html.includes("<button"), false);
+	assert.equal((html.match(/Selected show/g) ?? []).length, 2);
 	assert.equal(html.includes("<dialog"), false);
 });
 
@@ -52,4 +53,21 @@ test("SAMCast keeps its title and enabled fullscreen scaffold without a widget",
 	assert.equal(html.includes("<iframe"), false);
 	assert.equal(html.includes("disabled"), false);
 	assert.ok(html.includes('aria-hidden="true"'));
+});
+
+test("clearing a selected track removes the player content", () => {
+	const audioStore = new SelectedSnapshotStore();
+	audioStore.select({
+		title: "Selected show",
+		source: { kind: "mixcloud", cloudcastKey: "/dj/show/" },
+	});
+	audioStore.clear();
+	assert.equal(
+		renderToStaticMarkup(
+			<StoresProvider stores={{ audioStore }}>
+				<Miniplayer />
+			</StoresProvider>,
+		),
+		"",
+	);
 });

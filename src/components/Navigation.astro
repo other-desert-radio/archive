@@ -34,25 +34,34 @@ const title = (() => {
 })();
 ---
 
-<nav aria-label="Navigation title">
-  <a
-    class="leading-box"
-    title={`Return to ${returning_page}`}
-    href={returnHref}
-  >
-    <span aria-hidden="true">←</span>
-    <b>{returning_page.toUpperCase()}</b>
-  </a>
+<header>
+  <nav aria-label="Navigation title">
+    <a
+      class="leading-box"
+      title={`Return to ${returning_page}`}
+      href={returnHref}
+    >
+      <span aria-hidden="true">←</span>
+      <b>{returning_page.toUpperCase()}</b>
+    </a>
 
-  <span>OTHER DESERT RADIO / {title.toUpperCase()}</span>
-  <div class="miniplayer-slot">
+    <span>OTHER DESERT RADIO / {title.toUpperCase()}</span>
+  </nav>
+  <div class="miniplayer-slot" data-miniplayer-bar>
     <Miniplayer client:load transition:persist="miniplayer" />
   </div>
-</nav>
+</header>
 
 <style>
-  nav {
+  header {
     --nav-inline-padding: calc(var(--density-unit) * 3.125);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    color: white;
+  }
+
+  nav {
     min-height: var(--nav-height);
     display: flex;
     flex-wrap: wrap;
@@ -62,10 +71,6 @@ const title = (() => {
     align-items: center;
 
     font-size: var(--font-small);
-
-    position: sticky;
-    top: 0;
-    z-index: 100;
 
     background: black;
     color: white;
@@ -84,9 +89,9 @@ const title = (() => {
   .miniplayer-slot {
     min-width: 0;
     max-width: 100%;
-    margin-inline-start: auto;
-    width: min(100%, 40rem);
-    min-height: 3.75rem;
+    width: 100%;
+    background: var(--miniplayer-background);
+    font-size: var(--font-small);
   }
 
   .leading-box {
@@ -103,6 +108,6 @@ const title = (() => {
     text-decoration: underline;
   }
   @media (max-width: 750px) {
-    nav { --nav-inline-padding: var(--page-gutter); }
+    header { --nav-inline-padding: var(--page-gutter); }
   }
 </style>
