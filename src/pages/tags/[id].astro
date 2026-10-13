@@ -41,12 +41,14 @@ const { tag, djs } = Astro.props as Props;
 >
   <LargeTagHeader tag={tag} />
 
-  <section aria-labelledby="tag-djs-heading">
-    <h2 id="tag-djs-heading">DJs</h2>
-    <div class="tag-row">
-      {djs.map((dj) => <DJExploreCard dj={dj} />)}
-    </div>
-  </section>
+  {djs.length > 0 && (
+    <section aria-labelledby="tag-djs-heading">
+      <h2 id="tag-djs-heading">DJs</h2>
+      <div class="tag-row">
+        {djs.map((dj) => <DJExploreCard dj={dj} />)}
+      </div>
+    </section>
+  )}
 
   <section aria-labelledby="tag-shows-heading">
     <h2 id="tag-shows-heading">SHOWS</h2>

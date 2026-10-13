@@ -19,6 +19,11 @@ test("tag pages render only matching DJ cards with profiles and detail links", a
 		const cards =
 			html.match(/<a\b[^>]*class="dj-explore-card"[^>]*>[\s\S]*?<\/a>/g) ?? [];
 		const matching = profiles.filter((dj) => dj.tagIds.includes(tag.id));
+		assert.equal(
+			html.includes('aria-labelledby="tag-djs-heading"'),
+			matching.length > 0,
+			`tag ${tag.id}: DJs section visibility`,
+		);
 		assert.equal(cards.length, matching.length, `tag ${tag.id}: card count`);
 		for (const [index, dj] of matching.entries()) {
 			const card = cards[index];
