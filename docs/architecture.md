@@ -49,6 +49,10 @@ to avoid circular dependencies through the barrels.
 between internal pages, with root and body transition animations disabled
 and an immediate swap fallback.
 The site still builds to static HTML; initial visits load a full document.
+Tag pages return to Explore. Their show and DJ links carry `fromTag`; shared
+navigation resolves known tag IDs in the browser on initial load and
+`astro:page-load`, returning to the tag instead of the default listing.
+Missing or invalid IDs retain the default SHOWS or DJs return destination.
 
 `Navigation.astro` mounts `Miniplayer.tsx` with `client:load` and the stable
 `transition:persist="miniplayer"` name across all pages using `BaseLayout`.

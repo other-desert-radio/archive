@@ -3,13 +3,15 @@ import type { HydratedDJ } from "../../utils/fetch-dj";
 
 type Props = {
   dj: HydratedDJ;
+  fromTag?: number;
 };
 
-const { dj } = Astro.props;
+const { dj, fromTag } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const query = fromTag === undefined ? "" : `?fromTag=${fromTag}`;
 ---
 
-<a class="dj-explore-card" href={`${base}/djs/${dj.id}`} aria-label={`View ${dj.title}`}>
+<a class="dj-explore-card" href={`${base}/djs/${dj.id}${query}`} aria-label={`View ${dj.title}`}>
   <img src={`${base}/${dj.image_large}`} alt={dj.title} loading="lazy" />
   <div class="dj-content">
     <h3>{dj.title}</h3>

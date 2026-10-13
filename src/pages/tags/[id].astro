@@ -37,7 +37,7 @@ const { tag, djs, shows } = Astro.props as Props;
 
 <BaseLayout
   page={{ name: "tag_page", color: tag.color }}
-  returning_page="shows"
+  returning_page="explore"
   title={`${tag.title} | Other Desert Radio`}
 >
   <LargeTagHeader tag={tag} />
@@ -46,7 +46,7 @@ const { tag, djs, shows } = Astro.props as Props;
     <section aria-labelledby="tag-djs-heading">
       <h2 id="tag-djs-heading">DJs</h2>
       <div class="tag-row">
-        {djs.map((dj) => <DJExploreCard dj={dj} />)}
+        {djs.map((dj) => <DJExploreCard dj={dj} fromTag={tag.id} />)}
       </div>
     </section>
   )}
@@ -57,7 +57,7 @@ const { tag, djs, shows } = Astro.props as Props;
         <h2 id="tag-shows-heading">SHOWS</h2>
       </div>
       <div class="shows-grid">
-        {shows.map((show) => <ShowExploreCard show={show} base={import.meta.env.BASE_URL} />)}
+        {shows.map((show) => <ShowExploreCard show={show} base={import.meta.env.BASE_URL} fromTag={tag.id} />)}
       </div>
     </section>
   )}
