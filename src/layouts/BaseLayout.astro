@@ -21,7 +21,7 @@ import Navigation from "../components/Navigation.astro";
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <ClientRouter />
   </head>
@@ -42,6 +42,8 @@ import Navigation from "../components/Navigation.astro";
     width: 100%;
     max-width: var(--page-max-width);
     margin-inline: auto;
-    padding-inline: var(--page-gutter);
+    padding-left: max(var(--page-gutter), env(safe-area-inset-left));
+    padding-right: max(var(--page-gutter), env(safe-area-inset-right));
+    padding-bottom: env(safe-area-inset-bottom);
   }
 </style>

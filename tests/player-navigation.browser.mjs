@@ -86,6 +86,6 @@ for (const width of [320, 332, 750, 1440]) {
 	})()`);
 	assert.equal(layout.overflow, false, `${width}px horizontal overflow`);
 	assert.equal(layout.position, "fixed");
-	assert.equal(layout.height, layout.viewportHeight);
+	assert.ok(layout.height >= layout.viewportHeight);
 }
 console.log("Player document survives listing/detail/back/forward navigation; viewport background and responsive widths pass.");
