@@ -1,5 +1,12 @@
 import { swapFunctions } from "astro:transitions/client";
 
+/**
+ * Keeps the Mixcloud iframe attached during internal archive navigation.
+ * iOS Safari versions without Element.moveBefore() cannot use Astro's
+ * state-preserving moves for transition:persist. Astro's fallback DOM moves
+ * reload the iframe, interrupting playback. Keep the body and player header
+ * in place and swap the navigation and surrounding page content instead.
+ */
 document.addEventListener("astro:before-swap", (event) => {
 	const header = document.querySelector("[data-site-header]");
 	const nextHeader = event.newDocument.querySelector("[data-site-header]");
