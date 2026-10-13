@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import LargeTagHeader from "../../components/LargeTagHeader.astro";
 import { fetchShows, type Show } from "../../utils/fetch-shows";
 import { fetchDJs, type DJ } from "../../utils/fetch-djs";
 import { fetchTags, type Tag } from "../../utils/fetch-tags";
@@ -33,11 +34,5 @@ const { /*shows, djs,*/ tag } = Astro.props as Props;
   returning_page="shows"
   title={`${tag.title} | Other Desert Radio`}
 >
-  <div class="detail-grid">
-    <div class="detail-header">
-      <h1 class="page-title">{tag.title}</h1>
-    </div>
-  </div>
-
-  <style></style>
+  <LargeTagHeader tag={tag} />
 </BaseLayout>
