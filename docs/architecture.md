@@ -24,6 +24,7 @@ src/
 └── utils/              Build-time data readers and validators
 
 public/                 Static assets copied to the site root unchanged
+├── assets/icons/       Play and pause SVGs for show-card controls
 ├── background.jpeg
 └── fonts/              WOFF2 webfont files and the Space Mono license
 
@@ -75,8 +76,13 @@ source changes, and disposal. Widget play/pause events confirm the loaded
 selection, and error events report playback failure. Events during loads are
 ignored; disposal removes listeners. `MixcloudWidget` creates it using the
 context's `audioStore` and the widget readiness promise, then disposes it on
-cleanup. Command completion alone does not confirm playback. Show-selection controls and uninterrupted
-iframe navigation remain future work.
+cleanup. Command completion alone does not confirm playback. Show-card controls select, pause, and resume through the same store;
+uninterrupted iframe navigation remains future work.
+
+`ShowsPane` is hydrated with `client:load`; each show card subscribes to playback
+state and renders an artwork overlay control. Metadata and detail links retain
+their server-rendered HTML. Show URLs are converted to validated Mixcloud keys
+by `src/components/shows/show-playback.ts` before publishing playback requests.
 
 The archive listings use `src/pages/index.astro` for SHOWS and
 `src/pages/djs.astro` for DJs. Both use `CategoryTabs.astro` to select the

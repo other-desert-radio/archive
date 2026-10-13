@@ -1,8 +1,14 @@
+import { useAudioState, useStores } from "../../stores";
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
 import { formatDate } from "../../utils/format-date";
 import TagContainer from "../TagContainer";
 import styles from "./ShowCard.module.css";
+import {
+	isSelectedShow,
+	mixcloudShowTrack,
+	toggleShowPlayback,
+} from "./show-playback";
 
 type Props = {
 	show: Show;
@@ -37,14 +43,35 @@ const renderDJs = (djs: Show["djs"], base: string) =>
  */
 export default function ShowCard({ show, base, tags }: Props) {
 	const detailBase = base.replace(/\/$/, "");
+	const { audioStore } = useStores();
+	const audio = useAudioState();
+	const track = mixcloudShowTrack(show);
+	const selected = isSelectedShow(audio, track);
+	const pause =
+		selected && (audio.status === "playing" || audio.status === "loading");
 
 	return (
 		<article className={styles["show-card"]}>
-			<img
-				className={`${styles["show-image"]} image-border-primary`}
-				src={`${show.image_large}`}
-				alt={show.title}
-			/>
+			<div className={styles["artwork"]}>
+				<img
+					className={`${styles["show-image"]} image-border-primary`}
+					src={show.image_large}
+					alt={show.title}
+				/>
+				<button
+					type="button"
+					className={styles["playback-button"]}
+					data-selected={selected}
+					aria-label={`${pause ? "Pause" : "Play"} ${show.title}`}
+					onClick={() => toggleShowPlayback(audioStore, track)}
+				>
+					<img
+						src={`${detailBase}/assets/icons/${pause ? "pause" : "play"}.svg`}
+						alt=""
+						aria-hidden="true"
+					/>
+				</button>
+			</div>
 			<div className={styles["trailing-content"]}>
 				<a
 					href={`${detailBase}/shows/${show.id}`}

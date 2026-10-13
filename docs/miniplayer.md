@@ -105,7 +105,7 @@ the current modal must not cover the widget. Fullscreen remains separate work.
 with the readiness promise, and disposes it during effect cleanup. Changing
 Mixcloud shows keeps the component/iframe mounted with its original `src`;
 the adapter changes shows through `load()`. Clear or a source-kind change
-unmounts the host and requests a pause. No show-selection buttons are added yet.
+unmounts the host and requests a pause. Show-card artwork now includes playback controls (see below).
 Playback state is confirmed by widget play/pause events; widget errors retain
 selection with an error state. Real embed readiness, layout, and audio need manual review;
 headless rendering tests do not execute React effects or browser layout.
@@ -252,8 +252,8 @@ Do not pass class instances as hydrated props from Astro.
 Fullscreen visibility is local React state, separate from playback. The
 application store set is a module singleton, not created during component
 rendering; full document reloads start idle.
-No new playback buttons, automatic selection, or sample track are introduced.
-The site therefore starts with no visible miniplayer until future source
+Show cards provide playback selection; no automatic selection or sample track
+is introduced. The site starts with no visible miniplayer until user
 controls call the store. No adapter consumes requests yet, so selection stays
 loading until a confirmation is supplied. Real audio and error presentation
 remain deferred.
@@ -651,3 +651,23 @@ mount confirmed black background and exact viewport coverage at 1280 × 633
 and 320 × 700; the temporary mount was removed afterward. No automated behavior
 test was added for this empty, unmounted presentation container. Add interaction
 tests when opening and closing are implemented.
+
+## Show-card playback controls
+
+`ShowsPane` is hydrated with `client:load` so its show cards can use the shared
+store. Each artwork has a centered white play/pause icon on a square black
+background at 50% opacity. The control appears on card hover or keyboard focus;
+it stays visible for the selected show and is always visible on touch devices.
+Clicking another show selects it; clicking the selected playing or loading show
+requests pause. A paused/error selection offers Play, which resumes/retries
+without reselecting. Icons follow confirmed store state, with Pause also offered
+during loading so pending playback can be stopped. Widget controls and card
+controls share state. Archive URLs are checked as HTTPS Mixcloud show URLs and
+converted to keys without query/fragment tracking data.
+
+Focused tests cover URL conversion, selection/pause/resume, and accessible
+rendered state. Manual review: hover artwork, tab to the control, select a real
+show, move the pointer away, pause/resume from both the card and widget, and
+select another card. Check 320px, 332px, 750px, 1440px, and wide desktop artwork
+layout and touch visibility. Browser automation remains disabled; actual
+playback and CSS layout have not been verified by these headless tests.

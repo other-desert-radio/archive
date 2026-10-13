@@ -18,5 +18,5 @@ const base = import.meta.env.BASE_URL;
   returning_page="home"
 >
   <CategoryTabs active="shows" />
-  <ShowsPane base={base} shows={shows} tags={tags} />
+  <ShowsPane client:load base={base} shows={shows} tags={tags} />
 </BaseLayout>
