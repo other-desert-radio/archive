@@ -32,7 +32,9 @@ test("Mixcloud compact UI renders one widget without duplicate title or progress
 	assert.ok(html.includes("feed=%2Fdj%2Fshow%2F"));
 	assert.ok(html.includes("mini=1&amp;hide_cover=1&amp;light=0"));
 	assert.equal(html.includes("Selected show"), false);
-	assert.equal(html.includes('aria-hidden="true"'), false);
+	assert.ok(
+		/data-miniplayer-expansion="true" aria-hidden="true"><\/div>/.test(html),
+	);
 	assert.ok(/<button[^>]*disabled/.test(html));
 	assert.equal(html.includes("<dialog"), false);
 });

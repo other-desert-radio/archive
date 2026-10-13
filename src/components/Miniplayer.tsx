@@ -20,7 +20,10 @@ function ActiveMiniplayer({ track }: { track: AudioTrack }) {
 	switch (track.source.kind) {
 		case "mixcloud":
 			return (
-				<div className={styles["miniplayer"]} data-miniplayer>
+				<div
+					className={`${styles["miniplayer"]} ${styles["hover-player"]}`}
+					data-miniplayer
+				>
 					<div className={styles["controls"]}>
 						<div className={styles["widget-slot"]}>
 							<MixcloudWidget
@@ -32,6 +35,11 @@ function ActiveMiniplayer({ track }: { track: AudioTrack }) {
 							F
 						</button>
 					</div>
+					<div
+						className={styles["expansion"]}
+						data-miniplayer-expansion
+						aria-hidden="true"
+					/>
 				</div>
 			);
 		case "samcast":

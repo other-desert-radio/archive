@@ -163,7 +163,7 @@ wired, and is hidden from assistive technology. `Miniplayer.module.css` owns
 the layout and reuses shared spacing and border tokens.
 
 The previous hover-layout implementation was explicitly undone at the user's
-request. Hover is still deferred. React and CSS should own the layout; do not
+request. An empty Mixcloud hover expansion is now implemented; its content is deferred. React and CSS should own the layout; do not
 manually reparent React-owned DOM nodes. Use the latest source-specific layouts
 below when that chunk is requested.
 
@@ -671,3 +671,21 @@ show, move the pointer away, pause/resume from both the card and widget, and
 select another card. Check 320px, 332px, 750px, 1440px, and wide desktop artwork
 layout and touch visibility. Browser automation remains disabled; actual
 playback and CSS layout have not been verified by these headless tests.
+
+## Hover expansion scaffold
+
+The Mixcloud miniplayer opens an empty black panel directly below its controls
+on hover or focus within. The panel extends from the compact player's left edge to the viewport's right
+edge, with white borders on its left and bottom only. It animates open/closed
+(over 180ms, disabled for reduced motion), stays
+open while the pointer is over either area, and collapses when hover/focus leave.
+It overlays page content without changing navigation or listing geometry.
+Its temporary height is capped at half the viewport and 30 density units.
+The existing widget stays attached and visible in its original position; there
+is no new widget, playback command, metadata, or touch toggle in this chunk.
+The empty panel is decorative and hidden from assistive technology. Content,
+touch interaction, and final sizing await the user's next instructions.
+
+Review: select a show, hover the widget, move into the blank panel, then move
+outside the player. Confirm the panel opens/stays/collapses and page content
+and iframe identity remain unchanged. Keyboard focus within also opens it.

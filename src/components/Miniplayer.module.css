@@ -30,3 +30,43 @@
 	background: currentColor;
 	opacity: 0.5;
 }
+
+.hover-player {
+	position: relative;
+}
+
+.expansion {
+	position: absolute;
+	top: 100%;
+	right: calc(-1 * var(--nav-inline-padding, 0rem));
+	width: calc(100% + var(--nav-inline-padding, 0rem));
+	height: min(50dvh, calc(var(--density-unit) * 50));
+	box-sizing: border-box;
+	background: black;
+	border-left: var(--border-secondary) solid white;
+	border-bottom: var(--border-secondary) solid white;
+	transform-origin: top;
+	transform: scaleY(0);
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition:
+		transform 140ms ease-out,
+		opacity 140ms ease-out,
+		visibility 0s linear 180ms;
+}
+
+.hover-player:hover .expansion,
+.hover-player:focus-within .expansion {
+	transform: scaleY(1);
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+	transition-delay: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.expansion {
+		transition: none;
+	}
+}

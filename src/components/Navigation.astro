@@ -52,12 +52,13 @@ const title = (() => {
 
 <style>
   nav {
+    --nav-inline-padding: calc(var(--density-unit) * 3.125);
     min-height: var(--nav-height);
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-xs) var(--space-sm);
     overflow-wrap: anywhere;
-    padding: 0 calc(var(--density-unit) * 3.125);
+    padding: 0 var(--nav-inline-padding);
     align-items: center;
 
     font-size: var(--font-small);
@@ -102,6 +103,6 @@ const title = (() => {
     text-decoration: underline;
   }
   @media (max-width: 750px) {
-    nav { padding-inline: var(--page-gutter); }
+    nav { --nav-inline-padding: var(--page-gutter); }
   }
 </style>
