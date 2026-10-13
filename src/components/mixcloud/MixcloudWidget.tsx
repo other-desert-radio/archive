@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { useStores } from "../../stores";
 import styles from "./MixcloudWidget.module.css";
+import { MixcloudAdapter } from "./mixcloud-adapter";
 import {
 	loadMixcloudApi,
 	type MixcloudWidget as Widget,
@@ -20,6 +22,7 @@ export default function MixcloudWidget({
 	initialCloudcastKey,
 	iframeParams,
 }: Props) {
+	const { audioStore } = useStores();
 	// Later selections must use widget.load(), preserving the original iframe src.
 	const [src] = useState(() =>
 		mixcloudEmbedUrl(initialCloudcastKey, iframeParams),
@@ -42,6 +45,7 @@ export default function MixcloudWidget({
 			}
 			return waitForMixcloudWidget(api.PlayerWidget(iframe));
 		});
+		const adapter = new MixcloudAdapter(audioStore, widgetPromise.current);
 		widgetPromise.current.then(
 			() => {
 				if (!disposed) {
@@ -60,8 +64,9 @@ export default function MixcloudWidget({
 		);
 		return () => {
 			disposed = true;
+			adapter.dispose();
 		};
-	}, []);
+	}, [audioStore]);
 
 	return (
 		<div data-mixcloud-widget={readiness.status}>

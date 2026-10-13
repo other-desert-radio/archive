@@ -20,6 +20,11 @@
 	overflow-wrap: anywhere;
 }
 
+.widget-slot {
+	flex: 1;
+	min-width: 0;
+}
+
 .progress-track {
 	height: var(--border-secondary);
 	background: currentColor;

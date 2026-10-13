@@ -9,9 +9,9 @@ import type { MixcloudWidget } from "./mixcloud-api";
 /**
  * Applies the shared store's playback requests to one existing Mixcloud widget.
  *
- * Intended owner: MixcloudWidget creates one adapter for its iframe, using
- * audioStore from useStores(), and disposes it during effect cleanup. This
- * ownership is not wired yet. The adapter never creates or moves the iframe.
+ * Owner: MixcloudWidget creates one adapter for its iframe, using audioStore
+ * from useStores(), and disposes it during effect cleanup. The adapter never
+ * creates or moves the iframe.
  *
  * Loads are serialized and use the latest request after readiness and each
  * completion. Track identity avoids reloading for play/pause requests while

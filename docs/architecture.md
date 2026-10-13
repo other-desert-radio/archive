@@ -64,13 +64,18 @@ defaults to the application stores and supports `StoresProvider` overrides.
 `useSyncExternalStore`, with a stable idle server snapshot for static HTML and
 hydration. Both player views read this store. The miniplayer is hidden while
 idle and shows the selected track in every other state. Clearing the track
-unmounts the visible player and resets fullscreen visibility. Source playback
-integration is not mounted; requests do not yet produce audio.
+unmounts the visible player and resets fullscreen visibility. The compact
+Mixcloud branch renders one visible widget and owns its adapter lifecycle;
+the SAMCast branch retains its title/progress/fullscreen scaffold. Mixcloud
+fullscreen is disabled until the shared iframe presentation is implemented.
 `src/components/mixcloud/mixcloud-adapter.ts` now provides an independent
 adapter with request subscription, readiness gating, serialized show loads and
 play/pause commands, error reporting, and disposal. It requests a pause on clear,
 source changes, and disposal. It does not listen for playback confirmations
-yet, and is not connected to the widget host or miniplayer.
+yet. `MixcloudWidget` creates it using the context's `audioStore` and the widget
+readiness promise, then disposes it on cleanup. Store playback state remains
+unconfirmed even when audio starts. Show-selection controls and uninterrupted
+iframe navigation remain future work.
 
 The archive listings use `src/pages/index.astro` for SHOWS and
 `src/pages/djs.astro` for DJs. Both use `CategoryTabs.astro` to select the

@@ -10,8 +10,9 @@ original custom playback controls for **SAMCast** live streaming (called
 “samcloud” in the user's latest message; the source discriminator remains
 `samcast`). Do not discard the custom control work when adding Mixcloud.
 
-This document records the design and integration contract; the new screenshot
-layouts and source switch are not implemented yet. No screenshot files should
+This document records the design and integration contract. The compact
+source switch and visible Mixcloud widget are implemented; expanded and
+fullscreen Mixcloud layouts remain deferred. No screenshot files should
 be saved in the repository. Do not make more Figma MCP calls or use
 agent-browser (including eval). Work in tiny reviewable chunks.
 
@@ -29,7 +30,8 @@ Audio integration review chunks:
 2. Integrate the Mixcloud widget independently (API loader and standalone host
    subchunks implemented; adapter loading and playback commands implemented,
    event confirmations not started).
-3. Connect the widget to the miniplayer (not started).
+3. Connect the widget to the miniplayer (compact UI and adapter lifecycle
+   implemented for review; fullscreen and event confirmations deferred).
 
 Stop for review after each chunk. SAMCast playback and navigation continuity
 remain later integration work.
@@ -81,11 +83,42 @@ Widget integration is split into smaller review checkpoints:
      pending intent reversal, clear/source changes, failures/retry, and disposal.
    - Widget event confirmations (not started). Command success leaves store
      state unconfirmed; it does not mean audio is playing or paused. Event
-     wiring is required before mounting the adapter as the playback owner.
+     wiring remains the next playback chunk. At the user's request, compact
+     UI and the existing adapter are mounted first for review.
 
-The standalone host is not mounted in the site yet. The loader is called only
-when that host mounts. The adapter is exported but not connected to the host
-or miniplayer. Focused adapter tests use a fake widget to verify readiness,
+The miniplayer now switches on source kind. Mixcloud renders the visible dark
+mini widget without a duplicate application title or decorative progress bar.
+The navigation slot has a fluid width capped at 40rem only while a player is
+selected. The SAMCast title/progress/fullscreen scaffold remains unchanged.
+Mixcloud's fullscreen button is disabled for this compact-only review chunk;
+the current modal must not cover the widget. Fullscreen remains separate work.
+
+`MixcloudWidget` obtains `audioStore` through `useStores()`, creates its adapter
+with the readiness promise, and disposes it during effect cleanup. Changing
+Mixcloud shows keeps the component/iframe mounted with its original `src`;
+the adapter changes shows through `load()`. Clear or a source-kind change
+unmounts the host and requests a pause. No show-selection buttons are added yet.
+Playback may start, but store state remains loading until future widget event
+confirmations. Real embed readiness, layout, and audio need manual review;
+headless rendering tests do not execute React effects or browser layout.
+
+For manual review on the dev server, select a real show from the browser console:
+
+```js
+const { stores } = await import("/archive-site/src/stores/index.ts");
+stores.audioStore.select({
+  title: "Selected archive show",
+  source: { kind: "mixcloud", cloudcastKey: "/otherdesertradio/REAL-SHOW-KEY/" },
+});
+```
+
+Replace the key with a real selected-show path. Check compact sizing at narrow
+and desktop widths, use the visible widget to pause/resume, select another show
+and confirm the iframe DOM identity and `src` stay unchanged, then call
+`stores.audioStore.clear()` and confirm playback stops and the player disappears.
+Navigation continuity is still unverified and remains a separate shell chunk.
+
+Focused adapter tests use a fake widget to verify readiness,
 serialized loads, stale requests, errors/retry, clear/source filtering, and
 disposal; actual Mixcloud behavior still needs manual integration verification.
 Stop for review after each subchunk before connecting the miniplayer.
