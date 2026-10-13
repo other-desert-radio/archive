@@ -27,7 +27,8 @@ Audio integration review chunks:
 1. Source contracts, playback requests, and confirmed store state (implemented;
    stop for review before the next chunk).
 2. Integrate the Mixcloud widget independently (API loader and standalone host
-   subchunks implemented; store adapter not started).
+   subchunks implemented; adapter scaffold and loading implemented, playback
+   commands and confirmations not started).
 3. Connect the widget to the miniplayer (not started).
 
 Stop for review after each chunk. SAMCast playback and navigation continuity
@@ -56,10 +57,28 @@ Widget integration is split into smaller review checkpoints:
    and `light` options with no defaults. Callers pass all three explicitly via
    `MixcloudWidget`'s `iframeParams` prop. Both the key and options initialize
    the iframe URL once at mount.
-3. Shared-store request adapter and widget event confirmations (not started).
+3. Shared-store request adapter:
+   - Scaffold and loading (implemented; stop for review).
+     `src/components/mixcloud/mixcloud-adapter.ts` exports `MixcloudAdapter`.
+     Construct it with an `AudioStore` and a ready-widget promise, then call
+     `dispose()` on teardown. It subscribes to requests and reads the latest
+     selection after readiness, including a late mount with play/pause intent.
+     Loads are serialized; intermediate selections are skipped, and the same
+     selected track is not reloaded for play/pause requests. Each new selection
+     identity loads through `widget.load(key, false)` without changing iframe
+     `src`. Current loading failures report an error; stale/disposed failures
+     are ignored. A newer request can retry a failed load. Disposal unsubscribes
+     and ignores pending results; widget promises cannot be physically canceled.
+   - Play/pause commands, stopping on clear/source changes, and widget event
+     confirmations (not started). Successful loading leaves store state
+     unconfirmed; it does not mean audio is playing or paused. This loading-only
+     adapter is not yet suitable for mounting as the playback owner.
 
 The standalone host is not mounted in the site yet. The loader is called only
-when that host mounts; shared-store playback requests are not consumed yet.
+when that host mounts. The adapter is exported but not connected to the host
+or miniplayer. Focused adapter tests use a fake widget to verify readiness,
+serialized loads, stale requests, errors/retry, clear/source filtering, and
+disposal; actual Mixcloud behavior still needs manual integration verification.
 Stop for review after each subchunk before connecting the miniplayer.
 
 Latest fullscreen direction: Mixcloud fullscreen must include the widget.

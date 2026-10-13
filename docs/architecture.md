@@ -65,7 +65,12 @@ defaults to the application stores and supports `StoresProvider` overrides.
 hydration. Both player views read this store. The miniplayer is hidden while
 idle and shows the selected track in every other state. Clearing the track
 unmounts the visible player and resets fullscreen visibility. Source playback
-adapters are not implemented; requests do not yet produce audio.
+integration is not mounted; requests do not yet produce audio.
+`src/components/mixcloud/mixcloud-adapter.ts` now provides an independent
+loading-only adapter with request subscription, readiness gating, serialized
+show loads, error reporting, and disposal. It does not issue playback commands
+or listen for playback confirmations yet, and is not connected to the widget
+host or miniplayer.
 
 The archive listings use `src/pages/index.astro` for SHOWS and
 `src/pages/djs.astro` for DJs. Both use `CategoryTabs.astro` to select the
