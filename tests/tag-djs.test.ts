@@ -5,6 +5,7 @@ import test from "node:test";
 import { pathToFileURL } from "node:url";
 import { fetchDJ } from "../src/utils/fetch-dj";
 import { fetchDJs } from "../src/utils/fetch-djs";
+import { fetchShows } from "../src/utils/fetch-shows";
 import { fetchTags } from "../src/utils/fetch-tags";
 
 test("tag pages render only matching DJ cards with profiles and detail links", async () => {
@@ -14,8 +15,14 @@ test("tag pages render only matching DJ cards with profiles and detail links", a
 		summaries.map(({ id }) => fetchDJ(pathToFileURL(`src/res/djs/${id}.json`))),
 	);
 	const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
+	const shows = await fetchShows(pathToFileURL("src/res/shows.json"));
 	for (const tag of tags.values()) {
 		const html = await readFile(`dist/tags/${tag.id}/index.html`, "utf8");
+		assert.equal(
+			html.includes('aria-labelledby="tag-shows-heading"'),
+			shows.some((show) => show.tagIds.includes(tag.id)),
+			`tag ${tag.id}: shows section visibility`,
+		);
 		const cards =
 			html.match(/<a\b[^>]*class="dj-explore-card"[^>]*>[\s\S]*?<\/a>/g) ?? [];
 		const matching = profiles.filter((dj) => dj.tagIds.includes(tag.id));

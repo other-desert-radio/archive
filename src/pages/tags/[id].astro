@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LargeTagHeader from "../../components/explore/LargeTagHeader.astro";
 import DJExploreCard from "../../components/explore/DJExploreCard.astro";
+import ShowExploreCard from "../../components/explore/ShowExploreCard";
 import { fetchShows, type Show } from "../../utils/fetch-shows";
 import { fetchDJs } from "../../utils/fetch-djs";
 import { fetchDJ, type HydratedDJ } from "../../utils/fetch-dj";
@@ -31,7 +32,7 @@ export async function getStaticPaths() {
   }));
 }
 
-const { tag, djs } = Astro.props as Props;
+const { tag, djs, shows } = Astro.props as Props;
 ---
 
 <BaseLayout
@@ -50,10 +51,16 @@ const { tag, djs } = Astro.props as Props;
     </section>
   )}
 
-  <section aria-labelledby="tag-shows-heading">
-    <h2 id="tag-shows-heading">SHOWS</h2>
-    <div class="tag-row"></div>
-  </section>
+  {shows.length > 0 && (
+    <section aria-labelledby="tag-shows-heading">
+      <div class="shows-heading-row">
+        <h2 id="tag-shows-heading">SHOWS</h2>
+      </div>
+      <div class="shows-grid">
+        {shows.map((show) => <ShowExploreCard show={show} />)}
+      </div>
+    </section>
+  )}
 </BaseLayout>
 
 <style>
@@ -72,5 +79,42 @@ const { tag, djs } = Astro.props as Props;
     gap: var(--space-lg);
     min-height: var(--space-lg);
     overflow-x: auto;
+  }
+
+  .shows-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .shows-heading-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .shows-heading-row h2 {
+    margin: 0;
+  }
+
+  @media (min-width: 600px) {
+    .shows-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1023px) {
+    .shows-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1600px) {
+    .shows-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 </style>
