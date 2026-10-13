@@ -1,79 +1,38 @@
 # Development workflow
 
-This repository is intentionally small and static-first. Build changes in
-small, reviewable chunks so each change has a clear purpose and can be checked
-independently.
+## Development and formatting
 
-## Work in small chunks
+`bun run dev` runs `astro dev --background` and `astro check --watch`.
+The script remains attached to the watcher and stops Astro on exit. Manage the
+background server with `astro dev status`, `astro dev logs`, and `astro dev stop`.
 
-- Implement one narrowly scoped feature or behavior at a time.
-- Keep unrelated routing, content, styling, and interaction changes separate.
-- Add or update documentation in the same chunk when behavior or workflow
-  changes.
-- Add or update focused automated tests whenever introducing a feature or
-  changing existing behavior. If a behavior cannot be tested practically,
-  explain why in the handoff.
-- Place headless tests under the top-level `tests/` directory. Mirror source
-  module folders when grouping tests, such as `tests/components/mixcloud/`,
-  `tests/stores/`, and `tests/stores/audio/`.
-- Put reusable test fixtures in `tests/res/`.
-- Run the smallest relevant verification commands before handing off the
-  chunk.
-- Stop after the chunk is complete so it can be reviewed before the next
-  feature begins.
+`bun run format` applies Biome formatting, safe lint fixes and import
+organization. The pre-commit hook runs it before staging resulting changes.
+Use the [testing reference](testing.md) when selecting verification commands.
+The root agent instructions own chunk scope and review checkpoints.
 
-A good chunk should be understandable from its diff, have a clear acceptance
-condition, and leave the site in a buildable state. If a task contains several
-independent outcomes, split them into separate chunks rather than hiding them
-behind one large implementation.
+## Persistent plans
 
-## Preserve the site boundaries
+For a multi-step task that benefits from persistent state, use one
+`docs/plans/<task>.md`. Do not create a plan for trivial work. Read only the
+plan for the active task at its start and update it as work progresses.
+Record incomplete/completed steps, blockers, decisions and next actions.
+Do not use `AGENTS.md` or the documentation index as a task log.
 
-- Keep the site static unless a concrete requirement needs a server runtime.
-- Put routes in `src/pages/` and shared page shells in `src/layouts/`.
-- Move genuinely reusable presentation into `src/components/`.
-- Keep browser-only behavior in a React component or a small client-side
-  script; do not add a runtime dependency for a static page.
-- Keep generated `.astro/` and `dist/` output out of manual edits.
+On completion, delete a plan if it has no lasting value; otherwise move it to
+`docs/plans/archive/` with a completion/status note. Historical sketches in
+that directory are evidence, not current engineering guidance. Create these
+directories only when needed. Promote enduring decisions to the authoritative
+reference and link it instead of duplicating its rules in the plan.
 
-Read [`architecture.md`](architecture.md) before making structural changes.
-Update it when the routing, rendering flow, source layout, or deployment model
-changes materially.
+## Framework reference lookup
 
-## Verification by change type
+Consult official Astro documentation when the task needs framework semantics
+that source and local references do not establish; do not fetch it for every edit.
 
-Vite dependency caches are separated by command (`node_modules/.vite-serve`
-and `node_modules/.vite-build`) in `astro.config.mjs`. This lets production
-builds, including build-based tests, run alongside the dev server without
-overwriting its React development runtime. A shared cache previously caused
-miniplayer text to render on the server and disappear during hydration after
-refresh (`jsxDEV is not a function`). After changing this configuration,
-restart the background dev server and reload the browser.
-
-For this regression, check the hydrated miniplayer text after a full refresh,
-run `bun run build` while dev is running, then refresh again and navigate from
-SHOWS to DJs. Text must remain visible and the persisted island must retain
-its DOM identity. This browser check passed with the separate caches; the
-existing generated-HTML test cannot detect a client runtime hydration failure.
-
-- `bun run format` applies Biome formatting, safe lint fixes, and import
-  organization. The pre-commit hook runs it before staging the resulting
-  changes.
-- Astro pages, layouts, or content: `bun run check`
-- TypeScript, CSS, JavaScript, or configuration: `bun run lint`
-- Unit-tested behavior: `bun run test`
-  The detail-image regression test also builds the site and checks generated
-  show and DJ pages for large artwork and matching alt text.
-- Routing, deployment configuration, or production behavior: `bun run build`
-- Broad changes: run `bun run lint`, `bun run check`, and `bun run build`
-
-Use the existing repository scripts rather than introducing one-off local
-commands. Keep the verification result with the handoff so the next review
-starts from a known state.
-
-For DJ card CSS changes, also check `/archive-site/djs` in responsive mode
-at 320px, 332px, 750px, and desktop widths. Names and tags must wrap within
-their cards without horizontal overflow or changing the page scale when
-switching from SHOWS to DJs. The mobile cards use smaller titles and gaps;
-long unbroken names and tags must remain contained. This requires a browser
-check because the current server-rendered unit tests do not compute layout.
+- [Routing](https://docs.astro.build/en/guides/routing/): pages, dynamic routes, middleware.
+- [Astro components](https://docs.astro.build/en/basics/astro-components/): component syntax/lifecycle.
+- [Framework components](https://docs.astro.build/en/guides/framework-components/): React islands and hydration.
+- [Content collections](https://docs.astro.build/en/guides/content-collections/): managed content.
+- [Styling](https://docs.astro.build/en/guides/styling/): style integration.
+- [Internationalization](https://docs.astro.build/en/guides/internationalization/): language support.

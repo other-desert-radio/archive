@@ -1,0 +1,40 @@
+#!/bin/sh
+# Local Markdown navigation and always-loaded instruction budget; no dependencies.
+set -eu
+python3 - <<'PY'
+from pathlib import Path
+import re
+import subprocess
+from urllib.parse import unquote
+
+root = Path.cwd()
+files = [root / 'AGENTS.md', *sorted((root / 'docs').rglob('*.md'))]
+errors = []
+for source in files:
+    body = source.read_text()
+    # Code samples are not navigation. Support the repository's inline links.
+    prose = re.sub(r'```.*?```', '', body, flags=re.S)
+    for link in re.findall(r'\[[^\]]*\]\(([^)]+)\)', prose):
+        link = link.strip().strip('<>')
+        if re.match(r'[a-zA-Z][\w+.-]*:', link):
+            continue
+        path, _, fragment = unquote(link).partition('#')
+        target = source.parent / path if path else source
+        if not target.exists():
+            errors.append(f'{source.relative_to(root)}: missing {link}')
+        elif fragment and target.suffix == '.md':
+            headings = re.findall(r'^#{1,6}\s+(.+)$', target.read_text(), re.M)
+            anchors = {re.sub(r'[^\w\- ]', '', h.lower()).replace(' ', '-') for h in headings}
+            if fragment not in anchors:
+                errors.append(f'{source.relative_to(root)}: missing heading {link}')
+# Detect new tracked instruction files so they cannot silently bypass the budget.
+tracked = subprocess.check_output(['git', 'ls-files', '--cached', '--others', '--exclude-standard'], text=True).splitlines()
+for name in tracked:
+    if Path(name).name in ('AGENTS.md', 'CLAUDE.md'):
+        instruction = root / name
+        if instruction.exists() and (instruction.stat().st_size > 4096 or len(instruction.read_text().splitlines()) > 80):
+            errors.append(f'{name}: exceeds instruction budget (80 lines / 4096 bytes)')
+if errors:
+    raise SystemExit('\n'.join(errors))
+print(f'Validated {len(files)} Markdown files: local links/headings and instruction budgets pass.')
+PY

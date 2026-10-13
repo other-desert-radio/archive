@@ -1,3 +1,8 @@
+# Historical sketch (superseded)
+
+Retained for design history; not an active plan or implementation contract.
+Current behavior is described in [Architecture](../../architecture.md).
+
 # Site Structure
 
 
@@ -13,7 +18,7 @@ Ontop of every page there is a navigation bar that says "OTHER DESERT RADIO / ${
 ## Main page
 
 Detailed SHOWS design reference and future implementation guidance:
-[Shows archive UI guideline](shows-ui-guideline.md). This records the Figma
+[Shows archive UI guideline](../../shows-ui-guideline.md). This records the Figma
 screen, filter states, React component boundaries, and playback handoff;
 proposed behavior is distinguished from observed design details.
 

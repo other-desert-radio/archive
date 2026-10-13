@@ -1,38 +1,42 @@
-## Development
+# Agent entry point
 
-When starting the dev server, use background mode:
+## Work scope
 
-```
-astro dev --background
-```
+- Implement one small, independently reviewable feature or behavior at a time.
+  Include focused verification and necessary documentation in that chunk;
+  stop for review before unrelated follow-up work.
+- Keep generated `.astro/` and `dist/` output out of manual edits.
+- Use existing scripts and automated checks rather than duplicating their
+  rules in prose.
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+## Selective references
 
-Before making changes, read the relevant guidance in [`docs/`](docs/):
+Identify the relevant code first. Follow a known reference directly or consult
+[docs/INDEX.md](docs/INDEX.md) when you need guidance. Read only the relevant
+sections; reuse unchanged guidance already read during the task. Markdown
+links here are navigation, not file imports. Do not preload `docs/`.
 
-- [`docs/architecture.md`](docs/architecture.md) before structural changes.
-- [`docs/development-workflow.md`](docs/development-workflow.md) for chunk
-  boundaries, review checkpoints, and verification.
-- [`docs/typescript.md`](docs/typescript.md) for TypeScript and component
-  contract conventions.
-- [`docs/css.md`](docs/css.md) before CSS changes, for shared variables, units,
-  responsive layouts, and existing breakpoints. Do not invent new query numbers.
+| Task | Reference |
+| --- | --- |
+| TypeScript or component contracts | [TypeScript](docs/typescript.md) |
+| CSS or responsive layout | [CSS](docs/css.md) |
+| Tests or verification selection | [Testing](docs/testing.md) |
+| Routes, rendering, data or service boundaries | [Architecture](docs/architecture.md) |
+| Dev server, hooks or multi-step work | [Workflow](docs/development-workflow.md) |
+| Hosting, base paths or deployment | [Deployment](docs/deployment.md) |
 
-Implement one small, independently reviewable feature or behavior at a time.
-Include focused verification and documentation in the same chunk, then stop
-for review before beginning unrelated follow-up work.
+When starting Astro, use `astro dev --background`; manage it with
+`astro dev stop`, `astro dev status`, and `astro dev logs`. `bun run dev`
+uses this mode and adds a foreground type-check watcher.
 
-## Documentation
+## Documentation maintenance
 
-Repository architecture reference: [docs/architecture.md](docs/architecture.md). Read it before making structural changes and keep it current when the site architecture evolves.
-
-Full documentation: https://docs.astro.build
-
-Consult these guides before working on related tasks:
-
-- [Adding pages, dynamic routes, or middleware](https://docs.astro.build/en/guides/routing/)
-- [Working with Astro components](https://docs.astro.build/en/basics/astro-components/)
-- [Using React, Vue, Svelte, or other framework components](https://docs.astro.build/en/guides/framework-components/)
-- [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
-- [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
-- [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+- Search for an authoritative reference before creating documentation; update
+  it when its documented behavior or convention changes.
+- Do not create a Markdown summary after every task. Keep temporary progress
+  in a relevant plan, never in this file; see the workflow for plan lifecycle.
+- Update links and the index when moving or deleting documents.
+- Separate stable conventions from temporary details; remove obsolete rules
+  instead of appending exceptions or rules for one-time agent errors.
+- Add unconditional reading requirements only with a concrete justification.
+  Keep agent-specific configuration minimal and do not duplicate these rules.
