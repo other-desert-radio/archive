@@ -12,6 +12,9 @@
   flex bases that become heights when a row stacks into a column.
 - Keep wide listing grids aligned with the category tabs; avoid an additional
   width cap or side inset within the shared page container.
+- Bottom page spacing belongs to `BaseLayout`'s main container, which adds
+  `--container-grid-padding-bottom` and the bottom safe-area inset. Listing
+  components must not duplicate that padding.
 
 ## Breakpoints
 

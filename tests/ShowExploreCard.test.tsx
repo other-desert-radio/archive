@@ -3,9 +3,10 @@ import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import ShowExploreCard from "../src/components/explore/ShowExploreCard";
 
-test("renders large show artwork with the show title as alt text", () => {
+test("links large show artwork to the show detail page with an accessible label", () => {
 	const markup = renderToStaticMarkup(
 		<ShowExploreCard
+			base="/archive-site/"
 			show={{
 				id: 1,
 				title: "Test Show",
@@ -21,4 +22,6 @@ test("renders large show artwork with the show title as alt text", () => {
 	);
 	assert.ok(markup.includes('src="https://cdn.example.com/large.jpg"'));
 	assert.ok(markup.includes('alt="Test Show"'));
+	assert.ok(markup.includes('href="/archive-site/shows/1"'));
+	assert.ok(markup.includes('aria-label="View Test Show"'));
 });

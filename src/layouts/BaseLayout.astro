@@ -55,6 +55,8 @@ import Navigation from "../components/Navigation.astro";
     margin-inline: auto;
     padding-left: max(var(--page-gutter), env(safe-area-inset-left));
     padding-right: max(var(--page-gutter), env(safe-area-inset-right));
-    padding-bottom: env(safe-area-inset-bottom);
+    padding-bottom: calc(
+      var(--container-grid-padding-bottom) + env(safe-area-inset-bottom)
+    );
   }
 </style>
