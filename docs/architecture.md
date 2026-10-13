@@ -1,6 +1,6 @@
 # Architecture overview
 
-This repository is a small static Astro site. The current implementation is intentionally minimal, so this document describes both what exists today and the boundaries to preserve as the site grows.
+This repository is a small static Astro site. This reference describes current boundaries and intentional static-first decisions; source and configuration own exact implementation details.
 
 ## Runtime and build
 
@@ -88,31 +88,25 @@ by `src/components/shows/show-playback.ts` before publishing playback requests.
 The archive listings use `src/pages/index.astro` for SHOWS and
 `src/pages/djs.astro` for DJs. Both use `CategoryTabs.astro` to select the
 active category. `src/utils/fetch-djs.ts` reads and validates
-`public/archive/djs_brief.json` at build time. The DJ page passes its summaries
+`src/res/djs_brief.json` at build time. The DJ page passes its summaries
 to the server-rendered `DJsPane` component, which links each title to its
 static detail page. `src/pages/djs/[id].astro` loads the matching full DJ
 profile during the build and generates one static detail page per DJ; it
-currently renders a minimal placeholder while the profile UI is built.
+renders the profile image, tags, socials, biography and show information.
 
 For the current site, a browser requests `/`, Astro resolves that URL to `src/pages/index.astro`, and the build emits a static `dist/index.html`. `src/layouts/BaseLayout.astro` provides the document shell and imports `src/styles/global.css`, which registers Space Mono and applies the base font to the page. Files in `public/` are available at root-relative URLs, such as `/background.jpeg` and `/fonts/space-mono-regular.woff2`.
 
 As routes are added, place them under `src/pages/` using Astro's file-based routing and wrap them in `BaseLayout.astro` so the global styles and document metadata are consistently applied. Shared presentation should move into `src/components/`; reusable data or content can live in a dedicated `src/` module or Astro content collection when the project needs one. Keep browser-only interactivity isolated to React components or client-side scripts rather than introducing a runtime dependency for otherwise static pages.
 
-## Development and quality checks
+## Related boundaries
 
-`BaseLayout.astro` also imports `src/styles/styles.css` for shared typography:
-the root respects the browser font preference, while shared rem-based density
-tokens scale body text, headings, spacing, and artwork from 80% on smaller
-viewports to full size at 1800px. Body text retains a unitless line height.
-Form controls inherit the surrounding font. Component styles can override
-these defaults.
+Shared density tokens and layout standards live in [CSS](css.md).
+Development commands live in [Workflow](development-workflow.md), verification
+in [Testing](testing.md), and hosting/base-path behavior in [Deployment](deployment.md).
 
-- Start development with `bun run dev`. The script starts Astro with `astro dev --background` and runs `astro check --watch` alongside it, so type errors in `.astro` files appear in the terminal while developing.
-- Use `astro dev status`, `astro dev logs`, and `astro dev stop` to manage the background server.
-- `bun run build` creates the production static site.
-- `bun run lint` runs formatting, shell syntax, ESLint, and TypeScript checks.
-
-When changing routing, components, styling, content, or internationalization, consult the relevant Astro guide linked from `AGENTS.md` and update this document if the architecture changes materially.
+Archive JSON is read from `src/res/` during builds and validated in
+`src/utils/`. The site has no database connection. Change contracts at these
+boundaries rather than introducing backend-only database conventions.
 
 ## Archive image fields
 

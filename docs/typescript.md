@@ -29,6 +29,27 @@ const { title, description } = Astro.props;
 ---
 ```
 
+## Contracts and functions
+
+Use meaningful parameter and return types at public module boundaries when
+helpful; infer local values where that improves readability. Use generics only
+for an actual shared contract. Avoid `any` without a justified integration
+reason, unsafe casts and unnecessary non-null assertions; narrow or validate
+values instead.
+
+Give functions one understandable responsibility and consistent names across
+the call chain. Prefer simple functions over classes unless state,
+encapsulation or existing conventions justify a class. Make dependencies and
+data flow explicit through parameters or existing dependency-injection
+patterns; keep hidden state and side effects minimal. Separate pure transforms
+from I/O where useful, without adding needless helpers, files or layers.
+
+Reuse existing modules, patterns and dependencies before introducing new
+abstractions. Preserve architectural decisions unless a concrete requirement
+justifies a change. Propagate errors to the boundary that can handle them;
+catch only to recover or add useful context, never to silently report success.
+Prefer readable code over cleverness or speculative flexibility.
+
 ## Make finite states explicit
 
 Use braces for conditional branches, including early returns and `continue`.

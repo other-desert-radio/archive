@@ -27,9 +27,17 @@ Screenshots are described here in words; their temporary clipboard paths are
 not durable repository assets. Figma asset URLs also expire and are not an
 asset source to hardcode in production.
 
+## Current implementation status
+
+Cards, build-time JSON validation, detail routes, a hydrated `ShowsPane`, and
+store-backed miniplayer playback are implemented. Search, structured filters
+and date sorting remain proposals. Exact data/props are owned by `src/utils/`
+and the components; the model below is illustrative, not a replacement schema.
+The original implementation sequence is historical, not an active task plan.
+
 ## Existing repository boundaries
 
-`src/pages/index.astro` is the SHOWS route and currently renders a placeholder
+`src/pages/index.astro` is the SHOWS route and renders `ShowsPane`
 after `CategoryTabs`. `BaseLayout.astro` supplies the navigation, shared main
 container, CSS, and Astro `ClientRouter`. `CategoryTabs.astro` already supports
 SHOWS and DJs; `src/pages/djs.astro` is the DJ listing route.
@@ -41,14 +49,12 @@ the existing category component contain only SHOWS and DJs. Do not infer a
 new HISTORY route from this reference.
 
 The site is static Astro with React already configured. Backend-generated
-JSON is the intended data source, but its schema is not yet defined. Preserve
+JSON in `src/res/` is validated at build time by `src/utils/`. Preserve
 static hosting and base-path-aware URLs. This guide does not introduce routes,
 dependencies, a data service, or a playback implementation.
 
-Read [architecture.md](architecture.md),
-[development-workflow.md](development-workflow.md), and
-[typescript.md](typescript.md) before implementation. Update the architecture
-document when the proposed React island actually exists.
+Use [the documentation index](INDEX.md) to select standards for the changed
+boundary; do not load unrelated references.
 
 ## Visual structure
 
@@ -267,7 +273,11 @@ a white oval; #21 is tan with a cream oval containing writing. Both have
 Justin Paszul and show information along the bottom. These are reference
 content, not titles, colors, avatars, or dates to hardcode into the component.
 
-### Playback handoff, not player implementation
+### Original playback handoff proposal (superseded)
+
+Current playback uses the shared audio store and validated Mixcloud keys; see
+[Architecture](architecture.md#request-and-rendering-flow). The following records
+the original callback proposal, not the current card contract.
 
 Thumbnail click or keyboard activation calls `onPlay(show)` exactly once.
 The parent passes an adapter to the future shared player boundary. It must
@@ -280,7 +290,7 @@ Do not claim playback is working until the miniplayer is integrated. Missing
 playback URLs need an explicitly unavailable control and explanatory text;
 missing imagery needs a stable-size fallback without removing valid playback.
 Future player state should live outside cards and the listing so it can
-persist across page navigation as described in [site-structure.md](site-structure.md).
+persist across page navigation as described in [Architecture](architecture.md).
 
 ## Proposed React boundary and contracts
 
@@ -291,7 +301,8 @@ and hydrate its interactive behavior; pass serializable data from Astro and
 create callback functions inside React. See the official
 [Astro framework component guidance](https://docs.astro.build/en/guides/framework-components/).
 
-Suggested component names and responsibilities (not existing files):
+Suggested decomposition for future filtering work (some responsibilities
+already exist in `ShowsPane` and `ShowCard`; do not rename them solely to match):
 
 | Component / module | Responsibility |
 | --- | --- |
@@ -395,8 +406,9 @@ artwork should be described as Figma-verified.
 
 ## Implementation chunks and acceptance checks
 
-Follow the repository's stop-for-review workflow. This document is the current
-chunk; the list below sequences future work, not authorization to build it now.
+Follow the selected mode in [Workflow](development-workflow.md#development-modes). The original
+sequence below is historical; cards, data and playback now exist. Use a task
+plan for remaining work rather than treating this list as current progress.
 
 1. **Card and list:** normalized representative fixture data, reusable React
    card, scrolling list, responsive CSS, and the playback callback boundary.
@@ -429,7 +441,7 @@ starting a server or asserting that an unbuilt screen has passed UI tests.
 
 The open DJ panel, multi-select logic, card-tag shortcuts, search normalization,
 mobile layout, and unavailable-data states use the proposed defaults above.
-The backend schema, exact screenshot-only tag colors, durable artwork source,
-detail-page URLs, and actual player integration remain unconfirmed. Reconcile
-those at their implementation boundaries. Do not spend Figma quota or expand
+Exact screenshot-only tag colors and open-panel/mobile design evidence remain
+unconfirmed. Data contracts, artwork paths, detail URLs and playback now have
+source implementations; reconcile changes at those boundaries. Do not spend Figma quota or expand
 scope merely to settle details for which this guide provides a usable default.

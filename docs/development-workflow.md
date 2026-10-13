@@ -1,79 +1,114 @@
 # Development workflow
 
-This repository is intentionally small and static-first. Build changes in
-small, reviewable chunks so each change has a clear purpose and can be checked
-independently.
+## Development modes
 
-## Work in small chunks
+The root [agent entry point](../AGENTS.md#work-scope) owns mode selection.
+An explicit request for chunks, incremental implementation, scaffolding,
+step-by-step work or pair programming selects **chunked mode**. A complete
+implementation request or explicit one-shot choice selects **one-shot mode**.
+For small fixes, straightforward refactors and minor edits, proceed normally
+unless chunked mode was requested. Do not ask again when a mode is specified;
+do not carry it into unrelated future tasks.
 
-- Implement one narrowly scoped feature or behavior at a time.
-- Keep unrelated routing, content, styling, and interaction changes separate.
-- Add or update documentation in the same chunk when behavior or workflow
-  changes.
-- Add or update focused automated tests whenever introducing a feature or
-  changing existing behavior. If a behavior cannot be tested practically,
-  explain why in the handoff.
-- Place headless tests under the top-level `tests/` directory. Mirror source
-  module folders when grouping tests, such as `tests/components/mixcloud/`,
-  `tests/stores/`, and `tests/stores/audio/`.
-- Put reusable test fixtures in `tests/res/`.
-- Run the smallest relevant verification commands before handing off the
-  chunk.
-- Stop after the chunk is complete so it can be reviewed before the next
-  feature begins.
+In one-shot mode, follow conventions, implement the authorized scope, add
+appropriate tests, validate integrated behavior and report the result without
+stage interruptions. Keep changes focused and avoid speculative features or
+unrelated cleanup.
 
-A good chunk should be understandable from its diff, have a clear acceptance
-condition, and leave the site in a buildable state. If a task contains several
-independent outcomes, split them into separate chunks rather than hiding them
-behind one large implementation.
+In chunked mode, never cross a stage or unit review boundary without explicit
+user approval. Approval of structure alone does not authorize scaffolding;
+wait for a scaffolding request. Approval of scaffolding authorizes the first
+implementation unit, not all remaining units. Follow the user's chosen unit
+and adjust existing work rather than restarting planning. "Finish the rest"
+or "skip ahead and finish" switches the remaining task to one-shot; type or
+structure corrections authorize only those corrections.
 
-## Preserve the site boundaries
+## Chunked stages
 
-- Keep the site static unless a concrete requirement needs a server runtime.
-- Put routes in `src/pages/` and shared page shells in `src/layouts/`.
-- Move genuinely reusable presentation into `src/components/`.
-- Keep browser-only behavior in a React component or a small client-side
-  script; do not add a runtime dependency for a static page.
-- Keep generated `.astro/` and `dist/` output out of manual edits.
+### 1. File structure
 
-Read [`architecture.md`](architecture.md) before making structural changes.
-Update it when the routing, rendering flow, source layout, or deployment model
-changes materially.
+Before implementation, inspect relevant code and architectural boundaries,
+identify reusable modules/functions, and propose the smallest file set.
+Show a concise tree marking new and modified files, each responsibility,
+dependencies and data-flow direction. Create the files agreed by the task or
+user; if the proposal is not yet agreed, obtain agreement before creating them.
+New files remain empty; keep existing files functional and unchanged except
+for explicitly necessary structural edits. Do not add types, interfaces,
+classes, function bodies or substantial scaffolding yet.
 
-## Verification by change type
+Stop for inspection of the structure. If the user changes it, make only those
+changes and stop again. Advance only after structure approval and a request
+such as "make the scaffolding".
 
-Vite dependency caches are separated by command (`node_modules/.vite-serve`
-and `node_modules/.vite-build`) in `astro.config.mjs`. This lets production
-builds, including build-based tests, run alongside the dev server without
-overwriting its React development runtime. A shared cache previously caused
-miniplayer text to render on the server and disappear during hydration after
-refresh (`jsxDEV is not a function`). After changing this configuration,
-restart the background dev server and reload the browser.
+### 2. Types and scaffolding
 
-For this regression, check the hydrated miniplayer text after a full refresh,
-run `bun run build` while dev is running, then refresh again and navigate from
-SHOWS to DJs. Text must remain visible and the persisted island must retain
-its DOM identity. This browser check passed with the separate caches; the
-existing generated-HTML test cannot detect a client runtime hydration failure.
+Establish public contracts, typed signatures, module declarations, named
+imports/exports and minimal entry points that reveal call relationships.
+Follow [TypeScript conventions](typescript.md), including the repository's
+preference for type aliases rather than new interfaces. Use classes only
+when state, encapsulation or existing patterns justify them.
 
-- `bun run format` applies Biome formatting, safe lint fixes, and import
-  organization. The pre-commit hook runs it before staging the resulting
-  changes.
-- Astro pages, layouts, or content: `bun run check`
-- TypeScript, CSS, JavaScript, or configuration: `bun run lint`
-- Unit-tested behavior: `bun run test`
-  The detail-image regression test also builds the site and checks generated
-  show and DJ pages for large artwork and matching alt text.
-- Routing, deployment configuration, or production behavior: `bun run build`
-- Broad changes: run `bun run lint`, `bun run check`, and `bun run build`
+Show intended orchestration without business logic. Mark leaf stubs clearly
+with `throw new Error("Not implemented")`; do not fabricate results or return
+success-shaped placeholders. Keep scaffolded paths disconnected from working
+entry points where possible, and identify any temporarily nonfunctional path.
+Comments should explain responsibilities, dependencies and why/how calls
+connect, rather than narrating syntax.
 
-Use the existing repository scripts rather than introducing one-off local
-commands. Keep the verification result with the handoff so the next review
-starts from a known state.
+Present the resulting file tree, important types/contracts, a compact call
+flow with inputs, outputs, side effects and error paths, and the unimplemented
+functions. Check contracts where practical; report any temporary check failures.
+Stop and request approval before implementing behavior in any function body.
 
-For DJ card CSS changes, also check `/archive-site/djs` in responsive mode
-at 320px, 332px, 750px, and desktop widths. Names and tags must wrap within
-their cards without horizontal overflow or changing the page scale when
-switching from SHOWS to DJs. The mobile cards use smaller titles and gaps;
-long unbroken names and tags must remain contained. This requires a browser
-check because the current server-rendered unit tests do not compute layout.
+### 3. Individual implementation units
+
+Implement one meaningful function or tightly coupled unit at a time, with
+small testable dependencies before integration. Before editing, briefly
+identify its role and callers. Keep unrelated functions unchanged. Add focused
+tests when appropriate and run relevant checks using [Testing](testing.md).
+Show the diff or concise change summary and explain inputs, outputs, side
+effects and error propagation. Stop for review before the next unit, even if
+several remaining functions seem obvious.
+
+Requests such as "implement validation", "change the types" or "show how this
+gets called" steer the existing task. Do not generate a new plan or status
+document for each turn. Keep flow descriptions short and local to the work;
+reuse them instead of repeating them in every file. Once integration is
+complete, validate the complete behavior and report remaining limitations.
+
+## Development and formatting
+
+`bun run dev` runs `astro dev --background` and `astro check --watch`.
+The script remains attached to the watcher and stops Astro on exit. Manage the
+background server with `astro dev status`, `astro dev logs`, and `astro dev stop`.
+
+`bun run format` applies Biome formatting, safe lint fixes and import
+organization. The pre-commit hook runs it before staging resulting changes.
+Use the [testing reference](testing.md) when selecting verification commands.
+The mode and stage sections above own implementation review checkpoints.
+
+## Persistent plans
+
+For a multi-step task that benefits from persistent state, use one
+`docs/plans/<task>.md`. Do not create a plan for trivial work. Read only the
+plan for the active task at its start and update it as work progresses.
+Record incomplete/completed steps, blockers, decisions and next actions.
+Do not use `AGENTS.md` or the documentation index as a task log.
+
+On completion, delete a plan if it has no lasting value; otherwise move it to
+`docs/plans/archive/` with a completion/status note. Historical sketches in
+that directory are evidence, not current engineering guidance. Create these
+directories only when needed. Promote enduring decisions to the authoritative
+reference and link it instead of duplicating its rules in the plan.
+
+## Framework reference lookup
+
+Consult official Astro documentation when the task needs framework semantics
+that source and local references do not establish; do not fetch it for every edit.
+
+- [Routing](https://docs.astro.build/en/guides/routing/): pages, dynamic routes, middleware.
+- [Astro components](https://docs.astro.build/en/basics/astro-components/): component syntax/lifecycle.
+- [Framework components](https://docs.astro.build/en/guides/framework-components/): React islands and hydration.
+- [Content collections](https://docs.astro.build/en/guides/content-collections/): managed content.
+- [Styling](https://docs.astro.build/en/guides/styling/): style integration.
+- [Internationalization](https://docs.astro.build/en/guides/internationalization/): language support.
