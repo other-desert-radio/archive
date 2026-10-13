@@ -27,10 +27,10 @@ const { active } = Astro.props;
 <style>
   .tabs {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    flex-wrap: nowrap;
+    justify-content: center;
 
-    gap: var(--space-md);
+    gap: var(--space-lg);
 
     padding-left: var(--space-md);
     padding-right: var(--space-md);
@@ -40,9 +40,28 @@ const { active } = Astro.props;
   }
 
   a {
+    flex-shrink: 0;
+    white-space: nowrap;
     text-decoration: none;
     color: black;
     font-size: var(--tabs-font-size);
+  }
+
+  @media (max-width: 750px) {
+    .tabs {
+      gap: clamp(var(--space-sm), 4vw, var(--space-lg));
+      padding-inline: 0;
+    }
+
+    a {
+      font-size: clamp(0.875rem, 3.5vw, var(--tabs-font-size));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .tabs {
+      justify-content: space-between;
+    }
   }
 
   @media (hover: hover) and (pointer: fine) {
