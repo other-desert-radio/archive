@@ -23,7 +23,7 @@ test("idle miniplayer renders no widget", () => {
 	assert.equal(renderToStaticMarkup(<Miniplayer />), "");
 });
 
-test("Mixcloud compact UI renders one widget without duplicate title or progress", () => {
+test("Mixcloud renders one widget and the selected title inside its hover expansion", () => {
 	const html = selectedMarkup({
 		title: "Selected show",
 		source: { kind: "mixcloud", cloudcastKey: "/dj/show/" },
@@ -33,10 +33,12 @@ test("Mixcloud compact UI renders one widget without duplicate title or progress
 	assert.ok(
 		html.includes("mini=1&amp;hide_cover=1&amp;hide_artwork=1&amp;light=0"),
 	);
-	assert.equal(html.includes("Selected show"), false);
 	assert.ok(
-		/data-miniplayer-expansion="true" aria-hidden="true"><\/div>/.test(html),
+		/data-miniplayer-expansion="true"><p[^>]*>Selected show<\/p><\/div>/.test(
+			html,
+		),
 	);
+
 	assert.ok(/<button[^>]*disabled/.test(html));
 	assert.equal(html.includes("<dialog"), false);
 });

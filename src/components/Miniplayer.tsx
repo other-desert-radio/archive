@@ -40,11 +40,9 @@ function ActiveMiniplayer({ track }: { track: AudioTrack }) {
 							F
 						</button>
 					</div>
-					<div
-						className={styles["expansion"]}
-						data-miniplayer-expansion
-						aria-hidden="true"
-					/>
+					<div className={styles["expansion"]} data-miniplayer-expansion>
+						<p className={styles["expanded-title"]}>{track.title}</p>
+					</div>
 				</div>
 			);
 		case "samcast":
