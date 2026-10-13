@@ -66,7 +66,25 @@ const query = fromTag === undefined ? "" : `?fromTag=${fromTag}`;
 
   @media (max-width: 600px) {
     .dj-explore-card {
+      flex-direction: column;
+      align-items: center;
+      width: min(70%, var(--dj-artwork-size));
       gap: var(--space-sm);
+      text-align: center;
+    }
+
+    img {
+      width: 100%;
+      flex: none;
+    }
+
+    .dj-content {
+      width: 100%;
+      flex: none;
+    }
+
+    .dj-description {
+      display: none;
     }
 
     h3 {

@@ -39,4 +39,17 @@ const { tag } = Astro.props;
     line-height: 1.2;
     overflow-wrap: anywhere;
   }
+
+  @media (max-width: 600px) {
+    .large-tag-header {
+      width: calc(
+        100% + var(--header-inset) +
+          max(var(--page-gutter), env(safe-area-inset-right))
+      );
+      max-width: none;
+      padding-left: max(var(--page-gutter), env(safe-area-inset-left));
+      padding-right: max(var(--page-gutter), env(safe-area-inset-right));
+      text-align: center;
+    }
+  }
 </style>
