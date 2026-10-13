@@ -115,6 +115,7 @@ for (const [width, height] of [[320, 800], [332, 600], [750, 800], [1440, 800], 
 		return {
 			overflow: document.documentElement.scrollWidth > innerWidth,
 			position: background.position,
+			headerTop: document.querySelector('[data-site-header]').getBoundingClientRect().top,
 			top: rect.top,
 			bottom: rect.bottom,
 			viewportHeight: innerHeight,
@@ -127,6 +128,7 @@ for (const [width, height] of [[320, 800], [332, 600], [750, 800], [1440, 800], 
 	})()`);
 	assert.equal(layout.overflow, false, `${width}px horizontal overflow`);
 	assert.equal(layout.position, "fixed");
+	assert.ok(Math.abs(layout.headerTop) < 1, `${width}px header must remain sticky after scrolling`);
 	assert.equal(layout.top, 0);
 	assert.ok(layout.bottom >= layout.viewportHeight);
 	assert.equal(layout.attachment, "scroll");
