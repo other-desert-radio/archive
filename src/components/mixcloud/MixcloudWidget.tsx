@@ -1,14 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import styles from "./MixcloudWidget.module.css";
 import {
 	loadMixcloudApi,
 	type MixcloudWidget as Widget,
 	waitForMixcloudWidget,
-} from "../audio/mixcloud-api";
-import {
-	type MixcloudEmbedParams,
-	mixcloudEmbedUrl,
-} from "../audio/mixcloud-embed";
-import styles from "./MixcloudWidget.module.css";
+} from "./mixcloud-api";
+import { type MixcloudEmbedParams, mixcloudEmbedUrl } from "./mixcloud-embed";
 
 type Props = {
 	initialCloudcastKey: string;

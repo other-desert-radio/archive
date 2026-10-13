@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useAudioState } from "../audio/use-audio-state";
+import { useAudioState } from "../stores/audio";
 import styles from "./FullscreenPlayer.module.css";
 
 type Props = {

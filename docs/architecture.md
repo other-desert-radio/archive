@@ -16,7 +16,9 @@ This repository is a small static Astro site. The current implementation is inte
 ```text
 src/
 ├── layouts/            Shared page shells; `BaseLayout.astro` owns global CSS
-├── audio/              Shared playback state store and React subscription hook
+├── components/         Shared UI; mixcloud/ contains the widget and API helpers
+├── stores/             Shared store instances and React context
+│   └── audio/          Playback state store and React subscription hook
 ├── pages/              File-based routes; `index.astro` is `/`
 ├── styles/             Global stylesheet and shared design tokens
 └── utils/              Build-time data readers and validators
@@ -34,6 +36,12 @@ dist/                   Generated static build output (do not edit by hand)
 .astro/                 Astro-generated types and development metadata
 ```
 
+The Mixcloud widget and helpers are exported through
+`src/components/mixcloud/index.ts`. Store APIs are exported through
+`src/stores/index.ts`, with playback exports also available through
+`src/stores/audio/index.ts`. Internal store imports use their defining modules
+to avoid circular dependencies through the barrels.
+
 ## Request and rendering flow
 
 `BaseLayout.astro` includes Astro's `ClientRouter` for client-side navigation
@@ -43,14 +51,14 @@ The site still builds to static HTML; initial visits load a full document.
 `Navigation.astro` mounts `Miniplayer.tsx` with `client:load` and the stable
 `transition:persist="miniplayer"` name across all pages using `BaseLayout`.
 Only the island persists; navigation links and page titles still update.
-`src/audio/audio-store.ts` defines the store class with immutable idle,
+`src/stores/audio/audio-store.ts` defines the store class with immutable idle,
 loading, playing, paused, and error snapshots. Mixcloud sources identify a
 cloudcast key; SAMCast sources identify a stream URL. A separate subscription
 publishes load/play/pause/clear requests to future source adapters. Adapter
 confirmations update display state without republishing playback commands;
-callbacks from old selections are ignored. `src/stores.ts` creates the application's shared
+callbacks from old selections are ignored. `src/stores/stores.ts` creates the application's shared
 instances and exports `createStores()` for isolated instances. React consumers
-read dependencies through `useStores()` in `src/stores-context.tsx`, which
+read dependencies through `useStores()` in `src/stores/stores-context.tsx`, which
 defaults to the application stores and supports `StoresProvider` overrides.
 `use-audio-state.ts` subscribes via React's
 `useSyncExternalStore`, with a stable idle server snapshot for static HTML and

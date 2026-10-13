@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { AudioTrack } from "../audio/audio-store";
-import { useAudioState } from "../audio/use-audio-state";
+import type { AudioTrack } from "../stores/audio";
+import { useAudioState } from "../stores/audio";
 import FullscreenPlayer from "./FullscreenPlayer";
 import styles from "./Miniplayer.module.css";
 

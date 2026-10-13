@@ -35,7 +35,7 @@ remain later integration work.
 
 Widget integration is split into smaller review checkpoints:
 
-1. `src/audio/mixcloud-api.ts`: typed playback API boundary and browser-only
+1. `src/components/mixcloud/mixcloud-api.ts`: typed playback API boundary and browser-only
    script loader (implemented). Concurrent callers share one load; failures
    reject and allow retry. Existing API globals are checked before reuse.
    Importing the module does not access browser globals. Focused tests cover
@@ -114,8 +114,8 @@ add all the buttons or complete the pictured UI without further direction.
 
 ### Shared playback store (implemented)
 
-`src/audio/audio-store.ts` exports the `AudioStore` class and readonly
-`AudioTrack` / `AudioState` types. `src/stores.ts` owns shared instance creation
+`src/stores/audio/audio-store.ts` exports the `AudioStore` class and readonly
+`AudioTrack` / `AudioState` types. `src/stores/stores.ts` owns shared instance creation
 and exports `stores.audioStore` plus `createStores()` for independent instances.
 Track metadata consists of `title` and a discriminated source:
 

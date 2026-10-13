@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import { waitForMixcloudWidget } from "../src/audio/mixcloud-api";
-import { mixcloudEmbedUrl } from "../src/audio/mixcloud-embed";
-import MixcloudWidget from "../src/components/MixcloudWidget";
+import MixcloudWidget, {
+	mixcloudEmbedUrl,
+	waitForMixcloudWidget,
+} from "../src/components/mixcloud";
 
 const miniParams = { mini: true, hide_cover: true, light: false };
 
