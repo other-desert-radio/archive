@@ -11,7 +11,7 @@ and standards. None of these links automatically imports another file.
 | [TypeScript](typescript.md) | Implementing/refactoring TypeScript or component contracts; types, state, validation, imports and accessible labels. |
 | [CSS](css.md) | Changing styles/layout; shared tokens, allowed breakpoints and responsive behavior. |
 | [Testing](testing.md) | Changing behavior/tests or selecting handoff checks; commands, test placement and targeted browser regressions. |
-| [Development workflow](development-workflow.md) | Starting development, managing hooks or persistent multi-step plans. |
+| [Development workflow](development-workflow.md) | Choosing chunked/one-shot mode, reviewing stages, starting development, hooks or persistent plans. |
 | [Deployment](deployment.md) | Changing hosting/build configuration or base-path URLs; GitHub Pages and production checks. |
 | [SHOWS design](shows-ui-guideline.md) | Changing SHOWS presentation/search/filter behavior; observed design evidence and unimplemented proposals, not current code contracts. |
 
@@ -23,5 +23,6 @@ Temporary multi-step work uses `docs/plans/<task>.md` only when useful; see the
 workflow. Historical files in `docs/plans/archive/` are not routine references
 and are intentionally not individually listed here.
 
-`docs/human/` contains human-maintained notes; it is outside agent standards
-and should not be changed as part of documentation maintenance.
+`docs/human/` contains human-maintained notes outside agent standards. The
+[protected-directory rule](../AGENTS.md#documentation-maintenance) also covers
+`docs/humans/` if present.

@@ -2,9 +2,13 @@
 
 ## Work scope
 
-- Implement one small, independently reviewable feature or behavior at a time.
-  Include focused verification and necessary documentation in that chunk;
-  stop for review before unrelated follow-up work.
+- Honor the task's chosen mode: chunked work requires approval at each review
+  boundary; one-shot work proceeds through implementation and verification.
+  For substantial features, architecture changes or multi-file implementations
+  with no mode specified, ask: "Would you like to build this in chunks
+  (structure → scaffolding → implementation) or one-shot?" Small fixes/refactors
+  proceed normally. Mode applies to the current task only; see
+  [Workflow](docs/development-workflow.md#development-modes) for stage rules.
 - Keep generated `.astro/` and `dist/` output out of manual edits.
 - Use existing scripts and automated checks rather than duplicating their
   rules in prose.
@@ -22,7 +26,7 @@ links here are navigation, not file imports. Do not preload `docs/`.
 | CSS or responsive layout | [CSS](docs/css.md) |
 | Tests or verification selection | [Testing](docs/testing.md) |
 | Routes, rendering, data or service boundaries | [Architecture](docs/architecture.md) |
-| Dev server, hooks or multi-step work | [Workflow](docs/development-workflow.md) |
+| Development modes, dev server, hooks or multi-step work | [Workflow](docs/development-workflow.md) |
 | Hosting, base paths or deployment | [Deployment](docs/deployment.md) |
 
 When starting Astro, use `astro dev --background`; manage it with
@@ -30,6 +34,10 @@ When starting Astro, use `astro dev --background`; manage it with
 uses this mode and adds a foreground type-check watcher.
 
 ## Documentation maintenance
+
+- Never modify `docs/human/` or `docs/humans/` unless the user explicitly asks
+  for changes there. This includes moving, renaming, deleting or reformatting
+  their contents; general documentation work does not authorize those edits.
 
 - Search for an authoritative reference before creating documentation; update
   it when its documented behavior or convention changes.

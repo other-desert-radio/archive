@@ -6,6 +6,16 @@ tests under `tests/`, mirroring source folders when useful (for example
 `tests/components/mixcloud/` or `tests/stores/audio/`); reusable fixtures belong
 in `tests/res/`. Run the smallest relevant checks and report results.
 
+## Meaningful coverage
+
+Use the existing Bun test framework and repository fixtures. Test observable
+behavior at the appropriate boundary: inputs/outputs, error paths and required
+side effects. Avoid assertions tied to private helper ordering or incidental
+implementation details. Add focused coverage as implementation units become
+functional; scaffolding does not need tests that only assert "Not implemented".
+After integration, verify the complete behavior as well as individual units.
+Use browser checks where hydration or layout cannot be established headlessly.
+
 ## Commands
 
 - Astro pages, layouts or content: `bun run check`.

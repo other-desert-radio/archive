@@ -406,7 +406,7 @@ artwork should be described as Figma-verified.
 
 ## Implementation chunks and acceptance checks
 
-Follow the repository's stop-for-review workflow. The original
+Follow the selected mode in [Workflow](development-workflow.md#development-modes). The original
 sequence below is historical; cards, data and playback now exist. Use a task
 plan for remaining work rather than treating this list as current progress.
 
