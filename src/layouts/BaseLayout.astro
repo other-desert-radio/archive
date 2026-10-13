@@ -1,15 +1,16 @@
 ---
 import { ClientRouter } from "astro:transitions";
+import type { Page } from "../types/page";
 
 type Props = {
   title: string;
-  page: "explore" | "shows" | "djs" | "history" | "dj_page" | "show_page";
-  returning_page: "shows" | "djs" | "home";
+  page: Page;
+  returning_page: "shows" | "djs" | "home" | "explore";
 };
 
 const {
   title = "Archive Site",
-  page = "shows",
+  page = { name: "shows" },
   returning_page = "home",
 } = Astro.props;
 import "../styles/global.css";
@@ -21,7 +22,14 @@ import Navigation from "../components/Navigation.astro";
 <html lang="en" transition:animate="none">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta
+      name="theme-color"
+      content={page.name === "tag_page" ? page.color : "#000000"}
+    />
     <title>{title}</title>
     <ClientRouter fallback="swap" />
   </head>
@@ -47,6 +55,8 @@ import Navigation from "../components/Navigation.astro";
     margin-inline: auto;
     padding-left: max(var(--page-gutter), env(safe-area-inset-left));
     padding-right: max(var(--page-gutter), env(safe-area-inset-right));
-    padding-bottom: env(safe-area-inset-bottom);
+    padding-bottom: calc(
+      var(--container-grid-padding-bottom) + env(safe-area-inset-bottom)
+    );
   }
 </style>

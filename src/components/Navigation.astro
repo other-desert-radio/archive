@@ -1,9 +1,10 @@
 ---
 import Miniplayer from "./Miniplayer";
+import type { Page } from "../types/page";
 
 type Props = {
-  page: "explore" | "shows" | "djs" | "history" | "dj_page" | "show_page";
-  returning_page: "shows" | "djs" | "home";
+  page: Page;
+  returning_page: "shows" | "djs" | "home" | "explore";
 };
 
 const { page, returning_page } = Astro.props;
@@ -15,13 +16,15 @@ const returnHref = (() => {
     }
     case "djs":
       return `${base}/djs`;
+    case "explore":
+      return `${base}/explore`;
     case "home":
       return "https://otherdesertradio.com";
   }
 })();
 
 const title = (() => {
-  switch (page) {
+  switch (page.name) {
     case "explore":
     case "history":
     case "shows":
@@ -29,19 +32,27 @@ const title = (() => {
       return "archive";
     }
     case "dj_page":
+    case "tag_page":
     case "show_page": {
-      return page;
+      return page.name;
     }
   }
 })();
 ---
 
 <header data-site-header>
-  <nav aria-label="Navigation title">
+  <nav
+    aria-label="Navigation title"
+    style={page.name === "tag_page" ? { backgroundColor: page.color } : undefined}
+  >
     <a
       class="leading-box"
       title={`Return to ${returning_page}`}
+      aria-label={`Return to ${returning_page}`}
       href={returnHref}
+      data-tag-return={page.name === "show_page" || page.name === "dj_page" ? "" : undefined}
+      data-return-href={returnHref}
+      data-return-label={returning_page.toUpperCase()}
     >
       <span aria-hidden="true">←</span>
       <b>{returning_page.toUpperCase()}</b>
@@ -53,6 +64,34 @@ const title = (() => {
     <Miniplayer client:load transition:persist="miniplayer" />
   </div>
 </header>
+
+<script>
+  import tags from "../res/tags.json";
+  import { getTagReturn } from "../utils/tag-return";
+
+  function updateTagReturn() {
+    const link = document.querySelector<HTMLAnchorElement>("[data-tag-return]");
+    const label = link?.querySelector("b");
+    if (!link || !label) {
+      return;
+    }
+
+    const destination = getTagReturn(location.search, import.meta.env.BASE_URL, tags);
+    const href = destination?.href ?? link.dataset["returnHref"];
+    const text = destination?.label ?? link.dataset["returnLabel"];
+    if (!href || !text) {
+      return;
+    }
+
+    link.href = href;
+    label.textContent = text;
+    link.title = `Return to ${text}`;
+    link.setAttribute("aria-label", `Return to ${text}`);
+  }
+
+  updateTagReturn();
+  document.addEventListener("astro:page-load", updateTagReturn);
+</script>
 
 <style>
   header {

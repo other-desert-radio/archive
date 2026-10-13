@@ -1,0 +1,120 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LargeTagHeader from "../../components/explore/LargeTagHeader.astro";
+import DJExploreCard from "../../components/explore/DJExploreCard.astro";
+import ShowExploreCard from "../../components/explore/ShowExploreCard";
+import { fetchShows, type Show } from "../../utils/fetch-shows";
+import { fetchDJs } from "../../utils/fetch-djs";
+import { fetchDJ, type HydratedDJ } from "../../utils/fetch-dj";
+import { fetchTags, type Tag } from "../../utils/fetch-tags";
+import { pathToFileURL } from "node:url";
+
+type Props = {
+  tag: Tag;
+  shows: Show[];
+  djs: HydratedDJ[];
+};
+export async function getStaticPaths() {
+  const shows = await fetchShows(pathToFileURL("src/res/shows.json"));
+  const djs = await fetchDJs(pathToFileURL("src/res/djs_brief.json"));
+  const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
+  const profiles = await Promise.all(
+    djs.map(({ id }) => fetchDJ(pathToFileURL(`src/res/djs/${id}.json`))),
+  );
+
+  return Array.from(tags.values()).map((tag) => ({
+    params: { id: String(tag.id) },
+    props: {
+      tag,
+      shows: shows.filter((show) => show.tagIds.includes(tag.id)),
+      djs: profiles.filter((dj) => dj.tagIds.includes(tag.id)),
+    },
+  }));
+}
+
+const { tag, djs, shows } = Astro.props as Props;
+---
+
+<BaseLayout
+  page={{ name: "tag_page", color: tag.color }}
+  returning_page="explore"
+  title={`${tag.title} | Other Desert Radio`}
+>
+  <LargeTagHeader tag={tag} />
+
+  {djs.length > 0 && (
+    <section aria-labelledby="tag-djs-heading">
+      <h2 id="tag-djs-heading">DJs</h2>
+      <div class="tag-row">
+        {djs.map((dj) => <DJExploreCard dj={dj} fromTag={tag.id} />)}
+      </div>
+    </section>
+  )}
+
+  {shows.length > 0 && (
+    <section aria-labelledby="tag-shows-heading">
+      <div class="shows-heading-row">
+        <h2 id="tag-shows-heading">SHOWS</h2>
+      </div>
+      <div class="shows-grid">
+        {shows.map((show) => <ShowExploreCard show={show} base={import.meta.env.BASE_URL} fromTag={tag.id} />)}
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  section {
+    margin-top: var(--space-lg);
+  }
+
+  h2 {
+    margin: 0 0 var(--space-md);
+    font-size: var(--font-title);
+    font-weight: 400;
+  }
+
+  .tag-row {
+    display: flex;
+    gap: var(--space-lg);
+    min-height: var(--space-lg);
+    overflow-x: auto;
+  }
+
+  .shows-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .shows-heading-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .shows-heading-row h2 {
+    margin: 0;
+  }
+
+  @media (max-width: 1600px) {
+    .shows-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .shows-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .shows-grid {
+      gap: var(--space-sm);
+    }
+  }
+</style>

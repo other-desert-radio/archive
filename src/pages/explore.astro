@@ -1,12 +1,18 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CategoryTabs from "../components/CategoryTabs.astro";
+import ExplorePane from "../components/explore/ExplorePane";
+import { fetchTags } from "../utils/fetch-tags";
+import { pathToFileURL } from "node:url";
+
+const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
 ---
 
 <BaseLayout
   title="Explore | Other Desert Radio"
-  page="explore"
+  page={{ name: "explore" }}
   returning_page="home"
 >
   <CategoryTabs active="explore" />
+  <ExplorePane tags={tags} />
 </BaseLayout>

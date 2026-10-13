@@ -1,0 +1,13 @@
+.tags-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-lg);
+	width: 100%;
+	overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+	.tags-container {
+		gap: var(--space-sm);
+	}
+}
