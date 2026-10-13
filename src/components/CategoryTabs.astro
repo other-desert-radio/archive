@@ -31,8 +31,10 @@ const { active } = Astro.props;
     font-size: var(--tabs-font-size);
   }
 
-  a:hover {
-    border-bottom: var(--border-primary) solid;
+  @media (hover: hover) and (pointer: fine) {
+    a:hover {
+      border-bottom: var(--border-primary) solid;
+    }
   }
 
   a[aria-current="page"] {

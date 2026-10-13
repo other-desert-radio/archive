@@ -49,6 +49,14 @@ tags, at 320px, 332px, 750px, 1440px, and wide desktop widths.
 Category tabs and navigation items wrap naturally when their combined widths
 exceed the available space. Keep each tab and the return link together, and
 allow the navigation title to wrap within its own line on tiny screens.
+Hover effects are limited to `(hover: hover) and (pointer: fine)`; links and
+buttons use `touch-action: manipulation` to avoid waiting for double taps.
+The shared layout renders a decorative fixed background layer at z-index 0,
+with page content above it. Its height is `100dvh` (`100vh` fallback), so it
+tracks the visible viewport as mobile browser controls expand or collapse.
+The root canvas uses the same image, and `viewport-fit=cover` allows it to
+extend into safe areas; keep safe-area padding on content, not the image.
+Use neither fixed background attachment nor a negative-z-index pseudo-element.
 Navigation vertical padding belongs to the return link and title text only.
 The shared sticky header contains the navigation followed by a full-width
 miniplayer bar using `--miniplayer-background` (#25292C). The bar has no minimum height and collapses completely while idle;
