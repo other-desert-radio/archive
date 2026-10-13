@@ -8,7 +8,10 @@ type Props = {
 const { tag } = Astro.props;
 ---
 
-<div class="large-tag-header" style={{ backgroundColor: tag.color }}>
+<div
+  class="large-tag-header"
+  style={{ backgroundColor: tag.color, "--tag-title-length": Math.max(1, Array.from(tag.title).length) }}
+>
   <h1>{tag.title}</h1>
 </div>
 
@@ -50,6 +53,13 @@ const { tag } = Astro.props;
       padding-left: max(var(--page-gutter), env(safe-area-inset-left));
       padding-right: max(var(--page-gutter), env(safe-area-inset-right));
       text-align: center;
+      container-type: inline-size;
+    }
+
+    h1 {
+      width: 100%;
+      font-size: calc(100cqw / var(--tag-title-length) / 0.64);
+      white-space: nowrap;
     }
   }
 </style>
