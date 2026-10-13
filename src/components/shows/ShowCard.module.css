@@ -135,11 +135,13 @@
 }
 
 @media (max-width: 600px) {
+	/*
 	.show-card {
 		flex-direction: column;
 	}
+  */
 
 	.artwork {
-		width: min(100%, var(--show-artwork-max));
+		width: min(40%, var(--show-artwork-min));
 	}
 }
