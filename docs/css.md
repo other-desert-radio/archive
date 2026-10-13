@@ -49,3 +49,8 @@ tags, at 320px, 332px, 750px, 1440px, and wide desktop widths.
 Category tabs and navigation items wrap naturally when their combined widths
 exceed the available space. Keep each tab and the return link together, and
 allow the navigation title to wrap within its own line on tiny screens.
+Navigation vertical padding belongs to the return link and title text only.
+The navigation container and miniplayer slot have no vertical padding, so the
+Mixcloud widget does not add padding above and below its height.
+The miniplayer slot reserves its width and 3.75rem widget height while idle,
+keeping selection from adding height or a new wrapped navigation row.

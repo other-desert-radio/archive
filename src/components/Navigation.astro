@@ -57,7 +57,7 @@ const title = (() => {
     flex-wrap: wrap;
     gap: var(--space-xs) var(--space-sm);
     overflow-wrap: anywhere;
-    padding: calc(var(--density-unit) * 1.5625) calc(var(--density-unit) * 3.125);
+    padding: 0 calc(var(--density-unit) * 3.125);
     align-items: center;
 
     font-size: var(--font-small);
@@ -70,6 +70,11 @@ const title = (() => {
     color: white;
   }
 
+  nav > span,
+  .leading-box {
+    padding-block: calc(var(--density-unit) * 1.5625);
+  }
+
   nav > span {
     min-width: 0;
     max-width: 100%;
@@ -79,10 +84,8 @@ const title = (() => {
     min-width: 0;
     max-width: 100%;
     margin-inline-start: auto;
-  }
-
-  .miniplayer-slot:has([data-miniplayer]) {
     width: min(100%, 40rem);
+    min-height: 3.75rem;
   }
 
   .leading-box {
