@@ -52,7 +52,11 @@ The site still builds to static HTML; initial visits load a full document.
 `Navigation.astro` mounts `Miniplayer.tsx` with `client:load` and the stable
 `transition:persist="miniplayer"` name across all pages using `BaseLayout`.
 The island sits in a full-width charcoal bar below the navigation, inside the
-shared sticky header. Only the island persists; navigation links and page titles still update.
+shared sticky header. `src/utils/preserve-player-navigation.ts` customizes
+Astro's swap to keep the body and header attached, replacing navigation and
+the remaining body content. This prevents iframe reloads in browsers that
+cannot move iframes without resetting their documents. Navigation links and
+page titles still update; pages without the shared header use Astro's default swap.
 `src/stores/audio/audio-store.ts` defines the store class with immutable idle,
 loading, playing, paused, and error snapshots. Mixcloud sources identify a
 cloudcast key; SAMCast sources identify a stream URL. A separate subscription
@@ -78,7 +82,8 @@ selection, and error events report playback failure. Events during loads are
 ignored; disposal removes listeners. `MixcloudWidget` creates it using the
 context's `audioStore` and the widget readiness promise, then disposes it on
 cleanup. Command completion alone does not confirm playback. Show-card controls select, pause, and resume through the same store;
-uninterrupted iframe navigation remains future work.
+the widget stays attached during internal archive navigation. Full reloads
+and navigation outside the archive still end playback.
 
 `ShowsPane` is hydrated with `client:load`; each show card subscribes to playback
 state and renders an artwork overlay control. Metadata and detail links retain

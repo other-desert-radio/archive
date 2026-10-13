@@ -45,6 +45,14 @@ existing generated-HTML test cannot detect a client runtime hydration failure.
 
 ## Responsive layout verification
 
+For player navigation and the viewport background, start `bun run preview`
+after building, then run `bun tests/player-navigation.browser.mjs` (requires
+`agent-browser`). The browser regression uses a same-origin iframe to verify
+its document and playback marker survive listing/detail and back/forward
+navigation without reloading. It also checks viewport background sizing and
+horizontal overflow at 320px, 332px, 750px and 1440px. Physical iOS rendering
+and external Mixcloud playback require a device check.
+
 For DJ card CSS changes, check `/archive-site/djs` at 320px, 332px, 750px
 and desktop widths. Names/tags must wrap without horizontal overflow or page
 scale changes when switching from SHOWS to DJs. Server-rendered tests cannot
