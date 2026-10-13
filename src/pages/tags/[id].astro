@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TagView from "../../components/TagView.astro";
+import { fetchShows, type Show } from "../../utils/fetch-shows";
+import { fetchTags } from "../../utils/fetch-tags";
+import { formatDate } from "../../utils/format-date";
+import { hydrateTags } from "../../utils/hydrate-tags";
+import { pathToFileURL } from "node:url";
+
+type Props = {
+  shows: Show[];
+  djs: DJs[];
+
+};
+export async function getStaticPaths() {
+  const shows = await fetchShows(pathToFileURL("src/res/shows.json"));
+
+  return Promise.all(
+  shows
+  .filter(// show has tag)
+
+  .map(async (show) => ({
+      params: { id: String(show.id) },
+      props: {
+        show: show,
+      },
+    })),
+  );
+}
+
+const { show } = Astro.props as Props;
+const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
+const hydratedTags = hydrateTags(show, tags);
+---
+
+<BaseLayout
+  page="show_page"
+  returning_page="shows"
+  title={`${show.title} | Other Desert Radio`}
+>
+  <div class="detail-grid">
+    <div class="detail-header">
+      <h1 class="page-title">{show.title}</h1>
+      <p>{formatDate(show.date)}</p>
+    </div>
+    <div class="detail-column">
+      <img class="detail-photo" src={show.image_large} alt={show.title} />
+      <div class="tag-container">
+        {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
+      </div>
+    </div>
+    <div class="detail-column">
+      <p>maybe tracklist goes here</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .detail-grid { --detail-row-gap: var(--space-sm); }
+  .page-title { margin-bottom: 0; }
+</style>
