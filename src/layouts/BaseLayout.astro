@@ -19,7 +19,11 @@ import Navigation from "../components/Navigation.astro";
 ---
 
 <!doctype html>
-<html lang="en" transition:animate="none">
+<html
+  lang="en"
+  transition:animate="none"
+  style={page.name === "tag_page" ? { background: page.color } : undefined}
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />

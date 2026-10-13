@@ -35,4 +35,33 @@ const { /*shows, djs,*/ tag } = Astro.props as Props;
   title={`${tag.title} | Other Desert Radio`}
 >
   <LargeTagHeader tag={tag} />
+
+  <section aria-labelledby="tag-djs-heading">
+    <h2 id="tag-djs-heading">DJs</h2>
+    <div class="tag-row"></div>
+  </section>
+
+  <section aria-labelledby="tag-shows-heading">
+    <h2 id="tag-shows-heading">SHOWS</h2>
+    <div class="tag-row"></div>
+  </section>
 </BaseLayout>
+
+<style>
+  section {
+    margin-top: var(--space-lg);
+  }
+
+  h2 {
+    margin: 0 0 var(--space-md);
+    font-size: var(--font-title);
+    font-weight: 400;
+  }
+
+  .tag-row {
+    display: flex;
+    gap: var(--space-lg);
+    min-height: var(--space-lg);
+    overflow-x: auto;
+  }
+</style>
