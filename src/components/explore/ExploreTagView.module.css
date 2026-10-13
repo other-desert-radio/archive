@@ -2,6 +2,8 @@
 	cursor: pointer;
 	font-size: min(calc(var(--density-unit) * 6), 8.5vw);
 	color: white;
+	text-decoration: none;
+	touch-action: manipulation;
 	font-weight: bold;
 	padding: var(--space-lg);
 	border: 0.625rem transparent solid;
