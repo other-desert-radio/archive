@@ -2,7 +2,7 @@
 import Miniplayer from "./Miniplayer";
 
 type Props = {
-  page: "shows" | "djs" | "dj_page" | "show_page";
+  page: "explore" | "shows" | "djs" | "history" | "dj_page" | "show_page";
   returning_page: "shows" | "djs" | "home";
 };
 
@@ -22,6 +22,8 @@ const returnHref = (() => {
 
 const title = (() => {
   switch (page) {
+    case "explore":
+    case "history":
     case "shows":
     case "djs": {
       return "archive";

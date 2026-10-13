@@ -95,7 +95,9 @@ by `src/components/shows/show-playback.ts` before publishing playback requests.
 
 The archive listings use `src/pages/index.astro` for SHOWS and
 `src/pages/djs.astro` for DJs. Both use `CategoryTabs.astro` to select the
-active category. `src/utils/fetch-djs.ts` reads and validates
+active category. `src/pages/explore.astro` and `src/pages/history.astro`
+provide page shells for the remaining tabs, using the shared layout and their
+respective active category. `src/utils/fetch-djs.ts` reads and validates
 `src/res/djs_brief.json` at build time. The DJ page passes its summaries
 to the server-rendered `DJsPane` component, which links each title to its
 static detail page. `src/pages/djs/[id].astro` loads the matching full DJ
