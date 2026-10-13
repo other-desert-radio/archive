@@ -32,9 +32,6 @@ const { active } = Astro.props;
 
     gap: var(--space-lg);
 
-    padding-left: var(--space-md);
-    padding-right: var(--space-md);
-
     margin-top: var(--space-sm);
     margin-bottom: var(--space-md);
   }
@@ -61,6 +58,8 @@ const { active } = Astro.props;
   @media (max-width: 600px) {
     .tabs {
       justify-content: space-between;
+      padding-left: var(--space-md);
+      padding-right: var(--space-md);
     }
   }
 
