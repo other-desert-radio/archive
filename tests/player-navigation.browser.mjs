@@ -18,6 +18,39 @@ function evaluate(code) {
 
 browser("open", `${base}/`);
 browser("wait", "button[aria-label^='Play ']");
+const basePath = new URL(base).pathname;
+
+function rememberIdlePage() {
+	evaluate(`(() => {
+		Object.defineProperty(document.documentElement, 'moveBefore', {
+			value: undefined, configurable: true
+		});
+		window.idleBody = document.body;
+		window.idleHeader = document.querySelector('[data-site-header]');
+		window.idlePageLoad = location.pathname;
+		document.addEventListener('astro:page-load', () => {
+			window.idlePageLoad = location.pathname;
+		});
+		return true;
+	})()`);
+}
+
+function verifyIdleSwap(path) {
+	browser("wait", "--fn", `window.idlePageLoad.replace(/\\/$/, '') === ${JSON.stringify(path)}`);
+	browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
+	assert.equal(evaluate("window.idleBody !== document.body"), true);
+	assert.equal(evaluate("window.idleHeader !== document.querySelector('[data-site-header]')"), true);
+}
+
+// No widget: the compatibility path must leave Astro's normal body swap intact.
+rememberIdlePage();
+browser("click", `a[href='${basePath}/djs']`);
+browser("wait", "a[aria-label^='View ']");
+verifyIdleSwap(`${basePath}/djs`);
+browser("click", `a[href='${basePath}/']`);
+browser("wait", "button[aria-label^='Play ']");
+browser("wait", "--fn", `window.idlePageLoad.replace(/\\/$/, '') === ${JSON.stringify(basePath)}`);
+browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
 // A same-origin fixture lets us check the iframe document, independently of
 // Mixcloud availability. Moving it would reload it even if DOM identity survived.
 evaluate(`(() => {
@@ -57,7 +90,6 @@ function verifyPlayer(path) {
 	assert.equal(result.position, 123);
 }
 
-const basePath = new URL(base).pathname;
 browser("click", `a[href='${basePath}/djs']`);
 browser("wait", "a[aria-label^='View ']");
 verifyPlayer(`${basePath}/djs`);
@@ -88,4 +120,11 @@ for (const width of [320, 332, 750, 1440]) {
 	assert.equal(layout.position, "fixed");
 	assert.ok(layout.height >= layout.viewportHeight);
 }
-console.log("Player document survives listing/detail/back/forward navigation; viewport background and responsive widths pass.");
+
+// Removing the player restores normal navigation on the very next swap.
+evaluate("window.playerProbe.remove(); true");
+rememberIdlePage();
+browser("click", `a[href='${basePath}/djs']`);
+browser("wait", "a[aria-label^='View ']");
+verifyIdleSwap(`${basePath}/djs`);
+console.log("Idle navigation uses the default swap; active player document survives listing/detail/back/forward navigation; viewport background and responsive widths pass.");

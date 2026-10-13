@@ -6,7 +6,7 @@ import { swapFunctions } from "astro:transitions/client";
  * state-preserving moves for transition:persist. Astro's fallback DOM moves
  * reload the iframe, interrupting playback. Keep the body and player header
  * in place and swap the navigation and surrounding page content instead.
- * Browsers supporting moveBefore() use Astro's default swap.
+ * Idle players and browsers supporting moveBefore() use Astro's default swap.
  */
 document.addEventListener("astro:before-swap", (event) => {
 	if (typeof document.documentElement.moveBefore === "function") {
@@ -14,6 +14,12 @@ document.addEventListener("astro:before-swap", (event) => {
 	}
 
 	const header = document.querySelector("[data-site-header]");
+	// Only pay for the compatibility swap when there is a widget to preserve.
+	// Keep paused/loading widgets too: moving them would reset their document.
+	if (!header?.querySelector("[data-miniplayer-bar] iframe")) {
+		return;
+	}
+
 	const nextHeader = event.newDocument.querySelector("[data-site-header]");
 	const nav = header?.querySelector("nav");
 	const nextNav = nextHeader?.querySelector("nav");

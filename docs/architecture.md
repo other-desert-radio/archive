@@ -54,7 +54,9 @@ The site still builds to static HTML; initial visits load a full document.
 The island sits in a full-width charcoal bar below the navigation, inside the
 shared sticky header. `src/utils/preserve-player-navigation.ts` customizes
 Astro's swap to keep the body and header attached, replacing navigation and
-the remaining body content. This prevents iframe reloads in browsers that
+the remaining body content only when the miniplayer contains an iframe and
+the browser lacks `moveBefore()`. Idle navigation uses Astro's default swap.
+This prevents iframe reloads in browsers that
 cannot move iframes without resetting their documents. Navigation links and
 page titles still update; pages without the shared header use Astro's default swap.
 `src/stores/audio/audio-store.ts` defines the store class with immutable idle,
