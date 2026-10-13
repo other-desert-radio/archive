@@ -13,7 +13,9 @@ independently.
 - Add or update focused automated tests whenever introducing a feature or
   changing existing behavior. If a behavior cannot be tested practically,
   explain why in the handoff.
-- Place headless tests in the top-level `tests/` directory.
+- Place headless tests under the top-level `tests/` directory. Mirror source
+  module folders when grouping tests, such as `tests/components/mixcloud/`,
+  `tests/stores/`, and `tests/stores/audio/`.
 - Put reusable test fixtures in `tests/res/`.
 - Run the smallest relevant verification commands before handing off the
   chunk.
@@ -39,6 +41,20 @@ Update it when the routing, rendering flow, source layout, or deployment model
 changes materially.
 
 ## Verification by change type
+
+Vite dependency caches are separated by command (`node_modules/.vite-serve`
+and `node_modules/.vite-build`) in `astro.config.mjs`. This lets production
+builds, including build-based tests, run alongside the dev server without
+overwriting its React development runtime. A shared cache previously caused
+miniplayer text to render on the server and disappear during hydration after
+refresh (`jsxDEV is not a function`). After changing this configuration,
+restart the background dev server and reload the browser.
+
+For this regression, check the hydrated miniplayer text after a full refresh,
+run `bun run build` while dev is running, then refresh again and navigate from
+SHOWS to DJs. Text must remain visible and the persisted island must retain
+its DOM identity. This browser check passed with the separate caches; the
+existing generated-HTML test cannot detect a client runtime hydration failure.
 
 - `bun run format` applies Biome formatting, safe lint fixes, and import
   organization. The pre-commit hook runs it before staging the resulting

@@ -31,6 +31,16 @@ const { title, description } = Astro.props;
 
 ## Make finite states explicit
 
+Use braces for conditional branches, including early returns and `continue`.
+Keep the condition and its body on separate lines rather than writing a
+single-line guard:
+
+```ts
+if (this.disposed) {
+	return;
+}
+```
+
 Use discriminated unions for component state and `switch` statements when
 branching over a finite set of known cases. This keeps loading, empty, error,
 and success states visible in the type system and makes new cases harder to

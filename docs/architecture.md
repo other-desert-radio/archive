@@ -7,7 +7,8 @@ This repository is a small static Astro site. The current implementation is inte
 - Astro is the application framework and build tool.
 - `astro.config.mjs` sets `output: "static"`, so production output is pre-rendered into `dist/` and does not require a server runtime.
 - `.github/workflows/deploy-pages.yml` builds the static site with Bun and deploys `dist/` to GitHub Pages on pushes to `main`.
-- `@astrojs/react` is configured for interactive React components when they are needed; the current page does not use one.
+- `@astrojs/react` supports server-rendered archive components and the hydrated
+  miniplayer island below the shared navigation.
 - The project targets Node.js `>=22.12.0` and uses Bun for package scripts and lockfile management.
 
 ## Source layout
@@ -15,11 +16,15 @@ This repository is a small static Astro site. The current implementation is inte
 ```text
 src/
 ├── layouts/            Shared page shells; `BaseLayout.astro` owns global CSS
+├── components/         Shared UI; mixcloud/ contains the widget and API helpers
+├── stores/             Shared store instances and React context
+│   └── audio/          Playback state store and React subscription hook
 ├── pages/              File-based routes; `index.astro` is `/`
 ├── styles/             Global stylesheet and shared design tokens
 └── utils/              Build-time data readers and validators
 
 public/                 Static assets copied to the site root unchanged
+├── assets/icons/       Play and pause SVGs for show-card controls
 ├── background.jpeg
 └── fonts/              WOFF2 webfont files and the Space Mono license
 
@@ -32,11 +37,53 @@ dist/                   Generated static build output (do not edit by hand)
 .astro/                 Astro-generated types and development metadata
 ```
 
+The Mixcloud widget and helpers are exported through
+`src/components/mixcloud/index.ts`. Store APIs are exported through
+`src/stores/index.ts`, with playback exports also available through
+`src/stores/audio/index.ts`. Internal store imports use their defining modules
+to avoid circular dependencies through the barrels.
+
 ## Request and rendering flow
 
 `BaseLayout.astro` includes Astro's `ClientRouter` for client-side navigation
 between internal pages, with the default body transition animation disabled.
 The site still builds to static HTML; initial visits load a full document.
+
+`Navigation.astro` mounts `Miniplayer.tsx` with `client:load` and the stable
+`transition:persist="miniplayer"` name across all pages using `BaseLayout`.
+The island sits in a full-width charcoal bar below the navigation, inside the
+shared sticky header. Only the island persists; navigation links and page titles still update.
+`src/stores/audio/audio-store.ts` defines the store class with immutable idle,
+loading, playing, paused, and error snapshots. Mixcloud sources identify a
+cloudcast key; SAMCast sources identify a stream URL. A separate subscription
+publishes load/play/pause/clear requests to future source adapters. Adapter
+confirmations update display state without republishing playback commands;
+callbacks from old selections are ignored. `src/stores/stores.ts` creates the application's shared
+instances and exports `createStores()` for isolated instances. React consumers
+read dependencies through `useStores()` in `src/stores/stores-context.tsx`, which
+defaults to the application stores and supports `StoresProvider` overrides.
+`use-audio-state.ts` subscribes via React's
+`useSyncExternalStore`, with a stable idle server snapshot for static HTML and
+hydration. The miniplayer reads this store. The miniplayer is hidden while
+idle and shows the selected track in every other state. Clearing the track
+unmounts the visible player. The compact
+Mixcloud branch renders one visible widget and owns its adapter lifecycle;
+the SAMCast branch retains its title/progress scaffold. Fullscreen components,
+controls, and modal state have been removed; fullscreen presentation is deferred.
+`src/components/mixcloud/mixcloud-adapter.ts` now provides an independent
+adapter with request subscription, readiness gating, serialized show loads and
+play/pause commands, error reporting, and disposal. It requests a pause on clear,
+source changes, and disposal. Widget play/pause events confirm the loaded
+selection, and error events report playback failure. Events during loads are
+ignored; disposal removes listeners. `MixcloudWidget` creates it using the
+context's `audioStore` and the widget readiness promise, then disposes it on
+cleanup. Command completion alone does not confirm playback. Show-card controls select, pause, and resume through the same store;
+uninterrupted iframe navigation remains future work.
+
+`ShowsPane` is hydrated with `client:load`; each show card subscribes to playback
+state and renders an artwork overlay control. Metadata and detail links retain
+their server-rendered HTML. Show URLs are converted to validated Mixcloud keys
+by `src/components/shows/show-playback.ts` before publishing playback requests.
 
 The archive listings use `src/pages/index.astro` for SHOWS and
 `src/pages/djs.astro` for DJs. Both use `CategoryTabs.astro` to select the

@@ -1,0 +1,53 @@
+.miniplayer {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-xs);
+	min-width: 0;
+	max-width: 100%;
+	width: 100%;
+}
+
+.controls {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-xs);
+	min-width: 0;
+	min-height: 3.75rem;
+}
+
+.title {
+	flex: 1;
+	min-width: min(100%, 20rem);
+	box-sizing: border-box;
+	overflow-wrap: anywhere;
+	padding: var(--space-xs) var(--nav-inline-padding);
+}
+
+.widget-slot {
+	flex: 0 1 40rem;
+	margin-inline-start: auto;
+	min-width: 0;
+}
+
+.progress-track {
+	height: var(--border-secondary);
+	background: currentColor;
+	opacity: 0.5;
+}
+
+@media (max-width: 750px) {
+	.controls {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.title {
+		padding-block: var(--space-xs);
+	}
+
+	.widget-slot {
+		flex: auto;
+		width: 100%;
+	}
+}
