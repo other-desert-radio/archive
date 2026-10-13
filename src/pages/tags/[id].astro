@@ -1,61 +1,43 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import TagView from "../../components/TagView.astro";
 import { fetchShows, type Show } from "../../utils/fetch-shows";
-import { fetchTags } from "../../utils/fetch-tags";
-import { formatDate } from "../../utils/format-date";
-import { hydrateTags } from "../../utils/hydrate-tags";
+import { fetchDJs, type DJ } from "../../utils/fetch-djs";
+import { fetchTags, type Tag } from "../../utils/fetch-tags";
 import { pathToFileURL } from "node:url";
 
 type Props = {
+  tag: Tag;
   shows: Show[];
-  djs: DJs[];
-
+  djs: DJ[];
 };
 export async function getStaticPaths() {
   const shows = await fetchShows(pathToFileURL("src/res/shows.json"));
+  const djs = await fetchDJs(pathToFileURL("src/res/djs_brief.json"));
+  const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
 
-  return Promise.all(
-  shows
-  .filter(// show has tag)
-
-  .map(async (show) => ({
-      params: { id: String(show.id) },
-      props: {
-        show: show,
-      },
-    })),
-  );
+  return Array.from(tags.values()).map((tag) => ({
+    params: { id: String(tag.id) },
+    props: {
+      tag,
+      shows: shows.filter((show) => show.tagIds.includes(tag.id)),
+      djs: djs.filter((dj) => dj.tagIds.includes(tag.id)),
+    },
+  }));
 }
 
-const { show } = Astro.props as Props;
-const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
-const hydratedTags = hydrateTags(show, tags);
+const { /*shows, djs,*/ tag } = Astro.props as Props;
 ---
 
 <BaseLayout
-  page="show_page"
+  page="tag_page"
   returning_page="shows"
-  title={`${show.title} | Other Desert Radio`}
+  title={`${tag.title} | Other Desert Radio`}
 >
   <div class="detail-grid">
     <div class="detail-header">
-      <h1 class="page-title">{show.title}</h1>
-      <p>{formatDate(show.date)}</p>
-    </div>
-    <div class="detail-column">
-      <img class="detail-photo" src={show.image_large} alt={show.title} />
-      <div class="tag-container">
-        {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
-      </div>
-    </div>
-    <div class="detail-column">
-      <p>maybe tracklist goes here</p>
+      <h1 class="page-title">{tag.title}</h1>
     </div>
   </div>
-</BaseLayout>
 
-<style>
-  .detail-grid { --detail-row-gap: var(--space-sm); }
-  .page-title { margin-bottom: 0; }
-</style>
+  <style></style>
+</BaseLayout>
