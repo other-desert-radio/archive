@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { AudioStore, type AudioTrack } from "../src/stores/audio";
+import { AudioStore, type AudioTrack } from "../../../src/stores/audio";
 
 const track: AudioTrack = {
 	title: "Archive show",

@@ -13,7 +13,9 @@ independently.
 - Add or update focused automated tests whenever introducing a feature or
   changing existing behavior. If a behavior cannot be tested practically,
   explain why in the handoff.
-- Place headless tests in the top-level `tests/` directory.
+- Place headless tests under the top-level `tests/` directory. Mirror source
+  module folders when grouping tests, such as `tests/components/mixcloud/`,
+  `tests/stores/`, and `tests/stores/audio/`.
 - Put reusable test fixtures in `tests/res/`.
 - Run the smallest relevant verification commands before handing off the
   chunk.

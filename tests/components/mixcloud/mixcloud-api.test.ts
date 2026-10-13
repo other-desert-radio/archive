@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { createMixcloudApiLoader } from "../src/components/mixcloud";
+import { createMixcloudApiLoader } from "../../../src/components/mixcloud";
 
 function fixture() {
 	let api: unknown;

@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import MixcloudWidget, {
 	mixcloudEmbedUrl,
 	waitForMixcloudWidget,
-} from "../src/components/mixcloud";
+} from "../../../src/components/mixcloud";
 
 const miniParams = { mini: true, hide_cover: true, light: false };
 

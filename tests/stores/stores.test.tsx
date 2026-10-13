@@ -1,8 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import { createStores, StoresProvider, stores, useStores } from "../src/stores";
-import { useAudioState } from "../src/stores/audio";
+import {
+	createStores,
+	StoresProvider,
+	stores,
+	useStores,
+} from "../../src/stores";
+import { useAudioState } from "../../src/stores/audio";
 
 function TrackProbe() {
 	const audio = useStores().audioStore.getSnapshot();
