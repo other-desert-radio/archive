@@ -26,8 +26,8 @@ Audio integration review chunks:
 
 1. Source contracts, playback requests, and confirmed store state (implemented;
    stop for review before the next chunk).
-2. Integrate the Mixcloud widget independently (API loader subchunk implemented;
-   widget host and adapter not started).
+2. Integrate the Mixcloud widget independently (API loader and standalone host
+   subchunks implemented; store adapter not started).
 3. Connect the widget to the miniplayer (not started).
 
 Stop for review after each chunk. SAMCast playback and navigation continuity
@@ -40,10 +40,26 @@ Widget integration is split into smaller review checkpoints:
    reject and allow retry. Existing API globals are checked before reuse.
    Importing the module does not access browser globals. Focused tests cover
    shared loading, existing API reuse, network failure/retry, and invalid API.
-2. Visible standalone iframe host and widget readiness (not started).
+2. Visible standalone iframe host and widget readiness (implemented; stop
+   for review). `MixcloudWidget.tsx` accepts an `initialCloudcastKey` and required
+   `iframeParams` widget options, renders
+   one labeled dark mini iframe, and keeps its initial `src` stable. Invalid
+   show keys are rejected before embedding. Initialization waits for widget
+   readiness and validates the required playback methods/events; failure
+   leaves the iframe visible and shows a connection message. Effect cleanup
+   ignores late readiness results. No autoplay or playback commands are issued.
+   Focused tests cover deferred readiness, failures, URL validation/encoding,
+   and browser-free server rendering. Real embed readiness and responsive
+   sizing still require manual verification when the host is mounted; these
+   tests do not run a browser or connect to Mixcloud.
+   `mixcloudEmbedUrl(key, params)` accepts typed boolean `mini`, `hide_cover`,
+   and `light` options with no defaults. Callers pass all three explicitly via
+   `MixcloudWidget`'s `iframeParams` prop. Both the key and options initialize
+   the iframe URL once at mount.
 3. Shared-store request adapter and widget event confirmations (not started).
 
-The loader is not mounted or called by the site yet and produces no playback.
+The standalone host is not mounted in the site yet. The loader is called only
+when that host mounts; shared-store playback requests are not consumed yet.
 Stop for review after each subchunk before connecting the miniplayer.
 
 Latest fullscreen direction: Mixcloud fullscreen must include the widget.

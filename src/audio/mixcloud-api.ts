@@ -23,12 +23,44 @@ type ScriptEnvironment = {
 	appendScript: (onLoad: () => void, onError: () => void) => void;
 };
 
-function readApi(value: unknown): MixcloudApi | undefined {
-	const factory = P.when(
-		(candidate: unknown): candidate is (...args: unknown[]) => unknown =>
-			typeof candidate === "function",
+const callable = P.when(
+	(candidate: unknown): candidate is (...args: unknown[]) => unknown =>
+		typeof candidate === "function",
+);
+
+const eventPattern = { on: callable, off: callable };
+
+function isWidget(value: unknown): value is MixcloudWidget {
+	return isMatching(
+		{
+			load: callable,
+			play: callable,
+			pause: callable,
+			events: { play: eventPattern, pause: eventPattern, error: eventPattern },
+		},
+		value,
 	);
-	if (!isMatching({ PlayerWidget: factory }, value)) return undefined;
+}
+
+export async function waitForMixcloudWidget(
+	value: unknown,
+): Promise<MixcloudWidget> {
+	// biome-ignore lint/suspicious/noThenProperty: Validating Mixcloud's documented Promises/A+ readiness object.
+	if (!isMatching({ ready: { then: callable } }, value)) {
+		throw new Error("Mixcloud widget readiness is unavailable.");
+	}
+	// Await the original thenable with its receiver intact (Promises/A+).
+	await new Promise<unknown>((resolve, reject) => {
+		value.ready.then(resolve, reject);
+	});
+	if (!isWidget(value)) {
+		throw new Error("Mixcloud widget playback API is unavailable.");
+	}
+	return value;
+}
+
+function readApi(value: unknown): MixcloudApi | undefined {
+	if (!isMatching({ PlayerWidget: callable }, value)) return undefined;
 	return { PlayerWidget: (iframe) => value.PlayerWidget(iframe) };
 }
 
