@@ -10,7 +10,7 @@ const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
 
 <BaseLayout
   title="Explore | Other Desert Radio"
-  page="explore"
+  page={{ name: "explore" }}
   returning_page="home"
 >
   <CategoryTabs active="explore" />

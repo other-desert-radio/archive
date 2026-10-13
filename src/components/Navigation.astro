@@ -1,8 +1,9 @@
 ---
 import Miniplayer from "./Miniplayer";
+import type { Page } from "../types/page";
 
 type Props = {
-  page: "explore" | "shows" | "djs" | "history" | "dj_page" | "show_page";
+  page: Page;
   returning_page: "shows" | "djs" | "home";
 };
 
@@ -21,7 +22,7 @@ const returnHref = (() => {
 })();
 
 const title = (() => {
-  switch (page) {
+  switch (page.name) {
     case "explore":
     case "history":
     case "shows":
@@ -29,15 +30,19 @@ const title = (() => {
       return "archive";
     }
     case "dj_page":
+    case "tag_page":
     case "show_page": {
-      return page;
+      return page.name;
     }
   }
 })();
 ---
 
 <header data-site-header>
-  <nav aria-label="Navigation title">
+  <nav
+    aria-label="Navigation title"
+    style={page.name === "tag_page" ? { backgroundColor: page.color } : undefined}
+  >
     <a
       class="leading-box"
       title={`Return to ${returning_page}`}

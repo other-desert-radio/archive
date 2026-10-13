@@ -29,7 +29,7 @@ const { /*shows, djs,*/ tag } = Astro.props as Props;
 ---
 
 <BaseLayout
-  page="tag_page"
+  page={{ name: "tag_page", color: tag.color }}
   returning_page="shows"
   title={`${tag.title} | Other Desert Radio`}
 >

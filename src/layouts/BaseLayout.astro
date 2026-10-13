@@ -1,15 +1,16 @@
 ---
 import { ClientRouter } from "astro:transitions";
+import type { Page } from "../types/page";
 
 type Props = {
   title: string;
-  page: "explore" | "shows" | "djs" | "history" | "dj_page" | "show_page";
+  page: Page;
   returning_page: "shows" | "djs" | "home";
 };
 
 const {
   title = "Archive Site",
-  page = "shows",
+  page = { name: "shows" },
   returning_page = "home",
 } = Astro.props;
 import "../styles/global.css";
