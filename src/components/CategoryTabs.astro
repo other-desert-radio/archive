@@ -1,34 +1,67 @@
 ---
 const base = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/`;
 type Props = {
-  active: "shows" | "djs";
+  active: "explore" | "shows" | "djs" | "history";
 };
 
 const { active } = Astro.props;
 ---
 
 <div class="tabs">
+  <a
+    href={`${base}explore`}
+    aria-current={active === "explore" ? "page" : undefined}>EXPLORE</a
+  >
+  <!--- TODO: have explore be the base -->
   <a href={base} aria-current={active === "shows" ? "page" : undefined}>SHOWS</a
   >
   <a href={`${base}djs`} aria-current={active === "djs" ? "page" : undefined}
     >DJs</a
+  >
+  <a
+    href={`${base}history`}
+    aria-current={active === "history" ? "page" : undefined}>HISTORY</a
   >
 </div>
 
 <style>
   .tabs {
     display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: var(--space-sm);
-    margin-top: var(--space-md);
-    margin-bottom: var(--space-sm);
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+
+    gap: var(--space-lg);
+
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-md);
   }
 
   a {
+    flex-shrink: 0;
+    white-space: nowrap;
     text-decoration: none;
     color: black;
     font-size: var(--tabs-font-size);
+  }
+
+  @media (max-width: 750px) {
+    .tabs {
+      gap: clamp(var(--space-sm), 4vw, var(--space-lg));
+      padding-inline: 0;
+    }
+
+    a {
+      font-size: clamp(0.875rem, 3.5vw, var(--tabs-font-size));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .tabs {
+      justify-content: space-between;
+    }
   }
 
   @media (hover: hover) and (pointer: fine) {

@@ -46,8 +46,11 @@ in place. Shared detail classes keep show and DJ artwork, gaps, and wrapping
 consistent. Verify these layouts in the browser, including long names and
 tags, at 320px, 332px, 750px, 1440px, and wide desktop widths.
 
-Category tabs and navigation items wrap naturally when their combined widths
-exceed the available space. Keep each tab and the return link together, and
+Category tabs stay on one row, with smaller fluid text, reduced gaps and no
+extra inline padding at 750px and below. They spread across the available width
+at 600px and below and form a left-aligned group on larger screens.
+Navigation items wrap naturally when
+their combined widths exceed the available space. Keep the return link together, and
 allow the navigation title to wrap within its own line on tiny screens.
 Hover effects are limited to `(hover: hover) and (pointer: fine)`; links and
 buttons use `touch-action: manipulation` to avoid waiting for double taps.
