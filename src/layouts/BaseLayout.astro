@@ -19,14 +19,17 @@ import Navigation from "../components/Navigation.astro";
 ---
 
 <!doctype html>
-<html
-  lang="en"
-  transition:animate="none"
-  style={page.name === "tag_page" ? { background: page.color } : undefined}
->
+<html lang="en" transition:animate="none">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta
+      name="theme-color"
+      content={page.name === "tag_page" ? page.color : "#000000"}
+    />
     <title>{title}</title>
     <ClientRouter fallback="swap" />
   </head>
