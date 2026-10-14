@@ -6,6 +6,13 @@ import {
 	type MixcloudWidget,
 } from "../../../src/components/mixcloud";
 import { AudioStore } from "../../../src/stores/audio";
+import fixtureShows from "../../res/shows.json";
+
+const fixtureShow = fixtureShows[0];
+if (!fixtureShow) {
+	throw new Error("Expected a show fixture.");
+}
+const show = fixtureShow;
 
 function deferred<T>() {
 	let resolve!: (value: T) => void;
@@ -60,7 +67,7 @@ function fixture() {
 	};
 	const select = (name: string) =>
 		store.select({
-			title: name,
+			show: { ...show, title: name },
 			source: { kind: "mixcloud", cloudcastKey: `/dj/${name}/` },
 		});
 	return {
@@ -153,7 +160,7 @@ test("clear or SAMCast selection before readiness produces no Mixcloud load", as
 		if (action === "clear") f.store.clear();
 		else
 			f.store.select({
-				title: "Live",
+				show: { ...show, title: "Live" },
 				source: { kind: "samcast", streamUrl: "https://example.com/live" },
 			});
 		f.ready.resolve(f.widget);
@@ -237,7 +244,7 @@ test("clear and source changes pause immediately and after pending play settles"
 			f.store.clear();
 		} else {
 			f.store.select({
-				title: "Live",
+				show: { ...show, title: "Live" },
 				source: { kind: "samcast", streamUrl: "https://example.com/live" },
 			});
 		}

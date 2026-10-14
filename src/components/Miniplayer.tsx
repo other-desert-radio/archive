@@ -18,7 +18,7 @@ function ActiveMiniplayer({ track }: { track: AudioTrack }) {
 			return (
 				<div className={styles["miniplayer"]} data-miniplayer>
 					<div className={styles["controls"]}>
-						<span className={styles["title"]}>{track.title}</span>
+						<span className={styles["title"]}>{track.show.title}</span>
 						<div className={styles["widget-slot"]}>
 							<MixcloudWidget
 								initialCloudcastKey={track.source.cloudcastKey}
@@ -40,7 +40,7 @@ function ActiveMiniplayer({ track }: { track: AudioTrack }) {
 	return (
 		<div className={styles["miniplayer"]} data-miniplayer>
 			<div className={styles["controls"]}>
-				<span className={styles["title"]}>{track.title}</span>
+				<span className={styles["title"]}>{track.show.title}</span>
 			</div>
 			<div className={styles["progress-track"]} aria-hidden="true" />
 		</div>

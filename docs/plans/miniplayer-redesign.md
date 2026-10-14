@@ -4,7 +4,7 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 
 ## Decisions
 
-- Carry the full Show through AudioTrack; generic tracks may omit it.
+- Require the full Show on AudioTrack; read its title from show.title.
 - Desktop: linked DJ names, divider, linked show title; ellipsis until marquee work.
 - Mobile through 600px: hide metadata when adding the right-aligned expand button.
 - Desktop icons: text heart and fullscreen symbols, initially inert.
@@ -15,9 +15,9 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 ## Progress and review boundaries
 
 - Structure approved: reuse existing store, show converter, Miniplayer and CSS.
-- Contract stage: optional AudioTrack.show and full Show converter input.
-  Await review before flowing show data.
-- Next: flow Show through converter and test store propagation; stop for review.
+- Contract approved, then revised by request: show is required; remove duplicate title.
+- Show now flows through converter and store; existing title rendering reads show.title.
+  Await review before desktop link rendering.
 - Then: render desktop links and ellipsis; stop for review.
 - Feature 2: desktop heart/fullscreen buttons, unwired.
 - Feature 3: mobile expand button, unwired, hide compact metadata.

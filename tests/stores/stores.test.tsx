@@ -8,10 +8,19 @@ import {
 	useStores,
 } from "../../src/stores";
 import { useAudioState } from "../../src/stores/audio";
+import fixtureShows from "../res/shows.json";
+
+const fixtureShow = fixtureShows[0];
+if (!fixtureShow) {
+	throw new Error("Expected a show fixture.");
+}
+const show = fixtureShow;
 
 function TrackProbe() {
 	const audio = useStores().audioStore.getSnapshot();
-	return <span>{audio.status === "idle" ? "idle" : audio.track.title}</span>;
+	return (
+		<span>{audio.status === "idle" ? "idle" : audio.track.show.title}</span>
+	);
 }
 
 function ServerSnapshotProbe() {
@@ -26,7 +35,7 @@ test("fresh store sets have independent playback and subscriptions", () => {
 	let secondNotifications = 0;
 	const unsubscribe = second.audioStore.subscribe(() => secondNotifications++);
 	first.audioStore.select({
-		title: "First show",
+		show: { ...show, title: "First show" },
 		source: { kind: "mixcloud", cloudcastKey: "/dj/first/" },
 	});
 	assert.deepEqual(second.audioStore.getSnapshot(), { status: "idle" });
@@ -38,11 +47,11 @@ test("React providers inject the selected store without affecting other trees", 
 	const first = createStores();
 	const second = createStores();
 	first.audioStore.select({
-		title: "First show",
+		show: { ...show, title: "First show" },
 		source: { kind: "mixcloud", cloudcastKey: "/dj/first/" },
 	});
 	second.audioStore.select({
-		title: "Second show",
+		show: { ...show, title: "Second show" },
 		source: { kind: "samcast", streamUrl: "https://example.com/live" },
 	});
 	const markup = renderToStaticMarkup(
@@ -71,7 +80,7 @@ test("components without an override use the application stores", () => {
 test("injected playback does not change the idle server hydration snapshot", () => {
 	const injected = createStores();
 	injected.audioStore.select({
-		title: "Selected show",
+		show: { ...show, title: "Selected show" },
 		source: { kind: "mixcloud", cloudcastKey: "/dj/selected/" },
 	});
 	assert.equal(

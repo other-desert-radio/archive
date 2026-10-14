@@ -3,6 +3,13 @@ import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import Miniplayer from "../../src/components/Miniplayer";
 import { AudioStore, type AudioTrack, StoresProvider } from "../../src/stores";
+import fixtureShows from "../res/shows.json";
+
+const fixtureShow = fixtureShows[0];
+if (!fixtureShow) {
+	throw new Error("Expected a show fixture.");
+}
+const show = fixtureShow;
 
 // Render selected UI without a browser. Production stores keep SSR idle.
 class SelectedSnapshotStore extends AudioStore {
@@ -25,7 +32,7 @@ test("idle miniplayer renders no widget", () => {
 
 test("Mixcloud renders one widget and one title without hover expansion", () => {
 	const html = selectedMarkup({
-		title: "Selected show",
+		show: { ...show, title: "Selected show" },
 		source: { kind: "mixcloud", cloudcastKey: "/dj/show/" },
 	});
 	assert.equal((html.match(/<iframe/g) ?? []).length, 1);
@@ -42,7 +49,7 @@ test("Mixcloud renders one widget and one title without hover expansion", () => 
 
 test("SAMCast keeps its title and progress without fullscreen controls or a widget", () => {
 	const html = selectedMarkup({
-		title: "Live broadcast",
+		show: { ...show, title: "Live broadcast" },
 		source: { kind: "samcast", streamUrl: "https://example.com/live" },
 	});
 	assert.ok(html.includes("Live broadcast"));
@@ -55,7 +62,7 @@ test("SAMCast keeps its title and progress without fullscreen controls or a widg
 test("clearing a selected track removes the player content", () => {
 	const audioStore = new SelectedSnapshotStore();
 	audioStore.select({
-		title: "Selected show",
+		show: { ...show, title: "Selected show" },
 		source: { kind: "mixcloud", cloudcastKey: "/dj/show/" },
 	});
 	audioStore.clear();

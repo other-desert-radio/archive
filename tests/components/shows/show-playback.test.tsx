@@ -27,7 +27,7 @@ class SelectedSnapshotStore extends AudioStore {
 
 test("show URLs become keys without tracking params and reject other sources", () => {
 	assert.deepEqual(mixcloudShowTrack(show), {
-		title: "Show",
+		show,
 		source: { kind: "mixcloud", cloudcastKey: "/dj/show/" },
 	});
 	for (const url of [
@@ -88,4 +88,37 @@ test("card renders accessible play/pause controls and retains the selected overl
 	audioStore.confirmPaused(request.track);
 	assert.ok(render().includes('aria-label="Play Show"'));
 	assert.ok(render().includes('data-selected="true"'));
+});
+
+test("full show metadata survives playback requests and state transitions", () => {
+	const selectedShow = {
+		...show,
+		djs: [
+			{
+				id: 2,
+				title: "DJ",
+				image_small: "dj.jpg",
+				image_large: "dj-large.jpg",
+			},
+		],
+		tagIds: [1, 2],
+	};
+	const track = mixcloudShowTrack(selectedShow);
+	assert.equal(track.show, selectedShow);
+	const store = new AudioStore();
+	store.select(track);
+	const request = store.getRequestSnapshot();
+	assert.ok(request && request.action === "load");
+	assert.equal(request.track.show, selectedShow);
+	store.confirmPlaying(request.track);
+	store.pause();
+	store.confirmPaused(request.track);
+	store.play();
+	store.reportError(request.track, "Playback failed");
+	const state = store.getSnapshot();
+	assert.ok(state.status === "error");
+	assert.equal(state.track.show, selectedShow);
+	const resume = store.getRequestSnapshot();
+	assert.ok(resume && resume.action === "play");
+	assert.equal(resume.track.show, selectedShow);
 });

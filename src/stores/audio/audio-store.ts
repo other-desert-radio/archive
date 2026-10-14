@@ -5,9 +5,8 @@ export type PlaybackSource =
 	| Readonly<{ kind: "samcast"; streamUrl: string }>;
 
 export type AudioTrack = Readonly<{
-	title: string;
 	source: PlaybackSource;
-	show?: Show;
+	show: Show;
 }>;
 
 export type AudioState =

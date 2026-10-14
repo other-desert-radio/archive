@@ -14,7 +14,7 @@ export function mixcloudShowTrack(show: Show): AudioTrack {
 		throw new Error("Expected a Mixcloud show URL.");
 	}
 	return {
-		title: show.title,
+		show,
 		source: { kind: "mixcloud", cloudcastKey: url.pathname },
 	};
 }
