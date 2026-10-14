@@ -1,3 +1,5 @@
+import type { Show } from "../../utils/fetch-shows";
+
 export type PlaybackSource =
 	| Readonly<{ kind: "mixcloud"; cloudcastKey: string }>
 	| Readonly<{ kind: "samcast"; streamUrl: string }>;
@@ -5,6 +7,7 @@ export type PlaybackSource =
 export type AudioTrack = Readonly<{
 	title: string;
 	source: PlaybackSource;
+	show?: Show;
 }>;
 
 export type AudioState =

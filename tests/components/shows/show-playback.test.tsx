@@ -36,7 +36,7 @@ test("show URLs become keys without tracking params and reject other sources", (
 		"https://www.mixcloud.com.evil.com/dj/show/",
 		"http://www.mixcloud.com/dj/show/",
 	]) {
-		assert.throws(() => mixcloudShowTrack({ title: "Show", url }));
+		assert.throws(() => mixcloudShowTrack({ ...show, url }));
 	}
 });
 
@@ -59,6 +59,7 @@ test("card selects, pauses pending/playing audio, and resumes the same selection
 	assert.ok(resume && resume.action !== "clear");
 	assert.equal(resume.track, request.track);
 	const next = mixcloudShowTrack({
+		...show,
 		title: "Next",
 		url: "https://mixcloud.com/dj/next/",
 	});
