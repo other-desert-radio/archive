@@ -73,12 +73,37 @@ const title = (() => {
   // --miniplayer-height on the root, so BaseLayout can reserve mobile space.
   // The returned cleanup releases the observer when this bar is replaced.
   function observeMiniplayerHeight(bar: HTMLElement): () => void {
-    void bar;
-    throw new Error("Not implemented");
+    const updateHeight = () => {
+      document.documentElement.style.setProperty(
+        "--miniplayer-height",
+        `${bar.getBoundingClientRect().height}px`,
+      );
+    };
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(bar);
+    updateHeight();
+
+    return () => {
+      observer.disconnect();
+      document.documentElement.style.removeProperty("--miniplayer-height");
+    };
   }
 
-  // Disconnected until implementation; existing navigation remains functional.
-  void observeMiniplayerHeight;
+  let stopObservingMiniplayer: (() => void) | undefined;
+
+  // Rebind after both normal page swaps and the iframe-preserving swap.
+  // Root attributes are replaced during navigation even when the bar persists.
+  function initializeMiniplayerHeight(): void {
+    stopObservingMiniplayer?.();
+    stopObservingMiniplayer = undefined;
+    const bar = document.querySelector<HTMLElement>("[data-miniplayer-bar]");
+    if (bar) {
+      stopObservingMiniplayer = observeMiniplayerHeight(bar);
+    }
+  }
+
+  initializeMiniplayerHeight();
+  document.addEventListener("astro:page-load", initializeMiniplayerHeight);
 
   function updateTagReturn() {
     const link = document.querySelector<HTMLAnchorElement>("[data-tag-return]");
