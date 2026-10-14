@@ -23,6 +23,11 @@ and adjust existing work rather than restarting planning. "Finish the rest"
 or "skip ahead and finish" switches the remaining task to one-shot; type or
 structure corrections authorize only those corrections.
 
+When a chunk is complete, summarize the result and ask for approval of the
+current chunk. After that approval request, briefly describe the next chunk
+and its scope, or state that no chunks remain. Describing the next chunk does
+not authorize starting it; wait for the required approval or request.
+
 ## Chunked stages
 
 ### 1. File structure

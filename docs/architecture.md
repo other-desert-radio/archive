@@ -54,44 +54,12 @@ navigation resolves known tag IDs in the browser on initial load and
 `astro:page-load`, returning to the tag instead of the default listing.
 Missing or invalid IDs retain the default SHOWS or DJs return destination.
 
-`Navigation.astro` mounts `Miniplayer.tsx` with `client:load` and the stable
-`transition:persist="miniplayer"` name across all pages using `BaseLayout`.
-The island sits in a full-width charcoal bar below the navigation, inside the
-shared sticky header. `src/utils/preserve-player-navigation.ts` customizes
-Astro's swap to keep the body and header attached, replacing navigation and
-the remaining body content only when the miniplayer contains an iframe and
-the browser lacks `moveBefore()`. Idle navigation uses Astro's default swap.
-This prevents iframe reloads in browsers that
-cannot move iframes without resetting their documents. Navigation links and
-page titles still update; pages without the shared header use Astro's default swap.
-`src/stores/audio/audio-store.ts` defines the store class with immutable idle,
-loading, playing, paused, and error snapshots. Mixcloud sources identify a
-cloudcast key; SAMCast sources identify a stream URL. A separate subscription
-publishes load/play/pause/clear requests to future source adapters. Adapter
-confirmations update display state without republishing playback commands;
-callbacks from old selections are ignored. `src/stores/stores.ts` creates the application's shared
-instances and exports `createStores()` for isolated instances. React consumers
-read dependencies through `useStores()` in `src/stores/stores-context.tsx`, which
-defaults to the application stores and supports `StoresProvider` overrides.
-`use-audio-state.ts` subscribes via React's
-`useSyncExternalStore`, with a stable idle server snapshot for static HTML and
-hydration. AudioTrack carries the full required Show and its playback source; the title is read
-from show.title. The miniplayer reads this store. The miniplayer is hidden while
-idle and shows the selected track in every other state. Clearing the track
-unmounts the visible player. The compact
-Mixcloud branch renders one visible widget and owns its adapter lifecycle;
-the SAMCast branch retains its title/progress scaffold. Fullscreen components,
-controls, and modal state have been removed; fullscreen presentation is deferred.
-`src/components/mixcloud/mixcloud-adapter.ts` now provides an independent
-adapter with request subscription, readiness gating, serialized show loads and
-play/pause commands, error reporting, and disposal. It requests a pause on clear,
-source changes, and disposal. Widget play/pause events confirm the loaded
-selection, and error events report playback failure. Events during loads are
-ignored; disposal removes listeners. `MixcloudWidget` creates it using the
-context's `audioStore` and the widget readiness promise, then disposes it on
-cleanup. Command completion alone does not confirm playback. Show-card controls select, pause, and resume through the same store;
-the widget stays attached during internal archive navigation. Full reloads
-and navigation outside the archive still end playback.
+The shared header mounts a persisted React miniplayer backed by the audio store.
+Show selections carry the full Show and a validated playback source. The widget
+stays attached during internal navigation to avoid interrupting playback;
+full reloads and navigation outside the archive end playback. See
+[Miniplayer](miniplayer.md) for player data flow, adapter lifecycle, responsive
+layout and iframe-preserving navigation.
 
 `ShowsPane` is hydrated with `client:load`; each show card subscribes to playback
 state and renders an artwork overlay control. Metadata and detail links retain

@@ -18,11 +18,56 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 - Contract approved, then revised by request: show is required; remove duplicate title.
 - Show now flows through converter and store; existing title rendering reads show.title.
 - Desktop DJ/show links and ellipsis implemented; mobile plain title retained.
-  Await review before feature 2.
-- Feature 2: desktop heart/fullscreen buttons, unwired.
-- Feature 3: mobile expand button, unwired, hide compact metadata.
-- Feature 4: wire expand/close, preserve iframe, handle focus/Escape and background
-  isolation, add public/assets/icons/close.svg. Stop for evaluation afterward.
+- Feature 2 implemented: desktop text heart/fullscreen buttons after the iframe,
+  accessible labels, hidden through 600px, no handlers. Approved.
+- Feature 3 implemented: content-width mobile expand button above the right edge,
+  unwired, compact metadata and desktop actions hidden. Desktop wrapping preserved.
+  Approved; feature 4 structure review is next.
+- Feature 4: wire expand/close, preserve iframe and lock background scrolling,
+  add public/assets/icons/close.svg. Keyboard/focus work is deferred.
+
+## Fullscreen structure
+
+- Miniplayer.tsx: local compact/fullscreen state, header and close control;
+  retain the same widget at its existing position in the React tree.
+- Miniplayer.module.css: viewport overlay and responsive widget positioning;
+  preserve compact desktop wrapping.
+- public/assets/icons/close.svg: new empty asset, populate during implementation.
+- Existing player tests and miniplayer.md: verify/document implemented behavior.
+- Expand controls -> local presentation state -> existing container styling.
+  Closing restores compact presentation; no audio-store or adapter changes.
+- Keep the outer bar's compact height independent of the expanded container,
+  so Navigation's existing observer never reserves a viewport of page padding.
+- Structure approved. Scaffolding adds PlayerPresentation (compact/fullscreen),
+  compact-initialized local state and a hidden station/close header. No handlers,
+  effects or fullscreen styles yet; the SVG remains empty and unreferenced.
+- Scaffold approved. Visual expand/close and close SVG implemented. The existing
+  iframe stays attached; a shell reserves compact height. Browser coverage passes
+  at 390, 600, 601, 750 and 1440px, including iframe document identity and clearance.
+- FullscreenNav extracted and conditionally mounted; shared iframe remains mounted.
+- Background scroll lock implemented with fixed body, saved styles/scroll position
+  and cleanup on close/unmount. Browser tests cover locking, restoration and
+  resuming scroll at all five widths. Physical iOS verification remains manual.
+- Refactor requested before keyboard/focus work. Approved miniplayer/ structure:
+  public index, working Miniplayer and CSS, FullscreenNav, TrackTitle,
+  CompactActions, usePlayerPresentation, scroll-lock.
+- Scaffolding: moved working player/CSS and updated imports; added typed,
+  disconnected extraction stubs. Behavior remains in Miniplayer until reviewed.
+  FullscreenDetails/artwork remain deferred.
+- Scaffolding approved. Scroll-lock logic extracted unchanged into scroll-lock.ts;
+  the existing presentation effect acquires the lock and returns its cleanup.
+- Scroll-lock extraction approved. usePlayerPresentation now owns presentation
+  state, compact-height measurement, expand/close and scroll-lock cleanup.
+  Miniplayer consumes its returned state/ref/callbacks; markup remains unchanged.
+- Presentation hook approved. FullscreenNav, TrackTitle, MobileExpand and
+  DesktopActions extracted into the scaffolded files, preserving markup/styles.
+  Miniplayer now composes these components around the single shared widget.
+- Visual extraction approved; refactor complete.
+- Keyboard/focus work removed at user request after Firefox Escape remained
+  unreliable. Escape handling, focus guards/restoration, inert background and
+  modal semantics are deferred. Expand/X and scroll locking remain functional.
+- Stop for evaluation. FullscreenDetails/artwork/tags/favorites and marquee
+  remain deferred; no automatic next implementation chunk.
 
 ## Verification
 

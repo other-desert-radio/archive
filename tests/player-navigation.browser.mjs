@@ -218,3 +218,75 @@ browser("click", `a[href='${basePath}/djs']`);
 browser("wait", "a[aria-label^='View ']");
 verifyIdleSwap(`${basePath}/djs`);
 console.log("Idle navigation uses the default swap; active player document survives listing/detail/back/forward navigation; bottom docking, dynamic clearance, viewport background and responsive widths pass.");
+
+
+// Exercise the real React player with a same-origin iframe document, so
+// fullscreen identity checks do not depend on Mixcloud network/playback readiness.
+browser("open", `${base}/`);
+browser("wait", "button[aria-label^='Play ']");
+evaluate("document.querySelector('button[aria-label^=\"Play \"]').click(); true");
+browser("wait", "[data-miniplayer] iframe");
+evaluate(`(() => {
+	window.fullscreenFrame = document.querySelector('[data-miniplayer] iframe');
+	window.fullscreenFrame.srcdoc = '<p>Fullscreen playback fixture</p>';
+	return true;
+})()`);
+browser("wait", "--fn", "window.fullscreenFrame.contentDocument?.body.textContent.includes('Fullscreen playback fixture')");
+evaluate("window.fullscreenDocument = window.fullscreenFrame.contentDocument; true");
+for (const width of [390, 600, 601, 750, 1440]) {
+	browser("set", "viewport", String(width), "844");
+	evaluate("window.scrollTo(0, 200); true");
+	const savedScrollY = evaluate("window.scrollY");
+	const savedBodyStyles = evaluate("document.body.style.cssText");
+	const compactHeight = evaluate("document.querySelector('[data-miniplayer-bar]').getBoundingClientRect().height");
+	const expand = width <= 600
+		? '[data-miniplayer] > button[aria-label="Expand player"]'
+		: '[data-miniplayer] div > button[aria-label="Expand player"]';
+	browser("click", expand);
+	browser("wait", '[data-presentation="fullscreen"]');
+	browser("wait", "--fn", "document.body.style.position === 'fixed'");
+	const lockedTop = evaluate("document.body.getBoundingClientRect().top");
+	browser("scroll", "down", "400");
+	assert.equal(evaluate("document.body.getBoundingClientRect().top"), lockedTop);
+	assert.equal(evaluate("getComputedStyle(document.documentElement).overflow"), "hidden");
+	const fullscreen = evaluate(`(() => {
+		const player = document.querySelector('[data-miniplayer]');
+		const rect = player.getBoundingClientRect();
+		const frame = player.querySelector('iframe');
+		return {
+			x: rect.x, y: rect.y, width: rect.width, height: rect.height,
+			viewportWidth: innerWidth, viewportHeight: innerHeight,
+			barHeight: document.querySelector('[data-miniplayer-bar]').getBoundingClientRect().height,
+			sameFrame: frame === window.fullscreenFrame,
+			sameDocument: frame.contentDocument === window.fullscreenDocument,
+			frameBottom: frame.getBoundingClientRect().bottom,
+			background: getComputedStyle(player).backgroundColor,
+			heartHidden: getComputedStyle(player.querySelector('[aria-label="Favorite show"]').parentElement).display === 'none',
+			closeVisible: player.querySelector('[aria-label="Close player"]').getBoundingClientRect().width > 0,
+			overflow: document.documentElement.scrollWidth > innerWidth
+		};
+	})()`);
+	assert.equal(fullscreen.x, 0);
+	assert.equal(fullscreen.y, 0);
+	assert.equal(fullscreen.width, fullscreen.viewportWidth);
+	assert.equal(fullscreen.height, fullscreen.viewportHeight);
+	assert.ok(Math.abs(fullscreen.barHeight - compactHeight) < 1);
+	assert.equal(fullscreen.sameFrame, true);
+	assert.equal(fullscreen.sameDocument, true);
+	assert.equal(fullscreen.background, "rgb(0, 0, 0)");
+	assert.equal(fullscreen.heartHidden, true);
+	assert.equal(fullscreen.closeVisible, true);
+	assert.equal(fullscreen.overflow, false);
+	if (width <= 600) {
+		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);
+	}
+	browser("click", '[data-miniplayer] button[aria-label="Close player"]');
+	browser("wait", '[data-presentation="compact"]');
+	browser("wait", "--fn", "document.body.style.position !== 'fixed'");
+	assert.equal(evaluate("window.scrollY"), savedScrollY);
+	assert.equal(evaluate("document.body.style.cssText"), savedBodyStyles);
+	browser("scroll", "down", "100");
+	assert.ok(evaluate("window.scrollY") > savedScrollY);
+	assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame && window.fullscreenFrame.contentDocument === window.fullscreenDocument"), true);
+}
+console.log("Fullscreen expand/close, scroll restoration and iframe identity pass on mobile and desktop widths.");
