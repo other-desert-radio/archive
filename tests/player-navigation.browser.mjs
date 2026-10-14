@@ -326,3 +326,27 @@ for (const [width, height] of [[390, 844], [600, 844], [601, 844], [750, 844], [
 	assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame && window.fullscreenFrame.contentDocument === window.fullscreenDocument"), true);
 }
 console.log("Fullscreen expand/close, scroll restoration and iframe identity pass on mobile and desktop widths.");
+
+// Fullscreen archive links close the persisted presentation before navigating.
+for (const width of [390, 1440]) {
+	browser("set", "viewport", String(width), "844");
+	for (const selector of [
+		'[class*="fullscreen-tags"] a',
+		'[class*="fullscreen-djs"] a',
+		'[class*="fullscreen-title"]',
+	]) {
+		const expand = width <= 600
+			? '[data-miniplayer] > button[aria-label="Expand player"]'
+			: '[data-miniplayer] div > button[aria-label="Expand player"]';
+		browser("click", expand);
+		browser("wait", '[data-presentation="fullscreen"]');
+		const destination = evaluate(`new URL(document.querySelector(${JSON.stringify(selector)}).href).pathname`);
+		// Clicking the nested span/div exercises event bubbling from TagView/DJ content.
+		evaluate(`(() => { const link = document.querySelector(${JSON.stringify(selector)}); (link.lastElementChild ?? link).click(); return true; })()`);
+		browser("wait", "--fn", `location.pathname === ${JSON.stringify(destination)}`);
+		browser("wait", '[data-presentation="compact"]');
+		browser("wait", "--fn", "document.body.style.position !== 'fixed' && getComputedStyle(document.documentElement).overflow !== 'hidden'");
+		assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame && window.fullscreenFrame.contentDocument === window.fullscreenDocument"), true);
+	}
+}
+console.log("Fullscreen tag, DJ and show links dismiss the overlay, release scroll lock and preserve the iframe through navigation.");

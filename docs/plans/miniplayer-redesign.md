@@ -145,6 +145,12 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
   the existing large TagView in an archive link; no duplicate color/sizing markup.
 - Added focused DJ/heart tests and browser assertions for visible controls and
   DJ destinations. Await row review; alignment/header/integrated checks remain.
+- Requested navigation fix: show title calls close directly; tags and DJs
+  receive onNavigate={close} and invoke it on their anchor clicks. Navigation
+  remains native; the existing close effect releases scroll locking.
+- Added mobile/desktop actual tag, DJ and show navigation regression checks
+  for compact presentation, released scroll lock and preserved iframe document.
+  Await review of this fix before proceeding with alignment/header work.
 - Stop for approval after every unit. Do not advance from structure to
   scaffolding without an explicit request.
 

@@ -59,7 +59,9 @@ outside the measured bar above its top edge.
 ## Fullscreen presentation
 
 Both expand controls switch local presentation state to fullscreen; the close
-button restores compact presentation. The same player container becomes fixed
+button restores compact presentation. Activating fullscreen show, tag or DJ
+links also closes fullscreen and releases scroll locking while normal archive
+navigation preserves the playing iframe. The same player container becomes fixed
 and fills the viewport with a black background, a station header and a close SVG.
 Compact metadata and actions are hidden. The existing iframe stays mounted in
 its original position in the React tree: at the viewport bottom on mobile and

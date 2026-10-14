@@ -80,12 +80,18 @@ function ActiveMiniplayer({
 										className={styles["fullscreen-title"]}
 										href={`${base}/shows/${track.show.id}`}
 										aria-label={`View ${track.show.title}`}
+										onClick={close}
 									>
 										{track.show.title}
 									</a>
 								)}
 								{presentation === "fullscreen" && (
-									<FullscreenTags show={track.show} base={base} tags={tags} />
+									<FullscreenTags
+										show={track.show}
+										base={base}
+										tags={tags}
+										onNavigate={close}
+									/>
 								)}
 							</div>
 							<TrackTitle
@@ -115,7 +121,11 @@ function ActiveMiniplayer({
 								hidden={presentation !== "fullscreen"}
 							>
 								{presentation === "fullscreen" && (
-									<FullscreenDJs show={track.show} base={base} />
+									<FullscreenDJs
+										show={track.show}
+										base={base}
+										onNavigate={close}
+									/>
 								)}
 							</div>
 							<DesktopActions

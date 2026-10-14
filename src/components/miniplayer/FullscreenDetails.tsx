@@ -8,6 +8,7 @@ import styles from "./Miniplayer.module.css";
 type ShowProps = {
 	show: Show;
 	base: string;
+	onNavigate?: () => void;
 };
 
 type TagsProps = ShowProps & {
@@ -15,7 +16,12 @@ type TagsProps = ShowProps & {
 };
 
 // The caller supplies the catalog; this section resolves the show's tag IDs.
-export function FullscreenTags({ show, base, tags }: TagsProps): ReactElement {
+export function FullscreenTags({
+	show,
+	base,
+	tags,
+	onNavigate,
+}: TagsProps): ReactElement {
 	return (
 		<div className={`tag-container ${styles["fullscreen-tags"]}`}>
 			{hydrateTags(show, tags).map((tag) => (
@@ -23,6 +29,7 @@ export function FullscreenTags({ show, base, tags }: TagsProps): ReactElement {
 					key={tag.id}
 					href={`${base}/tags/${tag.id}`}
 					aria-label={`Explore ${tag.title}`}
+					onClick={onNavigate}
 				>
 					<TagView tag={tag} size="large" />
 				</a>
@@ -32,7 +39,11 @@ export function FullscreenTags({ show, base, tags }: TagsProps): ReactElement {
 }
 
 // Render all DJ links/portraits; shows without DJs have no DJ section.
-export function FullscreenDJs({ show, base }: ShowProps): ReactElement | null {
+export function FullscreenDJs({
+	show,
+	base,
+	onNavigate,
+}: ShowProps): ReactElement | null {
 	if (show.djs.length === 0) {
 		return null;
 	}
@@ -43,6 +54,7 @@ export function FullscreenDJs({ show, base }: ShowProps): ReactElement | null {
 					key={dj.id}
 					href={`${base}/djs/${dj.id}`}
 					aria-label={`View ${dj.title}`}
+					onClick={onNavigate}
 					className={styles["fullscreen-dj"]}
 				>
 					{dj.image_small && <img src={`${base}/${dj.image_small}`} alt="" />}
