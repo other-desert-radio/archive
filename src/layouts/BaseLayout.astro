@@ -59,4 +59,13 @@ import Navigation from "../components/Navigation.astro";
       var(--container-grid-padding-bottom) + env(safe-area-inset-bottom)
     );
   }
+
+  @media (max-width: 600px) {
+    main {
+      padding-bottom: calc(
+        var(--container-grid-padding-bottom) +
+        max(var(--miniplayer-height, 0px), env(safe-area-inset-bottom))
+      );
+    }
+  }
 </style>

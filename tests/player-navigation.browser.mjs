@@ -16,6 +16,47 @@ function evaluate(code) {
 	return JSON.parse(browser("eval", code));
 }
 
+function verifyPlayerLayout(width) {
+	browser("wait", "--fn", `(() => {
+		const bar = document.querySelector('[data-miniplayer-bar]');
+		return Math.abs(parseFloat(document.documentElement.style.getPropertyValue('--miniplayer-height')) - bar.getBoundingClientRect().height) < 1;
+	})()`);
+	const layout = evaluate(`(() => {
+		const bar = document.querySelector('[data-miniplayer-bar]');
+		const rect = bar.getBoundingClientRect();
+		const main = document.querySelector('main');
+		const spacing = document.createElement('div');
+		spacing.style.cssText = 'position: absolute; height: var(--container-grid-padding-bottom); visibility: hidden';
+		main.append(spacing);
+		const baseClearance = spacing.getBoundingClientRect().height;
+		spacing.remove();
+		return {
+			position: getComputedStyle(bar).position,
+			bottom: rect.bottom,
+			left: rect.left,
+			right: rect.right,
+			height: rect.height,
+			viewportHeight: innerHeight,
+			viewportWidth: innerWidth,
+			navBottom: document.querySelector('nav').getBoundingClientRect().bottom,
+			top: rect.top,
+			clearance: parseFloat(getComputedStyle(main).paddingBottom),
+			baseClearance
+		};
+	})()`);
+	if (width <= 600) {
+		assert.equal(layout.position, "fixed");
+		assert.ok(Math.abs(layout.bottom - layout.viewportHeight) < 1);
+		assert.equal(layout.left, 0);
+		assert.equal(layout.right, layout.viewportWidth);
+		assert.ok(Math.abs(layout.clearance - layout.baseClearance - layout.height) < 1);
+	} else {
+		assert.equal(layout.position, "static");
+		assert.ok(Math.abs(layout.top - layout.navBottom) < 1);
+		assert.ok(Math.abs(layout.clearance - layout.baseClearance) < 1);
+	}
+}
+
 browser("open", `${base}/`);
 browser("wait", "button[aria-label^='Play ']");
 const basePath = new URL(base).pathname;
@@ -88,8 +129,11 @@ function verifyPlayer(path) {
 	assert.equal(result.connected, true);
 	assert.equal(result.loads, 1);
 	assert.equal(result.position, 123);
+	verifyPlayerLayout(evaluate("innerWidth"));
 }
 
+// Navigate with the bottom-docked player as well as checking the desktop layout.
+browser("set", "viewport", "600", "800");
 browser("click", `a[href='${basePath}/djs']`);
 browser("wait", "a[aria-label^='View ']");
 verifyPlayer(`${basePath}/djs`);
@@ -105,7 +149,7 @@ browser("click", `a[href='${basePath}/']`);
 browser("wait", "button[aria-label^='Play ']");
 verifyPlayer(basePath);
 
-for (const [width, height] of [[320, 800], [332, 600], [750, 800], [1440, 800], [844, 390]]) {
+for (const [width, height] of [[320, 800], [332, 600], [600, 800], [601, 800], [750, 800], [1440, 800], [844, 390]]) {
 	browser("set", "viewport", String(width), String(height));
 	browser("scroll", "down", "10000");
 	const layout = evaluate(`(() => {
@@ -136,8 +180,18 @@ for (const [width, height] of [[320, 800], [332, 600], [750, 800], [1440, 800], 
 	assert.ok(layout.canvasImage.includes("background.jpeg"));
 	assert.ok(layout.viewport.includes("viewport-fit=cover"));
 	assert.equal(layout.touchAction, "manipulation");
+	verifyPlayerLayout(width);
 }
 browser("scroll", "up", "10000");
+
+// Emulate an inset to verify that padding stays inside the background and the
+// measured clearance includes it. Desktop emulation has no physical iOS inset.
+browser("set", "viewport", "390", "844");
+evaluate("document.querySelector('[data-miniplayer-bar]').style.paddingBottom = '34px'; true");
+verifyPlayerLayout(390);
+evaluate("window.playerProbe.style.height = '15rem'; true");
+verifyPlayerLayout(390);
+evaluate("document.querySelector('[data-miniplayer-bar]').style.removeProperty('padding-bottom'); true");
 
 // Touch emulation must not expose the inactive tab's desktop hover border.
 browser("set", "device", "iPhone 12");
@@ -158,8 +212,9 @@ assert.equal(touchTab.highlight, "rgba(0, 0, 0, 0)");
 
 // Removing the player restores Astro's default swap on the next click.
 evaluate("window.playerProbe.remove(); true");
+browser("wait", "--fn", "document.querySelector('[data-miniplayer-bar]').getBoundingClientRect().height === 0 && document.documentElement.style.getPropertyValue('--miniplayer-height') === '0px'");
 rememberIdlePage();
 browser("click", `a[href='${basePath}/djs']`);
 browser("wait", "a[aria-label^='View ']");
 verifyIdleSwap(`${basePath}/djs`);
-console.log("Idle navigation uses the default swap; active player document survives listing/detail/back/forward navigation; viewport background and responsive widths pass.");
+console.log("Idle navigation uses the default swap; active player document survives listing/detail/back/forward navigation; bottom docking, dynamic clearance, viewport background and responsive widths pass.");

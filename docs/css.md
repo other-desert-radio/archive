@@ -71,3 +71,10 @@ the iframe sits flush right with a maximum width of 40rem. The title has a
 20rem minimum width capped at 100%, so controls wrap before the title becomes
 a narrow column. At 750px and below,
 title and widget stack to fit narrow screens without horizontal overflow.
+At 600px and below, the miniplayer bar is fixed to the viewport bottom while
+navigation stays at the top. Its background extends to the bottom edge, with
+safe-area padding inside the active bar. The title remains visible. A
+border-box resize observer publishes the full bar height as
+`--miniplayer-height`; `BaseLayout` reserves that height in its main padding,
+using the bottom safe-area inset when the player is idle. The existing player
+stays mounted inside the header to preserve its iframe across navigation.
