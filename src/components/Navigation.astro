@@ -61,7 +61,7 @@ const title = (() => {
     <span>OTHER DESERT RADIO / {title.toUpperCase()}</span>
   </nav>
   <div class="miniplayer-slot" data-miniplayer-bar>
-    <Miniplayer client:load transition:persist="miniplayer" />
+    <Miniplayer base={base} client:load transition:persist="miniplayer" />
   </div>
 </header>
 

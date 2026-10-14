@@ -21,13 +21,13 @@ function selectedMarkup(track: AudioTrack) {
 	audioStore.select(track);
 	return renderToStaticMarkup(
 		<StoresProvider stores={{ audioStore }}>
-			<Miniplayer />
+			<Miniplayer base="/archive-site" />
 		</StoresProvider>,
 	);
 }
 
 test("idle miniplayer renders no widget", () => {
-	assert.equal(renderToStaticMarkup(<Miniplayer />), "");
+	assert.equal(renderToStaticMarkup(<Miniplayer base="/archive-site" />), "");
 });
 
 test("Mixcloud renders one widget and one title without hover expansion", () => {
@@ -43,7 +43,7 @@ test("Mixcloud renders one widget and one title without hover expansion", () => 
 	assert.equal(html.includes("data-miniplayer-expansion"), false);
 
 	assert.equal(html.includes("<button"), false);
-	assert.equal((html.match(/Selected show/g) ?? []).length, 1);
+	assert.equal((html.match(/Selected show/g) ?? []).length, 3);
 	assert.equal(html.includes("<dialog"), false);
 });
 
@@ -69,9 +69,62 @@ test("clearing a selected track removes the player content", () => {
 	assert.equal(
 		renderToStaticMarkup(
 			<StoresProvider stores={{ audioStore }}>
-				<Miniplayer />
+				<Miniplayer base="/archive-site" />
 			</StoresProvider>,
 		),
 		"",
 	);
+});
+
+test("metadata links each DJ and the show using the configured base path", () => {
+	const html = selectedMarkup({
+		show: {
+			...show,
+			djs: [
+				{
+					...show.djs[0],
+					id: 12,
+					title: "First DJ",
+					image_small: "dj.jpg",
+					image_large: "dj-large.jpg",
+				},
+				{
+					id: 34,
+					title: "Second DJ",
+					image_small: "dj.jpg",
+					image_large: "dj-large.jpg",
+				},
+			],
+		},
+		source: { kind: "mixcloud", cloudcastKey: "/dj/show/" },
+	});
+	const base = "/archive-site";
+	assert.ok(
+		html.includes(
+			`href="${base}/djs/12" aria-label="View First DJ">First DJ</a>`,
+		),
+	);
+	assert.ok(
+		html.includes(
+			`href="${base}/djs/34" aria-label="View Second DJ">Second DJ</a>`,
+		),
+	);
+	assert.ok(
+		html.includes(
+			`href="${base}/shows/${show.id}" aria-label="View ${show.title}">${show.title}</a>`,
+		),
+	);
+	assert.ok(html.includes('aria-hidden="true">|</span>'));
+	assert.ok(html.indexOf("First DJ</a>") < html.indexOf("Second DJ</a>"));
+	assert.equal((html.match(/<iframe/g) ?? []).length, 1);
+});
+
+test("shows without DJs keep the show link and omit the divider", () => {
+	const html = selectedMarkup({
+		show: { ...show, djs: [] },
+		source: { kind: "mixcloud", cloudcastKey: "/dj/show/" },
+	});
+	assert.ok(html.includes(`aria-label="View ${show.title}"`));
+	assert.equal(html.includes("/djs/"), false);
+	assert.equal(html.includes('aria-hidden="true">|</span>'), false);
 });

@@ -17,8 +17,8 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 - Structure approved: reuse existing store, show converter, Miniplayer and CSS.
 - Contract approved, then revised by request: show is required; remove duplicate title.
 - Show now flows through converter and store; existing title rendering reads show.title.
-  Await review before desktop link rendering.
-- Then: render desktop links and ellipsis; stop for review.
+- Desktop DJ/show links and ellipsis implemented; mobile plain title retained.
+  Await review before feature 2.
 - Feature 2: desktop heart/fullscreen buttons, unwired.
 - Feature 3: mobile expand button, unwired, hide compact metadata.
 - Feature 4: wire expand/close, preserve iframe, handle focus/Escape and background

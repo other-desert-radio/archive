@@ -9,7 +9,7 @@
 
 .controls {
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
 	align-items: center;
 	gap: var(--space-xs);
 	min-width: 0;
@@ -18,10 +18,36 @@
 
 .title {
 	flex: 1;
-	min-width: min(100%, 20rem);
+	min-width: 0;
 	box-sizing: border-box;
-	overflow-wrap: anywhere;
 	padding: var(--space-xs) var(--nav-inline-padding);
+}
+
+.desktop-title {
+	display: block;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.title a {
+	color: inherit;
+	text-decoration: none;
+	touch-action: manipulation;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.title a:hover {
+		text-decoration: underline;
+	}
+}
+
+.divider {
+	margin-inline: var(--space-sm);
+}
+
+.mobile-title {
+	display: none;
 }
 
 .widget-slot {
@@ -36,10 +62,19 @@
 	opacity: 0.5;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 600px) {
 	.controls {
 		flex-direction: column;
 		align-items: stretch;
+	}
+
+	.desktop-title {
+		display: none;
+	}
+
+	.mobile-title {
+		display: block;
+		overflow-wrap: anywhere;
 	}
 
 	.title {
