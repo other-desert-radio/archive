@@ -255,6 +255,7 @@ for (const [width, height] of [[390, 844], [600, 844], [601, 844], [750, 844], [
 		const frame = player.querySelector('iframe');
 		const artwork = player.querySelector('[class*="fullscreen-artwork"] img');
 		const title = player.querySelector('[class*="fullscreen-title"]');
+		const tagLinks = [...player.querySelectorAll('[class*="fullscreen-tags"] a')];
 		return {
 			x: rect.x, y: rect.y, width: rect.width, height: rect.height,
 			viewportWidth: innerWidth, viewportHeight: innerHeight,
@@ -274,6 +275,8 @@ for (const [width, height] of [[390, 844], [600, 844], [601, 844], [750, 844], [
 			frameCenterY: frame.getBoundingClientRect().y + frame.getBoundingClientRect().height / 2,
 			matchingTitle: artwork.alt === title.textContent && title.textContent.length > 0,
 			showLink: title.getAttribute('href').startsWith('/archive-site/shows/'),
+			tagsVisible: tagLinks.length > 0 && tagLinks.every(link => link.getBoundingClientRect().height > 0),
+			tagDestinations: tagLinks.every(link => link.getAttribute('href').startsWith('/archive-site/tags/')),
 			overflow: document.documentElement.scrollWidth > innerWidth
 		};
 	})()`);
@@ -290,6 +293,8 @@ for (const [width, height] of [[390, 844], [600, 844], [601, 844], [750, 844], [
 	assert.equal(fullscreen.artworkVisible, true);
 	assert.equal(fullscreen.matchingTitle, true);
 	assert.equal(fullscreen.showLink, true);
+	assert.equal(fullscreen.tagsVisible, true);
+	assert.equal(fullscreen.tagDestinations, true);
 	if (width <= 1023) {
 		assert.ok(fullscreen.artworkBottom <= fullscreen.metadataTop, 'Artwork must not overlap metadata');
 		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);

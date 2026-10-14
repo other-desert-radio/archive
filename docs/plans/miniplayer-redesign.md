@@ -133,6 +133,11 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 - Updated smaller-width reference supersedes DJ-first stacking: artwork above
   metadata, shared heart/DJ row below, and space before the bottom widget.
   Adjusted existing slots only; tags, heart and DJ rendering remain later chunks.
+- Tags requested: implemented FullscreenTags with existing hydrateTags and
+  large tag styles, archive links and catalog colors. Miniplayer supplies a
+  module-level map of the existing JSON catalog; renders tags only in fullscreen.
+  Tags wrap within metadata and missing IDs retain helper logging/omission.
+- Await tags review. Next unit: heart and DJ portraits/links in the shared row.
 - Stop for approval after every unit. Do not advance from structure to
   scaffolding without an explicit request.
 

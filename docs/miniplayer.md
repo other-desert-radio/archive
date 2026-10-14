@@ -65,8 +65,11 @@ Compact metadata and actions are hidden. The existing iframe stays mounted in
 its original position in the React tree: at the viewport bottom on mobile and
 in the right-hand content area on desktop.
 
-Fullscreen controls use a grid with large show artwork and a wrapping linked
-title; slots for tags, heart and DJs remain unfinished. Above 1023px, artwork
+Fullscreen controls use a grid with large show artwork, a wrapping linked
+title and colored tag links; slots for heart and DJs remain unfinished. Tags
+resolve show tag IDs against the existing catalog, preserving their order and
+colors, and link to archive tag pages. Missing IDs use hydrateTags' existing
+logging/omission behavior. Above 1023px, artwork
 spans the left column and the other slots
 occupy the right. At 1023px and below, the slots stack as artwork, metadata,
 a shared row with heart left and DJs right, then the bottom widget. Desktop

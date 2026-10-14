@@ -1,11 +1,15 @@
+import tagCatalog from "../../res/tags.json";
 import type { AudioTrack } from "../../stores/audio";
 import { useAudioState } from "../../stores/audio";
 import MixcloudWidget from "../mixcloud";
 import { DesktopActions, MobileExpand } from "./CompactActions";
+import { FullscreenTags } from "./FullscreenDetails";
 import FullscreenNav from "./FullscreenNav";
 import styles from "./Miniplayer.module.css";
 import TrackTitle from "./TrackTitle";
 import { usePlayerPresentation } from "./usePlayerPresentation";
+
+const tags = new Map(tagCatalog.map((tag) => [tag.id, tag]));
 
 export default function Miniplayer({ base }: { base: string }) {
 	const audio = useAudioState();
@@ -75,6 +79,9 @@ function ActiveMiniplayer({
 									>
 										{track.show.title}
 									</a>
+								)}
+								{presentation === "fullscreen" && (
+									<FullscreenTags show={track.show} base={base} tags={tags} />
 								)}
 							</div>
 							<TrackTitle
