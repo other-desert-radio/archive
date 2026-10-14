@@ -64,24 +64,6 @@ The root canvas uses the same image, and `viewport-fit=cover` allows it to
 extend into safe areas; keep safe-area padding on content, not the image.
 Use neither fixed background attachment nor a negative-z-index pseudo-element.
 Navigation vertical padding belongs to the return link and title text only.
-The shared sticky header contains the navigation followed by a full-width
-miniplayer bar using `--miniplayer-background` (#25292C). The bar has no minimum height and collapses completely while idle;
-only the active player supplies the widget height. Selected metadata aligns with navigation
-text. Above 600px, individually linked DJ names precede a decorative divider and
-the linked show title. Metadata stays on one line with ellipsis, alongside the
-iframe with a maximum width of 40rem. Shows without DJs omit the divider.
-Text heart and fullscreen buttons follow the iframe; both remain
-unwired pending subsequent player work.
-At 1023px and below, metadata wraps onto its own row, with the widget aligned
-left underneath and the heart and fullscreen controls aligned right.
-At 600px and below, metadata and desktop actions are hidden. A content-width
-“expand ↑” button sits above the widget at its right edge, without a full-width
-background strip. It remains unwired pending fullscreen work.
-At 600px and below, the miniplayer bar is fixed to the viewport bottom while
-navigation stays at the top. Its background extends to the bottom edge, with
-safe-area padding inside the active bar. The expand button is positioned outside
-the measured bar above its top edge. A
-border-box resize observer publishes the full bar height as
-`--miniplayer-height`; `BaseLayout` reserves that height in its main padding,
-using the bottom safe-area inset when the player is idle. The existing player
-stays mounted inside the header to preserve its iframe across navigation.
+
+Player-specific layout and iframe persistence are documented in
+[Miniplayer](miniplayer.md).

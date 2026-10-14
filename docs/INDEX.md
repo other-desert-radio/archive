@@ -9,7 +9,8 @@ and standards. None of these links automatically imports another file.
 | --- | --- |
 | [Architecture](architecture.md) | Changing routes, rendering, stores, playback or archive data boundaries; static-first decisions and current flow. |
 | [TypeScript](typescript.md) | Implementing/refactoring TypeScript or component contracts; types, state, validation, imports and accessible labels. |
-| [CSS](css.md) | Changing styles/layout; shared tokens, allowed breakpoints and responsive behavior. |
+| [CSS](css.md) | General site styling guidance; shared tokens, allowed breakpoints and responsive behavior. |
+| [Miniplayer](miniplayer.md) | Changing player metadata, controls, responsive layout, playback flow or iframe persistence. |
 | [Testing](testing.md) | Changing behavior/tests or selecting handoff checks; commands, test placement and targeted browser regressions. |
 | [Development workflow](development-workflow.md) | Choosing chunked/one-shot mode, reviewing stages, starting development, hooks or persistent plans. |
 | [Deployment](deployment.md) | Changing hosting/build configuration or base-path URLs; GitHub Pages and production checks. |
