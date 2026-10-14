@@ -3,7 +3,11 @@ import type { AudioTrack } from "../../stores/audio";
 import { useAudioState } from "../../stores/audio";
 import MixcloudWidget from "../mixcloud";
 import { DesktopActions, MobileExpand } from "./CompactActions";
-import { FullscreenTags } from "./FullscreenDetails";
+import {
+	FullscreenDJs,
+	FullscreenHeart,
+	FullscreenTags,
+} from "./FullscreenDetails";
 import FullscreenNav from "./FullscreenNav";
 import styles from "./Miniplayer.module.css";
 import TrackTitle from "./TrackTitle";
@@ -103,11 +107,17 @@ function ActiveMiniplayer({
 							<div
 								className={styles["fullscreen-heart"]}
 								hidden={presentation !== "fullscreen"}
-							/>
+							>
+								{presentation === "fullscreen" && <FullscreenHeart />}
+							</div>
 							<div
 								className={styles["fullscreen-djs"]}
 								hidden={presentation !== "fullscreen"}
-							/>
+							>
+								{presentation === "fullscreen" && (
+									<FullscreenDJs show={track.show} base={base} />
+								)}
+							</div>
 							<DesktopActions
 								hidden={presentation === "fullscreen"}
 								onExpand={expand}

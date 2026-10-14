@@ -298,6 +298,63 @@
 	justify-self: end;
 }
 
+.fullscreen-heart-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: calc(var(--space-lg) * 2);
+	height: calc(var(--space-lg) * 2);
+	min-width: 2.75rem;
+	min-height: 2.75rem;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: #ccc;
+	touch-action: manipulation;
+}
+
+.fullscreen-heart-button svg {
+	width: 100%;
+	height: 100%;
+}
+
+.fullscreen-dj-list {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: var(--space-sm);
+}
+
+.fullscreen-dj {
+	display: flex;
+	align-items: center;
+	gap: var(--space-sm);
+	max-width: 100%;
+	color: inherit;
+	font-size: var(--font-title);
+	line-height: 1.4;
+	text-decoration: none;
+	touch-action: manipulation;
+}
+
+.fullscreen-dj img {
+	flex: 0 0 auto;
+	width: var(--space-lg);
+	height: var(--space-lg);
+	object-fit: cover;
+}
+
+.fullscreen-dj span {
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.fullscreen-dj:hover {
+		text-decoration: underline;
+	}
+}
+
 .miniplayer[data-presentation="fullscreen"] .widget-slot {
 	grid-column: 2 / 4;
 	grid-row: 2;

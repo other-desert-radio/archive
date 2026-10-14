@@ -138,6 +138,13 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
   module-level map of the existing JSON catalog; renders tags only in fullscreen.
   Tags wrap within metadata and missing IDs retain helper logging/omission.
 - Await tags review. Next unit: heart and DJ portraits/links in the shared row.
+- Tags approved; heart/DJ row requested. Implemented labeled SVG outline heart
+  (unwired), all linked DJ names and small portraits, with wrapping for long
+  names. No DJs returns null; empty portrait references omit images.
+- User requested TagView reuse during this chunk: each fullscreen tag now wraps
+  the existing large TagView in an archive link; no duplicate color/sizing markup.
+- Added focused DJ/heart tests and browser assertions for visible controls and
+  DJ destinations. Await row review; alignment/header/integrated checks remain.
 - Stop for approval after every unit. Do not advance from structure to
   scaffolding without an explicit request.
 

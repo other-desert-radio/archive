@@ -66,7 +66,10 @@ its original position in the React tree: at the viewport bottom on mobile and
 in the right-hand content area on desktop.
 
 Fullscreen controls use a grid with large show artwork, a wrapping linked
-title and colored tag links; slots for heart and DJs remain unfinished. Tags
+title, colored tag links, an unwired outline heart button and linked DJ portraits
+and names. All DJs render; shows without DJs omit their content and missing
+portrait references omit the image. Tags use the existing large TagView inside
+archive links and
 resolve show tag IDs against the existing catalog, preserving their order and
 colors, and link to archive tag pages. Missing IDs use hydrateTags' existing
 logging/omission behavior. Above 1023px, artwork

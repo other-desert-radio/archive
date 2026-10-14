@@ -256,6 +256,8 @@ for (const [width, height] of [[390, 844], [600, 844], [601, 844], [750, 844], [
 		const artwork = player.querySelector('[class*="fullscreen-artwork"] img');
 		const title = player.querySelector('[class*="fullscreen-title"]');
 		const tagLinks = [...player.querySelectorAll('[class*="fullscreen-tags"] a')];
+		const heart = player.querySelector('[class*="fullscreen-heart"] button');
+		const djLinks = [...player.querySelectorAll('[class*="fullscreen-djs"] a')];
 		return {
 			x: rect.x, y: rect.y, width: rect.width, height: rect.height,
 			viewportWidth: innerWidth, viewportHeight: innerHeight,
@@ -264,7 +266,10 @@ for (const [width, height] of [[390, 844], [600, 844], [601, 844], [750, 844], [
 			sameDocument: frame.contentDocument === window.fullscreenDocument,
 			frameBottom: frame.getBoundingClientRect().bottom,
 			background: getComputedStyle(player).backgroundColor,
-			heartHidden: getComputedStyle(player.querySelector('[aria-label="Favorite show"]').parentElement).display === 'none',
+			heartHidden: getComputedStyle(player.querySelector('[class*="desktop-actions"]')).display === 'none',
+			fullscreenHeartVisible: heart.getBoundingClientRect().width > 0,
+			djsVisible: djLinks.length > 0 && djLinks.every(link => link.getBoundingClientRect().width > 0),
+			djDestinations: djLinks.every(link => link.getAttribute('href').startsWith('/archive-site/djs/')),
 			closeVisible: player.querySelector('[aria-label="Close player"]').getBoundingClientRect().width > 0,
 			artworkVisible: artwork.getBoundingClientRect().width > 0 && artwork.getBoundingClientRect().height > 0,
 			artworkWidth: artwork.getBoundingClientRect().width,
@@ -289,6 +294,9 @@ for (const [width, height] of [[390, 844], [600, 844], [601, 844], [750, 844], [
 	assert.equal(fullscreen.sameDocument, true);
 	assert.equal(fullscreen.background, "rgb(0, 0, 0)");
 	assert.equal(fullscreen.heartHidden, true);
+	assert.equal(fullscreen.fullscreenHeartVisible, true);
+	assert.equal(fullscreen.djsVisible, true);
+	assert.equal(fullscreen.djDestinations, true);
 	assert.equal(fullscreen.closeVisible, true);
 	assert.equal(fullscreen.artworkVisible, true);
 	assert.equal(fullscreen.matchingTitle, true);
