@@ -41,8 +41,22 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 - Structure approved. Scaffolding adds PlayerPresentation (compact/fullscreen),
   compact-initialized local state and a hidden station/close header. No handlers,
   effects or fullscreen styles yet; the SVG remains empty and unreferenced.
-- Await scaffold review. Next unit: implement visual expand/close and close SVG;
-  then separately handle focus, background isolation and iframe regression checks.
+- Scaffold approved. Visual expand/close and close SVG implemented. The existing
+  iframe stays attached; a shell reserves compact height. Browser coverage passes
+  at 390, 600, 601, 750 and 1440px, including iframe document identity and clearance.
+- FullscreenNav extracted and conditionally mounted; shared iframe remains mounted.
+- Background scroll lock implemented with fixed body, saved styles/scroll position
+  and cleanup on close/unmount. Browser tests cover locking, restoration and
+  resuming scroll at all five widths. Physical iOS verification remains manual.
+- Refactor requested before keyboard/focus work. Approved miniplayer/ structure:
+  public index, working Miniplayer and CSS, FullscreenNav, TrackTitle,
+  CompactActions, usePlayerPresentation, scroll-lock.
+- Scaffolding: moved working player/CSS and updated imports; added typed,
+  disconnected extraction stubs. Behavior remains in Miniplayer until reviewed.
+  FullscreenDetails/artwork remain deferred.
+- Await scaffold review. Next unit: extract scroll-lock implementation and verify
+  cleanup. Then presentation hook/integration, then visual component extraction,
+  stopping at each boundary. Resume keyboard/focus work afterward.
 
 ## Verification
 

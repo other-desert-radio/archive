@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import Miniplayer from "../../src/components/Miniplayer";
+import Miniplayer from "../../src/components/miniplayer";
 import { AudioStore, type AudioTrack, StoresProvider } from "../../src/stores";
 import fixtureShows from "../res/shows.json";
 
@@ -42,7 +42,7 @@ test("Mixcloud renders one widget and one title without hover expansion", () => 
 	);
 	assert.equal(html.includes("data-miniplayer-expansion"), false);
 
-	assert.equal((html.match(/<button/g) ?? []).length, 4);
+	assert.equal((html.match(/<button/g) ?? []).length, 3);
 	assert.ok(html.includes('expand <span aria-hidden="true">↑</span>'));
 	assert.ok(html.includes('type="button" aria-label="Favorite show"'));
 	assert.ok(html.includes('type="button" aria-label="Expand player"'));

@@ -2,7 +2,8 @@
 
 This reference owns player-specific behavior and layout. General styling rules
 live in [CSS](css.md); verification commands and the navigation regression live
-in [Testing](testing.md).
+in [Testing](testing.md). Player implementation and styles live in
+`src/components/miniplayer/`; consumers import its public entry point.
 
 ## Data and playback
 
@@ -44,13 +45,28 @@ left underneath with the desktop controls aligned right.
 At 600px and below, the bar is fixed to the viewport bottom while navigation
 stays at the top. Metadata and desktop actions are hidden. A borderless,
 content-width “expand ↑” button sits immediately above the widget at its right
-edge, without a full-width background strip. The heart and expand controls
-currently have no handlers; fullscreen presentation is deferred.
+edge, without a full-width background strip. The heart remains unwired.
 
 Safe-area padding stays inside the active bar. A border-box ResizeObserver
 publishes its height as `--miniplayer-height`; BaseLayout reserves that height in
 main padding, using the bottom safe-area inset when idle. The expand button sits
 outside the measured bar above its top edge.
+
+## Fullscreen presentation
+
+Both expand controls switch local presentation state to fullscreen; the close
+button restores compact presentation. The same player container becomes fixed
+and fills the viewport with a black background, a station header and a close SVG.
+Compact metadata and actions are hidden. The existing iframe stays mounted in
+its original position in the React tree: at the viewport bottom on mobile and
+in the right-hand content area on desktop.
+
+A player-shell wrapper reserves the compact height measured on expand, so the
+bar's resize observer does not turn fullscreen height into page clearance.
+Fullscreen fixes the body at its current scroll offset and hides root overflow to
+lock background scrolling, including iOS touch scrolling. Closing or unmounting
+restores prior inline styles and scroll position. Scrollbar space is compensated
+to avoid shifting page content. Keyboard/focus isolation is not implemented yet.
 
 ## Preserve the iframe
 
