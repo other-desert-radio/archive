@@ -83,9 +83,25 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 - Reuse Show metadata and the existing tag catalog. Render all DJs, omit an
   absent DJ section, and omit missing tag IDs using the existing convention.
 - Preserve the iframe's existing parent and React tree position across modes.
-- Structure chunk: created empty FullscreenDetails.tsx; existing runtime files
-  unchanged. Await structure review and a scaffolding request.
-- Remaining review units: typed disconnected scaffolding; grid slots;
+- Structure chunk approved; scaffolding requested with "next".
+- Scaffolding: FullscreenDetails exports typed artwork, title, tags, DJs and
+  heart leaf stubs. Show/base feed metadata sections; tags additionally receives
+  TagMap. DJ output permits null for shows without DJs. All stubs throw
+  "Not implemented" and remain disconnected from the working player.
+- Intended flow: audio track.show + base -> Miniplayer -> detail sections;
+  tag catalog -> tags section. Outputs are React elements; no playback or store
+  side effects. Miniplayer retains the widget and CSS handles visual ordering.
+- Scaffolding approved; grid unit requested. Added persistent empty artwork,
+  metadata, heart and DJ slots directly in Miniplayer, hidden in compact mode.
+  No extra layout component/helper layer; detail stubs remain disconnected.
+- Grid unit: artwork spans the left desktop column; metadata, widget and
+  heart/DJs occupy the right. At 1023px and below, slots stack in the chosen
+  DJ/artwork/metadata/heart/widget order. Widget parent/tree position is retained.
+- Lint/types, six focused player tests, production build and browser regression
+  pass, including fullscreen iframe identity, scroll restoration and navigation.
+  Await grid
+  review; content rendering, scrolling/pinning polish and header remain later units.
+- Remaining review units:
   artwork/title; tags; heart/DJs; player alignment; header; integrated checks.
 - Stop for approval after every unit. Do not advance from structure to
   scaffolding without an explicit request.

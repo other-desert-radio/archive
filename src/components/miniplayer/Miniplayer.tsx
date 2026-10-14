@@ -55,6 +55,14 @@ function ActiveMiniplayer({
 							onExpand={expand}
 						/>
 						<div className={styles["controls"]}>
+							<div
+								className={styles["fullscreen-artwork"]}
+								hidden={presentation !== "fullscreen"}
+							/>
+							<div
+								className={styles["fullscreen-metadata"]}
+								hidden={presentation !== "fullscreen"}
+							/>
 							<TrackTitle
 								show={track.show}
 								base={base}
@@ -71,6 +79,14 @@ function ActiveMiniplayer({
 									}}
 								/>
 							</div>
+							<div
+								className={styles["fullscreen-heart"]}
+								hidden={presentation !== "fullscreen"}
+							/>
+							<div
+								className={styles["fullscreen-djs"]}
+								hidden={presentation !== "fullscreen"}
+							/>
 							<DesktopActions
 								hidden={presentation === "fullscreen"}
 								onExpand={expand}

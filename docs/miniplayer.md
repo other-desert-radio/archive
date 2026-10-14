@@ -65,6 +65,12 @@ Compact metadata and actions are hidden. The existing iframe stays mounted in
 its original position in the React tree: at the viewport bottom on mobile and
 in the right-hand content area on desktop.
 
+Fullscreen controls use a grid with empty slots for upcoming artwork, metadata,
+heart and DJs. Above 1023px, artwork spans the left column and the other slots
+occupy the right. At 1023px and below, the slots stack as DJ, artwork, metadata,
+heart and widget. These slots are hidden in compact mode; content rendering is
+not implemented yet. The widget retains its existing parent in both modes.
+
 A player-shell wrapper reserves the compact height measured on expand, so the
 bar's resize observer does not turn fullscreen height into page clearance.
 Fullscreen fixes the body at its current scroll offset and hides root overflow to
