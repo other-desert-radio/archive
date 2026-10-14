@@ -75,7 +75,8 @@ read dependencies through `useStores()` in `src/stores/stores-context.tsx`, whic
 defaults to the application stores and supports `StoresProvider` overrides.
 `use-audio-state.ts` subscribes via React's
 `useSyncExternalStore`, with a stable idle server snapshot for static HTML and
-hydration. The miniplayer reads this store. The miniplayer is hidden while
+hydration. AudioTrack carries the full required Show and its playback source; the title is read
+from show.title. The miniplayer reads this store. The miniplayer is hidden while
 idle and shows the selected track in every other state. Clearing the track
 unmounts the visible player. The compact
 Mixcloud branch renders one visible widget and owns its adapter lifecycle;

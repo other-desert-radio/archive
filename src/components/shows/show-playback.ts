@@ -1,9 +1,7 @@
 import type { AudioState, AudioStore, AudioTrack } from "../../stores/audio";
+import type { Show } from "../../utils/fetch-shows";
 
-export function mixcloudShowTrack(show: {
-	title: string;
-	url: string;
-}): AudioTrack {
+export function mixcloudShowTrack(show: Show): AudioTrack {
 	const url = new URL(show.url);
 	if (
 		url.protocol !== "https:" ||
@@ -16,7 +14,7 @@ export function mixcloudShowTrack(show: {
 		throw new Error("Expected a Mixcloud show URL.");
 	}
 	return {
-		title: show.title,
+		show,
 		source: { kind: "mixcloud", cloudcastKey: url.pathname },
 	};
 }

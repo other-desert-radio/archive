@@ -1,9 +1,16 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { AudioStore, type AudioTrack } from "../../../src/stores/audio";
+import fixtureShows from "../../res/shows.json";
+
+const fixtureShow = fixtureShows[0];
+if (!fixtureShow) {
+	throw new Error("Expected a show fixture.");
+}
+const show = fixtureShow;
 
 const track: AudioTrack = {
-	title: "Archive show",
+	show: { ...show, title: "Archive show" },
 	source: { kind: "mixcloud", cloudcastKey: "/dj/show/" },
 };
 
@@ -100,7 +107,7 @@ test("changing sources or reselecting a show rejects previous selection callback
 	store.select(track);
 	const old = selectedTrack(store);
 	store.select({
-		title: "Live",
+		show: { ...show, title: "Live" },
 		source: { kind: "samcast", streamUrl: "https://example.com/live" },
 	});
 	const current = store.getSnapshot();
@@ -158,14 +165,14 @@ test("late adapters can read the latest request while server hydration always st
 test("track, nested source, state and requests are immutable copies", () => {
 	const store = new AudioStore();
 	const mutable = {
-		title: "Show",
+		show: { ...show, title: "Show" },
 		source: { kind: "mixcloud" as const, cloudcastKey: "/dj/first/" },
 	};
 	store.select(mutable);
-	mutable.title = "Changed";
+	mutable.show = { ...show, title: "Changed" };
 	mutable.source.cloudcastKey = "/dj/changed/";
 	const selected = selectedTrack(store);
-	assert.equal(selected.title, "Show");
+	assert.equal(selected.show.title, "Show");
 	assert.deepEqual(selected.source, {
 		kind: "mixcloud",
 		cloudcastKey: "/dj/first/",

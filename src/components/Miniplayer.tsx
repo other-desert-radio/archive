@@ -3,22 +3,34 @@ import { useAudioState } from "../stores/audio";
 import styles from "./Miniplayer.module.css";
 import MixcloudWidget from "./mixcloud";
 
-export default function Miniplayer() {
+export default function Miniplayer({ base }: { base: string }) {
 	const audio = useAudioState();
 
 	if (audio.status === "idle") {
 		return null;
 	}
-	return <ActiveMiniplayer key={audio.track.source.kind} track={audio.track} />;
+	return (
+		<ActiveMiniplayer
+			key={audio.track.source.kind}
+			track={audio.track}
+			base={base}
+		/>
+	);
 }
 
-function ActiveMiniplayer({ track }: { track: AudioTrack }) {
+function ActiveMiniplayer({
+	track,
+	base,
+}: {
+	track: AudioTrack;
+	base: string;
+}) {
 	switch (track.source.kind) {
 		case "mixcloud":
 			return (
 				<div className={styles["miniplayer"]} data-miniplayer>
 					<div className={styles["controls"]}>
-						<span className={styles["title"]}>{track.title}</span>
+						<TrackTitle show={track.show} base={base} />
 						<div className={styles["widget-slot"]}>
 							<MixcloudWidget
 								initialCloudcastKey={track.source.cloudcastKey}
@@ -40,9 +52,41 @@ function ActiveMiniplayer({ track }: { track: AudioTrack }) {
 	return (
 		<div className={styles["miniplayer"]} data-miniplayer>
 			<div className={styles["controls"]}>
-				<span className={styles["title"]}>{track.title}</span>
+				<TrackTitle show={track.show} base={base} />
 			</div>
 			<div className={styles["progress-track"]} aria-hidden="true" />
+		</div>
+	);
+}
+
+function TrackTitle({
+	show,
+	base,
+}: {
+	show: AudioTrack["show"];
+	base: string;
+}) {
+	return (
+		<div className={styles["title"]}>
+			<span className={styles["desktop-title"]}>
+				{show.djs.map((dj, index) => (
+					<span key={dj.id}>
+						{index > 0 && ", "}
+						<a href={`${base}/djs/${dj.id}`} aria-label={`View ${dj.title}`}>
+							{dj.title}
+						</a>
+					</span>
+				))}
+				{show.djs.length > 0 && (
+					<span className={styles["divider"]} aria-hidden="true">
+						|
+					</span>
+				)}
+				<a href={`${base}/shows/${show.id}`} aria-label={`View ${show.title}`}>
+					{show.title}
+				</a>
+			</span>
+			<span className={styles["mobile-title"]}>{show.title}</span>
 		</div>
 	);
 }
