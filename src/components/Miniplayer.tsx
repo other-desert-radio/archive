@@ -42,6 +42,14 @@ function ActiveMiniplayer({
 								}}
 							/>
 						</div>
+						<div className={styles["desktop-actions"]}>
+							<button type="button" aria-label="Favorite show">
+								<span aria-hidden="true">{"\u2661\uFE0E"}</span>
+							</button>
+							<button type="button" aria-label="Expand player">
+								<span aria-hidden="true">{"\u26F6\uFE0E"}</span>
+							</button>
+						</div>
 					</div>
 				</div>
 			);

@@ -70,7 +70,11 @@ only the active player supplies the widget height. Selected metadata aligns with
 text. Above 600px, individually linked DJ names precede a decorative divider and
 the linked show title. Metadata stays on one line with ellipsis, alongside the
 iframe with a maximum width of 40rem. Shows without DJs omit the divider.
-At 600px and below, the plain show title and widget stack.
+Text heart and fullscreen buttons follow the iframe; both remain
+unwired pending subsequent player work.
+At 1023px and below, metadata wraps onto its own row, with the widget aligned
+left underneath and the heart and fullscreen controls aligned right.
+At 600px and below, metadata uses the plain show title.
 At 600px and below, the miniplayer bar is fixed to the viewport bottom while
 navigation stays at the top. Its background extends to the bottom edge, with
 safe-area padding inside the active bar. The title remains visible. A

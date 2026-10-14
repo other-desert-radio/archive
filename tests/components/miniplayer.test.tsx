@@ -42,7 +42,14 @@ test("Mixcloud renders one widget and one title without hover expansion", () => 
 	);
 	assert.equal(html.includes("data-miniplayer-expansion"), false);
 
-	assert.equal(html.includes("<button"), false);
+	assert.equal((html.match(/<button/g) ?? []).length, 2);
+	assert.ok(html.includes('type="button" aria-label="Favorite show"'));
+	assert.ok(html.includes('type="button" aria-label="Expand player"'));
+	assert.ok(html.includes("\u2661\uFE0E"));
+	assert.ok(html.includes("\u26F6\uFE0E"));
+	assert.ok(
+		html.indexOf("</iframe>") < html.indexOf('aria-label="Favorite show"'),
+	);
 	assert.equal((html.match(/Selected show/g) ?? []).length, 3);
 	assert.equal(html.includes("<dialog"), false);
 });
