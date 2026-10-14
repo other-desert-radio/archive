@@ -232,13 +232,3 @@
 .player-shell {
 	min-width: 0;
 }
-
-.focus-guard {
-	position: fixed;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	border: 0;
-	overflow: hidden;
-	clip-path: inset(50%);
-}

@@ -23,8 +23,8 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 - Feature 3 implemented: content-width mobile expand button above the right edge,
   unwired, compact metadata and desktop actions hidden. Desktop wrapping preserved.
   Approved; feature 4 structure review is next.
-- Feature 4: wire expand/close, preserve iframe, handle focus/Escape and background
-  isolation, add public/assets/icons/close.svg. Stop for evaluation afterward.
+- Feature 4: wire expand/close, preserve iframe and lock background scrolling,
+  add public/assets/icons/close.svg. Keyboard/focus work is deferred.
 
 ## Fullscreen structure
 
@@ -63,18 +63,11 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
   DesktopActions extracted into the scaffolded files, preserving markup/styles.
   Miniplayer now composes these components around the single shared widget.
 - Visual extraction approved; refactor complete.
-- Keyboard/focus unit implemented: fullscreen-focus helper, inert background,
-  close-button initial focus, Tab guards across iframe boundaries, Escape in the
-  parent document, and focus restoration to the activating expand control.
-  Browser checks cover both close paths, focus containment/restoration, prior
-  inert state preservation, scroll restoration and iframe identity at five widths.
-- Cross-origin iframe keyboard events do not reach the parent: Escape inside
-  Mixcloud is outside parent control. Physical iOS verification remains manual.
-- Escape follow-up: moved keyboard listener from document bubbling to window
-  capture so child handlers cannot swallow modal shortcuts. Regression reproduced
-  the blocked Escape before the change; verification covers child stopPropagation.
-- Await final review/evaluation; no more implementation chunks in agreed scope.
-  FullscreenDetails/artwork/tags/favorites and marquee remain deferred.
+- Keyboard/focus work removed at user request after Firefox Escape remained
+  unreliable. Escape handling, focus guards/restoration, inert background and
+  modal semantics are deferred. Expand/X and scroll locking remain functional.
+- Stop for evaluation. FullscreenDetails/artwork/tags/favorites and marquee
+  remain deferred; no automatic next implementation chunk.
 
 ## Verification
 

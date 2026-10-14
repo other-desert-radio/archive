@@ -7,8 +7,7 @@ in [Testing](testing.md). Player implementation and styles live in
 Miniplayer composes FullscreenNav, TrackTitle and the compact controls around one
 shared widget. These visual components receive props and callbacks;
 usePlayerPresentation owns presentation/sizing and delegates scroll locking to
-scroll-lock.ts. The fullscreen-focus helper owns keyboard focus and background
-isolation.
+scroll-lock.ts.
 
 ## Data and playback
 
@@ -73,13 +72,8 @@ lock background scrolling, including iOS touch scrolling. Closing or unmounting
 restores prior inline styles and scroll position. Scrollbar space is compensated
 to avoid shifting page content.
 
-Fullscreen has dialog semantics and focuses its close button on opening.
-Surrounding content is inert, retaining any prior inert state for cleanup.
-Tab/Shift+Tab stay within the player; focus guards handle leaving the iframe.
-Closing restores focus to the activating expand button when it is still attached.
-Escape closes when keyboard events reach the parent document. Events inside
-Mixcloud's cross-origin iframe do not reach the parent; its controls retain their
-own keyboard handling. The close button remains available.
+Keyboard shortcuts, focus management and background focus isolation are deferred.
+Use the X button to close fullscreen.
 
 ## Preserve the iframe
 

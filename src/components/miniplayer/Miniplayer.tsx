@@ -46,22 +46,7 @@ function ActiveMiniplayer({
 						className={styles["miniplayer"]}
 						data-miniplayer
 						data-presentation={presentation}
-						{...(presentation === "fullscreen"
-							? {
-									role: "dialog",
-									"aria-modal": true,
-									"aria-label": "Now playing",
-									tabIndex: -1,
-								}
-							: {})}
 					>
-						<button
-							type="button"
-							className={styles["focus-guard"]}
-							data-focus-guard="start"
-							hidden={presentation !== "fullscreen"}
-							aria-label="Return to player controls"
-						/>
 						{presentation === "fullscreen" && (
 							<FullscreenNav base={base} onClose={close} />
 						)}
@@ -91,13 +76,6 @@ function ActiveMiniplayer({
 								onExpand={expand}
 							/>
 						</div>
-						<button
-							type="button"
-							className={styles["focus-guard"]}
-							data-focus-guard="end"
-							hidden={presentation !== "fullscreen"}
-							aria-label="Return to player controls"
-						/>
 					</div>
 				</div>
 			);

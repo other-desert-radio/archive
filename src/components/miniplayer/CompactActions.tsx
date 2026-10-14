@@ -3,7 +3,7 @@ import styles from "./Miniplayer.module.css";
 
 type Props = {
 	hidden: boolean;
-	onExpand: (trigger: HTMLButtonElement) => void;
+	onExpand: () => void;
 };
 
 // Both controls delegate presentation changes to the parent hook.
@@ -13,7 +13,7 @@ export function MobileExpand({ hidden, onExpand }: Props): ReactElement {
 			type="button"
 			className={styles["mobile-expand"]}
 			hidden={hidden}
-			onClick={(event) => onExpand(event.currentTarget)}
+			onClick={onExpand}
 			aria-label="Expand player"
 		>
 			expand <span aria-hidden="true">↑</span>
@@ -29,11 +29,7 @@ export function DesktopActions({ hidden, onExpand }: Props): ReactElement {
 					{"\u2661\uFE0E"}
 				</span>
 			</button>
-			<button
-				type="button"
-				aria-label="Expand player"
-				onClick={(event) => onExpand(event.currentTarget)}
-			>
+			<button type="button" aria-label="Expand player" onClick={onExpand}>
 				<span aria-hidden="true">{"\u26F6\uFE0E"}</span>
 			</button>
 		</div>
