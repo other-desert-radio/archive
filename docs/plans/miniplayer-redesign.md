@@ -38,7 +38,11 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
   Closing restores compact presentation; no audio-store or adapter changes.
 - Keep the outer bar's compact height independent of the expanded container,
   so Navigation's existing observer never reserves a viewport of page padding.
-- Review structure before scaffolding; then review contracts before behavior.
+- Structure approved. Scaffolding adds PlayerPresentation (compact/fullscreen),
+  compact-initialized local state and a hidden station/close header. No handlers,
+  effects or fullscreen styles yet; the SVG remains empty and unreferenced.
+- Await scaffold review. Next unit: implement visual expand/close and close SVG;
+  then separately handle focus, background isolation and iframe regression checks.
 
 ## Verification
 

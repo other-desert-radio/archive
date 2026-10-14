@@ -1,7 +1,10 @@
+import { useState } from "react";
 import type { AudioTrack } from "../stores/audio";
 import { useAudioState } from "../stores/audio";
 import styles from "./Miniplayer.module.css";
 import MixcloudWidget from "./mixcloud";
+
+type PlayerPresentation = "compact" | "fullscreen";
 
 export default function Miniplayer({ base }: { base: string }) {
 	const audio = useAudioState();
@@ -25,10 +28,24 @@ function ActiveMiniplayer({
 	track: AudioTrack;
 	base: string;
 }) {
+	// Expand/close handlers will own transitions in the next implementation unit.
+	const [presentation] = useState<PlayerPresentation>("compact");
+
 	switch (track.source.kind) {
 		case "mixcloud":
 			return (
-				<div className={styles["miniplayer"]} data-miniplayer>
+				<div
+					className={styles["miniplayer"]}
+					data-miniplayer
+					data-presentation={presentation}
+				>
+					<div hidden={presentation !== "fullscreen"}>
+						<span>OTHER DESERT RADIO</span>
+						{/* The close SVG and handler are deferred to implementation. */}
+						<button type="button" aria-label="Close player">
+							Close
+						</button>
+					</div>
 					<button
 						type="button"
 						className={styles["mobile-expand"]}
