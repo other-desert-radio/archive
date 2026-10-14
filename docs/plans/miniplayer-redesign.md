@@ -9,8 +9,8 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 - Mobile through 600px: hide metadata when adding the right-aligned expand button.
 - Desktop icons: text heart and fullscreen symbols, initially inert.
 - Fullscreen expands the existing container without moving/remounting its iframe.
-- Fullscreen scope: black background, station header, close SVG, existing iframe.
-  Artwork and other fullscreen metadata are deferred. Heart remains inert.
+- Fullscreen scope now includes responsive artwork, title, tags, DJ portraits
+  and an inert heart alongside the existing header and iframe.
 
 ## Progress and review boundaries
 
@@ -66,11 +66,35 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 - Keyboard/focus work removed at user request after Firefox Escape remained
   unreliable. Escape handling, focus guards/restoration, inert background and
   modal semantics are deferred. Expand/X and scroll locking remain functional.
-- Stop for evaluation. FullscreenDetails/artwork/tags/favorites and marquee
-  remain deferred; no automatic next implementation chunk.
+- Previous fullscreen shell/refactor complete. Responsive details are now
+  authorized in small chunks; favorites behavior and marquee remain deferred.
+
+## Responsive fullscreen details
+
+- Structure approved: one new FullscreenDetails.tsx for presentational sections;
+  compose sections in Miniplayer.tsx, style in Miniplayer.module.css, and use
+  FullscreenNav.tsx for header styling hooks. No audio-store/adapter changes.
+- Above 1023px: fluid square artwork left; title/tags, widget and heart/DJ row
+  spaced vertically right. Preserve artwork aspect ratio without cropping.
+- At 1023px and below: DJ, artwork, title, tags, heart. Header and bottom widget
+  stay visible while the content scrolls. DJ portraits appear in both layouts.
+- Station label and X only; stacked header has larger type and a white bottom
+  border. Tags/DJs/title link to archive destinations; heart remains unwired.
+- Reuse Show metadata and the existing tag catalog. Render all DJs, omit an
+  absent DJ section, and omit missing tag IDs using the existing convention.
+- Preserve the iframe's existing parent and React tree position across modes.
+- Structure chunk: created empty FullscreenDetails.tsx; existing runtime files
+  unchanged. Await structure review and a scaffolding request.
+- Remaining review units: typed disconnected scaffolding; grid slots;
+  artwork/title; tags; heart/DJs; player alignment; header; integrated checks.
+- Stop for approval after every unit. Do not advance from structure to
+  scaffolding without an explicit request.
 
 ## Verification
 
 Run focused playback/player tests and lint/type checks per functional unit.
 Verify responsive layout and iframe identity across fullscreen and navigation
 in browser checks. Update authoritative player docs as behavior changes.
+For responsive fullscreen details, check 320, 332, 600, 750, 1023, 1440 and wide
+desktop widths, long titles, multiple DJs, missing images and short viewports.
+Verify playback continuity, expand/close, scroll restoration and compact layout.
