@@ -233,7 +233,7 @@ evaluate(`(() => {
 })()`);
 browser("wait", "--fn", "window.fullscreenFrame.contentDocument?.body.textContent.includes('Fullscreen playback fixture')");
 evaluate("window.fullscreenDocument = window.fullscreenFrame.contentDocument; true");
-for (const width of [390, 600, 601, 750, 1440]) {
+for (const width of [390, 600, 601, 750, 1440, 2560]) {
 	browser("set", "viewport", String(width), "844");
 	evaluate("window.scrollTo(0, 200); true");
 	const savedScrollY = evaluate("window.scrollY");
@@ -253,6 +253,8 @@ for (const width of [390, 600, 601, 750, 1440]) {
 		const player = document.querySelector('[data-miniplayer]');
 		const rect = player.getBoundingClientRect();
 		const frame = player.querySelector('iframe');
+		const artwork = player.querySelector('[class*="fullscreen-artwork"] img');
+		const title = player.querySelector('[class*="fullscreen-title"]');
 		return {
 			x: rect.x, y: rect.y, width: rect.width, height: rect.height,
 			viewportWidth: innerWidth, viewportHeight: innerHeight,
@@ -263,6 +265,13 @@ for (const width of [390, 600, 601, 750, 1440]) {
 			background: getComputedStyle(player).backgroundColor,
 			heartHidden: getComputedStyle(player.querySelector('[aria-label="Favorite show"]').parentElement).display === 'none',
 			closeVisible: player.querySelector('[aria-label="Close player"]').getBoundingClientRect().width > 0,
+			artworkVisible: artwork.getBoundingClientRect().width > 0 && artwork.getBoundingClientRect().height > 0,
+			artworkWidth: artwork.getBoundingClientRect().width,
+			artworkHeight: artwork.getBoundingClientRect().height,
+			artworkCenterY: artwork.getBoundingClientRect().y + artwork.getBoundingClientRect().height / 2,
+			frameCenterY: frame.getBoundingClientRect().y + frame.getBoundingClientRect().height / 2,
+			matchingTitle: artwork.alt === title.textContent && title.textContent.length > 0,
+			showLink: title.getAttribute('href').startsWith('/archive-site/shows/'),
 			overflow: document.documentElement.scrollWidth > innerWidth
 		};
 	})()`);
@@ -276,6 +285,14 @@ for (const width of [390, 600, 601, 750, 1440]) {
 	assert.equal(fullscreen.background, "rgb(0, 0, 0)");
 	assert.equal(fullscreen.heartHidden, true);
 	assert.equal(fullscreen.closeVisible, true);
+	assert.equal(fullscreen.artworkVisible, true);
+	assert.equal(fullscreen.matchingTitle, true);
+	assert.equal(fullscreen.showLink, true);
+	if (width > 1023) {
+		assert.ok(Math.abs(fullscreen.artworkWidth - fullscreen.artworkHeight) < 1);
+		assert.ok(fullscreen.artworkHeight <= fullscreen.viewportHeight * 0.8);
+		assert.ok(Math.abs(fullscreen.artworkCenterY - fullscreen.frameCenterY) < 1);
+	}
 	assert.equal(fullscreen.overflow, false);
 	if (width <= 600) {
 		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);

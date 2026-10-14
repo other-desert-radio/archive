@@ -101,8 +101,28 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
   pass, including fullscreen iframe identity, scroll restoration and navigation.
   Await grid
   review; content rendering, scrolling/pinning polish and header remain later units.
-- Remaining review units:
-  artwork/title; tags; heart/DJs; player alignment; header; integrated checks.
+- Grid approved; artwork/title chunk requested. Render large artwork and linked
+  wrapping title directly inside existing Miniplayer slots, removing their
+  unused FullscreenDetails stubs to reduce indirection. Remaining stubs stay
+  disconnected. No new rendering abstraction.
+- Artwork uses image_large as supplied, matching ShowCard, with object-fit
+  contain on desktop and natural height when stacked. Content mounts only in
+  fullscreen. Added stacked overflow scrolling and sticky widget positioning
+  so real artwork cannot push the player offscreen; alignment polish remains.
+- Await artwork/title review. Remaining units: tags; heart/DJs; player
+  alignment; header; integrated checks.
+- Artwork/title verification: lint/types, six player tests, production build,
+  docs and diff checks pass. Browser regression also passes with visible artwork,
+  matching alt/title, show link, iframe identity and scroll restoration checks.
+- Review correction: desktop content is centered vertically, bounded by 80%
+  of viewport height (dynamic viewport when supported) and 52rem. Artwork is
+  a 1:1 square bounded by column width and content height after padding, centered
+  in its column. RHS metadata/widget share a centered 44rem maximum width
+  (increased from 40rem during visual review).
+  Stacked artwork keeps its existing natural sizing. Await correction review.
+- Layout correction: retain CSS grid, using explicit grid-column/grid-row
+  placement instead of named grid areas. Desktop and stacked placements,
+  sizing and alignment remain unchanged; no component/tree changes.
 - Stop for approval after every unit. Do not advance from structure to
   scaffolding without an explicit request.
 

@@ -195,47 +195,99 @@
 
 .miniplayer[data-presentation="fullscreen"] .controls {
 	display: grid;
-	flex: 1;
+	flex: 0 1 auto;
+	height: min(80vh, 52rem);
+	box-sizing: border-box;
+	margin-block: auto;
 	min-height: 0;
 	grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
 	grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr);
-	grid-template-areas:
-		"artwork metadata metadata"
-		"artwork widget widget"
-		"artwork heart djs";
 	gap: var(--space-md);
 	padding: var(--space-md) var(--nav-inline-padding);
 }
 
 .fullscreen-artwork {
-	grid-area: artwork;
+	grid-column: 1;
+	grid-row: 1 / 4;
 	min-width: 0;
+	min-height: 0;
+	width: min(
+		100%,
+		calc(80vh - var(--space-md) * 2),
+		calc(52rem - var(--space-md) * 2)
+	);
+	aspect-ratio: 1;
 	align-self: center;
+	justify-self: center;
+}
+
+@supports (height: 100dvh) {
+	.miniplayer[data-presentation="fullscreen"] .controls {
+		height: min(80dvh, 52rem);
+	}
+
+	.fullscreen-artwork {
+		width: min(
+			100%,
+			calc(80dvh - var(--space-md) * 2),
+			calc(52rem - var(--space-md) * 2)
+		);
+	}
+}
+
+.fullscreen-artwork img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.fullscreen-title {
+	color: inherit;
+	font-size: var(--font-title);
+	line-height: 1.4;
+	text-decoration: none;
+	overflow-wrap: anywhere;
+	touch-action: manipulation;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.fullscreen-title:hover {
+		text-decoration: underline;
+	}
 }
 
 .fullscreen-metadata {
-	grid-area: metadata;
+	grid-column: 2 / 4;
+	grid-row: 1;
 	min-width: 0;
 	align-self: center;
+	width: 100%;
+	max-width: 44rem;
+	justify-self: center;
 }
 
 .fullscreen-heart {
-	grid-area: heart;
+	grid-column: 2;
+	grid-row: 3;
 	align-self: end;
 }
 
 .fullscreen-djs {
-	grid-area: djs;
+	grid-column: 3;
+	grid-row: 3;
 	min-width: 0;
 	align-self: end;
 	justify-self: end;
 }
 
 .miniplayer[data-presentation="fullscreen"] .widget-slot {
-	grid-area: widget;
+	grid-column: 2 / 4;
+	grid-row: 2;
 	width: 100%;
-	max-width: 40rem;
+	max-width: 44rem;
 	margin: 0;
+	justify-self: center;
 }
 
 .desktop-actions[hidden],
@@ -245,28 +297,56 @@
 
 @media (max-width: 1023px) {
 	.miniplayer[data-presentation="fullscreen"] .controls {
+		flex: 1;
+		height: auto;
+		margin-block: 0;
 		grid-template-columns: minmax(0, 1fr);
-		grid-template-rows: auto auto auto minmax(0, 1fr) auto;
-		grid-template-areas: "djs" "artwork" "metadata" "heart" "widget";
+		grid-template-rows: auto auto auto minmax(min-content, 1fr) auto;
+		overflow-y: auto;
 		padding: 0;
+	}
+
+	.fullscreen-artwork img {
+		height: auto;
+	}
+
+	.fullscreen-artwork {
+		grid-row: 2;
+		width: auto;
+		aspect-ratio: auto;
+		justify-self: stretch;
+	}
+
+	.fullscreen-metadata {
+		grid-row: 3;
+		width: auto;
+		max-width: none;
+		justify-self: stretch;
 	}
 
 	.fullscreen-djs,
 	.fullscreen-artwork,
 	.fullscreen-metadata,
 	.fullscreen-heart {
+		grid-column: 1;
 		margin-inline: var(--nav-inline-padding);
 	}
 
 	.fullscreen-djs {
+		grid-row: 1;
 		justify-self: start;
 	}
 
 	.fullscreen-heart {
+		grid-row: 4;
 		align-self: start;
 	}
 
 	.miniplayer[data-presentation="fullscreen"] .widget-slot {
+		grid-column: 1;
+		grid-row: 5;
+		position: sticky;
+		bottom: 0;
 		max-width: none;
 	}
 }

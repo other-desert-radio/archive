@@ -65,11 +65,18 @@ Compact metadata and actions are hidden. The existing iframe stays mounted in
 its original position in the React tree: at the viewport bottom on mobile and
 in the right-hand content area on desktop.
 
-Fullscreen controls use a grid with empty slots for upcoming artwork, metadata,
-heart and DJs. Above 1023px, artwork spans the left column and the other slots
+Fullscreen controls use a grid with large show artwork and a wrapping linked
+title; slots for tags, heart and DJs remain unfinished. Above 1023px, artwork
+spans the left column and the other slots
 occupy the right. At 1023px and below, the slots stack as DJ, artwork, metadata,
-heart and widget. These slots are hidden in compact mode; content rendering is
-not implemented yet. The widget retains its existing parent in both modes.
+heart and widget. Desktop artwork occupies a 1:1 square bounded by column
+width and the content area's height, without cropping. Desktop content is
+centered vertically and bounded by 80% of viewport height and 52rem; artwork
+and right-hand content are centered within their respective columns. Fullscreen
+metadata and widget share a 44rem maximum width on desktop. The
+stacked grid scrolls when content exceeds its height, with the widget sticky at
+the bottom. Detail slots are hidden in compact mode; artwork/title mount only
+in fullscreen. The widget retains its existing parent in both modes.
 
 A player-shell wrapper reserves the compact height measured on expand, so the
 bar's resize observer does not turn fullscreen height into page clearance.

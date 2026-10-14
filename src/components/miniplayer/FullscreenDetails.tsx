@@ -11,16 +11,6 @@ type TagsProps = ShowProps & {
 	tags: TagMap;
 };
 
-// Miniplayer will compose these sections around its existing widget-slot.
-// Keep each section separate so CSS can reorder DJs without moving the iframe.
-export function FullscreenArtwork(_props: ShowProps): ReactElement {
-	throw new Error("Not implemented");
-}
-
-export function FullscreenTitle(_props: ShowProps): ReactElement {
-	throw new Error("Not implemented");
-}
-
 // The caller supplies the catalog; this section resolves the show's tag IDs.
 export function FullscreenTags(_props: TagsProps): ReactElement {
 	throw new Error("Not implemented");

@@ -58,11 +58,25 @@ function ActiveMiniplayer({
 							<div
 								className={styles["fullscreen-artwork"]}
 								hidden={presentation !== "fullscreen"}
-							/>
+							>
+								{presentation === "fullscreen" && (
+									<img src={track.show.image_large} alt={track.show.title} />
+								)}
+							</div>
 							<div
 								className={styles["fullscreen-metadata"]}
 								hidden={presentation !== "fullscreen"}
-							/>
+							>
+								{presentation === "fullscreen" && (
+									<a
+										className={styles["fullscreen-title"]}
+										href={`${base}/shows/${track.show.id}`}
+										aria-label={`View ${track.show.title}`}
+									>
+										{track.show.title}
+									</a>
+								)}
+							</div>
 							<TrackTitle
 								show={track.show}
 								base={base}
