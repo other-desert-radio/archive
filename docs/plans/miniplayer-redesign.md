@@ -22,9 +22,23 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
   accessible labels, hidden through 600px, no handlers. Approved.
 - Feature 3 implemented: content-width mobile expand button above the right edge,
   unwired, compact metadata and desktop actions hidden. Desktop wrapping preserved.
-  Await review before feature 4.
+  Approved; feature 4 structure review is next.
 - Feature 4: wire expand/close, preserve iframe, handle focus/Escape and background
   isolation, add public/assets/icons/close.svg. Stop for evaluation afterward.
+
+## Fullscreen structure
+
+- Miniplayer.tsx: local compact/fullscreen state, header and close control;
+  retain the same widget at its existing position in the React tree.
+- Miniplayer.module.css: viewport overlay and responsive widget positioning;
+  preserve compact desktop wrapping.
+- public/assets/icons/close.svg: new empty asset, populate during implementation.
+- Existing player tests and miniplayer.md: verify/document implemented behavior.
+- Expand controls -> local presentation state -> existing container styling.
+  Closing restores compact presentation; no audio-store or adapter changes.
+- Keep the outer bar's compact height independent of the expanded container,
+  so Navigation's existing observer never reserves a viewport of page padding.
+- Review structure before scaffolding; then review contracts before behavior.
 
 ## Verification
 
