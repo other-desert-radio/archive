@@ -54,9 +54,10 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 - Scaffolding: moved working player/CSS and updated imports; added typed,
   disconnected extraction stubs. Behavior remains in Miniplayer until reviewed.
   FullscreenDetails/artwork remain deferred.
-- Await scaffold review. Next unit: extract scroll-lock implementation and verify
-  cleanup. Then presentation hook/integration, then visual component extraction,
-  stopping at each boundary. Resume keyboard/focus work afterward.
+- Scaffolding approved. Scroll-lock logic extracted unchanged into scroll-lock.ts;
+  the existing presentation effect acquires the lock and returns its cleanup.
+- Await scroll-lock review. Next unit: presentation hook/integration; then visual
+  component extraction, stopping at each boundary. Resume keyboard/focus afterward.
 
 ## Verification
 
