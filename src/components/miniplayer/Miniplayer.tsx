@@ -1,7 +1,10 @@
 import type { AudioTrack } from "../../stores/audio";
 import { useAudioState } from "../../stores/audio";
 import MixcloudWidget from "../mixcloud";
+import { DesktopActions, MobileExpand } from "./CompactActions";
+import FullscreenNav from "./FullscreenNav";
 import styles from "./Miniplayer.module.css";
+import TrackTitle from "./TrackTitle";
 import { usePlayerPresentation } from "./usePlayerPresentation";
 
 export default function Miniplayer({ base }: { base: string }) {
@@ -47,15 +50,10 @@ function ActiveMiniplayer({
 						{presentation === "fullscreen" && (
 							<FullscreenNav base={base} onClose={close} />
 						)}
-						<button
-							type="button"
-							className={styles["mobile-expand"]}
+						<MobileExpand
 							hidden={presentation === "fullscreen"}
-							onClick={expand}
-							aria-label="Expand player"
-						>
-							expand <span aria-hidden="true">↑</span>
-						</button>
+							onExpand={expand}
+						/>
 						<div className={styles["controls"]}>
 							<TrackTitle
 								show={track.show}
@@ -73,92 +71,23 @@ function ActiveMiniplayer({
 									}}
 								/>
 							</div>
-							<div
-								className={styles["desktop-actions"]}
+							<DesktopActions
 								hidden={presentation === "fullscreen"}
-							>
-								<button type="button" aria-label="Favorite show">
-									<span className={styles["heart-icon"]} aria-hidden="true">
-										{"\u2661\uFE0E"}
-									</span>
-								</button>
-								<button
-									type="button"
-									aria-label="Expand player"
-									onClick={expand}
-								>
-									<span aria-hidden="true">{"\u26F6\uFE0E"}</span>
-								</button>
-							</div>
+								onExpand={expand}
+							/>
 						</div>
 					</div>
 				</div>
 			);
-		case "samcast":
-			break;
+		case "samcast": {
+			return (
+				<div className={styles["miniplayer"]} data-miniplayer>
+					<div className={styles["controls"]}>
+						<TrackTitle show={track.show} base={base} />
+					</div>
+					<div className={styles["progress-track"]} aria-hidden="true" />
+				</div>
+			);
+		}
 	}
-
-	return (
-		<div className={styles["miniplayer"]} data-miniplayer>
-			<div className={styles["controls"]}>
-				<TrackTitle show={track.show} base={base} />
-			</div>
-			<div className={styles["progress-track"]} aria-hidden="true" />
-		</div>
-	);
-}
-
-function FullscreenNav({
-	base,
-	onClose,
-}: {
-	base: string;
-	onClose: () => void;
-}) {
-	return (
-		<div className={styles["fullscreen-header"]}>
-			<span>OTHER DESERT RADIO</span>
-			<button
-				type="button"
-				className={styles["close-button"]}
-				aria-label="Close player"
-				onClick={onClose}
-			>
-				<img src={`${base}/assets/icons/close.svg`} alt="" aria-hidden="true" />
-			</button>
-		</div>
-	);
-}
-
-function TrackTitle({
-	show,
-	base,
-	hidden = false,
-}: {
-	show: AudioTrack["show"];
-	base: string;
-	hidden?: boolean;
-}) {
-	return (
-		<div className={styles["title"]} hidden={hidden}>
-			<span className={styles["desktop-title"]}>
-				{show.djs.map((dj, index) => (
-					<span key={dj.id}>
-						{index > 0 && ", "}
-						<a href={`${base}/djs/${dj.id}`} aria-label={`View ${dj.title}`}>
-							{dj.title}
-						</a>
-					</span>
-				))}
-				{show.djs.length > 0 && (
-					<span className={styles["divider"]} aria-hidden="true">
-						|
-					</span>
-				)}
-				<a href={`${base}/shows/${show.id}`} aria-label={`View ${show.title}`}>
-					{show.title}
-				</a>
-			</span>
-		</div>
-	);
 }

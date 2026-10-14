@@ -59,8 +59,11 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 - Scroll-lock extraction approved. usePlayerPresentation now owns presentation
   state, compact-height measurement, expand/close and scroll-lock cleanup.
   Miniplayer consumes its returned state/ref/callbacks; markup remains unchanged.
-- Await hook review. Next unit: extract visual components into the approved files.
-  Resume keyboard/focus afterward.
+- Presentation hook approved. FullscreenNav, TrackTitle, MobileExpand and
+  DesktopActions extracted into the scaffolded files, preserving markup/styles.
+  Miniplayer now composes these components around the single shared widget.
+- Refactor implementation complete; await visual extraction review.
+  Next unit: keyboard/focus handling and background focus isolation.
 
 ## Verification
 

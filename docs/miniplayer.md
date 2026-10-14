@@ -4,6 +4,10 @@ This reference owns player-specific behavior and layout. General styling rules
 live in [CSS](css.md); verification commands and the navigation regression live
 in [Testing](testing.md). Player implementation and styles live in
 `src/components/miniplayer/`; consumers import its public entry point.
+Miniplayer composes FullscreenNav, TrackTitle and the compact controls around one
+shared widget. These visual components receive props and callbacks;
+usePlayerPresentation owns presentation/sizing and delegates scroll locking to
+scroll-lock.ts.
 
 ## Data and playback
 
