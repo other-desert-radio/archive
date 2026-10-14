@@ -74,8 +74,9 @@ width and the content area's height, without cropping. Desktop content is
 centered vertically and bounded by 80% of viewport height and 52rem; artwork
 and right-hand content are centered within their respective columns. Fullscreen
 metadata and widget share a 44rem maximum width on desktop. The
-stacked grid scrolls when content exceeds its height, with the widget sticky at
-the bottom. Detail slots are hidden in compact mode; artwork/title mount only
+stacked grid assigns remaining height to artwork, which shrinks to fit without
+overlapping metadata. Content can scroll when it exceeds its height, with the
+widget sticky at the bottom. Detail slots are hidden in compact mode; artwork/title mount only
 in fullscreen. The widget retains its existing parent in both modes.
 
 A player-shell wrapper reserves the compact height measured on expand, so the

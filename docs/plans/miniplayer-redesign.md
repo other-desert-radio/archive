@@ -123,6 +123,11 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 - Layout correction: retain CSS grid, using explicit grid-column/grid-row
   placement instead of named grid areas. Desktop and stacked placements,
   sizing and alignment remain unchanged; no component/tree changes.
+- Reproduced stacked overlap in agent-browser at 840x782: 760px artwork
+  overflowed its allocated row into the title. Changed artwork row to take
+  remaining height and contained the image within it. Verified 486px square
+  artwork with about 19px clearance before the title. Added 840x782 and stacked
+  no-overlap assertions to the existing browser regression.
 - Stop for approval after every unit. Do not advance from structure to
   scaffolding without an explicit request.
 

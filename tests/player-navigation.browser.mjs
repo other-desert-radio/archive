@@ -233,8 +233,8 @@ evaluate(`(() => {
 })()`);
 browser("wait", "--fn", "window.fullscreenFrame.contentDocument?.body.textContent.includes('Fullscreen playback fixture')");
 evaluate("window.fullscreenDocument = window.fullscreenFrame.contentDocument; true");
-for (const width of [390, 600, 601, 750, 1440, 2560]) {
-	browser("set", "viewport", String(width), "844");
+for (const [width, height] of [[390, 844], [600, 844], [601, 844], [750, 844], [840, 782], [1440, 844], [2560, 844]]) {
+	browser("set", "viewport", String(width), String(height));
 	evaluate("window.scrollTo(0, 200); true");
 	const savedScrollY = evaluate("window.scrollY");
 	const savedBodyStyles = evaluate("document.body.style.cssText");
@@ -268,6 +268,8 @@ for (const width of [390, 600, 601, 750, 1440, 2560]) {
 			artworkVisible: artwork.getBoundingClientRect().width > 0 && artwork.getBoundingClientRect().height > 0,
 			artworkWidth: artwork.getBoundingClientRect().width,
 			artworkHeight: artwork.getBoundingClientRect().height,
+			artworkBottom: artwork.getBoundingClientRect().bottom,
+			metadataTop: title.parentElement.getBoundingClientRect().top,
 			artworkCenterY: artwork.getBoundingClientRect().y + artwork.getBoundingClientRect().height / 2,
 			frameCenterY: frame.getBoundingClientRect().y + frame.getBoundingClientRect().height / 2,
 			matchingTitle: artwork.alt === title.textContent && title.textContent.length > 0,
@@ -288,6 +290,10 @@ for (const width of [390, 600, 601, 750, 1440, 2560]) {
 	assert.equal(fullscreen.artworkVisible, true);
 	assert.equal(fullscreen.matchingTitle, true);
 	assert.equal(fullscreen.showLink, true);
+	if (width <= 1023) {
+		assert.ok(fullscreen.artworkBottom <= fullscreen.metadataTop, 'Artwork must not overlap metadata');
+		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);
+	}
 	if (width > 1023) {
 		assert.ok(Math.abs(fullscreen.artworkWidth - fullscreen.artworkHeight) < 1);
 		assert.ok(fullscreen.artworkHeight <= fullscreen.viewportHeight * 0.8);
