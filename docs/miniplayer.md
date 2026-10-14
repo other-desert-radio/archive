@@ -68,8 +68,9 @@ in the right-hand content area on desktop.
 Fullscreen controls use a grid with large show artwork and a wrapping linked
 title; slots for tags, heart and DJs remain unfinished. Above 1023px, artwork
 spans the left column and the other slots
-occupy the right. At 1023px and below, the slots stack as DJ, artwork, metadata,
-heart and widget. Desktop artwork occupies a 1:1 square bounded by column
+occupy the right. At 1023px and below, the slots stack as artwork, metadata,
+a shared row with heart left and DJs right, then the bottom widget. Desktop
+artwork occupies a 1:1 square bounded by column
 width and the content area's height, without cropping. Desktop content is
 centered vertically and bounded by 80% of viewport height and 52rem; artwork
 and right-hand content are centered within their respective columns. Fullscreen

@@ -76,7 +76,8 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
   FullscreenNav.tsx for header styling hooks. No audio-store/adapter changes.
 - Above 1023px: fluid square artwork left; title/tags, widget and heart/DJ row
   spaced vertically right. Preserve artwork aspect ratio without cropping.
-- At 1023px and below: DJ, artwork, title, tags, heart. Header and bottom widget
+- At 1023px and below: artwork, title/tags, then heart left and DJs right on
+  a shared row, per the updated reference. Header and bottom widget
   stay visible while the content scrolls. DJ portraits appear in both layouts.
 - Station label and X only; stacked header has larger type and a white bottom
   border. Tags/DJs/title link to archive destinations; heart remains unwired.
@@ -96,7 +97,8 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
   No extra layout component/helper layer; detail stubs remain disconnected.
 - Grid unit: artwork spans the left desktop column; metadata, widget and
   heart/DJs occupy the right. At 1023px and below, slots stack in the chosen
-  DJ/artwork/metadata/heart/widget order. Widget parent/tree position is retained.
+  artwork/metadata/heart-and-DJs/widget order (revised during visual review).
+  Widget parent/tree position is retained.
 - Lint/types, six focused player tests, production build and browser regression
   pass, including fullscreen iframe identity, scroll restoration and navigation.
   Await grid
@@ -128,6 +130,9 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
   remaining height and contained the image within it. Verified 486px square
   artwork with about 19px clearance before the title. Added 840x782 and stacked
   no-overlap assertions to the existing browser regression.
+- Updated smaller-width reference supersedes DJ-first stacking: artwork above
+  metadata, shared heart/DJ row below, and space before the bottom widget.
+  Adjusted existing slots only; tags, heart and DJ rendering remain later chunks.
 - Stop for approval after every unit. Do not advance from structure to
   scaffolding without an explicit request.
 
