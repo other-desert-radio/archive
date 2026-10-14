@@ -233,7 +233,7 @@ evaluate(`(() => {
 })()`);
 browser("wait", "--fn", "window.fullscreenFrame.contentDocument?.body.textContent.includes('Fullscreen playback fixture')");
 evaluate("window.fullscreenDocument = window.fullscreenFrame.contentDocument; true");
-for (const [width, height] of [[390, 844], [600, 844], [601, 844], [750, 844], [840, 782], [1440, 844], [2560, 844]]) {
+for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [601, 844], [750, 844], [840, 782], [1440, 844], [2560, 844]]) {
 	browser("set", "viewport", String(width), String(height));
 	evaluate("window.scrollTo(0, 200); true");
 	const savedScrollY = evaluate("window.scrollY");
@@ -276,6 +276,11 @@ for (const [width, height] of [[390, 844], [600, 844], [601, 844], [750, 844], [
 			artworkHeight: artwork.getBoundingClientRect().height,
 			artworkBottom: artwork.getBoundingClientRect().bottom,
 			metadataTop: title.parentElement.getBoundingClientRect().top,
+			rowBounds: ['fullscreen-metadata', 'widget-slot', 'fullscreen-actions'].map(name => {
+				const bounds = player.querySelector('[class*="' + name + '"]').getBoundingClientRect();
+				return { left: bounds.left, right: bounds.right };
+			}),
+			controlsLeft: player.querySelector('[class*="controls"]').getBoundingClientRect().left,
 			artworkCenterY: artwork.getBoundingClientRect().y + artwork.getBoundingClientRect().height / 2,
 			frameCenterY: frame.getBoundingClientRect().y + frame.getBoundingClientRect().height / 2,
 			matchingTitle: artwork.alt === title.textContent && title.textContent.length > 0,
@@ -308,6 +313,13 @@ for (const [width, height] of [[390, 844], [600, 844], [601, 844], [750, 844], [
 		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);
 	}
 	if (width > 1023) {
+		for (const row of fullscreen.rowBounds) {
+			assert.ok(Math.abs(row.left - fullscreen.rowBounds[0].left) < 1);
+			assert.ok(Math.abs(row.right - fullscreen.rowBounds[0].right) < 1);
+		}
+		if (width >= 2560) {
+			assert.ok(fullscreen.controlsLeft >= 400, 'Wide screens retain generous side margins');
+		}
 		assert.ok(Math.abs(fullscreen.artworkWidth - fullscreen.artworkHeight) < 1);
 		assert.ok(fullscreen.artworkHeight <= fullscreen.viewportHeight * 0.8);
 		assert.ok(Math.abs(fullscreen.artworkCenterY - fullscreen.frameCenterY) < 1);

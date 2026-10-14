@@ -71,62 +71,66 @@ function ActiveMiniplayer({
 									<img src={track.show.image_large} alt={track.show.title} />
 								)}
 							</div>
-							<div
-								className={styles["fullscreen-metadata"]}
-								hidden={presentation !== "fullscreen"}
-							>
-								{presentation === "fullscreen" && (
-									<a
-										className={styles["fullscreen-title"]}
-										href={`${base}/shows/${track.show.id}`}
-										aria-label={`View ${track.show.title}`}
-										onClick={close}
-									>
-										{track.show.title}
-									</a>
-								)}
-								{presentation === "fullscreen" && (
-									<FullscreenTags
-										show={track.show}
-										base={base}
-										tags={tags}
-										onNavigate={close}
-									/>
-								)}
-							</div>
 							<TrackTitle
 								show={track.show}
 								base={base}
 								hidden={presentation === "fullscreen"}
 							/>
-							<div className={styles["widget-slot"]}>
-								<MixcloudWidget
-									initialCloudcastKey={track.source.cloudcastKey}
-									iframeParams={{
-										mini: true,
-										hide_cover: true,
-										hide_artwork: true,
-										light: false,
-									}}
-								/>
-							</div>
-							<div
-								className={styles["fullscreen-heart"]}
-								hidden={presentation !== "fullscreen"}
-							>
-								{presentation === "fullscreen" && <FullscreenHeart />}
-							</div>
-							<div
-								className={styles["fullscreen-djs"]}
-								hidden={presentation !== "fullscreen"}
-							>
-								{presentation === "fullscreen" && (
-									<FullscreenDJs
-										show={track.show}
-										base={base}
-										onNavigate={close}
+							<div className={styles["fullscreen-content"]}>
+								<div
+									className={styles["fullscreen-metadata"]}
+									hidden={presentation !== "fullscreen"}
+								>
+									{presentation === "fullscreen" && (
+										<a
+											className={styles["fullscreen-title"]}
+											href={`${base}/shows/${track.show.id}`}
+											aria-label={`View ${track.show.title}`}
+											onClick={close}
+										>
+											{track.show.title}
+										</a>
+									)}
+									{presentation === "fullscreen" && (
+										<FullscreenTags
+											show={track.show}
+											base={base}
+											tags={tags}
+											onNavigate={close}
+										/>
+									)}
+								</div>
+								<div className={styles["widget-slot"]}>
+									<MixcloudWidget
+										initialCloudcastKey={track.source.cloudcastKey}
+										iframeParams={{
+											mini: true,
+											hide_cover: true,
+											hide_artwork: true,
+											light: false,
+										}}
 									/>
-								)}
+								</div>
+								<div className={styles["fullscreen-actions"]}>
+									<div
+										className={styles["fullscreen-heart"]}
+										hidden={presentation !== "fullscreen"}
+									>
+										{presentation === "fullscreen" && <FullscreenHeart />}
+									</div>
+									<div
+										className={styles["fullscreen-djs"]}
+										hidden={presentation !== "fullscreen"}
+									>
+										{presentation === "fullscreen" && (
+											<FullscreenDJs
+												show={track.show}
+												base={base}
+												onNavigate={close}
+											/>
+										)}
+									</div>
+								</div>
 							</div>
 							<DesktopActions
 								hidden={presentation === "fullscreen"}
