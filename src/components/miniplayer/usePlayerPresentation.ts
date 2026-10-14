@@ -1,4 +1,5 @@
-import type { RefObject } from "react";
+import { type RefObject, useEffect, useRef, useState } from "react";
+import { lockBackgroundScroll } from "./scroll-lock";
 
 export type PlayerPresentation = "compact" | "fullscreen";
 
@@ -11,7 +12,28 @@ type PlayerPresentationState = {
 };
 
 // Owns presentation, compact-height measurement, and scroll-lock lifecycle.
-// The working player will adopt this hook after the contracts are reviewed.
 export function usePlayerPresentation(): PlayerPresentationState {
-	throw new Error("Not implemented");
+	const [presentation, setPresentation] =
+		useState<PlayerPresentation>("compact");
+	const [compactHeight, setCompactHeight] = useState<number>();
+	const playerRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (presentation !== "fullscreen") {
+			return;
+		}
+
+		return lockBackgroundScroll();
+	}, [presentation]);
+
+	function expand() {
+		setCompactHeight(playerRef.current?.getBoundingClientRect().height);
+		setPresentation("fullscreen");
+	}
+
+	function close() {
+		setPresentation("compact");
+	}
+
+	return { presentation, compactHeight, playerRef, expand, close };
 }

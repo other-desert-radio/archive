@@ -1,11 +1,8 @@
-import { useEffect, useRef, useState } from "react";
 import type { AudioTrack } from "../../stores/audio";
 import { useAudioState } from "../../stores/audio";
 import MixcloudWidget from "../mixcloud";
 import styles from "./Miniplayer.module.css";
-import { lockBackgroundScroll } from "./scroll-lock";
-
-type PlayerPresentation = "compact" | "fullscreen";
+import { usePlayerPresentation } from "./usePlayerPresentation";
 
 export default function Miniplayer({ base }: { base: string }) {
 	const audio = useAudioState();
@@ -29,23 +26,8 @@ function ActiveMiniplayer({
 	track: AudioTrack;
 	base: string;
 }) {
-	const [presentation, setPresentation] =
-		useState<PlayerPresentation>("compact");
-	const [compactHeight, setCompactHeight] = useState<number>();
-	const playerRef = useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		if (presentation !== "fullscreen") {
-			return;
-		}
-
-		return lockBackgroundScroll();
-	}, [presentation]);
-
-	function expand() {
-		setCompactHeight(playerRef.current?.getBoundingClientRect().height);
-		setPresentation("fullscreen");
-	}
+	const { presentation, compactHeight, playerRef, expand, close } =
+		usePlayerPresentation();
 
 	switch (track.source.kind) {
 		case "mixcloud":
@@ -63,10 +45,7 @@ function ActiveMiniplayer({
 						data-presentation={presentation}
 					>
 						{presentation === "fullscreen" && (
-							<FullscreenNav
-								base={base}
-								onClose={() => setPresentation("compact")}
-							/>
+							<FullscreenNav base={base} onClose={close} />
 						)}
 						<button
 							type="button"

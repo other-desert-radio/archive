@@ -56,8 +56,11 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
   FullscreenDetails/artwork remain deferred.
 - Scaffolding approved. Scroll-lock logic extracted unchanged into scroll-lock.ts;
   the existing presentation effect acquires the lock and returns its cleanup.
-- Await scroll-lock review. Next unit: presentation hook/integration; then visual
-  component extraction, stopping at each boundary. Resume keyboard/focus afterward.
+- Scroll-lock extraction approved. usePlayerPresentation now owns presentation
+  state, compact-height measurement, expand/close and scroll-lock cleanup.
+  Miniplayer consumes its returned state/ref/callbacks; markup remains unchanged.
+- Await hook review. Next unit: extract visual components into the approved files.
+  Resume keyboard/focus afterward.
 
 ## Verification
 
