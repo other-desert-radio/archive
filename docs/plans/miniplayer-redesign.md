@@ -62,8 +62,19 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 - Presentation hook approved. FullscreenNav, TrackTitle, MobileExpand and
   DesktopActions extracted into the scaffolded files, preserving markup/styles.
   Miniplayer now composes these components around the single shared widget.
-- Refactor implementation complete; await visual extraction review.
-  Next unit: keyboard/focus handling and background focus isolation.
+- Visual extraction approved; refactor complete.
+- Keyboard/focus unit implemented: fullscreen-focus helper, inert background,
+  close-button initial focus, Tab guards across iframe boundaries, Escape in the
+  parent document, and focus restoration to the activating expand control.
+  Browser checks cover both close paths, focus containment/restoration, prior
+  inert state preservation, scroll restoration and iframe identity at five widths.
+- Cross-origin iframe keyboard events do not reach the parent: Escape inside
+  Mixcloud is outside parent control. Physical iOS verification remains manual.
+- Escape follow-up: moved keyboard listener from document bubbling to window
+  capture so child handlers cannot swallow modal shortcuts. Regression reproduced
+  the blocked Escape before the change; verification covers child stopPropagation.
+- Await final review/evaluation; no more implementation chunks in agreed scope.
+  FullscreenDetails/artwork/tags/favorites and marquee remain deferred.
 
 ## Verification
 

@@ -1,4 +1,5 @@
 import { type RefObject, useEffect, useRef, useState } from "react";
+import { activateFullscreenFocus } from "./fullscreen-focus";
 import { lockBackgroundScroll } from "./scroll-lock";
 
 export type PlayerPresentation = "compact" | "fullscreen";
@@ -7,7 +8,7 @@ type PlayerPresentationState = {
 	presentation: PlayerPresentation;
 	compactHeight: number | undefined;
 	playerRef: RefObject<HTMLDivElement | null>;
-	expand: () => void;
+	expand: (trigger: HTMLButtonElement) => void;
 	close: () => void;
 };
 
@@ -17,16 +18,32 @@ export function usePlayerPresentation(): PlayerPresentationState {
 		useState<PlayerPresentation>("compact");
 	const [compactHeight, setCompactHeight] = useState<number>();
 	const playerRef = useRef<HTMLDivElement>(null);
+	const triggerRef = useRef<HTMLButtonElement | undefined>(undefined);
 
 	useEffect(() => {
 		if (presentation !== "fullscreen") {
 			return;
 		}
 
-		return lockBackgroundScroll();
+		const player = playerRef.current;
+		if (!player) {
+			return;
+		}
+		const unlockScroll = lockBackgroundScroll();
+		const releaseFocus = activateFullscreenFocus(player, () =>
+			setPresentation("compact"),
+		);
+		return () => {
+			releaseFocus();
+			unlockScroll();
+			if (triggerRef.current?.isConnected) {
+				triggerRef.current.focus({ preventScroll: true });
+			}
+		};
 	}, [presentation]);
 
-	function expand() {
+	function expand(trigger: HTMLButtonElement) {
+		triggerRef.current = trigger;
 		setCompactHeight(playerRef.current?.getBoundingClientRect().height);
 		setPresentation("fullscreen");
 	}

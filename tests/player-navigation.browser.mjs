@@ -228,11 +228,17 @@ evaluate("document.querySelector('button[aria-label^=\"Play \"]').click(); true"
 browser("wait", "[data-miniplayer] iframe");
 evaluate(`(() => {
 	window.fullscreenFrame = document.querySelector('[data-miniplayer] iframe');
-	window.fullscreenFrame.srcdoc = '<p>Fullscreen playback fixture</p>';
+	window.fullscreenFrame.srcdoc = '<p>Fullscreen playback fixture</p><button>First control</button><button>Last control</button>';
 	return true;
 })()`);
 browser("wait", "--fn", "window.fullscreenFrame.contentDocument?.body.textContent.includes('Fullscreen playback fixture')");
-evaluate("window.fullscreenDocument = window.fullscreenFrame.contentDocument; true");
+evaluate(`(() => {
+	window.fullscreenDocument = window.fullscreenFrame.contentDocument;
+	window.preexistingInert = document.createElement('aside');
+	window.preexistingInert.inert = true;
+	document.body.append(window.preexistingInert);
+	return true;
+})()`);
 for (const width of [390, 600, 601, 750, 1440]) {
 	browser("set", "viewport", String(width), "844");
 	evaluate("window.scrollTo(0, 200); true");
@@ -242,9 +248,24 @@ for (const width of [390, 600, 601, 750, 1440]) {
 	const expand = width <= 600
 		? '[data-miniplayer] > button[aria-label="Expand player"]'
 		: '[data-miniplayer] div > button[aria-label="Expand player"]';
+	evaluate(`window.expandTrigger = document.querySelector(${JSON.stringify(expand)}); true`);
 	browser("click", expand);
 	browser("wait", '[data-presentation="fullscreen"]');
 	browser("wait", "--fn", "document.body.style.position === 'fixed'");
+	assert.equal(evaluate("document.activeElement === document.querySelector('[aria-label=\"Close player\"]')"), true);
+	assert.equal(evaluate("document.querySelector('main').inert && document.querySelector('nav').inert"), true);
+	assert.equal(evaluate("document.querySelector('[data-miniplayer]').getAttribute('aria-modal')"), "true");
+	// Tab must leave the iframe through the trailing guard and return to close.
+	evaluate("window.fullscreenFrame.contentDocument.querySelector('button:last-child').focus(); true");
+	browser("press", "Tab");
+	assert.equal(evaluate("document.activeElement === document.querySelector('[aria-label=\"Close player\"]')"), true);
+	browser("press", "Shift+Tab");
+	assert.equal(evaluate("document.activeElement === window.fullscreenFrame"), true);
+	// Programmatic focus cannot reach the page behind the modal either.
+	evaluate("document.querySelector('nav a').focus(); true");
+	assert.equal(evaluate("document.activeElement === document.querySelector('nav a')"), false);
+	evaluate("document.querySelector('[aria-label=\"Close player\"]').focus(); true");
+
 	const lockedTop = evaluate("document.body.getBoundingClientRect().top");
 	browser("scroll", "down", "400");
 	assert.equal(evaluate("document.body.getBoundingClientRect().top"), lockedTop);
@@ -280,13 +301,25 @@ for (const width of [390, 600, 601, 750, 1440]) {
 	if (width <= 600) {
 		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);
 	}
-	browser("click", '[data-miniplayer] button[aria-label="Close player"]');
+	if (width === 601 || width === 1440) {
+		// A modal Escape shortcut must run before a child can stop bubbling.
+		evaluate(`document.querySelector('[aria-label="Close player"]').addEventListener('keydown', event => event.stopPropagation(), { once: true }); true`);
+		browser("press", "Escape");
+	} else {
+		browser("click", '[data-miniplayer] button[aria-label="Close player"]');
+	}
 	browser("wait", '[data-presentation="compact"]');
 	browser("wait", "--fn", "document.body.style.position !== 'fixed'");
+	assert.equal(evaluate("document.activeElement === window.expandTrigger"), true);
+	assert.equal(evaluate("!document.querySelector('main').inert && !document.querySelector('nav').inert"), true);
+	assert.equal(evaluate("document.querySelector('[data-miniplayer]').hasAttribute('aria-modal')"), false);
+	assert.equal(evaluate("window.preexistingInert.inert"), true);
+	evaluate("document.querySelector('nav a').focus({ preventScroll: true }); true");
+	assert.equal(evaluate("document.activeElement === document.querySelector('nav a')"), true);
 	assert.equal(evaluate("window.scrollY"), savedScrollY);
 	assert.equal(evaluate("document.body.style.cssText"), savedBodyStyles);
 	browser("scroll", "down", "100");
 	assert.ok(evaluate("window.scrollY") > savedScrollY);
 	assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame && window.fullscreenFrame.contentDocument === window.fullscreenDocument"), true);
 }
-console.log("Mobile and desktop expand/close preserve the same iframe document, compact clearance and viewport layout.");
+console.log("Fullscreen keyboard focus, Escape, background isolation, scroll restoration and iframe identity pass on mobile and desktop widths.");
