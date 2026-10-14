@@ -288,6 +288,7 @@
 
 .miniplayer[data-presentation="fullscreen"] .fullscreen-actions {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: flex-end;
 	align-self: end;
 	justify-content: space-between;
@@ -415,6 +416,28 @@
 		position: sticky;
 		bottom: 0;
 		margin-top: auto;
+	}
+}
+
+@media (max-width: 600px) {
+	.miniplayer[data-presentation="fullscreen"] .fullscreen-actions {
+		align-items: center;
+	}
+
+	.fullscreen-dj {
+		font-size: calc(var(--font-body) * 1.5);
+	}
+
+	.fullscreen-heart-button {
+		width: var(--space-lg);
+		height: var(--space-lg);
+		min-width: 0;
+		min-height: 0;
+	}
+
+	.fullscreen-heart-button svg {
+		width: var(--space-lg);
+		height: var(--space-lg);
 	}
 }
 
