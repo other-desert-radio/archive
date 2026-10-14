@@ -69,6 +69,17 @@ const title = (() => {
   import tags from "../res/tags.json";
   import { getTagReturn } from "../utils/tag-return";
 
+  // Publishes the bar's full height (including bottom safe-area padding) as
+  // --miniplayer-height on the root, so BaseLayout can reserve mobile space.
+  // The returned cleanup releases the observer when this bar is replaced.
+  function observeMiniplayerHeight(bar: HTMLElement): () => void {
+    void bar;
+    throw new Error("Not implemented");
+  }
+
+  // Disconnected until implementation; existing navigation remains functional.
+  void observeMiniplayerHeight;
+
   function updateTagReturn() {
     const link = document.querySelector<HTMLAnchorElement>("[data-tag-return]");
     const label = link?.querySelector("b");
