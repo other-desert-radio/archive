@@ -233,7 +233,7 @@ evaluate(`(() => {
 })()`);
 browser("wait", "--fn", "window.fullscreenFrame.contentDocument?.body.textContent.includes('Fullscreen playback fixture')");
 evaluate("window.fullscreenDocument = window.fullscreenFrame.contentDocument; true");
-for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [601, 844], [750, 844], [840, 782], [1440, 844], [2560, 844]]) {
+for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [601, 844], [750, 844], [840, 782], [1440, 844], [2041, 1352], [2560, 844]]) {
 	browser("set", "viewport", String(width), String(height));
 	evaluate("window.scrollTo(0, 200); true");
 	const savedScrollY = evaluate("window.scrollY");
@@ -275,6 +275,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 			artworkWidth: artwork.getBoundingClientRect().width,
 			artworkHeight: artwork.getBoundingClientRect().height,
 			artworkBottom: artwork.getBoundingClientRect().bottom,
+			artworkTop: artwork.getBoundingClientRect().top,
 			metadataTop: title.parentElement.getBoundingClientRect().top,
 			rowBounds: ['fullscreen-metadata', 'widget-slot', 'fullscreen-actions'].map(name => {
 				const bounds = player.querySelector('[class*="' + name + '"]').getBoundingClientRect();
@@ -313,6 +314,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);
 	}
 	if (width > 1023) {
+		assert.ok(Math.abs(fullscreen.artworkTop - fullscreen.metadataTop) < 1, "Artwork and metadata align at the top");
 		for (const row of fullscreen.rowBounds) {
 			assert.ok(Math.abs(row.left - fullscreen.rowBounds[0].left) < 1);
 			assert.ok(Math.abs(row.right - fullscreen.rowBounds[0].right) < 1);

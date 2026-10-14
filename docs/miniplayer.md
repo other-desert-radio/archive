@@ -80,8 +80,8 @@ occupy the right. At 1023px and below, the slots stack as artwork, metadata,
 a shared row with heart left and DJs right, then the bottom widget. Desktop
 artwork occupies a 1:1 square bounded by column
 width and the content area's height, without cropping. Desktop content is
-centered vertically and bounded by 80% of viewport height and 52rem; artwork
-and right-hand content are centered within their respective columns. The two equal desktop columns share a centered 100rem maximum-width container.
+centered vertically; artwork is bounded by 80% of viewport height and 52rem.
+The artwork determines the row height, with right-hand metadata aligned to its top. The two equal desktop columns share a centered 100rem maximum-width container.
 Metadata, widget and the heart/DJ flex row stretch to the same right-column width. The
 stacked grid assigns remaining height to artwork, which shrinks to fit without
 overlapping metadata. Content can scroll when it exceeds its height, with the
