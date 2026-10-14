@@ -29,6 +29,13 @@ function ActiveMiniplayer({
 		case "mixcloud":
 			return (
 				<div className={styles["miniplayer"]} data-miniplayer>
+					<button
+						type="button"
+						className={styles["mobile-expand"]}
+						aria-label="Expand player"
+					>
+						expand <span aria-hidden="true">↑</span>
+					</button>
 					<div className={styles["controls"]}>
 						<TrackTitle show={track.show} base={base} />
 						<div className={styles["widget-slot"]}>
@@ -94,7 +101,6 @@ function TrackTitle({
 					{show.title}
 				</a>
 			</span>
-			<span className={styles["mobile-title"]}>{show.title}</span>
 		</div>
 	);
 }

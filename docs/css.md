@@ -74,10 +74,13 @@ Text heart and fullscreen buttons follow the iframe; both remain
 unwired pending subsequent player work.
 At 1023px and below, metadata wraps onto its own row, with the widget aligned
 left underneath and the heart and fullscreen controls aligned right.
-At 600px and below, metadata uses the plain show title.
+At 600px and below, metadata and desktop actions are hidden. A content-width
+“expand ↑” button sits above the widget at its right edge, without a full-width
+background strip. It remains unwired pending fullscreen work.
 At 600px and below, the miniplayer bar is fixed to the viewport bottom while
 navigation stays at the top. Its background extends to the bottom edge, with
-safe-area padding inside the active bar. The title remains visible. A
+safe-area padding inside the active bar. The expand button is positioned outside
+the measured bar above its top edge. A
 border-box resize observer publishes the full bar height as
 `--miniplayer-height`; `BaseLayout` reserves that height in its main padding,
 using the bottom safe-area inset when the player is idle. The existing player

@@ -46,7 +46,7 @@
 	margin-inline: var(--space-sm);
 }
 
-.mobile-title {
+.mobile-expand {
 	display: none;
 }
 
@@ -111,16 +111,34 @@
 }
 
 @media (max-width: 600px) {
-	.desktop-title {
+	.miniplayer {
+		position: relative;
+		gap: 0;
+	}
+
+	.title,
+	.desktop-actions {
 		display: none;
 	}
 
-	.mobile-title {
-		display: block;
-		overflow-wrap: anywhere;
+	.mobile-expand {
+		position: absolute;
+		inset-inline-end: 0;
+		bottom: 100%;
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+		min-height: 2.75rem;
+		padding: var(--space-xs) var(--space-md);
+		border: 0;
+		background: var(--miniplayer-background);
+		color: inherit;
+		font-size: var(--font-body);
+		touch-action: manipulation;
 	}
 
-	.title {
-		padding-block: var(--space-xs);
+	.widget-slot {
+		flex: 1 1 100%;
+		max-width: none;
 	}
 }

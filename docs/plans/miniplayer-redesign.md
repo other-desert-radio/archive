@@ -19,8 +19,10 @@ Mode: chunked. Stop for approval at each stage and implementation unit.
 - Show now flows through converter and store; existing title rendering reads show.title.
 - Desktop DJ/show links and ellipsis implemented; mobile plain title retained.
 - Feature 2 implemented: desktop text heart/fullscreen buttons after the iframe,
-  accessible labels, hidden through 600px, no handlers. Await review.
-- Feature 3: mobile expand button, unwired, hide compact metadata.
+  accessible labels, hidden through 600px, no handlers. Approved.
+- Feature 3 implemented: content-width mobile expand button above the right edge,
+  unwired, compact metadata and desktop actions hidden. Desktop wrapping preserved.
+  Await review before feature 4.
 - Feature 4: wire expand/close, preserve iframe, handle focus/Escape and background
   isolation, add public/assets/icons/close.svg. Stop for evaluation afterward.
 
