@@ -69,6 +69,42 @@ const title = (() => {
   import tags from "../res/tags.json";
   import { getTagReturn } from "../utils/tag-return";
 
+  // Publishes the bar's full height (including bottom safe-area padding) as
+  // --miniplayer-height on the root, so BaseLayout can reserve mobile space.
+  // The returned cleanup releases the observer when this bar is replaced.
+  function observeMiniplayerHeight(bar: HTMLElement): () => void {
+    const updateHeight = () => {
+      document.documentElement.style.setProperty(
+        "--miniplayer-height",
+        `${bar.getBoundingClientRect().height}px`,
+      );
+    };
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(bar, { box: "border-box" });
+    updateHeight();
+
+    return () => {
+      observer.disconnect();
+      document.documentElement.style.removeProperty("--miniplayer-height");
+    };
+  }
+
+  let stopObservingMiniplayer: (() => void) | undefined;
+
+  // Rebind after both normal page swaps and the iframe-preserving swap.
+  // Root attributes are replaced during navigation even when the bar persists.
+  function initializeMiniplayerHeight(): void {
+    stopObservingMiniplayer?.();
+    stopObservingMiniplayer = undefined;
+    const bar = document.querySelector<HTMLElement>("[data-miniplayer-bar]");
+    if (bar) {
+      stopObservingMiniplayer = observeMiniplayerHeight(bar);
+    }
+  }
+
+  initializeMiniplayerHeight();
+  document.addEventListener("astro:page-load", initializeMiniplayerHeight);
+
   function updateTagReturn() {
     const link = document.querySelector<HTMLAnchorElement>("[data-tag-return]");
     const label = link?.querySelector("b");
@@ -154,5 +190,18 @@ const title = (() => {
   }
   @media (max-width: 750px) {
     header { --nav-inline-padding: var(--page-gutter); }
+  }
+  @media (max-width: 600px) {
+    .miniplayer-slot {
+      position: fixed;
+      inset-inline: 0;
+      bottom: 0;
+    }
+
+    .miniplayer-slot:has([data-miniplayer], iframe) {
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
   }
 </style>
