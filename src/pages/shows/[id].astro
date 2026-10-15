@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TagView from "../../components/TagView.astro";
+import PlayableShowArtwork from "../../components/shows/PlayableShowArtwork";
 import { fetchShows, type Show } from "../../utils/fetch-shows";
 import { fetchTags } from "../../utils/fetch-tags";
 import { formatDate } from "../../utils/format-date";
@@ -34,12 +35,15 @@ const hydratedTags = hydrateTags(show, tags);
   title={`${show.title} | Other Desert Radio`}
 >
   <section class="show-grid" aria-labelledby="show-title">
-    <img
-      class="show-artwork image-border-secondary"
-      decoding="async"
-      src={show.image_large}
-      alt={show.title}
-    />
+    <div class="show-artwork">
+      <PlayableShowArtwork
+        show={show}
+        base={import.meta.env.BASE_URL}
+        loading="eager"
+        border="secondary"
+        client:load
+      />
+    </div>
     <div class="show-info">
       <h1 id="show-title" class="show-title">{show.title}</h1>
       <p class="show-date">{formatDate(show.date)}</p>
@@ -60,12 +64,7 @@ const hydratedTags = hydrateTags(show, tags);
   }
 
   .show-artwork {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1;
-    object-fit: cover;
-    background-color: var(--artwork-placeholder);
+    min-width: 0;
   }
 
   .show-info {

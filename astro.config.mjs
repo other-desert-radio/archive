@@ -15,8 +15,8 @@ export default defineConfig({
 				// Keep builds from overwriting the dev server's React JSX runtime cache,
 				// which causes hydrated components to disappear after a refresh.
 				name: "separate-dependency-caches",
-				config: (_config, { command }) => ({
-					cacheDir: `node_modules/.vite-${command}`,
+				config: (_config, { command, mode }) => ({
+					cacheDir: `node_modules/.vite-${command}-${mode}`,
 				}),
 			},
 		],
