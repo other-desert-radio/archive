@@ -12,6 +12,7 @@
 	--font-body: var(--density-unit);
 	--font-small: calc(var(--density-unit) * 0.875);
 	--font-title: calc(var(--density-unit) * 2.5);
+	--font-small-title: calc(var(--density-unit) * 1.75);
 	--tabs-font-size: var(--space-lg);
 	--tag-font-size: calc(var(--density-unit) * 0.85);
 	--tag-large-font-size: calc(var(--density-unit) * 1.2);
@@ -53,6 +54,10 @@ html {
 body {
 	font-size: var(--font-body);
 	line-height: 1.5;
+}
+
+p {
+	font-size: calc(var(--font-body) * 1.125);
 }
 
 h1 {

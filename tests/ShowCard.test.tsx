@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import ShowCard from "../src/components/shows/ShowCard";
+import { ShowCard } from "../src/components/shows";
 import { formatDate } from "../src/utils/format-date";
 
 test("formats a show date in UTC", () => {

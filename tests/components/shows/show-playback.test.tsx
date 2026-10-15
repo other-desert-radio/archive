@@ -1,12 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import ShowCard from "../../../src/components/shows/ShowCard";
 import {
 	isSelectedShow,
 	mixcloudShowTrack,
+	ShowCard,
 	toggleShowPlayback,
-} from "../../../src/components/shows/show-playback";
+} from "../../../src/components/shows";
 import { AudioStore, StoresProvider } from "../../../src/stores";
 
 const show = {

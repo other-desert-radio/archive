@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import type { Show } from "../../utils/fetch-shows";
-import styles from "./ShowExploreCard.module.css";
+import styles from "./SquareShowCard.module.css";
 
 type Props = {
 	show: Show;
@@ -8,7 +8,7 @@ type Props = {
 	fromTag?: number;
 };
 
-export default function ShowExploreCard({
+export default function SquareShowCard({
 	show,
 	base,
 	fromTag,
@@ -17,7 +17,7 @@ export default function ShowExploreCard({
 	const query = fromTag === undefined ? "" : `?fromTag=${fromTag}`;
 	return (
 		<a
-			className={styles["show-explore-card"]}
+			className={styles["square-show-card"]}
 			data-astro-reload
 			href={`${detailBase}/shows/${show.id}${query}`}
 			aria-label={`View ${show.title}`}
@@ -29,6 +29,9 @@ export default function ShowExploreCard({
 				loading="lazy"
 				decoding="async"
 			/>
+			<span className={`${styles["overlay"]} image-border-primary`}>
+				<span className={styles["title"]}>{show.title}</span>
+			</span>
 		</a>
 	);
 }

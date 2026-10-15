@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import ShowExploreCard from "../src/components/explore/ShowExploreCard";
+import { SquareShowCard } from "../src/components/shows";
 
 test("links large show artwork to the show detail page with an accessible label", () => {
 	const markup = renderToStaticMarkup(
-		<ShowExploreCard
+		<SquareShowCard
 			base="/archive-site/"
 			show={{
 				id: 1,
