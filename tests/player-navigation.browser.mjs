@@ -277,6 +277,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 			artworkBottom: artwork.getBoundingClientRect().bottom,
 			artworkTop: artwork.getBoundingClientRect().top,
 			metadataTop: title.parentElement.getBoundingClientRect().top,
+			detailGap: parseFloat(getComputedStyle(player.querySelector('[class*="controls"]')).rowGap),
 			rowBounds: ['fullscreen-metadata', 'widget-slot', 'fullscreen-actions'].map(name => {
 				const bounds = player.querySelector('[class*="' + name + '"]').getBoundingClientRect();
 				return { left: bounds.left, right: bounds.right };
@@ -310,7 +311,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 	assert.equal(fullscreen.tagsVisible, true);
 	assert.equal(fullscreen.tagDestinations, true);
 	if (width <= 1023) {
-		assert.ok(fullscreen.artworkBottom <= fullscreen.metadataTop, 'Artwork must not overlap metadata');
+		assert.ok(Math.abs(fullscreen.metadataTop - fullscreen.artworkBottom - fullscreen.detailGap) < 1, 'Metadata sits one medium gap below artwork');
 		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);
 	}
 	if (width > 1023) {
