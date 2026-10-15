@@ -43,21 +43,22 @@ const hydratedTags = hydrateTags(dj, tags);
   returning_page="djs"
   title={`${dj.title} | Other Desert Radio`}
 >
-  <div class="detail-grid">
-    <h1 class="detail-header">{dj.title}</h1>
-    <div class="detail-column">
+  <h1 class="dj-header">{dj.title}</h1>
+  <div class="tag-container">
+    {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
+  </div>
+
+  <div class="dj-grid">
+    <div class="dj-column">
       <img
-        class="detail-photo"
+        class="dj-photo image-border-primary"
         decoding="async"
         src={`${base}/${dj.image_large}`}
         alt={dj.title}
       />
-      <div class="tag-container">
-        {hydratedTags.map((tag) => <TagView tag={tag} size="normal" />)}
-      </div>
       <div set:html={dj.socials} />
     </div>
-    <div class="detail-column">
+    <div class="dj-column">
       <div set:html={dj.bio} />
       <p>{dj.showTitle}</p>
       <p>{dj.showDescription}</p>
@@ -79,9 +80,55 @@ const hydratedTags = hydrateTags(dj, tags);
 </BaseLayout>
 
 <style>
-  h1 {
+  .dj-photo {
+    width: 100%;
+    max-width: var(--detail-artwork-size);
+    aspect-ratio: 1;
+    object-fit: cover;
+    background-color: var(--artwork-placeholder);
+  }
+
+  .dj-column {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: var(--space-sm);
+  }
+
+  .dj-grid {
+    display: grid;
+    grid-template-columns:
+      minmax(min(var(--detail-artwork-size), 100%), var(--detail-artwork-size))
+      minmax(0, 1fr);
+    column-gap: var(--space-lg);
+    row-gap: var(--dj-row-gap, 0);
+    overflow-wrap: anywhere;
+  }
+
+  .dj-grid :global(p) {
+    margin: 0;
+  }
+
+  .dj-header {
     margin: 0 0 var(--space-sm);
     font-size: calc(var(--font-title) * 2);
+    line-height: 1.3;
+  }
+
+  .tag-container {
+    margin-bottom: var(--space-md);
+  }
+
+  @media (max-width: 750px) {
+    .dj-grid {
+      column-gap: var(--space-sm);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .dj-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 
   .shows-container {

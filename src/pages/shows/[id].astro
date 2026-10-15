@@ -33,7 +33,7 @@ const hydratedTags = hydrateTags(show, tags);
   returning_page="shows"
   title={`${show.title} | Other Desert Radio`}
 >
-  <div class="detail-grid">
+  <div>
     <div class="detail-header">
       <h1 class="page-title">{show.title}</h1>
       <p>{formatDate(show.date)}</p>
@@ -51,6 +51,5 @@ const hydratedTags = hydrateTags(show, tags);
 </BaseLayout>
 
 <style>
-  .detail-grid { --detail-row-gap: var(--space-sm); }
   .page-title { margin-bottom: 0; }
 </style>
