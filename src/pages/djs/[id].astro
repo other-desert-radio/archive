@@ -63,19 +63,19 @@ const hydratedTags = hydrateTags(dj, tags);
       <p>{dj.showDescription}</p>
     </div>
   </div>
-  <div class="shows-container">
-    <h2 class="show-header">{dj.showTitle}</h2>
-    <p class="show-description">{dj.showDescription}</p>
-    {
-      djShows.length > 0 && (
+  {
+    djShows.length > 0 && (
+      <div class="shows-container">
+        <h2 class="show-header">{dj.showTitle}</h2>
+        <p class="show-description">{dj.showDescription}</p>
         <div class="shows-grid">
           {djShows.map((show) => (
             <SquareShowCard show={show} base={import.meta.env.BASE_URL} />
           ))}
         </div>
-      )
-    }
-  </div>
+      </div>
+    )
+  }
 </BaseLayout>
 
 <style>
@@ -103,6 +103,12 @@ const hydratedTags = hydrateTags(dj, tags);
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--space-lg);
+  }
+
+  .no-shows {
+    margin: var(--space-lg) 0;
+    text-align: center;
+    width: 100%;
   }
 
   @media (max-width: 1600px) {
