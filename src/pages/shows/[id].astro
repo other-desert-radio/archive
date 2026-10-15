@@ -33,23 +33,66 @@ const hydratedTags = hydrateTags(show, tags);
   returning_page="shows"
   title={`${show.title} | Other Desert Radio`}
 >
-  <div>
-    <div class="detail-header">
-      <h1 class="page-title">{show.title}</h1>
-      <p>{formatDate(show.date)}</p>
-    </div>
-    <div class="detail-column">
-      <img class="detail-photo" decoding="async" src={show.image_large} alt={show.title} />
+  <section class="show-grid" aria-labelledby="show-title">
+    <img
+      class="show-artwork image-border-secondary"
+      decoding="async"
+      src={show.image_large}
+      alt={show.title}
+    />
+    <div class="show-info">
+      <h1 id="show-title" class="show-title">{show.title}</h1>
+      <p class="show-date">{formatDate(show.date)}</p>
       <div class="tag-container">
         {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
       </div>
     </div>
-    <div class="detail-column">
-      <p>maybe tracklist goes here</p>
-    </div>
-  </div>
+  </section>
 </BaseLayout>
 
 <style>
-  .page-title { margin-bottom: 0; }
+  .show-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: var(--grid-column-gap);
+    margin-top: var(--grid-column-gap);
+  }
+
+  .show-artwork {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    background-color: var(--artwork-placeholder);
+  }
+
+  .show-info {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .show-title {
+    margin: 0 0 var(--space-lg);
+    font-size: clamp(var(--font-title), 4.5vw, calc(var(--font-title) * 2.5));
+    line-height: 1.4;
+  }
+
+  .show-date {
+    margin: 0 0 var(--space-sm);
+  }
+
+  @media (max-width: 750px) {
+    .show-grid {
+      gap: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .show-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
 </style>
