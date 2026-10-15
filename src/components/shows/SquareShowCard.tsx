@@ -29,6 +29,9 @@ export default function SquareShowCard({
 				loading="lazy"
 				decoding="async"
 			/>
+			<span className={styles["overlay"]}>
+				<span className={styles["title"]}>{show.title}</span>
+			</span>
 		</a>
 	);
 }

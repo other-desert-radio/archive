@@ -1,5 +1,32 @@
 .square-show-card {
+	position: relative;
+	display: block;
 	min-width: 0;
+}
+
+.overlay {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--space-sm);
+	background: rgb(255 255 255 / 75%);
+	color: black;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.title {
+	font-size: var(--font-small-title);
+	text-align: center;
+	overflow-wrap: anywhere;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.square-show-card:hover .overlay {
+		opacity: 1;
+	}
 }
 
 .square-show-card img {
