@@ -55,6 +55,10 @@ body {
 	line-height: 1.5;
 }
 
+p {
+	font-size: calc(var(--font-body) * 1.125);
+}
+
 h1 {
 	font-weight: normal;
 	font-size: var(--font-title);
