@@ -1,0 +1,67 @@
+.artwork {
+	position: relative;
+	width: 100%;
+	min-width: 0;
+}
+
+.show-image {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1;
+	object-fit: cover;
+	background-color: var(--artwork-placeholder);
+}
+
+.playback-button {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	display: grid;
+	place-items: center;
+	width: 18%;
+	min-width: min(2.75rem, 100%);
+	aspect-ratio: 1;
+	padding: 0;
+	border: 0;
+	background: rgb(0 0 0 / 50%);
+	color: white;
+	cursor: pointer;
+	opacity: 0;
+}
+
+.playback-button img {
+	width: 50%;
+	height: auto;
+	aspect-ratio: 1;
+}
+
+.playback-button:focus-visible,
+.playback-button[data-selected="true"] {
+	opacity: 1;
+}
+
+.playback-button:focus-visible {
+	outline: var(--border-secondary) solid white;
+	outline-offset: var(--border-secondary);
+}
+
+@media (hover: none) {
+	.playback-button {
+		opacity: 1;
+	}
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.artwork:hover .playback-button {
+		opacity: 1;
+	}
+}
+
+@media (max-width: 600px), (pointer: coarse) {
+	.playback-button {
+		opacity: 1;
+	}
+}

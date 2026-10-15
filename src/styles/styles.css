@@ -25,7 +25,7 @@
 	--dj-artwork-size: calc(var(--density-unit) * 12.5);
 	--show-artwork-min: calc(var(--density-unit) * 12);
 	--show-artwork-max: calc(var(--density-unit) * 20.625);
-	--detail-artwork-size: calc(var(--density-unit) * 18.75);
+	--detail-artwork-size: calc(var(--density-unit) * 38.75);
 	--artwork-placeholder: #bebebe;
 }
 
@@ -107,21 +107,8 @@ textarea {
 }
 
 /* Shared show and DJ detail presentation. */
-.detail-grid {
-	display: grid;
-	grid-template-columns: minmax(
-			min(var(--detail-artwork-size), 100%),
-			var(--detail-artwork-size)
-		) minmax(0, 1fr);
-	column-gap: var(--space-lg);
-	row-gap: var(--detail-row-gap, 0);
-	overflow-wrap: anywhere;
-}
 .detail-header {
 	grid-column: 1 / -1;
-}
-.detail-grid p {
-	margin: 0;
 }
 .detail-photo {
 	width: 100%;
@@ -136,14 +123,4 @@ textarea {
 	flex-direction: column;
 	min-width: 0;
 	gap: var(--space-sm);
-}
-@media (max-width: 750px) {
-	.detail-grid {
-		column-gap: var(--space-sm);
-	}
-}
-@media (max-width: 600px) {
-	.detail-grid {
-		grid-template-columns: minmax(0, 1fr);
-	}
 }

@@ -7,6 +7,7 @@ import {
 	ShowCard,
 	toggleShowPlayback,
 } from "../../../src/components/shows";
+import PlayableShowArtwork from "../../../src/components/shows/PlayableShowArtwork";
 import { AudioStore, StoresProvider } from "../../../src/stores";
 
 const show = {
@@ -88,6 +89,32 @@ test("card renders accessible play/pause controls and retains the selected overl
 	audioStore.confirmPaused(request.track);
 	assert.ok(render().includes('aria-label="Play Show"'));
 	assert.ok(render().includes('data-selected="true"'));
+});
+
+test("detail artwork shares player state and loads its image eagerly", () => {
+	const audioStore = new SelectedSnapshotStore();
+	const render = () =>
+		renderToStaticMarkup(
+			<StoresProvider stores={{ audioStore }}>
+				<PlayableShowArtwork
+					show={show}
+					base="/archive-site/"
+					loading="eager"
+					border="secondary"
+				/>
+			</StoresProvider>,
+		);
+	assert.match(render(), /aria-label="Play Show"/);
+	assert.match(render(), /loading="eager"/);
+	assert.match(render(), /image-border-secondary/);
+	assert.doesNotMatch(render(), /\/archive-site\/\//);
+	audioStore.select(mixcloudShowTrack(show));
+	assert.match(render(), /aria-label="Pause Show"/);
+	assert.match(render(), /data-selected="true"/);
+	const request = audioStore.getRequestSnapshot();
+	assert.ok(request && request.action === "load");
+	audioStore.confirmPaused(request.track);
+	assert.match(render(), /aria-label="Play Show"/);
 });
 
 test("full show metadata survives playback requests and state transitions", () => {

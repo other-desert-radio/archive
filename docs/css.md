@@ -45,8 +45,8 @@ Container width caps remain unscaled to preserve large-screen alignment.
 
 Show listings use two columns from 1023px. DJ listings retain two columns
 above 1023px and three from 1800px. Phone stacking and title reductions remain
-in place. Shared detail classes keep show and DJ artwork, gaps, and wrapping
-consistent. Verify these layouts in the browser, including long names and
+in place. DJ detail artwork uses a bounded fluid column at 40% of the available
+width, with a single-column layout at 600px and below. Verify these layouts in the browser, including long names and
 tags, at 320px, 332px, 750px, 1440px, and wide desktop widths.
 
 Category tabs stay on one row, with smaller fluid text, reduced gaps and no

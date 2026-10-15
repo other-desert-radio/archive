@@ -29,8 +29,11 @@ Use browser checks where hydration or layout cannot be established headlessly.
 
 ## Dependency-cache regression
 
-Vite dependency caches are separated by command (`node_modules/.vite-serve`
-and `node_modules/.vite-build`) in `astro.config.mjs`. This lets production
+Vite dependency caches are separated by command and mode (for example,
+`node_modules/.vite-serve-development` and
+`node_modules/.vite-serve-production`) in `astro.config.mjs`. Astro's content
+sync also creates a Vite server during production builds, so command alone
+does not isolate its cache from the development server. This lets production
 builds, including build-based tests, run alongside the dev server without
 overwriting its React development runtime. A shared cache previously caused
 miniplayer text to render on the server and disappear during hydration after

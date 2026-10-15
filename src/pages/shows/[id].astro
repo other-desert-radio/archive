@@ -1,7 +1,9 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TagView from "../../components/TagView.astro";
+import PlayableShowArtwork from "../../components/shows/PlayableShowArtwork";
 import { fetchShows, type Show } from "../../utils/fetch-shows";
+import { fetchDJ, type HydratedDJ } from "../../utils/fetch-dj";
 import { fetchTags } from "../../utils/fetch-tags";
 import { formatDate } from "../../utils/format-date";
 import { hydrateTags } from "../../utils/hydrate-tags";
@@ -9,6 +11,7 @@ import { pathToFileURL } from "node:url";
 
 type Props = {
   show: Show;
+  djs: HydratedDJ[];
 };
 export async function getStaticPaths() {
   const shows = await fetchShows(pathToFileURL("src/res/shows.json"));
@@ -18,12 +21,16 @@ export async function getStaticPaths() {
       params: { id: String(show.id) },
       props: {
         show: show,
+        djs: await Promise.all(
+          show.djs.map(({ id }) => fetchDJ(pathToFileURL(`src/res/djs/${id}.json`))),
+        ),
       },
     })),
   );
 }
 
-const { show } = Astro.props as Props;
+const { show, djs } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
 const hydratedTags = hydrateTags(show, tags);
 ---
@@ -33,24 +40,155 @@ const hydratedTags = hydrateTags(show, tags);
   returning_page="shows"
   title={`${show.title} | Other Desert Radio`}
 >
-  <div class="detail-grid">
-    <div class="detail-header">
-      <h1 class="page-title">{show.title}</h1>
-      <p>{formatDate(show.date)}</p>
+  <section class="show-grid" aria-labelledby="show-title">
+    <div class="show-artwork">
+      <PlayableShowArtwork
+        show={show}
+        base={import.meta.env.BASE_URL}
+        loading="eager"
+        border="secondary"
+        client:load
+      />
     </div>
-    <div class="detail-column">
-      <img class="detail-photo" decoding="async" src={show.image_large} alt={show.title} />
+    <div class="show-info">
+      <h1 id="show-title" class="show-title">{show.title}</h1>
+      <p class="show-date">{formatDate(show.date)}</p>
       <div class="tag-container">
         {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
       </div>
     </div>
-    <div class="detail-column">
-      <p>maybe tracklist goes here</p>
-    </div>
-  </div>
+  </section>
+  {djs.map((dj) => (
+    <a
+      class="show-dj"
+      href={`${base}/djs/${dj.id}`}
+      data-astro-reload
+      aria-label={`View ${dj.title}`}
+      aria-labelledby={`dj-${dj.id}`}
+    >
+      <h2 id={`dj-${dj.id}`} class="dj-name">
+        {dj.title}
+      </h2>
+      <div class="dj-profile">
+        <img
+          class="dj-portrait"
+          src={`${base}/${dj.image_large}`}
+          alt={dj.title}
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="dj-bio" set:html={dj.bio} />
+      </div>
+    </a>
+  ))}
 </BaseLayout>
 
 <style>
-  .detail-grid { --detail-row-gap: var(--space-sm); }
-  .page-title { margin-bottom: 0; }
+  .show-dj {
+    display: block;
+    width: min(100%, calc(var(--density-unit) * 72));
+    margin-top: var(--grid-column-gap);
+    padding: var(--space-sm);
+    border: 2px dashed transparent;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .show-dj:hover {
+      background-color: white;
+      border-color: currentColor;
+    }
+  }
+
+  .show-dj:focus-visible {
+    background-color: white;
+    border-color: currentColor;
+    outline: var(--border-secondary) solid currentColor;
+    outline-offset: var(--space-xs);
+  }
+
+  .dj-name {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--font-title);
+    font-weight: 400;
+    overflow-wrap: anywhere;
+  }
+
+  .dj-profile {
+    display: grid;
+    grid-template-columns:
+      minmax(0, var(--dj-artwork-size))
+      minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-lg);
+  }
+
+  .dj-portrait {
+    display: block;
+    width: 100%;
+    max-width: var(--dj-artwork-size);
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    background-color: var(--artwork-placeholder);
+  }
+
+  .dj-bio {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .dj-bio :global(p:first-child) {
+    margin-top: 0;
+  }
+
+  .dj-bio :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .show-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: var(--grid-column-gap);
+    margin-top: var(--grid-column-gap);
+  }
+
+  .show-artwork {
+    min-width: 0;
+  }
+
+  .show-info {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .show-title {
+    margin: 0 0 var(--space-lg);
+    font-size: clamp(var(--font-title), 4.5vw, calc(var(--font-title) * 2.5));
+    line-height: 1.4;
+  }
+
+  .show-date {
+    margin: 0 0 var(--space-sm);
+  }
+
+  @media (max-width: 750px) {
+    .show-grid {
+      gap: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .show-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .dj-profile {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+  }
 </style>
