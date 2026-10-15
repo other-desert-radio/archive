@@ -2,7 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LargeTagHeader from "../../components/explore/LargeTagHeader.astro";
 import DJExploreCard from "../../components/explore/DJExploreCard.astro";
-import SquareShowCard from "../../components/shows/SquareShowCard";
+import { SquareShowCard } from "../../components/shows";
 import { fetchShows, type Show } from "../../utils/fetch-shows";
 import { fetchDJs } from "../../utils/fetch-djs";
 import { fetchDJ, type HydratedDJ } from "../../utils/fetch-dj";
