@@ -8,17 +8,26 @@ const { active } = Astro.props;
 ---
 
 <div class="tabs">
+  <!-- Warm visible destinations before a touch user taps, without preloading
+       the entire archive. Astro respects reduced-data/slow-connection settings. -->
   <a
+    data-astro-prefetch="viewport"
     href={`${base}explore`}
     aria-current={active === "explore" ? "page" : undefined}>EXPLORE</a
   >
   <!--- TODO: have explore be the base -->
-  <a href={base} aria-current={active === "shows" ? "page" : undefined}>SHOWS</a
-  >
-  <a href={`${base}djs`} aria-current={active === "djs" ? "page" : undefined}
-    >DJs</a
+  <a
+    data-astro-prefetch="viewport"
+    href={base}
+    aria-current={active === "shows" ? "page" : undefined}>SHOWS</a
   >
   <a
+    data-astro-prefetch="viewport"
+    href={`${base}djs`}
+    aria-current={active === "djs" ? "page" : undefined}>DJs</a
+  >
+  <a
+    data-astro-prefetch="viewport"
     href={`${base}history`}
     aria-current={active === "history" ? "page" : undefined}>HISTORY</a
   >

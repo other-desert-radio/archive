@@ -43,13 +43,46 @@ SHOWS to DJs. Text must remain visible and the persisted island must retain
 its DOM identity. This browser check passed with the separate caches; the
 existing generated-HTML test cannot detect a client runtime hydration failure.
 
-## Responsive layout verification
+## Performance regression suite
+
+Run `bun run test:performance`. Install `agent-browser@0.38.1` and run
+`agent-browser install` first (Linux CI uses `--with-deps`). The command builds
+production output, checks gzip budgets, and runs real Chromium touch input at an
+iPhone viewport against its own local fixture server. No preview server or
+external artwork service is required. The Performance regressions workflow runs
+the unit suite (including image-loading and routing contracts), then this command
+on pull requests and pushes to main.
+
+- All four prefetched category tabs must render within 400ms, without another HTML
+  request. Timing includes native transition readiness and two animation frames.
+  Tap-to-click must stay below 150ms. An unprefetched control verifies the injected
+  800ms HTML delay. Both native prefetch and Safari's fetch-prefetch fallback run.
+- Cold DJ, show and tag details, and their return links, must load as full
+  documents with exactly one HTML request. Main content must reach a render
+  opportunity within 1300ms, including the injected 800ms network delay. Artwork
+  takes 2000ms; DJ/show content must be visible before it finishes. Prefetching
+  is disabled and HTML is not cached for these cases.
+- All emitted JS combined has a 100 KiB gzip budget; all CSS combined has a
+  5 KiB budget. Root HTML allows 12 KiB, other categories 7 KiB, and each detail
+  page 8 KiB. Failures print measurements; investigate growth before raising a
+  limit. These are transfer-size guards, not device-speed guarantees.
+
+The suite does not emulate WebKit or replace physical iPhone checks. It measures
+render opportunities, not pixel presentation or a Core Web Vitals score. Run it
+after build-based unit tests finish; rebuilding removes files while its fixture
+server is serving them. For an existing build, run
+`bun tests/performance-budget.mjs` and `bun tests/mobile-navigation.browser.mjs`
+individually.
+
+## Responsive browser checks
 
 For player navigation and the viewport background, start `bun run preview`
 after building, then run `bun tests/player-navigation.browser.mjs` (requires
 `agent-browser`). The browser regression uses a same-origin iframe to verify
-its document and playback marker survive listing/detail and back/forward
-navigation without reloading. It also checks viewport background sizing and
+its document and playback marker survive category-tab and back/forward
+navigation without reloading. Detail links must perform full document navigation
+and return links must restore the correct category/tag destination.
+It also checks viewport background sizing and
 horizontal overflow at 320px, 332px, 750px and 1440px. Physical iOS rendering
 and external Mixcloud playback require a device check.
 

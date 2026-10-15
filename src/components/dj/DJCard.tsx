@@ -12,6 +12,7 @@ type Props = {
 export default function DJCard({ dj, base, tags }: Props) {
 	return (
 		<a
+			data-astro-reload
 			href={`${base}/djs/${dj.id}`}
 			className={styles["dj-card"]}
 			aria-label={`View ${dj.title}`}
@@ -20,6 +21,8 @@ export default function DJCard({ dj, base, tags }: Props) {
 				className={`${styles["image"]} image-border-primary`}
 				src={`${base}/${dj.image_small}`}
 				alt={dj.title}
+				loading="lazy"
+				decoding="async"
 			/>
 
 			<div className={styles["trailing-content"]}>

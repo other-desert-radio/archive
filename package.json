@@ -17,6 +17,7 @@
 		"lint:shell": "find .githooks scripts -type f -exec sh -n {} +",
 		"lint:types": "tsc --noEmit --project tsconfig.lint.json",
 		"test": "bun test",
+		"test:performance": "bun run build && bun tests/performance-budget.mjs && bun tests/mobile-navigation.browser.mjs",
 		"prepare": "./scripts/setup-hooks.sh",
 		"preview": "astro preview",
 		"astro": "astro"

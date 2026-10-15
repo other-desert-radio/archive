@@ -18,6 +18,7 @@ export default function ShowExploreCard({
 	return (
 		<a
 			className={styles["show-explore-card"]}
+			data-astro-reload
 			href={`${detailBase}/shows/${show.id}${query}`}
 			aria-label={`View ${show.title}`}
 		>
@@ -26,6 +27,7 @@ export default function ShowExploreCard({
 				alt={show.title}
 				className="image-border-primary"
 				loading="lazy"
+				decoding="async"
 			/>
 		</a>
 	);

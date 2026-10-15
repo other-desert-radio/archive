@@ -25,6 +25,7 @@ const renderDJs = (djs: Show["djs"], base: string) =>
 	djs.map((dj) => (
 		<a
 			key={dj.id}
+			data-astro-reload
 			href={`${base}/djs/${dj.id}`}
 			className={styles["dj-container"]}
 			aria-label={`View ${dj.title}`}
@@ -33,6 +34,8 @@ const renderDJs = (djs: Show["djs"], base: string) =>
 				className={`${styles["dj-image"]} image-border-secondary`}
 				src={`${base}/${dj.image_small}`}
 				alt={dj.title}
+				loading="lazy"
+				decoding="async"
 			/>
 			<span className={styles["dj-name-title"]}>{dj.title}</span>
 		</a>
@@ -57,6 +60,8 @@ export default function ShowCard({ show, base, tags }: Props) {
 					className={`${styles["show-image"]} image-border-primary`}
 					src={show.image_large}
 					alt={show.title}
+					loading="lazy"
+					decoding="async"
 				/>
 				<button
 					type="button"
@@ -74,6 +79,7 @@ export default function ShowCard({ show, base, tags }: Props) {
 			</div>
 			<div className={styles["trailing-content"]}>
 				<a
+					data-astro-reload
 					href={`${detailBase}/shows/${show.id}`}
 					className={styles["show-title"]}
 					aria-label={`View ${show.title}`}

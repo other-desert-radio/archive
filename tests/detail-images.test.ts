@@ -45,6 +45,8 @@ test("built show and DJ detail pages render large artwork with alt text and page
 				),
 			);
 			assert.ok(image, `${category}/${record.id} should render large artwork`);
+			assert.doesNotMatch(image, /loading="lazy"/);
+			assert.match(image, /decoding="async"/);
 			assert.ok(
 				image.includes(`alt="${escapeAttribute(record.title)}"`),
 				`${category}/${record.id}: ${image}`,

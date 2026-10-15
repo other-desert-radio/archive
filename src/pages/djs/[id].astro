@@ -41,7 +41,7 @@ const hydratedTags = hydrateTags(dj, tags);
   <div class="detail-grid">
     <h1 class="detail-header">{dj.title}</h1>
     <div class="detail-column">
-      <img class="detail-photo" src={`${base}/${dj.image_large}`} alt={dj.title} />
+      <img class="detail-photo" decoding="async" src={`${base}/${dj.image_large}`} alt={dj.title} />
       <div class="tag-container">
         {hydratedTags.map((tag) => <TagView tag={tag} size="normal" />)}
       </div>
