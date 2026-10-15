@@ -1,8 +1,8 @@
-.show-explore-card {
+.square-show-card {
 	min-width: 0;
 }
 
-.show-explore-card img {
+.square-show-card img {
 	display: block;
 	width: 100%;
 	aspect-ratio: 1;

@@ -2,7 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LargeTagHeader from "../../components/explore/LargeTagHeader.astro";
 import DJExploreCard from "../../components/explore/DJExploreCard.astro";
-import ShowExploreCard from "../../components/explore/ShowExploreCard";
+import SquareShowCard from "../../components/shows/SquareShowCard";
 import { fetchShows, type Show } from "../../utils/fetch-shows";
 import { fetchDJs } from "../../utils/fetch-djs";
 import { fetchDJ, type HydratedDJ } from "../../utils/fetch-dj";
@@ -57,7 +57,7 @@ const { tag, djs, shows } = Astro.props as Props;
         <h2 id="tag-shows-heading">SHOWS</h2>
       </div>
       <div class="shows-grid">
-        {shows.map((show) => <ShowExploreCard show={show} base={import.meta.env.BASE_URL} fromTag={tag.id} />)}
+        {shows.map((show) => <SquareShowCard show={show} base={import.meta.env.BASE_URL} fromTag={tag.id} />)}
       </div>
     </section>
   )}
