@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import TagView from "../../components/TagView.astro";
 import PlayableShowArtwork from "../../components/shows/PlayableShowArtwork";
 import { fetchShows, type Show } from "../../utils/fetch-shows";
+import { fetchDJ, type HydratedDJ } from "../../utils/fetch-dj";
 import { fetchTags } from "../../utils/fetch-tags";
 import { formatDate } from "../../utils/format-date";
 import { hydrateTags } from "../../utils/hydrate-tags";
@@ -10,6 +11,7 @@ import { pathToFileURL } from "node:url";
 
 type Props = {
   show: Show;
+  djs: HydratedDJ[];
 };
 export async function getStaticPaths() {
   const shows = await fetchShows(pathToFileURL("src/res/shows.json"));
@@ -19,12 +21,16 @@ export async function getStaticPaths() {
       params: { id: String(show.id) },
       props: {
         show: show,
+        djs: await Promise.all(
+          show.djs.map(({ id }) => fetchDJ(pathToFileURL(`src/res/djs/${id}.json`))),
+        ),
       },
     })),
   );
 }
 
-const { show } = Astro.props as Props;
+const { show, djs } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
 const hydratedTags = hydrateTags(show, tags);
 ---
@@ -52,9 +58,96 @@ const hydratedTags = hydrateTags(show, tags);
       </div>
     </div>
   </section>
+  {djs.map((dj) => (
+    <a
+      class="show-dj"
+      href={`${base}/djs/${dj.id}`}
+      data-astro-reload
+      aria-label={`View ${dj.title}`}
+      aria-labelledby={`dj-${dj.id}`}
+    >
+      <h2 id={`dj-${dj.id}`} class="dj-name">
+        {dj.title}
+      </h2>
+      <div class="dj-profile">
+        <img
+          class="dj-portrait"
+          src={`${base}/${dj.image_large}`}
+          alt={dj.title}
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="dj-bio" set:html={dj.bio} />
+      </div>
+    </a>
+  ))}
 </BaseLayout>
 
 <style>
+  .show-dj {
+    display: block;
+    width: min(100%, calc(var(--density-unit) * 72));
+    margin-top: var(--grid-column-gap);
+    padding: var(--space-sm);
+    border: 2px dashed transparent;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .show-dj:hover {
+      background-color: white;
+      border-color: currentColor;
+    }
+  }
+
+  .show-dj:focus-visible {
+    background-color: white;
+    border-color: currentColor;
+    outline: var(--border-secondary) solid currentColor;
+    outline-offset: var(--space-xs);
+  }
+
+  .dj-name {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--font-title);
+    font-weight: 400;
+    overflow-wrap: anywhere;
+  }
+
+  .dj-profile {
+    display: grid;
+    grid-template-columns:
+      minmax(0, var(--dj-artwork-size))
+      minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-lg);
+  }
+
+  .dj-portrait {
+    display: block;
+    width: 100%;
+    max-width: var(--dj-artwork-size);
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    background-color: var(--artwork-placeholder);
+  }
+
+  .dj-bio {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .dj-bio :global(p:first-child) {
+    margin-top: 0;
+  }
+
+  .dj-bio :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
   .show-grid {
     display: grid;
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
@@ -93,5 +186,9 @@ const hydratedTags = hydrateTags(show, tags);
     .show-grid {
       grid-template-columns: minmax(0, 1fr);
     }
+    .dj-profile {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
   }
 </style>
