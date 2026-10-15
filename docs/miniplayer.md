@@ -59,11 +59,34 @@ outside the measured bar above its top edge.
 ## Fullscreen presentation
 
 Both expand controls switch local presentation state to fullscreen; the close
-button restores compact presentation. The same player container becomes fixed
+button restores compact presentation. Activating fullscreen show, tag or DJ
+links also closes fullscreen and releases scroll locking while normal archive
+navigation preserves the playing iframe. The same player container becomes fixed
 and fills the viewport with a black background, a station header and a close SVG.
 Compact metadata and actions are hidden. The existing iframe stays mounted in
 its original position in the React tree: at the viewport bottom on mobile and
 in the right-hand content area on desktop.
+
+Fullscreen controls use a grid with large show artwork, a wrapping linked
+title, colored tag links, an unwired outline heart button and linked DJ portraits
+and names. All DJs render; shows without DJs omit their content and missing
+portrait references omit the image. Tags use the existing large TagView inside
+archive links and
+resolve show tag IDs against the existing catalog, preserving their order and
+colors, and link to archive tag pages. Missing IDs use hydrateTags' existing
+logging/omission behavior. Above 1023px, artwork
+spans the left column and the other slots
+occupy the right. At 1023px and below, the slots stack as artwork, metadata,
+a shared row with heart left and DJs right, then the bottom widget. Desktop
+artwork occupies a 1:1 square bounded by column
+width and the content area's height, without cropping. Desktop content is
+centered vertically; artwork is bounded by 80% of viewport height and 52rem.
+The artwork determines the row height, with right-hand metadata aligned to its top. The two equal desktop columns share a centered 100rem maximum-width container.
+Metadata, widget and the heart/DJ flex row stretch to the same right-column width. The
+stacked layout caps square artwork at 45% of viewport height and places metadata
+one medium spacing token below it; remaining height belongs to the content column. Content can scroll when it exceeds its height, with the
+widget sticky at the bottom. Detail slots are hidden in compact mode; artwork/title mount only
+in fullscreen. The widget retains its existing parent in both modes.
 
 A player-shell wrapper reserves the compact height measured on expand, so the
 bar's resize observer does not turn fullscreen height into page clearance.

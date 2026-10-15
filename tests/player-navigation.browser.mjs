@@ -233,8 +233,8 @@ evaluate(`(() => {
 })()`);
 browser("wait", "--fn", "window.fullscreenFrame.contentDocument?.body.textContent.includes('Fullscreen playback fixture')");
 evaluate("window.fullscreenDocument = window.fullscreenFrame.contentDocument; true");
-for (const width of [390, 600, 601, 750, 1440]) {
-	browser("set", "viewport", String(width), "844");
+for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [601, 844], [750, 844], [840, 782], [1440, 844], [2041, 1352], [2560, 844]]) {
+	browser("set", "viewport", String(width), String(height));
 	evaluate("window.scrollTo(0, 200); true");
 	const savedScrollY = evaluate("window.scrollY");
 	const savedBodyStyles = evaluate("document.body.style.cssText");
@@ -253,6 +253,11 @@ for (const width of [390, 600, 601, 750, 1440]) {
 		const player = document.querySelector('[data-miniplayer]');
 		const rect = player.getBoundingClientRect();
 		const frame = player.querySelector('iframe');
+		const artwork = player.querySelector('[class*="fullscreen-artwork"] img');
+		const title = player.querySelector('[class*="fullscreen-title"]');
+		const tagLinks = [...player.querySelectorAll('[class*="fullscreen-tags"] a')];
+		const heart = player.querySelector('[class*="fullscreen-heart"] button');
+		const djLinks = [...player.querySelectorAll('[class*="fullscreen-djs"] a')];
 		return {
 			x: rect.x, y: rect.y, width: rect.width, height: rect.height,
 			viewportWidth: innerWidth, viewportHeight: innerHeight,
@@ -261,8 +266,29 @@ for (const width of [390, 600, 601, 750, 1440]) {
 			sameDocument: frame.contentDocument === window.fullscreenDocument,
 			frameBottom: frame.getBoundingClientRect().bottom,
 			background: getComputedStyle(player).backgroundColor,
-			heartHidden: getComputedStyle(player.querySelector('[aria-label="Favorite show"]').parentElement).display === 'none',
+			heartHidden: getComputedStyle(player.querySelector('[class*="desktop-actions"]')).display === 'none',
+			fullscreenHeartVisible: heart.getBoundingClientRect().width > 0,
+			djsVisible: djLinks.length > 0 && djLinks.every(link => link.getBoundingClientRect().width > 0),
+			djDestinations: djLinks.every(link => link.getAttribute('href').startsWith('/archive-site/djs/')),
 			closeVisible: player.querySelector('[aria-label="Close player"]').getBoundingClientRect().width > 0,
+			artworkVisible: artwork.getBoundingClientRect().width > 0 && artwork.getBoundingClientRect().height > 0,
+			artworkWidth: artwork.getBoundingClientRect().width,
+			artworkHeight: artwork.getBoundingClientRect().height,
+			artworkBottom: artwork.getBoundingClientRect().bottom,
+			artworkTop: artwork.getBoundingClientRect().top,
+			metadataTop: title.parentElement.getBoundingClientRect().top,
+			detailGap: parseFloat(getComputedStyle(player.querySelector('[class*="controls"]')).rowGap),
+			rowBounds: ['fullscreen-metadata', 'widget-slot', 'fullscreen-actions'].map(name => {
+				const bounds = player.querySelector('[class*="' + name + '"]').getBoundingClientRect();
+				return { left: bounds.left, right: bounds.right };
+			}),
+			controlsLeft: player.querySelector('[class*="controls"]').getBoundingClientRect().left,
+			artworkCenterY: artwork.getBoundingClientRect().y + artwork.getBoundingClientRect().height / 2,
+			frameCenterY: frame.getBoundingClientRect().y + frame.getBoundingClientRect().height / 2,
+			matchingTitle: artwork.alt === title.textContent && title.textContent.length > 0,
+			showLink: title.getAttribute('href').startsWith('/archive-site/shows/'),
+			tagsVisible: tagLinks.length > 0 && tagLinks.every(link => link.getBoundingClientRect().height > 0),
+			tagDestinations: tagLinks.every(link => link.getAttribute('href').startsWith('/archive-site/tags/')),
 			overflow: document.documentElement.scrollWidth > innerWidth
 		};
 	})()`);
@@ -275,7 +301,32 @@ for (const width of [390, 600, 601, 750, 1440]) {
 	assert.equal(fullscreen.sameDocument, true);
 	assert.equal(fullscreen.background, "rgb(0, 0, 0)");
 	assert.equal(fullscreen.heartHidden, true);
+	assert.equal(fullscreen.fullscreenHeartVisible, true);
+	assert.equal(fullscreen.djsVisible, true);
+	assert.equal(fullscreen.djDestinations, true);
 	assert.equal(fullscreen.closeVisible, true);
+	assert.equal(fullscreen.artworkVisible, true);
+	assert.equal(fullscreen.matchingTitle, true);
+	assert.equal(fullscreen.showLink, true);
+	assert.equal(fullscreen.tagsVisible, true);
+	assert.equal(fullscreen.tagDestinations, true);
+	if (width <= 1023) {
+		assert.ok(Math.abs(fullscreen.metadataTop - fullscreen.artworkBottom - fullscreen.detailGap) < 1, 'Metadata sits one medium gap below artwork');
+		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);
+	}
+	if (width > 1023) {
+		assert.ok(Math.abs(fullscreen.artworkTop - fullscreen.metadataTop) < 1, "Artwork and metadata align at the top");
+		for (const row of fullscreen.rowBounds) {
+			assert.ok(Math.abs(row.left - fullscreen.rowBounds[0].left) < 1);
+			assert.ok(Math.abs(row.right - fullscreen.rowBounds[0].right) < 1);
+		}
+		if (width >= 2560) {
+			assert.ok(fullscreen.controlsLeft >= 400, 'Wide screens retain generous side margins');
+		}
+		assert.ok(Math.abs(fullscreen.artworkWidth - fullscreen.artworkHeight) < 1);
+		assert.ok(fullscreen.artworkHeight <= fullscreen.viewportHeight * 0.8);
+		assert.ok(Math.abs(fullscreen.artworkCenterY - fullscreen.frameCenterY) < 1);
+	}
 	assert.equal(fullscreen.overflow, false);
 	if (width <= 600) {
 		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);
@@ -290,3 +341,27 @@ for (const width of [390, 600, 601, 750, 1440]) {
 	assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame && window.fullscreenFrame.contentDocument === window.fullscreenDocument"), true);
 }
 console.log("Fullscreen expand/close, scroll restoration and iframe identity pass on mobile and desktop widths.");
+
+// Fullscreen archive links close the persisted presentation before navigating.
+for (const width of [390, 1440]) {
+	browser("set", "viewport", String(width), "844");
+	for (const selector of [
+		'[class*="fullscreen-tags"] a',
+		'[class*="fullscreen-djs"] a',
+		'[class*="fullscreen-title"]',
+	]) {
+		const expand = width <= 600
+			? '[data-miniplayer] > button[aria-label="Expand player"]'
+			: '[data-miniplayer] div > button[aria-label="Expand player"]';
+		browser("click", expand);
+		browser("wait", '[data-presentation="fullscreen"]');
+		const destination = evaluate(`new URL(document.querySelector(${JSON.stringify(selector)}).href).pathname`);
+		// Clicking the nested span/div exercises event bubbling from TagView/DJ content.
+		evaluate(`(() => { const link = document.querySelector(${JSON.stringify(selector)}); (link.lastElementChild ?? link).click(); return true; })()`);
+		browser("wait", "--fn", `location.pathname === ${JSON.stringify(destination)}`);
+		browser("wait", '[data-presentation="compact"]');
+		browser("wait", "--fn", "document.body.style.position !== 'fixed' && getComputedStyle(document.documentElement).overflow !== 'hidden'");
+		assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame && window.fullscreenFrame.contentDocument === window.fullscreenDocument"), true);
+	}
+}
+console.log("Fullscreen tag, DJ and show links dismiss the overlay, release scroll lock and preserve the iframe through navigation.");
