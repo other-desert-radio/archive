@@ -82,7 +82,8 @@ const hydratedTags = hydrateTags(dj, tags);
 <style>
   .dj-photo {
     width: 100%;
-    max-width: var(--detail-artwork-size);
+    max-width: calc(var(--density-unit) * 38.75);
+    height: auto;
     aspect-ratio: 1;
     object-fit: cover;
     background-color: var(--artwork-placeholder);
@@ -98,7 +99,7 @@ const hydratedTags = hydrateTags(dj, tags);
   .dj-grid {
     display: grid;
     grid-template-columns:
-      minmax(min(var(--detail-artwork-size), 100%), var(--detail-artwork-size))
+      minmax(0, clamp(var(--show-artwork-min), 40%, calc(var(--density-unit) * 38.75)))
       minmax(0, 1fr);
     column-gap: var(--space-lg);
     row-gap: var(--dj-row-gap, 0);
