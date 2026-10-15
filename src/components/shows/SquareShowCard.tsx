@@ -18,7 +18,6 @@ export default function SquareShowCard({
 	return (
 		<a
 			className={styles["square-show-card"]}
-			data-astro-reload
 			href={`${detailBase}/shows/${show.id}${query}`}
 			aria-label={`View ${show.title}`}
 		>

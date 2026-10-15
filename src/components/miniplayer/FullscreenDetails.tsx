@@ -27,7 +27,6 @@ export function FullscreenTags({
 			{hydrateTags(show, tags).map((tag) => (
 				<a
 					key={tag.id}
-					data-astro-reload
 					href={`${base}/tags/${tag.id}`}
 					aria-label={`Explore ${tag.title}`}
 					onClick={onNavigate}
@@ -53,7 +52,6 @@ export function FullscreenDJs({
 			{show.djs.map((dj) => (
 				<a
 					key={dj.id}
-					data-astro-reload
 					href={`${base}/djs/${dj.id}`}
 					aria-label={`View ${dj.title}`}
 					onClick={onNavigate}

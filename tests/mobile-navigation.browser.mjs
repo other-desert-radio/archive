@@ -297,8 +297,8 @@ async function detailNavigation() {
         })`);
 				assert.equal(
 					result.newDocument,
-					true,
-					`${destination}: bypass client transitions`,
+					false,
+					`${destination}: preserve the document through client routing`,
 				);
 				assert.equal(
 					result.textVisible,

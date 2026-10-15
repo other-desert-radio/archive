@@ -10,25 +10,14 @@ test("every built page hosts one hydrated, persisted miniplayer below its naviga
 	assert.ok(pages.length > 0);
 	for (const page of pages) {
 		const html = await readFile(`dist/${page}`, "utf8");
-		const isCategoryPage = [
-			"index.html",
-			"djs/index.html",
-			"explore/index.html",
-			"history/index.html",
-		].includes(page);
-		assert.equal(
+		assert.ok(
 			html.includes('name="astro-view-transitions-enabled"'),
-			isCategoryPage,
-			`${page}: client routing is limited to category pages`,
+			`${page}: client routing must preserve playback on every page`,
 		);
-		for (const link of html.match(/<a\b[^>]*>/g) ?? []) {
-			if (/href="[^"?]*\/(djs|shows|tags)\/\d+(?:\?[^"]*)?"/.test(link)) {
-				assert.ok(
-					link.includes("data-astro-reload"),
-					`${page}: detail link must bypass the router: ${link}`,
-				);
-			}
-		}
+		assert.ok(
+			!html.includes("data-astro-reload"),
+			`${page}: internal links must use the router`,
+		);
 		const navigation = html.match(/<nav\b[^>]*>[\s\S]*?<\/nav>/)?.[0];
 		assert.ok(navigation, `${page}: missing navigation`);
 		const header = html.match(/<header\b[^>]*>[\s\S]*?<\/header>/)?.[0];

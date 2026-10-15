@@ -12,7 +12,6 @@ type Props = {
 export default function DJCard({ dj, base, tags }: Props) {
 	return (
 		<a
-			data-astro-reload
 			href={`${base}/djs/${dj.id}`}
 			className={styles["dj-card"]}
 			aria-label={`View ${dj.title}`}

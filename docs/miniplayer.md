@@ -60,8 +60,7 @@ outside the measured bar above its top edge.
 
 Both expand controls switch local presentation state to fullscreen; the close
 button restores compact presentation. Activating fullscreen show, tag or DJ
-links closes fullscreen and releases scroll locking before full document
-navigation ends playback. The same player container becomes fixed
+links closes fullscreen and releases scroll locking before client navigation while playback continues. The same player container becomes fixed
 and fills the viewport with a black background, a station header and a close SVG.
 Compact metadata and actions are hidden. The existing iframe stays mounted in
 its original position in the React tree: at the viewport bottom on mobile and
@@ -110,6 +109,5 @@ and header, replacing navigation and surrounding content without detaching the
 iframe. Idle navigation and browsers supporting state-preserving moves use
 Astro's default swap. Pages without the shared header also use the default swap.
 This protects playback in browsers where ordinary DOM moves reload iframes.
-Only navigation between the four category tabs preserves playback. Entering or
-leaving show, DJ and tag detail pages uses full document navigation and ends
-playback, as do reloads and navigation outside the archive.
+Navigation between category tabs and show, DJ and tag detail pages preserves
+playback. Full reloads and navigation outside the archive end playback.

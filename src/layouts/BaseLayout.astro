@@ -17,11 +17,6 @@ import "../styles/global.css";
 import "../styles/styles.css";
 import Navigation from "../components/Navigation.astro";
 
-// Keep the player mounted between category tabs. Detail pages use ordinary
-// document navigation to avoid the client router's transition preparation.
-const clientRouterEnabled = ["shows", "djs", "explore", "history"].includes(
-  page.name,
-);
 ---
 
 <!doctype html>
@@ -37,7 +32,7 @@ const clientRouterEnabled = ["shows", "djs", "explore", "history"].includes(
       content={page.name === "tag_page" ? page.color : "#000000"}
     />
     <title>{title}</title>
-    {clientRouterEnabled && <ClientRouter fallback="swap" />}
+    <ClientRouter fallback="swap" />
   </head>
   <body transition:animate="none">
     <div class="site-background" aria-hidden="true"></div>

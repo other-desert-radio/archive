@@ -342,22 +342,22 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 }
 console.log("Fullscreen expand/close, scroll restoration and iframe identity pass on mobile and desktop widths.");
 
-// Every detail entry and exit replaces the document, including tag-context returns.
+// Detail entry and exit preserve the document, including tag-context returns.
 function markDocument() {
-	evaluate("window.navigationDocumentMarker = true; true");
+	evaluate("window.navigationDocumentMarker = true; window.navigationFrame = document.querySelector('[data-miniplayer] iframe'); true");
 }
-function verifyFullNavigation(destination) {
+function verifyClientNavigation(destination) {
 	browser("wait", "--fn", `location.pathname === ${JSON.stringify(destination)}`);
 	browser("wait", "--fn", "document.readyState === 'complete'");
-	assert.equal(evaluate("window.navigationDocumentMarker === undefined"), true);
-	assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === null"), true);
+	assert.equal(evaluate("window.navigationDocumentMarker === true"), true);
+	assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.navigationFrame"), true);
 	assert.equal(evaluate("document.body.style.position !== 'fixed' && getComputedStyle(document.documentElement).overflow !== 'hidden'"), true);
 }
 function followLink(selector) {
 	const destination = evaluate(`new URL(document.querySelector(${JSON.stringify(selector)}).href).pathname`);
 	markDocument();
 	evaluate(`document.querySelector(${JSON.stringify(selector)}).click(); true`);
-	verifyFullNavigation(destination);
+	verifyClientNavigation(destination);
 	return destination;
 }
 for (const [listing, detailSelector] of [
@@ -383,9 +383,9 @@ for (const kind of ["shows", "djs"]) {
 	followLink("[data-tag-return]");
 	assert.equal(evaluate("location.pathname"), tagPath);
 }
-console.log("Show, DJ and tag details use full documents on entry and return, including fromTag context.");
+console.log("Show, DJ and tag details preserve the document on entry and return, including fromTag context.");
 
-// Fullscreen archive links perform full navigation and release scroll lock.
+// Fullscreen archive links preserve playback and release scroll lock.
 for (const width of [390, 1440]) {
 	browser("set", "viewport", String(width), "844");
 	for (const selector of [
@@ -406,7 +406,7 @@ for (const width of [390, 1440]) {
 		markDocument();
 		// Exercise bubbling from nested TagView/DJ content.
 		evaluate(`(() => { const link = document.querySelector(${JSON.stringify(selector)}); (link.lastElementChild ?? link).click(); return true; })()`);
-		verifyFullNavigation(destination);
+		verifyClientNavigation(destination);
 	}
 }
-console.log("Fullscreen tag, DJ and show links replace the document, reset playback and release scroll lock.");
+console.log("Fullscreen tag, DJ and show links preserve the document and playback and release scroll lock.");

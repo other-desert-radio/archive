@@ -45,11 +45,9 @@ to avoid circular dependencies through the barrels.
 
 ## Request and rendering flow
 
-`BaseLayout.astro` includes Astro's `ClientRouter` only on the four category
-pages (Shows, DJs, Explore and History), with root and body transition animations
-disabled and an immediate swap fallback. Show, DJ and tag detail pages omit the
-router. Links to details use `data-astro-reload` to bypass transition preparation
-and navigate directly, including links inside the player.
+`BaseLayout.astro` includes Astro's `ClientRouter` on every page, with root
+and body transition animations disabled and an immediate swap fallback.
+Internal archive links use client routing to preserve playback.
 The site still builds to static HTML; initial visits load a full document.
 Tag pages return to Explore. Their show and DJ links carry `fromTag`; shared
 navigation resolves known tag IDs in the browser on initial load and
@@ -58,9 +56,8 @@ Missing or invalid IDs retain the default SHOWS or DJs return destination.
 
 The shared header mounts a persisted React miniplayer backed by the audio store.
 Show selections carry the full Show and a validated playback source. The widget
-stays attached between category tabs to avoid interrupting playback;
-entering or leaving a detail page, full reloads and navigation outside the archive
-end playback. See
+stays attached across category and detail navigation to avoid interrupting playback;
+full reloads and navigation outside the archive end playback. See
 [Miniplayer](miniplayer.md) for player data flow, adapter lifecycle, responsive
 layout and iframe-preserving navigation.
 

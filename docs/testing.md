@@ -60,8 +60,8 @@ on pull requests and pushes to main.
   request. Timing includes native transition readiness and two animation frames.
   Tap-to-click must stay below 150ms. An unprefetched control verifies the injected
   800ms HTML delay. Both native prefetch and Safari's fetch-prefetch fallback run.
-- Cold DJ, show and tag details, and their return links, must load as full
-  documents with exactly one HTML request. Main content must reach a render
+- Cold DJ, show and tag details, and their return links, must use client
+  navigation with exactly one HTML request. Main content must reach a render
   opportunity within 1300ms, including the injected 800ms network delay. Artwork
   takes 2000ms; DJ/show content must be visible before it finishes. Prefetching
   is disabled and HTML is not cached for these cases.
@@ -83,7 +83,7 @@ For player navigation and the viewport background, start `bun run preview`
 after building, then run `bun tests/player-navigation.browser.mjs` (requires
 `agent-browser`). The browser regression uses a same-origin iframe to verify
 its document and playback marker survive category-tab and back/forward
-navigation without reloading. Detail links must perform full document navigation
+navigation without reloading. Detail links must preserve the document and playback
 and return links must restore the correct category/tag destination.
 It also checks viewport background sizing and
 horizontal overflow at 320px, 332px, 750px and 1440px. Physical iOS rendering

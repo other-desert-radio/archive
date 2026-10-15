@@ -6,7 +6,6 @@ export function ExploreTagView({ tag }: { tag: Tag }) {
 
 	return (
 		<a
-			data-astro-reload
 			href={`${base}/tags/${tag.id}`}
 			aria-label={`Explore ${tag.title}`}
 			className={styles["explore-tag"]}
