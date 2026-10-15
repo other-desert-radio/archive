@@ -86,9 +86,10 @@ test("fullscreen DJs omit absent DJs and missing portraits", () => {
 });
 
 test("fullscreen heart renders a labeled outline button", () => {
-	const html = renderToStaticMarkup(<FullscreenHeart />);
+	const html = renderToStaticMarkup(<FullscreenHeart base="/archive-site" />);
 	assert.ok(html.includes('aria-label="Favorite show"'));
 	assert.ok(html.includes('fill="none"'));
+	assert.ok(html.includes('href="/archive-site/assets/icons/heart.svg#heart"'));
 });
 
 test("shows without tags render no tag links", () => {

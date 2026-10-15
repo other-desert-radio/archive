@@ -116,7 +116,9 @@ function ActiveMiniplayer({
 										className={styles["fullscreen-heart"]}
 										hidden={presentation !== "fullscreen"}
 									>
-										{presentation === "fullscreen" && <FullscreenHeart />}
+										{presentation === "fullscreen" && (
+											<FullscreenHeart base={base} />
+										)}
 									</div>
 									<div
 										className={styles["fullscreen-djs"]}

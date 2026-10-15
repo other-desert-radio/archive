@@ -66,7 +66,7 @@ export function FullscreenDJs({
 }
 
 // Presentational only: favorites behavior is outside this task's scope.
-export function FullscreenHeart(): ReactElement {
+export function FullscreenHeart({ base }: { base: string }): ReactElement {
 	return (
 		<button
 			type="button"
@@ -74,12 +74,7 @@ export function FullscreenHeart(): ReactElement {
 			className={styles["fullscreen-heart-button"]}
 		>
 			<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-				<path
-					d="M32 57S5 41 5 22C5 5 25 2 32 16C39 2 59 5 59 22C59 41 32 57 32 57Z"
-					stroke="currentColor"
-					strokeWidth="4"
-					strokeLinejoin="round"
-				/>
+				<use href={`${base}/assets/icons/heart.svg#heart`} />
 			</svg>
 		</button>
 	);
