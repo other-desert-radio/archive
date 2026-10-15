@@ -17,7 +17,15 @@ export default function FullscreenNav({ base, onClose }: Props): ReactElement {
 				aria-label="Close player"
 				onClick={onClose}
 			>
-				<img src={`${base}/assets/icons/close.svg`} alt="" aria-hidden="true" />
+				<svg
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					strokeWidth="1.5"
+					aria-hidden="true"
+				>
+					<use href={`${base}/assets/icons/close.svg#close`} />
+				</svg>
 			</button>
 		</div>
 	);

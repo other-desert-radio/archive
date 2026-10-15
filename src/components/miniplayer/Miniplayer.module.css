@@ -179,6 +179,10 @@
 	padding: var(--space-sm) var(--nav-inline-padding);
 }
 
+.fullscreen-header > span {
+	font-weight: 700;
+}
+
 .close-button {
 	display: flex;
 	align-items: center;
@@ -190,12 +194,19 @@
 	border: 0;
 	background: transparent;
 	color: inherit;
+	cursor: pointer;
 	touch-action: manipulation;
 }
 
-.close-button img {
+.close-button svg {
 	width: var(--space-lg);
 	height: var(--space-lg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.close-button:hover svg {
+		stroke-width: 3;
+	}
 }
 
 .miniplayer[data-presentation="fullscreen"] .controls {
