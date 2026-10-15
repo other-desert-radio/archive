@@ -21,13 +21,22 @@ export function MobileExpand({ hidden, onExpand }: Props): ReactElement {
 	);
 }
 
-export function DesktopActions({ hidden, onExpand }: Props): ReactElement {
+export function DesktopActions({
+	base,
+	hidden,
+	onExpand,
+}: Props & { base: string }): ReactElement {
 	return (
 		<div className={styles["desktop-actions"]} hidden={hidden}>
 			<button type="button" aria-label="Favorite show">
-				<span className={styles["heart-icon"]} aria-hidden="true">
-					{"\u2661\uFE0E"}
-				</span>
+				<svg
+					className={styles["heart-icon"]}
+					viewBox="0 0 64 64"
+					fill="none"
+					aria-hidden="true"
+				>
+					<use href={`${base}/assets/icons/heart.svg#heart`} />
+				</svg>
 			</button>
 			<button type="button" aria-label="Expand player" onClick={onExpand}>
 				<span aria-hidden="true">{"\u26F6\uFE0E"}</span>

@@ -135,6 +135,7 @@ function ActiveMiniplayer({
 								</div>
 							</div>
 							<DesktopActions
+								base={base}
 								hidden={presentation === "fullscreen"}
 								onExpand={expand}
 							/>

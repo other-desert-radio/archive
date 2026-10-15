@@ -82,7 +82,8 @@
 }
 
 .heart-icon {
-	transform: scale(1.5, 1);
+	width: 0.6em;
+	height: 0.6em;
 }
 
 .desktop-actions button {

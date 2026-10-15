@@ -46,7 +46,7 @@ test("Mixcloud renders one widget and one title without hover expansion", () => 
 	assert.ok(html.includes('expand <span aria-hidden="true">↑</span>'));
 	assert.ok(html.includes('type="button" aria-label="Favorite show"'));
 	assert.ok(html.includes('type="button" aria-label="Expand player"'));
-	assert.ok(html.includes("\u2661\uFE0E"));
+	assert.ok(html.includes("/assets/icons/heart.svg#heart"));
 	assert.ok(html.includes("\u26F6\uFE0E"));
 	assert.ok(
 		html.indexOf("</iframe>") < html.indexOf('aria-label="Favorite show"'),
