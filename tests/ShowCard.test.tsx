@@ -44,6 +44,14 @@ test("renders normalized detail links, large show artwork, and small DJ artwork"
 		markup,
 		/<img[^>]+src="\/archive-site\/images\/djs\/2.jpg"[^>]+alt="Test DJ"/,
 	);
+	const artwork = (markup.match(/<img\b[^>]*>/g) ?? []).filter(
+		(image) => !image.includes('alt=""'),
+	);
+	assert.equal(artwork.length, 2);
+	for (const image of artwork) {
+		assert.match(image, /loading="lazy"/);
+		assert.match(image, /decoding="async"/);
+	}
 	assert.doesNotMatch(markup, /show-small\.jpg|2_large\.jpg/);
 	assert.doesNotMatch(markup, /\/archive-site\/\//);
 });

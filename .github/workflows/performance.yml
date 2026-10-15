@@ -1,0 +1,34 @@
+name: Performance regressions
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: performance-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  performance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: bun install --frozen-lockfile
+      - name: Install browser tooling
+        run: npm install --global agent-browser@0.38.1
+      - name: Install Chromium and system dependencies
+        run: agent-browser install --with-deps
+      - name: Check image-loading and routing contracts
+        run: bun run test
+      - name: Check production performance budgets
+        run: bun run test:performance

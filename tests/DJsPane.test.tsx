@@ -43,6 +43,12 @@ test("renders base-aware links for supplied DJs", () => {
 		/<img[^>]+src="\/archive-site\/images\/djs\/16.png"[^>]+alt="DJ Emocean"/,
 	);
 	assert.match(markup, /<img[^>]+alt="DJ AKĀSHA"/);
+	const images = markup.match(/<img\b[^>]*>/g) ?? [];
+	assert.equal(images.length, djs.length);
+	for (const image of images) {
+		assert.match(image, /loading="lazy"/);
+		assert.match(image, /decoding="async"/);
+	}
 	assert.doesNotMatch(markup, /_large/);
 	assert.doesNotMatch(markup, /\/archive-site\/\//);
 	assert.match(markup, />DJ AKĀSHA</);

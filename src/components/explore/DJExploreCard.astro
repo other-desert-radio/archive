@@ -13,10 +13,11 @@ const query = fromTag === undefined ? "" : `?fromTag=${fromTag}`;
 
 <a
   class="dj-explore-card"
+  data-astro-reload
   href={`${base}/djs/${dj.id}${query}`}
   aria-label={`View ${dj.title}`}
 >
-  <img src={`${base}/${dj.image_large}`} alt={dj.title} loading="lazy" />
+  <img src={`${base}/${dj.image_large}`} alt={dj.title} loading="lazy" decoding="async" />
   <div class="dj-content">
     <h3>{dj.title}</h3>
     <div class="dj-description" set:html={dj.bio} />

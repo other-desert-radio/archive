@@ -137,14 +137,14 @@ browser("set", "viewport", "600", "800");
 browser("click", `a[href='${basePath}/djs']`);
 browser("wait", "a[aria-label^='View ']");
 verifyPlayer(`${basePath}/djs`);
-browser("click", "a[aria-label='View Derek Monypeny']");
-browser("wait", `a[href='${basePath}/djs']`);
-verifyPlayer(`${basePath}/djs/12`);
+browser("click", `a[href='${basePath}/explore']`);
+verifyPlayer(`${basePath}/explore`);
+browser("click", `a[href='${basePath}/history']`);
+verifyPlayer(`${basePath}/history`);
 browser("back");
-verifyPlayer(`${basePath}/djs`);
+verifyPlayer(`${basePath}/explore`);
 browser("forward");
-verifyPlayer(`${basePath}/djs/12`);
-browser("back");
+verifyPlayer(`${basePath}/history`);
 browser("click", `a[href='${basePath}/']`);
 browser("wait", "button[aria-label^='Play ']");
 verifyPlayer(basePath);
@@ -217,7 +217,7 @@ rememberIdlePage();
 browser("click", `a[href='${basePath}/djs']`);
 browser("wait", "a[aria-label^='View ']");
 verifyIdleSwap(`${basePath}/djs`);
-console.log("Idle navigation uses the default swap; active player document survives listing/detail/back/forward navigation; bottom docking, dynamic clearance, viewport background and responsive widths pass.");
+console.log("Idle navigation uses the default swap; active player document survives root-tab/back/forward navigation; bottom docking, dynamic clearance, viewport background and responsive widths pass.");
 
 
 // Exercise the real React player with a same-origin iframe document, so
@@ -342,7 +342,50 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 }
 console.log("Fullscreen expand/close, scroll restoration and iframe identity pass on mobile and desktop widths.");
 
-// Fullscreen archive links close the persisted presentation before navigating.
+// Every detail entry and exit replaces the document, including tag-context returns.
+function markDocument() {
+	evaluate("window.navigationDocumentMarker = true; true");
+}
+function verifyFullNavigation(destination) {
+	browser("wait", "--fn", `location.pathname === ${JSON.stringify(destination)}`);
+	browser("wait", "--fn", "document.readyState === 'complete'");
+	assert.equal(evaluate("window.navigationDocumentMarker === undefined"), true);
+	assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === null"), true);
+	assert.equal(evaluate("document.body.style.position !== 'fixed' && getComputedStyle(document.documentElement).overflow !== 'hidden'"), true);
+}
+function followLink(selector) {
+	const destination = evaluate(`new URL(document.querySelector(${JSON.stringify(selector)}).href).pathname`);
+	markDocument();
+	evaluate(`document.querySelector(${JSON.stringify(selector)}).click(); true`);
+	verifyFullNavigation(destination);
+	return destination;
+}
+for (const [listing, detailSelector] of [
+	["", `a[href^='${basePath}/shows/']`],
+	["/djs", `a[href^='${basePath}/djs/']`],
+	["/explore", `a[href^='${basePath}/tags/']`],
+]) {
+	browser("open", `${base}${listing}/`);
+	browser("wait", detailSelector);
+	followLink(detailSelector);
+	followLink("nav a.leading-box");
+	assert.equal(evaluate("location.pathname.replace(/\\/$/, '')"), `${basePath}${listing}`);
+}
+
+browser("open", `${base}/explore`);
+browser("wait", `a[href^='${basePath}/tags/']`);
+const tagPath = followLink(`a[href='${basePath}/tags/30']`);
+for (const kind of ["shows", "djs"]) {
+	const selector = `a[href^='${basePath}/${kind}/'][href*='fromTag=']`;
+	browser("wait", selector);
+	followLink(selector);
+	browser("wait", "--fn", `document.querySelector('[data-tag-return]').pathname === ${JSON.stringify(tagPath)}`);
+	followLink("[data-tag-return]");
+	assert.equal(evaluate("location.pathname"), tagPath);
+}
+console.log("Show, DJ and tag details use full documents on entry and return, including fromTag context.");
+
+// Fullscreen archive links perform full navigation and release scroll lock.
 for (const width of [390, 1440]) {
 	browser("set", "viewport", String(width), "844");
 	for (const selector of [
@@ -350,18 +393,20 @@ for (const width of [390, 1440]) {
 		'[class*="fullscreen-djs"] a',
 		'[class*="fullscreen-title"]',
 	]) {
+		browser("open", `${base}/`);
+		browser("wait", "button[aria-label^='Play ']");
+		evaluate("document.querySelector('button[aria-label^=\"Play \"]').click(); true");
+		browser("wait", "[data-miniplayer] iframe");
 		const expand = width <= 600
 			? '[data-miniplayer] > button[aria-label="Expand player"]'
 			: '[data-miniplayer] div > button[aria-label="Expand player"]';
 		browser("click", expand);
 		browser("wait", '[data-presentation="fullscreen"]');
 		const destination = evaluate(`new URL(document.querySelector(${JSON.stringify(selector)}).href).pathname`);
-		// Clicking the nested span/div exercises event bubbling from TagView/DJ content.
+		markDocument();
+		// Exercise bubbling from nested TagView/DJ content.
 		evaluate(`(() => { const link = document.querySelector(${JSON.stringify(selector)}); (link.lastElementChild ?? link).click(); return true; })()`);
-		browser("wait", "--fn", `location.pathname === ${JSON.stringify(destination)}`);
-		browser("wait", '[data-presentation="compact"]');
-		browser("wait", "--fn", "document.body.style.position !== 'fixed' && getComputedStyle(document.documentElement).overflow !== 'hidden'");
-		assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame && window.fullscreenFrame.contentDocument === window.fullscreenDocument"), true);
+		verifyFullNavigation(destination);
 	}
 }
-console.log("Fullscreen tag, DJ and show links dismiss the overlay, release scroll lock and preserve the iframe through navigation.");
+console.log("Fullscreen tag, DJ and show links replace the document, reset playback and release scroll lock.");

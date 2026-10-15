@@ -21,6 +21,8 @@ test("links large show artwork to the show detail page with an accessible label"
 		/>,
 	);
 	assert.ok(markup.includes('src="https://cdn.example.com/large.jpg"'));
+	assert.match(markup, /loading="lazy"/);
+	assert.match(markup, /decoding="async"/);
 	assert.ok(markup.includes('alt="Test Show"'));
 	assert.ok(markup.includes('href="/archive-site/shows/1"'));
 	assert.ok(markup.includes('aria-label="View Test Show"'));

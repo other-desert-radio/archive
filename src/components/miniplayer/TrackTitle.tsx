@@ -19,7 +19,11 @@ export default function TrackTitle({
 				{show.djs.map((dj, index) => (
 					<span key={dj.id}>
 						{index > 0 && ", "}
-						<a href={`${base}/djs/${dj.id}`} aria-label={`View ${dj.title}`}>
+						<a
+							data-astro-reload
+							href={`${base}/djs/${dj.id}`}
+							aria-label={`View ${dj.title}`}
+						>
 							{dj.title}
 						</a>
 					</span>
@@ -29,7 +33,11 @@ export default function TrackTitle({
 						|
 					</span>
 				)}
-				<a href={`${base}/shows/${show.id}`} aria-label={`View ${show.title}`}>
+				<a
+					data-astro-reload
+					href={`${base}/shows/${show.id}`}
+					aria-label={`View ${show.title}`}
+				>
 					{show.title}
 				</a>
 			</span>

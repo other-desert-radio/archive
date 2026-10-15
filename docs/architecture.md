@@ -45,9 +45,11 @@ to avoid circular dependencies through the barrels.
 
 ## Request and rendering flow
 
-`BaseLayout.astro` includes Astro's `ClientRouter` for client-side navigation
-between internal pages, with root and body transition animations disabled
-and an immediate swap fallback.
+`BaseLayout.astro` includes Astro's `ClientRouter` only on the four category
+pages (Shows, DJs, Explore and History), with root and body transition animations
+disabled and an immediate swap fallback. Show, DJ and tag detail pages omit the
+router. Links to details use `data-astro-reload` to bypass transition preparation
+and navigate directly, including links inside the player.
 The site still builds to static HTML; initial visits load a full document.
 Tag pages return to Explore. Their show and DJ links carry `fromTag`; shared
 navigation resolves known tag IDs in the browser on initial load and
@@ -56,8 +58,9 @@ Missing or invalid IDs retain the default SHOWS or DJs return destination.
 
 The shared header mounts a persisted React miniplayer backed by the audio store.
 Show selections carry the full Show and a validated playback source. The widget
-stays attached during internal navigation to avoid interrupting playback;
-full reloads and navigation outside the archive end playback. See
+stays attached between category tabs to avoid interrupting playback;
+entering or leaving a detail page, full reloads and navigation outside the archive
+end playback. See
 [Miniplayer](miniplayer.md) for player data flow, adapter lifecycle, responsive
 layout and iframe-preserving navigation.
 
@@ -70,7 +73,10 @@ The archive listings use `src/pages/index.astro` for SHOWS and
 `src/pages/djs.astro` for DJs. Both use `CategoryTabs.astro` to select the
 active category. `src/pages/explore.astro` and `src/pages/history.astro`
 provide page shells for the remaining tabs, using the shared layout and their
-respective active category. `src/utils/fetch-djs.ts` reads and validates
+respective active category. Visible category tabs prefetch destination HTML
+using Astro's viewport strategy so touch navigation can reuse the HTTP cache
+without waiting for desktop hover. Astro retains its reduced-data and slow
+connection safeguards. `src/utils/fetch-djs.ts` reads and validates
 `src/res/djs_brief.json` at build time. The DJ page passes its summaries
 to the server-rendered `DJsPane` component, which links each title to its
 static detail page. `src/pages/djs/[id].astro` loads the matching full DJ

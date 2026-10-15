@@ -39,7 +39,7 @@ const hydratedTags = hydrateTags(show, tags);
       <p>{formatDate(show.date)}</p>
     </div>
     <div class="detail-column">
-      <img class="detail-photo" src={show.image_large} alt={show.title} />
+      <img class="detail-photo" decoding="async" src={show.image_large} alt={show.title} />
       <div class="tag-container">
         {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
       </div>

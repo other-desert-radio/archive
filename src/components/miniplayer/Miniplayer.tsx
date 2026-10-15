@@ -84,6 +84,7 @@ function ActiveMiniplayer({
 									{presentation === "fullscreen" && (
 										<a
 											className={styles["fullscreen-title"]}
+											data-astro-reload
 											href={`${base}/shows/${track.show.id}`}
 											aria-label={`View ${track.show.title}`}
 											onClick={close}
