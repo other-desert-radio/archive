@@ -45,8 +45,10 @@ const { tag, djs, shows } = Astro.props as Props;
   {djs.length > 0 && (
     <section aria-labelledby="tag-djs-heading">
       <h2 id="tag-djs-heading">DJs</h2>
-      <div class="tag-row">
-        {djs.map((dj) => <DJExploreCard dj={dj} fromTag={tag.id} />)}
+      <div class="tag-scroll">
+        <div class="tag-row">
+          {djs.map((dj) => <DJExploreCard dj={dj} fromTag={tag.id} />)}
+        </div>
       </div>
     </section>
   )}
@@ -74,11 +76,15 @@ const { tag, djs, shows } = Astro.props as Props;
     font-weight: 400;
   }
 
+  .tag-scroll {
+    overflow-x: auto;
+  }
+
   .tag-row {
     display: flex;
     gap: var(--space-lg);
     min-height: var(--space-lg);
-    overflow-x: auto;
+    padding-bottom: var(--space-sm);
   }
 
   .shows-grid {
@@ -98,12 +104,6 @@ const { tag, djs, shows } = Astro.props as Props;
 
   .shows-heading-row h2 {
     margin: 0;
-  }
-
-  @media (max-width: 1600px) {
-    .shows-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
   }
 
   @media (max-width: 1023px) {
