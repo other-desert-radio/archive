@@ -85,6 +85,23 @@ textarea {
 	padding: 0 calc(var(--density-unit) * 0.4375);
 	font-size: var(--tag-font-size);
 	border: var(--border-secondary) solid black;
+	color: inherit;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.tag {
+	display: inline-block;
+	transition: transform 80ms linear;
+}
+.tag:hover {
+	transform: scale(1.15);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tag {
+		transition: none;
+	}
 }
 
 .tag-large {

@@ -1,5 +1,6 @@
 import { useAudioState, useStores } from "../../stores";
 import type { Show } from "../../utils/fetch-shows";
+import { getBasePath } from "../../utils/get-base-path";
 import styles from "./PlayableShowArtwork.module.css";
 import {
 	isSelectedShow,
@@ -20,7 +21,7 @@ export default function PlayableShowArtwork({
 	loading = "lazy",
 	border = "primary",
 }: Props) {
-	const detailBase = base.replace(/\/$/, "");
+	const detailBase = getBasePath(base);
 	const { audioStore } = useStores();
 	const audio = useAudioState();
 	const track = mixcloudShowTrack(show);

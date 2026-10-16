@@ -15,9 +15,8 @@
 	}
 }
 
-@media (hover: hover) and (pointer: fine) {
-	.explore-tag:hover {
-		font-style: italic;
-		border-color: white;
-	}
+/*@media (hover: hover) and (pointer: fine) {*/
+.explore-tag:hover {
+	font-style: italic;
+	border-color: white;
 }

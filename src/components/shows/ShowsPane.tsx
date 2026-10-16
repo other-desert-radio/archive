@@ -1,5 +1,6 @@
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
+import { getBasePath } from "../../utils/get-base-path";
 import ShowCard from "./ShowCard";
 import styles from "./ShowsPane.module.css";
 
@@ -10,7 +11,7 @@ type Props = {
 };
 
 export default function ShowsPane({ base, shows, tags }: Props) {
-	const detailBase = base.replace(/\/$/, "");
+	const detailBase = getBasePath(base);
 
 	if (shows.length === 0) {
 		return <p>No shows found.</p>;

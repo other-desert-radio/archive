@@ -7,13 +7,24 @@
 	text-decoration: none;
 }
 
-.image {
+.artwork {
 	align-self: flex-start;
 
 	flex: 0 0 var(--dj-artwork-size);
 	width: var(--dj-artwork-size);
 	aspect-ratio: 1;
 	background-color: var(--artwork-placeholder);
+}
+
+.image {
+	display: block;
+	width: 100%;
+	aspect-ratio: 1;
+}
+
+.dj-title a {
+	color: inherit;
+	text-decoration: none;
 }
 
 .trailing-content {
@@ -42,7 +53,7 @@
 		font-size: var(--space-lg);
 	}
 
-	.image {
+	.artwork {
 		flex-basis: calc(var(--density-unit) * 8);
 		width: calc(var(--density-unit) * 8);
 	}

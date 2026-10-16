@@ -1,5 +1,6 @@
 ---
-const base = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/`;
+import { getBasePath } from "../utils/get-base-path";
+const base = `${getBasePath()}/`;
 type Props = {
   active: "explore" | "shows" | "djs" | "history";
 };

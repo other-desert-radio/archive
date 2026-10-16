@@ -1,4 +1,5 @@
 import type { Tag } from "./fetch-tags";
+import { getBasePath } from "./get-base-path";
 
 /** Resolve only known tag IDs, never an arbitrary return URL. */
 export function getTagReturn(
@@ -12,7 +13,7 @@ export function getTagReturn(
 		return undefined;
 	}
 	return {
-		href: `${base.replace(/\/$/, "")}/tags/${tag.id}`,
+		href: `${getBasePath(base)}/tags/${tag.id}`,
 		label: tag.title.toUpperCase(),
 	};
 }

@@ -1,5 +1,6 @@
 import type { ReactElement } from "react";
 import type { Show } from "../../utils/fetch-shows";
+import { getBasePath } from "../../utils/get-base-path";
 import styles from "./SquareShowCard.module.css";
 
 type Props = {
@@ -13,7 +14,7 @@ export default function SquareShowCard({
 	base,
 	fromTag,
 }: Props): ReactElement {
-	const detailBase = base.replace(/\/$/, "");
+	const detailBase = getBasePath(base);
 	const query = fromTag === undefined ? "" : `?fromTag=${fromTag}`;
 	return (
 		<a

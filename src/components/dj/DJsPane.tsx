@@ -1,5 +1,6 @@
 import type { DJ } from "../../utils/fetch-djs";
 import type { TagMap } from "../../utils/fetch-tags";
+import { getBasePath } from "../../utils/get-base-path";
 import DJCard from "./DJCard";
 import styles from "./DJsPane.module.css";
 
@@ -10,7 +11,7 @@ type Props = {
 };
 
 export default function DJsPane({ base, djs, tags }: Props) {
-	const detailBase = base.replace(/\/$/, "");
+	const detailBase = getBasePath(base);
 
 	if (djs.length === 0) {
 		return <p>No DJs found.</p>;
