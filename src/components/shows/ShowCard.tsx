@@ -1,6 +1,7 @@
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
 import { formatDate } from "../../utils/format-date";
+import { getBasePath } from "../../utils/get-base-path";
 import TagContainer from "../TagContainer";
 import PlayableShowArtwork from "./PlayableShowArtwork";
 import styles from "./ShowCard.module.css";
@@ -39,7 +40,7 @@ const renderDJs = (djs: Show["djs"], base: string) =>
  * Renders one archive show with its date, tags, and associated DJs.
  */
 export default function ShowCard({ show, base, tags }: Props) {
-	const detailBase = base.replace(/\/$/, "");
+	const detailBase = getBasePath(base);
 
 	return (
 		<article className={styles["show-card"]}>
@@ -57,7 +58,7 @@ export default function ShowCard({ show, base, tags }: Props) {
 				<time className={styles["show-date"]} dateTime={show.date}>
 					{formatDate(show.date)}
 				</time>
-				<TagContainer tagIds={show.tagIds} tags={tags} size="normal" />
+				<TagContainer tagIds={show.tagIds} tags={tags} size="large" />
 				{renderDJs(show.djs, detailBase)}
 			</div>
 		</article>

@@ -1,8 +1,9 @@
 import type { Tag } from "../../utils/fetch-tags";
+import { getBasePath } from "../../utils/get-base-path";
 import styles from "./ExploreTagView.module.css";
 
 export function ExploreTagView({ tag }: { tag: Tag }) {
-	const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+	const base = getBasePath();
 
 	return (
 		<a

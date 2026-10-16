@@ -13,7 +13,7 @@ test("renders a tag title with its configured background color", () => {
 
 	assert.equal(
 		markup,
-		'<div class="tag" style="background-color:#c2c5c5">Electronic</div>',
+		'<a href="/tags/1" aria-label="Explore Electronic" class="tag" style="background-color:#c2c5c5">Electronic</a>',
 	);
 });
 
@@ -26,6 +26,6 @@ test("adds the large class while preserving the title and color", () => {
 	);
 	assert.equal(
 		markup,
-		'<div class="tag tag-large" style="background-color:#c2c5c5">Electronic</div>',
+		'<a href="/tags/1" aria-label="Explore Electronic" class="tag tag-large" style="background-color:#c2c5c5">Electronic</a>',
 	);
 });

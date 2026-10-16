@@ -27,7 +27,27 @@
 			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/0/9/7/1faa-0fe1-433e-b58b-518683808f31",
 			"tagIds": [4, 21, 27],
 			"url": "https://www.mixcloud.com/otherdesertradio/muzizmu-volume-4-may-4-2026/"
+		},
+		{
+			"id": 31,
+			"title": "Volume 2",
+			"date": "2025-10-20T00:00:00.000Z",
+			"duration": 3141,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/c/3/4/5179-f517-48da-acd9-b499d8a7c733",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/c/3/4/5179-f517-48da-acd9-b499d8a7c733",
+			"tagIds": [21, 51],
+			"url": "https://www.mixcloud.com/otherdesertradio/muzizmu-volume-2-october-20-2025/"
+		},
+		{
+			"id": 33,
+			"title": "Boiling Rice Set",
+			"date": "2025-08-11T00:00:00.000Z",
+			"duration": 1895,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/0/a/7/3dc1-8ec3-4899-8749-ea9ac8fcfdd5",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/0/a/7/3dc1-8ec3-4899-8749-ea9ac8fcfdd5",
+			"tagIds": [4, 21, 52],
+			"url": "https://www.mixcloud.com/otherdesertradio/muzizmu-boiling-rice-set-august-11-2025/"
 		}
 	],
-	"tagIds": [4, 14, 15, 16, 17, 18, 21, 27]
+	"tagIds": [4, 21, 27, 51, 52]
 }

@@ -1,4 +1,5 @@
 ---
+import { getBasePath } from "../utils/get-base-path";
 import type { Tag } from "../utils/fetch-tags";
 
 type Props = {
@@ -7,8 +8,9 @@ type Props = {
 };
 
 const { tag, size } = Astro.props as Props;
+const base = getBasePath();
 ---
 
-<div class:list={["tag", { "tag-large": size === "large" }]} style={`background-color: ${tag.color}`}>
+<a href={`${base}/tags/${tag.id}`} aria-label={`Explore ${tag.title}`} class:list={["tag", { "tag-large": size === "large" }]} style={`background-color: ${tag.color}`}>
   {tag.title}
-</div>
+</a>
