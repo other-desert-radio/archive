@@ -134,5 +134,6 @@ or destination, rather than relying on visual context alone.
 ## Tag sizing
 
 `TagContainer` and both React and Astro `TagView` components require an explicit
-`size: "normal" | "large"` prop. Archive cards and DJ detail pages use `normal`; show detail
-pages use `large`, which adds `tag-large` alongside the base `tag` class.
+`size: "normal" | "large"` prop. DJ archive cards use `normal`; show archive cards
+and show and DJ detail pages use `large`, which adds `tag-large` alongside the
+base `tag` class.

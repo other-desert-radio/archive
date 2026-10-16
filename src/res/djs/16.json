@@ -47,7 +47,27 @@
 			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/b/1/2/1bf0-284b-4ad6-8fe2-591fca9b3322",
 			"tagIds": [],
 			"url": "https://www.mixcloud.com/otherdesertradio/dj-emocean-play-is-as-it-lays-episode-3-aries-season-dance-as-resistance-april-6-2026/"
+		},
+		{
+			"id": 57,
+			"title": "Play is as it Lays Episode 2: PISCES DREAMS: DEVOTION TO TERPSICHORE",
+			"date": "2026-03-09T00:00:00.000Z",
+			"duration": 4615,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/b/9/1/cf90-8d8b-4549-aa34-e6b9db0a0bcd",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/b/9/1/cf90-8d8b-4549-aa34-e6b9db0a0bcd",
+			"tagIds": [21, 22, 47],
+			"url": "https://www.mixcloud.com/otherdesertradio/dj-emocean-play-is-as-it-lays-episode-2-march-9-2026/"
+		},
+		{
+			"id": 59,
+			"title": "Play is as it Lays Episode 1",
+			"date": "2026-02-16T00:00:00.000Z",
+			"duration": 3600,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/5/2/b/e511-697c-4ed8-af32-83aa76c34331",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/5/2/b/e511-697c-4ed8-af32-83aa76c34331",
+			"tagIds": [4, 21, 64],
+			"url": "https://www.mixcloud.com/otherdesertradio/dj-emocean-play-is-as-it-lays-episode-1-february-16-2026/"
 		}
 	],
-	"tagIds": [4, 6, 21, 22]
+	"tagIds": [4, 6, 21, 22, 47, 64]
 }

@@ -3,9 +3,27 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import CategoryTabs from "../components/CategoryTabs.astro";
 import ExplorePane from "../components/explore/ExplorePane";
 import { fetchTags } from "../utils/fetch-tags";
+import { fetchShows } from "../utils/fetch-shows";
 import { pathToFileURL } from "node:url";
 
 const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
+const shows = await fetchShows(pathToFileURL("src/res/shows.json"));
+const showCounts = new Map<number, number>();
+
+for (const show of shows) {
+  for (const tagId of new Set(show.tagIds)) {
+    showCounts.set(tagId, (showCounts.get(tagId) ?? 0) + 1);
+  }
+}
+
+// TODO: implement user sorting, maybe update tag structure to include show count
+const sortedTags = new Map(
+  [...tags.entries()].sort(
+    ([idA, tagA], [idB, tagB]) =>
+      (showCounts.get(idB) ?? 0) - (showCounts.get(idA) ?? 0) ||
+      tagA.title.localeCompare(tagB.title),
+  ),
+);
 ---
 
 <BaseLayout
@@ -14,5 +32,5 @@ const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
   returning_page="home"
 >
   <CategoryTabs active="explore" />
-  <ExplorePane tags={tags} />
+  <ExplorePane tags={sortedTags} />
 </BaseLayout>

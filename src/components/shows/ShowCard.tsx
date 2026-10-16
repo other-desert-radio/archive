@@ -57,7 +57,7 @@ export default function ShowCard({ show, base, tags }: Props) {
 				<time className={styles["show-date"]} dateTime={show.date}>
 					{formatDate(show.date)}
 				</time>
-				<TagContainer tagIds={show.tagIds} tags={tags} size="normal" />
+				<TagContainer tagIds={show.tagIds} tags={tags} size="large" />
 				{renderDJs(show.djs, detailBase)}
 			</div>
 		</article>

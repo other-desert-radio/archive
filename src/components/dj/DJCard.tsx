@@ -10,6 +10,8 @@ type Props = {
 };
 
 export default function DJCard({ dj, base, tags }: Props) {
+	const tagSlice = dj.tagIds.slice(0, 8);
+
 	return (
 		<a
 			href={`${base}/djs/${dj.id}`}
@@ -26,7 +28,7 @@ export default function DJCard({ dj, base, tags }: Props) {
 
 			<div className={styles["trailing-content"]}>
 				<h2 className={styles["dj-title"]}>{dj.title}</h2>
-				<TagContainer tagIds={dj.tagIds} tags={tags} size="normal" />
+				<TagContainer tagIds={tagSlice} tags={tags} size="normal" />
 			</div>
 		</a>
 	);
