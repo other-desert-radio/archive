@@ -1,83 +1,125 @@
 {
-	"id": 15,
-	"title": "temporal emissions",
-	"image_small": "assets/djs/15_small.webp",
-	"image_large": "assets/djs/15_large.webp",
-	"bio": "<p>Temporal Emissions is hosted by michael bailey, lifelong musician and sound enthusiast. Once a fan, always a fan. Determined to keep music / art / creativity a Fun experience, with the occasional F U mixed in.</p>",
-	"socials": "<p>@temporal_emissions m-bailey.com</p>",
-	"showTitle": "Temporal Emissions Episode XX",
-	"showDescription": "Globe-trotting moments of clarity and interconnectedness. Non-linear story telling from the well of universal thoughts.",
-	"shows": [
-		{
-			"id": 28,
-			"title": "Episode 7",
-			"date": "2025-12-22T00:00:00.000Z",
-			"duration": 3600,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/5/8/2/1353-0398-41b4-9be6-66ec590f1e7a",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/5/8/2/1353-0398-41b4-9be6-66ec590f1e7a",
-			"tagIds": [36, 45, 46, 47],
-			"url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-7-december-22-2025/"
-		},
-		{
-			"id": 29,
-			"title": "Episode 6",
-			"date": "2025-12-08T00:00:00.000Z",
-			"duration": 3426,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/8/0/a/3b1a-07e8-4201-aeee-57987963a5a1",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/8/0/a/3b1a-07e8-4201-aeee-57987963a5a1",
-			"tagIds": [36, 48],
-			"url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-6-december-8-2025/"
-		},
-		{
-			"id": 30,
-			"title": "Episode 5, D'Angelo Special",
-			"date": "2025-11-10T00:00:00.000Z",
-			"duration": 3550,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/f/1/d/311d-b874-4135-871f-e9bb4d66786d",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/f/1/d/311d-b874-4135-871f-e9bb4d66786d",
-			"tagIds": [33, 49, 50],
-			"url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-5-dangelo-special-november-10-2025/"
-		},
-		{
-			"id": 32,
-			"title": "Episode 4",
-			"date": "2025-09-02T00:00:00.000Z",
-			"duration": 3720,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/3/5/a/7487-35d8-4e48-95cb-53c8a97a1e8b",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/3/5/a/7487-35d8-4e48-95cb-53c8a97a1e8b",
-			"tagIds": [33],
-			"url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-4-september-2-2025/"
-		},
-		{
-			"id": 37,
-			"title": "Episode 3",
-			"date": "2023-12-04T00:00:00.000Z",
-			"duration": 4012,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/b/0/9/f4cc-c100-472b-bf6c-c1ca5af4a1b2",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/b/0/9/f4cc-c100-472b-bf6c-c1ca5af4a1b2",
-			"tagIds": [32, 33, 37, 61],
-			"url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-3-december-4-2023/"
-		},
-		{
-			"id": 39,
-			"title": "Episode 2",
-			"date": "2023-09-04T00:00:00.000Z",
-			"duration": 3531,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/d/f/1/04cd-e079-4e2c-9e17-e7991794520b",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/d/f/1/04cd-e079-4e2c-9e17-e7991794520b",
-			"tagIds": [33, 35, 37],
-			"url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-2-september-4-2023/"
-		},
-		{
-			"id": 40,
-			"title": "Episode 1",
-			"date": "2023-06-26T00:00:00.000Z",
-			"duration": 3648,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/b/7/0/f77f-3085-42b1-8da0-684aaf4e9a5b",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/b/7/0/f77f-3085-42b1-8da0-684aaf4e9a5b",
-			"tagIds": [61, 64, 65],
-			"url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-1-june-26-2023/"
-		}
-	],
-	"tagIds": [32, 33, 35, 36, 37, 45, 46, 47, 48, 49, 50, 61, 64, 65]
+  "id": 15,
+  "title": "temporal emissions",
+  "image_small": "assets/djs/15_small.webp",
+  "image_large": "assets/djs/15_large.webp",
+  "bio": "<p>Temporal Emissions is hosted by michael bailey, lifelong musician and sound enthusiast. Once a fan, always a fan. Determined to keep music / art / creativity a Fun experience, with the occasional F U mixed in.</p>",
+  "socials": "<p>@temporal_emissions m-bailey.com</p>",
+  "showTitle": "Temporal Emissions Episode XX",
+  "showDescription": "Globe-trotting moments of clarity and interconnectedness. Non-linear story telling from the well of universal thoughts.",
+  "shows": [
+    {
+      "id": 28,
+      "title": "Episode 7",
+      "date": "2025-12-22T00:00:00.000Z",
+      "duration": 3600,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/5/8/2/1353-0398-41b4-9be6-66ec590f1e7a",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/5/8/2/1353-0398-41b4-9be6-66ec590f1e7a",
+      "tagIds": [
+        36,
+        45,
+        46,
+        47
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-7-december-22-2025/"
+    },
+    {
+      "id": 29,
+      "title": "Episode 6",
+      "date": "2025-12-08T00:00:00.000Z",
+      "duration": 3426,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/8/0/a/3b1a-07e8-4201-aeee-57987963a5a1",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/8/0/a/3b1a-07e8-4201-aeee-57987963a5a1",
+      "tagIds": [
+        36,
+        48
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-6-december-8-2025/"
+    },
+    {
+      "id": 30,
+      "title": "Episode 5, D'Angelo Special",
+      "date": "2025-11-10T00:00:00.000Z",
+      "duration": 3550,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/f/1/d/311d-b874-4135-871f-e9bb4d66786d",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/f/1/d/311d-b874-4135-871f-e9bb4d66786d",
+      "tagIds": [
+        33,
+        49,
+        50
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-5-dangelo-special-november-10-2025/"
+    },
+    {
+      "id": 32,
+      "title": "Episode 4",
+      "date": "2025-09-02T00:00:00.000Z",
+      "duration": 3720,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/3/5/a/7487-35d8-4e48-95cb-53c8a97a1e8b",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/3/5/a/7487-35d8-4e48-95cb-53c8a97a1e8b",
+      "tagIds": [
+        33
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-4-september-2-2025/"
+    },
+    {
+      "id": 37,
+      "title": "Episode 3",
+      "date": "2023-12-04T00:00:00.000Z",
+      "duration": 4012,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/b/0/9/f4cc-c100-472b-bf6c-c1ca5af4a1b2",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/b/0/9/f4cc-c100-472b-bf6c-c1ca5af4a1b2",
+      "tagIds": [
+        32,
+        33,
+        37,
+        61
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-3-december-4-2023/"
+    },
+    {
+      "id": 39,
+      "title": "Episode 2",
+      "date": "2023-09-04T00:00:00.000Z",
+      "duration": 3531,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/d/f/1/04cd-e079-4e2c-9e17-e7991794520b",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/d/f/1/04cd-e079-4e2c-9e17-e7991794520b",
+      "tagIds": [
+        33,
+        35,
+        37
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-2-september-4-2023/"
+    },
+    {
+      "id": 40,
+      "title": "Episode 1",
+      "date": "2023-06-26T00:00:00.000Z",
+      "duration": 3648,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/b/7/0/f77f-3085-42b1-8da0-684aaf4e9a5b",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/b/7/0/f77f-3085-42b1-8da0-684aaf4e9a5b",
+      "tagIds": [
+        61,
+        64,
+        65
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-1-june-26-2023/"
+    }
+  ],
+  "tagIds": [
+    32,
+    33,
+    35,
+    36,
+    37,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    61,
+    64,
+    65
+  ]
 }

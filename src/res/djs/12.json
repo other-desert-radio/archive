@@ -1,197 +1,303 @@
 {
-	"id": 12,
-	"title": "Derek Monypeny",
-	"image_small": "assets/djs/12_small.webp",
-	"image_large": "assets/djs/12_large.webp",
-	"bio": "<p>Born in the Arizona desert, a veteran of multiple explorations into the Sahara desert via Morocco and Western Sahara, and now a resident of the Mojave, Derek Monypeny sees his musical mission as adding to and expanding on what he calls the \"desert continuum;\" the psychedelic sirocco swirl of desert-based stringed instruments played with utter abandon by musicians the world over.</p>",
-	"socials": "<p>instagram.com/derek_monypeny</p>",
-	"showTitle": "Freedom Overspill Radio Hour",
-	"showDescription": "60-minute themed episode, usually based on a specific global region and sounds therein",
-	"shows": [
-		{
-			"id": 8,
-			"title": "Freedom Overspill Radio Hour #32, Sudanese 60s-70s",
-			"date": "2026-09-07T00:00:00.000Z",
-			"duration": 3743,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/6/7/a/58d8-06fa-4656-a054-c09d2ced7058",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/6/7/a/58d8-06fa-4656-a054-c09d2ced7058",
-			"tagIds": [30, 31],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-32-sudanese-60s-70s-september-7-2026/"
-		},
-		{
-			"id": 34,
-			"title": "Freedom Overspill Radio Hour Episode 29, Gitara",
-			"date": "2024-07-22T00:00:00.000Z",
-			"duration": 3599,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/d/1/1/f0de-e523-4301-9da5-80e40999c894",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/d/1/1/f0de-e523-4301-9da5-80e40999c894",
-			"tagIds": [53, 54],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-29-gitara-july-22-2024/"
-		},
-		{
-			"id": 35,
-			"title": "Freedom Overspill Radio Hour Episode 28, Shahi Baaja",
-			"date": "2024-07-08T00:00:00.000Z",
-			"duration": 3509,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/a/0/c/57ce-f83f-4277-a7d0-b68e6343568f",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/a/0/c/57ce-f83f-4277-a7d0-b68e6343568f",
-			"tagIds": [37, 55, 56, 57],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-28-shahi-baaja-july-8-2024/"
-		},
-		{
-			"id": 36,
-			"title": "Freedom Overspill Radio Hour Episode 27, Balochistan Benju",
-			"date": "2024-06-03T00:00:00.000Z",
-			"duration": 3559,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/f/4/3/080f-a72c-4911-ac97-95ec03882e1f",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/f/4/3/080f-a72c-4911-ac97-95ec03882e1f",
-			"tagIds": [58, 59, 60],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-27-balochistan-benju-june-3-2024/"
-		},
-		{
-			"id": 38,
-			"title": "Freedom Overspill Radio Hour Episode 26, Palestine Lives",
-			"date": "2023-11-13T00:00:00.000Z",
-			"duration": 3202,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/b/e/1/4cff-ac12-45b2-ae3a-67dc5053e602",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/b/e/1/4cff-ac12-45b2-ae3a-67dc5053e602",
-			"tagIds": [62, 63],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-26-palestine-lives-november-13-2023/"
-		},
-		{
-			"id": 41,
-			"title": "Freedom Overspill Radio Hour Episode 25, The Necks",
-			"date": "2023-06-05T00:00:00.000Z",
-			"duration": 7217,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/9/2/3/8770-fa1c-4370-8644-8ab5cdb45e41",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/9/2/3/8770-fa1c-4370-8644-8ab5cdb45e41",
-			"tagIds": [33, 66, 67, 68],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-25-the-necks-june-5-2023/"
-		},
-		{
-			"id": 42,
-			"title": "Freedom Overspill Radio Hour Episode 24, 1970s Algeria",
-			"date": "2023-02-27T00:00:00.000Z",
-			"duration": 3303,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/a/1/e/ab84-29c8-4927-8c74-ec97ce0da880",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/a/1/e/ab84-29c8-4927-8c74-ec97ce0da880",
-			"tagIds": [69, 70],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-24-1970s-algeria-february-27-2023/"
-		},
-		{
-			"id": 43,
-			"title": "Freedom Overspill Radio Hour Episode 23, Manuel Göttsching",
-			"date": "2022-11-21T00:00:00.000Z",
-			"duration": 3647,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/3/c/6/5b03-1257-42b2-9a43-8bcad5aa6c3d",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/3/c/6/5b03-1257-42b2-9a43-8bcad5aa6c3d",
-			"tagIds": [71, 72],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-23-manuel-g%C3%B6ttsching-november-21-2022/"
-		},
-		{
-			"id": 44,
-			"title": "Freedom Overspill Radio Hour Ep. 22, Experimental Gamelan",
-			"date": "2022-08-22T00:00:00.000Z",
-			"duration": 3599,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/c/3/b/ce20-80c2-4707-9cfe-6fd5ded015a9",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/c/3/b/ce20-80c2-4707-9cfe-6fd5ded015a9",
-			"tagIds": [],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-22-experimental-gamelan-august-22-2022/"
-		},
-		{
-			"id": 45,
-			"title": "Freedom Overspill Radio Hour Ep. 21: Cumbias Rebajadas",
-			"date": "2022-07-04T00:00:00.000Z",
-			"duration": 3601,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/0/6/6/dc7d-125f-48c4-b383-f750322fbb9e",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/0/6/6/dc7d-125f-48c4-b383-f750322fbb9e",
-			"tagIds": [73, 74, 75],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-rdio-hour-ep-21-cumbias-rebajadas-july-4-2022/"
-		},
-		{
-			"id": 46,
-			"title": "Freedom Overspill Episode 20: Western Rock Meets the World",
-			"date": "2022-04-18T00:00:00.000Z",
-			"duration": 3337,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/3/9/d/84a0-5fb4-4c33-bcff-cfe783d3f96a",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/3/9/d/84a0-5fb4-4c33-bcff-cfe783d3f96a",
-			"tagIds": [],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-episode-20-western-rock-meets-the-world-april-18-2022/"
-		},
-		{
-			"id": 47,
-			"title": "Freedom Overspill Radio Hour Episode 19: Brazil",
-			"date": "2022-03-28T00:00:00.000Z",
-			"duration": 3291,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/f/6/a/0823-128d-4b3b-97ed-4a3929fe720a",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/f/6/a/0823-128d-4b3b-97ed-4a3929fe720a",
-			"tagIds": [76, 77],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-19-brazil-march-28-2022/"
-		},
-		{
-			"id": 48,
-			"title": "Freedom Overspill Radio Hour Episode 18: Zamrock",
-			"date": "2022-02-28T00:00:00.000Z",
-			"duration": 3573,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/f/b/2/5914-e4c7-4226-99ef-f9f0a5a71231",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/f/b/2/5914-e4c7-4226-99ef-f9f0a5a71231",
-			"tagIds": [36, 78, 79, 80],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-18-zamrock-february-28-2022/"
-		},
-		{
-			"id": 49,
-			"title": "Freedom Overspill Ep. 17, Baroque/Chamber Pop 1960s-70s",
-			"date": "2022-01-17T00:00:00.000Z",
-			"duration": 3341,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/3/6/8/779f-8803-45cc-b19b-09492fdc5b6a",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/3/6/8/779f-8803-45cc-b19b-09492fdc5b6a",
-			"tagIds": [22, 81, 82, 83, 84],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-ep-17-baroquechamber-pop-1960s-70s-january-17-2022/"
-		},
-		{
-			"id": 50,
-			"title": "Freedom Overspill Radio Hour Ep. 16, Experimental Cairo",
-			"date": "2021-11-15T00:00:00.000Z",
-			"duration": 3597,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/d/8/8/5341-78c7-4cf3-8e6f-0a0472fb1dd1",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/d/8/8/5341-78c7-4cf3-8e6f-0a0472fb1dd1",
-			"tagIds": [33, 85, 86, 87, 88],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-16-experimental-cairo-november-15-2021/"
-		},
-		{
-			"id": 51,
-			"title": "Freedom Overspill Radio Hour Ep. 15, Devotional Music of Alice Coltrane",
-			"date": "2021-09-13T00:00:00.000Z",
-			"duration": 3647,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/9/8/0/ae87-05ce-4297-8c54-bebaad342e7c",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/9/8/0/ae87-05ce-4297-8c54-bebaad342e7c",
-			"tagIds": [88, 89, 90, 91],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-15-devotional-music-of-alice-coltrane-sept-132021/"
-		},
-		{
-			"id": 52,
-			"title": "Freedom Overspill Radio Hour Ep. 14: Congotronics",
-			"date": "2021-08-16T00:00:00.000Z",
-			"duration": 3597,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/9/3/2/ca0d-2702-41ea-9604-94a8af161e5f",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/9/3/2/ca0d-2702-41ea-9604-94a8af161e5f",
-			"tagIds": [],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-14-congotronics/"
-		},
-		{
-			"id": 53,
-			"title": "Freedom Overspill Radio Hour Episode 12 - Moroccan Mix",
-			"date": "2021-06-07T00:00:00.000Z",
-			"duration": 3602,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/0/9/3/ffd9-7eb0-4f2c-90fc-19ff400d7df4",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/0/9/3/ffd9-7eb0-4f2c-90fc-19ff400d7df4",
-			"tagIds": [86, 88, 92, 93, 94],
-			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-12-moroccan-mix-week-of-june-7-2021/"
-		}
-	],
-	"tagIds": [
-		22, 30, 31, 33, 36, 37, 53, 54, 55, 56, 57, 58, 59, 60, 62, 63, 66, 67, 68,
-		69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87,
-		88, 89, 90, 91, 92, 93, 94
-	]
+  "id": 12,
+  "title": "Derek Monypeny",
+  "image_small": "assets/djs/12_small.webp",
+  "image_large": "assets/djs/12_large.webp",
+  "bio": "<p>Born in the Arizona desert, a veteran of multiple explorations into the Sahara desert via Morocco and Western Sahara, and now a resident of the Mojave, Derek Monypeny sees his musical mission as adding to and expanding on what he calls the \"desert continuum;\" the psychedelic sirocco swirl of desert-based stringed instruments played with utter abandon by musicians the world over.</p>",
+  "socials": "<p>instagram.com/derek_monypeny</p>",
+  "showTitle": "Freedom Overspill Radio Hour",
+  "showDescription": "60-minute themed episode, usually based on a specific global region and sounds therein",
+  "shows": [
+    {
+      "id": 8,
+      "title": "Freedom Overspill Radio Hour #32, Sudanese 60s-70s",
+      "date": "2026-09-07T00:00:00.000Z",
+      "duration": 3743,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/6/7/a/58d8-06fa-4656-a054-c09d2ced7058",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/6/7/a/58d8-06fa-4656-a054-c09d2ced7058",
+      "tagIds": [
+        30,
+        31
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-32-sudanese-60s-70s-september-7-2026/"
+    },
+    {
+      "id": 34,
+      "title": "Freedom Overspill Radio Hour Episode 29, Gitara",
+      "date": "2024-07-22T00:00:00.000Z",
+      "duration": 3599,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/d/1/1/f0de-e523-4301-9da5-80e40999c894",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/d/1/1/f0de-e523-4301-9da5-80e40999c894",
+      "tagIds": [
+        53,
+        54
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-29-gitara-july-22-2024/"
+    },
+    {
+      "id": 35,
+      "title": "Freedom Overspill Radio Hour Episode 28, Shahi Baaja",
+      "date": "2024-07-08T00:00:00.000Z",
+      "duration": 3509,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/a/0/c/57ce-f83f-4277-a7d0-b68e6343568f",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/a/0/c/57ce-f83f-4277-a7d0-b68e6343568f",
+      "tagIds": [
+        37,
+        55,
+        56,
+        57
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-28-shahi-baaja-july-8-2024/"
+    },
+    {
+      "id": 36,
+      "title": "Freedom Overspill Radio Hour Episode 27, Balochistan Benju",
+      "date": "2024-06-03T00:00:00.000Z",
+      "duration": 3559,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/f/4/3/080f-a72c-4911-ac97-95ec03882e1f",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/f/4/3/080f-a72c-4911-ac97-95ec03882e1f",
+      "tagIds": [
+        58,
+        59,
+        60
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-27-balochistan-benju-june-3-2024/"
+    },
+    {
+      "id": 38,
+      "title": "Freedom Overspill Radio Hour Episode 26, Palestine Lives",
+      "date": "2023-11-13T00:00:00.000Z",
+      "duration": 3202,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/b/e/1/4cff-ac12-45b2-ae3a-67dc5053e602",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/b/e/1/4cff-ac12-45b2-ae3a-67dc5053e602",
+      "tagIds": [
+        62,
+        63
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-26-palestine-lives-november-13-2023/"
+    },
+    {
+      "id": 41,
+      "title": "Freedom Overspill Radio Hour Episode 25, The Necks",
+      "date": "2023-06-05T00:00:00.000Z",
+      "duration": 7217,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/9/2/3/8770-fa1c-4370-8644-8ab5cdb45e41",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/9/2/3/8770-fa1c-4370-8644-8ab5cdb45e41",
+      "tagIds": [
+        33,
+        66,
+        67,
+        68
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-25-the-necks-june-5-2023/"
+    },
+    {
+      "id": 42,
+      "title": "Freedom Overspill Radio Hour Episode 24, 1970s Algeria",
+      "date": "2023-02-27T00:00:00.000Z",
+      "duration": 3303,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/a/1/e/ab84-29c8-4927-8c74-ec97ce0da880",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/a/1/e/ab84-29c8-4927-8c74-ec97ce0da880",
+      "tagIds": [
+        69,
+        70
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-24-1970s-algeria-february-27-2023/"
+    },
+    {
+      "id": 43,
+      "title": "Freedom Overspill Radio Hour Episode 23, Manuel Göttsching",
+      "date": "2022-11-21T00:00:00.000Z",
+      "duration": 3647,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/3/c/6/5b03-1257-42b2-9a43-8bcad5aa6c3d",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/3/c/6/5b03-1257-42b2-9a43-8bcad5aa6c3d",
+      "tagIds": [
+        71,
+        72
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-23-manuel-g%C3%B6ttsching-november-21-2022/"
+    },
+    {
+      "id": 44,
+      "title": "Freedom Overspill Radio Hour Ep. 22, Experimental Gamelan",
+      "date": "2022-08-22T00:00:00.000Z",
+      "duration": 3599,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/c/3/b/ce20-80c2-4707-9cfe-6fd5ded015a9",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/c/3/b/ce20-80c2-4707-9cfe-6fd5ded015a9",
+      "tagIds": [],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-22-experimental-gamelan-august-22-2022/"
+    },
+    {
+      "id": 45,
+      "title": "Freedom Overspill Radio Hour Ep. 21: Cumbias Rebajadas",
+      "date": "2022-07-04T00:00:00.000Z",
+      "duration": 3601,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/0/6/6/dc7d-125f-48c4-b383-f750322fbb9e",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/0/6/6/dc7d-125f-48c4-b383-f750322fbb9e",
+      "tagIds": [
+        73,
+        74,
+        75
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-rdio-hour-ep-21-cumbias-rebajadas-july-4-2022/"
+    },
+    {
+      "id": 46,
+      "title": "Freedom Overspill Episode 20: Western Rock Meets the World",
+      "date": "2022-04-18T00:00:00.000Z",
+      "duration": 3337,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/3/9/d/84a0-5fb4-4c33-bcff-cfe783d3f96a",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/3/9/d/84a0-5fb4-4c33-bcff-cfe783d3f96a",
+      "tagIds": [],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-episode-20-western-rock-meets-the-world-april-18-2022/"
+    },
+    {
+      "id": 47,
+      "title": "Freedom Overspill Radio Hour Episode 19: Brazil",
+      "date": "2022-03-28T00:00:00.000Z",
+      "duration": 3291,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/f/6/a/0823-128d-4b3b-97ed-4a3929fe720a",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/f/6/a/0823-128d-4b3b-97ed-4a3929fe720a",
+      "tagIds": [
+        76,
+        77
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-19-brazil-march-28-2022/"
+    },
+    {
+      "id": 48,
+      "title": "Freedom Overspill Radio Hour Episode 18: Zamrock",
+      "date": "2022-02-28T00:00:00.000Z",
+      "duration": 3573,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/f/b/2/5914-e4c7-4226-99ef-f9f0a5a71231",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/f/b/2/5914-e4c7-4226-99ef-f9f0a5a71231",
+      "tagIds": [
+        36,
+        78,
+        79,
+        80
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-18-zamrock-february-28-2022/"
+    },
+    {
+      "id": 49,
+      "title": "Freedom Overspill Ep. 17, Baroque/Chamber Pop 1960s-70s",
+      "date": "2022-01-17T00:00:00.000Z",
+      "duration": 3341,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/3/6/8/779f-8803-45cc-b19b-09492fdc5b6a",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/3/6/8/779f-8803-45cc-b19b-09492fdc5b6a",
+      "tagIds": [
+        22,
+        81,
+        82,
+        83,
+        84
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-ep-17-baroquechamber-pop-1960s-70s-january-17-2022/"
+    },
+    {
+      "id": 50,
+      "title": "Freedom Overspill Radio Hour Ep. 16, Experimental Cairo",
+      "date": "2021-11-15T00:00:00.000Z",
+      "duration": 3597,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/d/8/8/5341-78c7-4cf3-8e6f-0a0472fb1dd1",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/d/8/8/5341-78c7-4cf3-8e6f-0a0472fb1dd1",
+      "tagIds": [
+        33,
+        85,
+        86,
+        87,
+        88
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-16-experimental-cairo-november-15-2021/"
+    },
+    {
+      "id": 51,
+      "title": "Freedom Overspill Radio Hour Ep. 15, Devotional Music of Alice Coltrane",
+      "date": "2021-09-13T00:00:00.000Z",
+      "duration": 3647,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/9/8/0/ae87-05ce-4297-8c54-bebaad342e7c",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/9/8/0/ae87-05ce-4297-8c54-bebaad342e7c",
+      "tagIds": [
+        88,
+        89,
+        90,
+        91
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-15-devotional-music-of-alice-coltrane-sept-132021/"
+    },
+    {
+      "id": 52,
+      "title": "Freedom Overspill Radio Hour Ep. 14: Congotronics",
+      "date": "2021-08-16T00:00:00.000Z",
+      "duration": 3597,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/9/3/2/ca0d-2702-41ea-9604-94a8af161e5f",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/9/3/2/ca0d-2702-41ea-9604-94a8af161e5f",
+      "tagIds": [],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-14-congotronics/"
+    },
+    {
+      "id": 53,
+      "title": "Freedom Overspill Radio Hour Episode 12 - Moroccan Mix",
+      "date": "2021-06-07T00:00:00.000Z",
+      "duration": 3602,
+      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/0/9/3/ffd9-7eb0-4f2c-90fc-19ff400d7df4",
+      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/0/9/3/ffd9-7eb0-4f2c-90fc-19ff400d7df4",
+      "tagIds": [
+        86,
+        88,
+        92,
+        93,
+        94
+      ],
+      "url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-12-moroccan-mix-week-of-june-7-2021/"
+    }
+  ],
+  "tagIds": [
+    22,
+    30,
+    31,
+    33,
+    36,
+    37,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    62,
+    63,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94
+  ]
 }
