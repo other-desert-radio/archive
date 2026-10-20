@@ -469,5 +469,12 @@
     "color": "#ed333b",
     "mixcloud_key": "/genres/najat-aatabou/",
     "mixcloud_url": "https://www.mixcloud.com/genres/najat-aatabou/"
+  },
+  {
+    "id": 95,
+    "title": "Rap",
+    "color": "#d9fb46",
+    "mixcloud_key": "/genres/rap/",
+    "mixcloud_url": "https://www.mixcloud.com/genres/rap/"
   }
 ]
