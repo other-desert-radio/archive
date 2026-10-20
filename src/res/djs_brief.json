@@ -1,50 +1,142 @@
 [
-	{
-		"id": 11,
-		"title": "DJ AKĀSHA",
-		"image_small": "assets/djs/11_small.webp",
-		"image_large": "assets/djs/11_large.webp",
-		"tagIds": [4, 6, 21, 22]
-	},
-	{
-		"id": 16,
-		"title": "DJ Emocean",
-		"image_small": "assets/djs/16_small.webp",
-		"image_large": "assets/djs/16_large.webp",
-		"tagIds": [4, 6, 21, 22, 47, 64]
-	},
-	{
-		"id": 12,
-		"title": "Derek Monypeny",
-		"image_small": "assets/djs/12_small.webp",
-		"image_large": "assets/djs/12_large.webp",
-		"tagIds": [
-			22, 30, 31, 33, 36, 37, 53, 54, 55, 56, 57, 58, 59, 60, 62, 63, 66, 67,
-			68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85,
-			86, 87, 88, 89, 90, 91, 92, 93, 94
-		]
-	},
-	{
-		"id": 13,
-		"title": "Justin Paszul",
-		"image_small": "assets/djs/13_small.webp",
-		"image_large": "assets/djs/13_large.webp",
-		"tagIds": [
-			12, 21, 22, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 50, 64
-		]
-	},
-	{
-		"id": 14,
-		"title": "muzizmu",
-		"image_small": "assets/djs/14_small.webp",
-		"image_large": "assets/djs/14_large.webp",
-		"tagIds": [4, 21, 27, 51, 52]
-	},
-	{
-		"id": 15,
-		"title": "temporal emissions",
-		"image_small": "assets/djs/15_small.webp",
-		"image_large": "assets/djs/15_large.webp",
-		"tagIds": [32, 33, 35, 36, 37, 45, 46, 47, 48, 49, 50, 61, 64, 65]
-	}
+  {
+    "id": 11,
+    "title": "DJ AKĀSHA",
+    "image_small": "assets/djs/11_small.webp",
+    "image_large": "assets/djs/11_large.webp",
+    "tagIds": [
+      4,
+      6,
+      21,
+      22
+    ]
+  },
+  {
+    "id": 16,
+    "title": "DJ Emocean",
+    "image_small": "assets/djs/16_small.webp",
+    "image_large": "assets/djs/16_large.webp",
+    "tagIds": [
+      4,
+      6,
+      21,
+      22,
+      47,
+      64
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Derek Monypeny",
+    "image_small": "assets/djs/12_small.webp",
+    "image_large": "assets/djs/12_large.webp",
+    "tagIds": [
+      22,
+      30,
+      31,
+      33,
+      36,
+      37,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      62,
+      63,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Justin Paszul",
+    "image_small": "assets/djs/13_small.webp",
+    "image_large": "assets/djs/13_large.webp",
+    "tagIds": [
+      12,
+      21,
+      22,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      50,
+      64
+    ]
+  },
+  {
+    "id": 14,
+    "title": "muzizmu",
+    "image_small": "assets/djs/14_small.webp",
+    "image_large": "assets/djs/14_large.webp",
+    "tagIds": [
+      4,
+      21,
+      27,
+      51,
+      52
+    ]
+  },
+  {
+    "id": 15,
+    "title": "temporal emissions",
+    "image_small": "assets/djs/15_small.webp",
+    "image_large": "assets/djs/15_large.webp",
+    "tagIds": [
+      32,
+      33,
+      35,
+      36,
+      37,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      61,
+      64,
+      65
+    ]
+  }
 ]
