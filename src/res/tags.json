@@ -422,13 +422,6 @@
     "mixcloud_url": "https://www.mixcloud.com/genres/cairo/"
   },
   {
-    "id": 86,
-    "title": "Derekmonypeny",
-    "color": "#93fb4e",
-    "mixcloud_key": "/genres/derekmonypeny/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/derekmonypeny/"
-  },
-  {
     "id": 87,
     "title": "Egypt",
     "color": "#9df563",
@@ -448,13 +441,6 @@
     "color": "#496bf8",
     "mixcloud_key": "/genres/alice-coltrane/",
     "mixcloud_url": "https://www.mixcloud.com/genres/alice-coltrane/"
-  },
-  {
-    "id": 90,
-    "title": "Derek monypeny",
-    "color": "#86faac",
-    "mixcloud_key": "/genres/derek-monypeny/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/derek-monypeny/"
   },
   {
     "id": 91,
