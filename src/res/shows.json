@@ -162,6 +162,24 @@
 		"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-lightning-rod-1-august-3-2026/"
 	},
 	{
+		"id": 67,
+		"title": "Looking Glass with Lodi Dottie Episode 7",
+		"date": "2026-08-03T00:00:00.000Z",
+		"duration": 3416,
+		"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/f/8/4/869e-96c9-4d49-b343-c64c0bcd2b65",
+		"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/f/8/4/869e-96c9-4d49-b343-c64c0bcd2b65",
+		"djs": [
+			{
+				"id": 22,
+				"title": "Lodi Dottie",
+				"image_small": "assets/djs/22_small.webp",
+				"image_large": "assets/djs/22_large.webp"
+			}
+		],
+		"tagIds": [33, 64, 96],
+		"url": "https://www.mixcloud.com/otherdesertradio/looking-glass-with-lodi-dottie-episode-7-august-3-2026/"
+	},
+	{
 		"id": 17,
 		"title": "From the Mixed-Up Files of Axaxaxas Mlö #26",
 		"date": "2026-07-27T00:00:00.000Z",
@@ -178,6 +196,24 @@
 		],
 		"tagIds": [22, 33, 39, 40],
 		"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-25-july-27-2026/"
+	},
+	{
+		"id": 71,
+		"title": "Industrial Goth Special, July 20,  2026",
+		"date": "2026-07-20T00:00:00.000Z",
+		"duration": 2707,
+		"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/6/5/d/7e84-3b68-4d9c-a0ed-0f1bef9be9b9",
+		"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/6/5/d/7e84-3b68-4d9c-a0ed-0f1bef9be9b9",
+		"djs": [
+			{
+				"id": 18,
+				"title": "DJ Nasty Nate",
+				"image_small": "assets/djs/18_small.webp",
+				"image_large": "assets/djs/18_large.webp"
+			}
+		],
+		"tagIds": [64, 102, 103, 104],
+		"url": "https://www.mixcloud.com/otherdesertradio/dj-nasty-nate-industrial-goth-dance-special-july-20-2026/"
 	},
 	{
 		"id": 18,
@@ -450,6 +486,24 @@
 		"url": "https://www.mixcloud.com/otherdesertradio/dj-emocean-play-is-as-it-lays-episode-1-february-16-2026/"
 	},
 	{
+		"id": 66,
+		"title": "From the Mixed-Up Files of Axaxaxas Mlö #15",
+		"date": "2026-02-02T00:00:00.000Z",
+		"duration": 3559,
+		"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/f/1/9/53b5-7e6b-4d11-ab43-0ba9117ba530",
+		"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/f/1/9/53b5-7e6b-4d11-ab43-0ba9117ba530",
+		"djs": [
+			{
+				"id": 13,
+				"title": "Justin Paszul",
+				"image_small": "assets/djs/13_small.webp",
+				"image_large": "assets/djs/13_large.webp"
+			}
+		],
+		"tagIds": [21, 33, 95],
+		"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-15-february-2-2026/"
+	},
+	{
 		"id": 28,
 		"title": "Episode 7",
 		"date": "2025-12-22T00:00:00.000Z",
@@ -666,6 +720,24 @@
 		"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-an-evening-of-stand-up-cosmogony-part-1-march-3-2025/"
 	},
 	{
+		"id": 69,
+		"title": "Helloween Volume 3",
+		"date": "2024-10-14T00:00:00.000Z",
+		"duration": 6728,
+		"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/0/c/6/7824-1bf9-46c9-a2e3-d1703b2c5a2e",
+		"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/0/c/6/7824-1bf9-46c9-a2e3-d1703b2c5a2e",
+		"djs": [
+			{
+				"id": 18,
+				"title": "DJ Nasty Nate",
+				"image_small": "assets/djs/18_small.webp",
+				"image_large": "assets/djs/18_large.webp"
+			}
+		],
+		"tagIds": [33, 98, 102],
+		"url": "https://www.mixcloud.com/otherdesertradio/nathan-ober-aka-dj-nasty-nate-helloween-volume-3-october-14-2024/"
+	},
+	{
 		"id": 34,
 		"title": "Freedom Overspill Radio Hour Episode 29, Gitara",
 		"date": "2024-07-22T00:00:00.000Z",
@@ -754,6 +826,24 @@
 		],
 		"tagIds": [62, 63],
 		"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-26-palestine-lives-november-13-2023/"
+	},
+	{
+		"id": 70,
+		"title": "Helloween Volume 2",
+		"date": "2023-10-16T00:00:00.000Z",
+		"duration": 6971,
+		"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/6/1/1/edad-0f6b-4c0a-bbe2-81baba5f532a",
+		"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/6/1/1/edad-0f6b-4c0a-bbe2-81baba5f532a",
+		"djs": [
+			{
+				"id": 18,
+				"title": "DJ Nasty Nate",
+				"image_small": "assets/djs/18_small.webp",
+				"image_large": "assets/djs/18_large.webp"
+			}
+		],
+		"tagIds": [36, 50, 98, 102],
+		"url": "https://www.mixcloud.com/otherdesertradio/nathan-ober-aka-dj-nasty-nate-helloween-volume-2-october-16-2023/"
 	},
 	{
 		"id": 39,
@@ -986,8 +1076,26 @@
 				"image_large": "assets/djs/12_large.webp"
 			}
 		],
-		"tagIds": [33, 85, 86, 87, 88],
+		"tagIds": [33, 85, 87, 88],
 		"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-16-experimental-cairo-november-15-2021/"
+	},
+	{
+		"id": 68,
+		"title": "Reading and Sound Collage: A Tale of the Ragged Mountains (Poe/Chain)",
+		"date": "2021-10-25T00:00:00.000Z",
+		"duration": 2377,
+		"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/9/6/6/5fc9-a90d-4dcf-a18e-4f7c980f91d8",
+		"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/9/6/6/5fc9-a90d-4dcf-a18e-4f7c980f91d8",
+		"djs": [
+			{
+				"id": 17,
+				"title": "Hans F. Wagner",
+				"image_small": "assets/djs/17_small.webp",
+				"image_large": "assets/djs/17_large.webp"
+			}
+		],
+		"tagIds": [97, 98, 99, 100, 101],
+		"url": "https://www.mixcloud.com/otherdesertradio/hans-f-wagner-reading-and-sound-collage-a-tale-of-the-ragged-mountains-poechain-oct-25-2021/"
 	},
 	{
 		"id": 51,
@@ -1004,7 +1112,7 @@
 				"image_large": "assets/djs/12_large.webp"
 			}
 		],
-		"tagIds": [88, 89, 90, 91],
+		"tagIds": [88, 89, 91],
 		"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-15-devotional-music-of-alice-coltrane-sept-132021/"
 	},
 	{
@@ -1040,7 +1148,7 @@
 				"image_large": "assets/djs/12_large.webp"
 			}
 		],
-		"tagIds": [86, 88, 92, 93, 94],
+		"tagIds": [88, 92, 93, 94],
 		"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-12-moroccan-mix-week-of-june-7-2021/"
 	}
 ]

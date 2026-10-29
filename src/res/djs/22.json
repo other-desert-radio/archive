@@ -1,0 +1,23 @@
+{
+	"id": 22,
+	"title": "Lodi Dottie",
+	"image_small": "assets/djs/22_small.webp",
+	"image_large": "assets/djs/22_large.webp",
+	"bio": "<p>Lodi Dottie is vinyl DJ + glass artist based in the Mojave Desert. She participates in ODR through her show, Looking Glass, and has spun records at venues throughout the hi desert, low desert, and LA.</p>",
+	"socials": "<p>@lodi.dottie.art</p>",
+	"showTitle": "Looking Glass",
+	"showDescription": "Looking Glass is best played loud. Summer heat, feet crunching desert sand, absorbing  soundscapes: embrace the wonder and tension.",
+	"shows": [
+		{
+			"id": 67,
+			"title": "Looking Glass with Lodi Dottie Episode 7",
+			"date": "2026-08-03T00:00:00.000Z",
+			"duration": 3416,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/f/8/4/869e-96c9-4d49-b343-c64c0bcd2b65",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/f/8/4/869e-96c9-4d49-b343-c64c0bcd2b65",
+			"tagIds": [33, 64, 96],
+			"url": "https://www.mixcloud.com/otherdesertradio/looking-glass-with-lodi-dottie-episode-7-august-3-2026/"
+		}
+	],
+	"tagIds": [33, 64, 96]
+}

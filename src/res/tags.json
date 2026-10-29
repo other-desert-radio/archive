@@ -422,13 +422,6 @@
 		"mixcloud_url": "https://www.mixcloud.com/genres/cairo/"
 	},
 	{
-		"id": 86,
-		"title": "Derekmonypeny",
-		"color": "#93fb4e",
-		"mixcloud_key": "/genres/derekmonypeny/",
-		"mixcloud_url": "https://www.mixcloud.com/genres/derekmonypeny/"
-	},
-	{
 		"id": 87,
 		"title": "Egypt",
 		"color": "#9df563",
@@ -448,13 +441,6 @@
 		"color": "#496bf8",
 		"mixcloud_key": "/genres/alice-coltrane/",
 		"mixcloud_url": "https://www.mixcloud.com/genres/alice-coltrane/"
-	},
-	{
-		"id": 90,
-		"title": "Derek monypeny",
-		"color": "#86faac",
-		"mixcloud_key": "/genres/derek-monypeny/",
-		"mixcloud_url": "https://www.mixcloud.com/genres/derek-monypeny/"
 	},
 	{
 		"id": 91,
@@ -480,8 +466,78 @@
 	{
 		"id": 94,
 		"title": "Najat Aatabou",
-		"color": "#e66100",
+		"color": "#ed333b",
 		"mixcloud_key": "/genres/najat-aatabou/",
 		"mixcloud_url": "https://www.mixcloud.com/genres/najat-aatabou/"
+	},
+	{
+		"id": 95,
+		"title": "Rap",
+		"color": "#d9fb46",
+		"mixcloud_key": "/genres/rap/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/rap/"
+	},
+	{
+		"id": 96,
+		"title": "Coldwave",
+		"color": "#3584e4",
+		"mixcloud_key": "/genres/coldwave/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/coldwave/"
+	},
+	{
+		"id": 97,
+		"title": "Edgar Allen Poe",
+		"color": "#f8977b",
+		"mixcloud_key": "/genres/edgar-allen-poe/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/edgar-allen-poe/"
+	},
+	{
+		"id": 98,
+		"title": "Halloween",
+		"color": "#f34d6b",
+		"mixcloud_key": "/genres/halloween/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/halloween/"
+	},
+	{
+		"id": 99,
+		"title": "Hans wagner",
+		"color": "#e78cfa",
+		"mixcloud_key": "/genres/hans-wagner/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/hans-wagner/"
+	},
+	{
+		"id": 100,
+		"title": "Paul Chain",
+		"color": "#71f8c2",
+		"mixcloud_key": "/genres/paul-chain/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/paul-chain/"
+	},
+	{
+		"id": 101,
+		"title": "Short storles",
+		"color": "#aafa77",
+		"mixcloud_key": "/genres/short-storles/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/short-storles/"
+	},
+	{
+		"id": 102,
+		"title": "Industrial",
+		"color": "#5bf353",
+		"mixcloud_key": "/genres/industrial/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/industrial/"
+	},
+	{
+		"id": 103,
+		"title": "Goth",
+		"color": "#8c80fb",
+		"mixcloud_key": "/genres/goth/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/goth/"
+	},
+	{
+		"id": 104,
+		"title": "Post-punk",
+		"color": "#ea8ef6",
+		"mixcloud_key": "/genres/post-punk/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/post-punk/"
 	}
 ]

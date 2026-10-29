@@ -1,5 +1,12 @@
 [
 	{
+		"id": 26,
+		"title": "DEV01D",
+		"image_small": "assets/djs/26_small.webp",
+		"image_large": "assets/djs/26_large.webp",
+		"tagIds": []
+	},
+	{
 		"id": 11,
 		"title": "DJ AKĀSHA",
 		"image_small": "assets/djs/11_small.webp",
@@ -14,6 +21,27 @@
 		"tagIds": [4, 6, 21, 22, 47, 64]
 	},
 	{
+		"id": 18,
+		"title": "DJ Nasty Nate",
+		"image_small": "assets/djs/18_small.webp",
+		"image_large": "assets/djs/18_large.webp",
+		"tagIds": [33, 36, 50, 64, 98, 102, 103, 104]
+	},
+	{
+		"id": 30,
+		"title": "DJ PUBLIC ROAD",
+		"image_small": "assets/djs/30_small.webp",
+		"image_large": "assets/djs/30_large.webp",
+		"tagIds": []
+	},
+	{
+		"id": 21,
+		"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+		"image_small": "assets/djs/21_small.webp",
+		"image_large": "assets/djs/21_large.webp",
+		"tagIds": []
+	},
+	{
 		"id": 12,
 		"title": "Derek Monypeny",
 		"image_small": "assets/djs/12_small.webp",
@@ -21,8 +49,36 @@
 		"tagIds": [
 			22, 30, 31, 33, 36, 37, 53, 54, 55, 56, 57, 58, 59, 60, 62, 63, 66, 67,
 			68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85,
-			86, 87, 88, 89, 90, 91, 92, 93, 94
+			87, 88, 89, 91, 92, 93, 94
 		]
+	},
+	{
+		"id": 24,
+		"title": "Desert Dove Radio",
+		"image_small": "assets/djs/24_small.webp",
+		"image_large": "assets/djs/24_large.webp",
+		"tagIds": []
+	},
+	{
+		"id": 32,
+		"title": "Dj Sensi",
+		"image_small": "assets/djs/32_small.webp",
+		"image_large": "assets/djs/32_large.webp",
+		"tagIds": []
+	},
+	{
+		"id": 23,
+		"title": "Gabriel Valenzuela",
+		"image_small": "assets/djs/23_small.webp",
+		"image_large": "assets/djs/23_large.webp",
+		"tagIds": []
+	},
+	{
+		"id": 17,
+		"title": "Hans F. Wagner",
+		"image_small": "assets/djs/17_small.webp",
+		"image_large": "assets/djs/17_large.webp",
+		"tagIds": [97, 98, 99, 100, 101]
 	},
 	{
 		"id": 13,
@@ -30,8 +86,64 @@
 		"image_small": "assets/djs/13_small.webp",
 		"image_large": "assets/djs/13_large.webp",
 		"tagIds": [
-			12, 21, 22, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 50, 64
+			12, 21, 22, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 50, 64, 95
 		]
+	},
+	{
+		"id": 19,
+		"title": "K Sera Sarah",
+		"image_small": "assets/djs/19_small.webp",
+		"image_large": "assets/djs/19_large.webp",
+		"tagIds": []
+	},
+	{
+		"id": 25,
+		"title": "Kayla",
+		"image_small": "assets/djs/25_small.webp",
+		"image_large": "assets/djs/25_large.webp",
+		"tagIds": []
+	},
+	{
+		"id": 29,
+		"title": "LUVWAVE",
+		"image_small": "assets/djs/29_small.webp",
+		"image_large": "assets/djs/29_large.webp",
+		"tagIds": []
+	},
+	{
+		"id": 27,
+		"title": "Lindsey Cooper Andersen",
+		"image_small": "assets/djs/27_small.webp",
+		"image_large": "assets/djs/27_large.webp",
+		"tagIds": []
+	},
+	{
+		"id": 22,
+		"title": "Lodi Dottie",
+		"image_small": "assets/djs/22_small.webp",
+		"image_large": "assets/djs/22_large.webp",
+		"tagIds": [33, 64, 96]
+	},
+	{
+		"id": 31,
+		"title": "Milk Thistle",
+		"image_small": "assets/djs/31_small.webp",
+		"image_large": "assets/djs/31_large.webp",
+		"tagIds": []
+	},
+	{
+		"id": 28,
+		"title": "No Translation",
+		"image_small": "assets/djs/28_small.webp",
+		"image_large": "assets/djs/28_large.webp",
+		"tagIds": []
+	},
+	{
+		"id": 20,
+		"title": "Tara Jane ONeil",
+		"image_small": "assets/djs/20_small.webp",
+		"image_large": "assets/djs/20_large.webp",
+		"tagIds": []
 	},
 	{
 		"id": 14,
