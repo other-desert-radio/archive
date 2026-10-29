@@ -1,73 +1,53 @@
 {
-  "id": 14,
-  "title": "muzizmu",
-  "image_small": "assets/djs/14_small.webp",
-  "image_large": "assets/djs/14_large.webp",
-  "bio": "<p>muzizmu is a library of hypnotic echoes and timeless atmospheres from 1930s big bands to 1990s techno analog.</p>",
-  "socials": "<p>ig @muzizmu<br /><br />SoundCloud.com/muzizmu</p>",
-  "showTitle": "mixtape 001",
-  "showDescription": "arpeggio horizons",
-  "shows": [
-    {
-      "id": 10,
-      "title": "Volume 5",
-      "date": "2026-08-31T00:00:00.000Z",
-      "duration": 3067,
-      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/d/4/5/950e-cc75-4472-a5f3-c6c48045aeb7",
-      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/d/4/5/950e-cc75-4472-a5f3-c6c48045aeb7",
-      "tagIds": [
-        4,
-        21
-      ],
-      "url": "https://www.mixcloud.com/otherdesertradio/muzizmu-volume-5-august-31-2026/"
-    },
-    {
-      "id": 24,
-      "title": "Volume 4",
-      "date": "2026-05-04T00:00:00.000Z",
-      "duration": 2490,
-      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/0/9/7/1faa-0fe1-433e-b58b-518683808f31",
-      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/0/9/7/1faa-0fe1-433e-b58b-518683808f31",
-      "tagIds": [
-        4,
-        21,
-        27
-      ],
-      "url": "https://www.mixcloud.com/otherdesertradio/muzizmu-volume-4-may-4-2026/"
-    },
-    {
-      "id": 31,
-      "title": "Volume 2",
-      "date": "2025-10-20T00:00:00.000Z",
-      "duration": 3141,
-      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/c/3/4/5179-f517-48da-acd9-b499d8a7c733",
-      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/c/3/4/5179-f517-48da-acd9-b499d8a7c733",
-      "tagIds": [
-        21,
-        51
-      ],
-      "url": "https://www.mixcloud.com/otherdesertradio/muzizmu-volume-2-october-20-2025/"
-    },
-    {
-      "id": 33,
-      "title": "Boiling Rice Set",
-      "date": "2025-08-11T00:00:00.000Z",
-      "duration": 1895,
-      "image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/0/a/7/3dc1-8ec3-4899-8749-ea9ac8fcfdd5",
-      "image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/0/a/7/3dc1-8ec3-4899-8749-ea9ac8fcfdd5",
-      "tagIds": [
-        4,
-        21,
-        52
-      ],
-      "url": "https://www.mixcloud.com/otherdesertradio/muzizmu-boiling-rice-set-august-11-2025/"
-    }
-  ],
-  "tagIds": [
-    4,
-    21,
-    27,
-    51,
-    52
-  ]
+	"id": 14,
+	"title": "muzizmu",
+	"image_small": "assets/djs/14_small.webp",
+	"image_large": "assets/djs/14_large.webp",
+	"bio": "<p>muzizmu is a library of hypnotic echoes and timeless atmospheres from 1930s big bands to 1990s techno analog.</p>",
+	"socials": "<p>ig @muzizmu<br /><br />SoundCloud.com/muzizmu</p>",
+	"showTitle": "mixtape 001",
+	"showDescription": "arpeggio horizons",
+	"shows": [
+		{
+			"id": 10,
+			"title": "Volume 5",
+			"date": "2026-08-31T00:00:00.000Z",
+			"duration": 3067,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/d/4/5/950e-cc75-4472-a5f3-c6c48045aeb7",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/d/4/5/950e-cc75-4472-a5f3-c6c48045aeb7",
+			"tagIds": [4, 21],
+			"url": "https://www.mixcloud.com/otherdesertradio/muzizmu-volume-5-august-31-2026/"
+		},
+		{
+			"id": 24,
+			"title": "Volume 4",
+			"date": "2026-05-04T00:00:00.000Z",
+			"duration": 2490,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/0/9/7/1faa-0fe1-433e-b58b-518683808f31",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/0/9/7/1faa-0fe1-433e-b58b-518683808f31",
+			"tagIds": [4, 21, 27],
+			"url": "https://www.mixcloud.com/otherdesertradio/muzizmu-volume-4-may-4-2026/"
+		},
+		{
+			"id": 31,
+			"title": "Volume 2",
+			"date": "2025-10-20T00:00:00.000Z",
+			"duration": 3141,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/c/3/4/5179-f517-48da-acd9-b499d8a7c733",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/c/3/4/5179-f517-48da-acd9-b499d8a7c733",
+			"tagIds": [21, 51],
+			"url": "https://www.mixcloud.com/otherdesertradio/muzizmu-volume-2-october-20-2025/"
+		},
+		{
+			"id": 33,
+			"title": "Boiling Rice Set",
+			"date": "2025-08-11T00:00:00.000Z",
+			"duration": 1895,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/0/a/7/3dc1-8ec3-4899-8749-ea9ac8fcfdd5",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/0/a/7/3dc1-8ec3-4899-8749-ea9ac8fcfdd5",
+			"tagIds": [4, 21, 52],
+			"url": "https://www.mixcloud.com/otherdesertradio/muzizmu-boiling-rice-set-august-11-2025/"
+		}
+	],
+	"tagIds": [4, 21, 27, 51, 52]
 }

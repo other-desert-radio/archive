@@ -1,487 +1,487 @@
 [
-  {
-    "id": 4,
-    "title": "House",
-    "color": "#ff4848"
-  },
-  {
-    "id": 6,
-    "title": "Disco",
-    "color": "#c061cb"
-  },
-  {
-    "id": 12,
-    "title": "world",
-    "color": "#95cbff"
-  },
-  {
-    "id": 21,
-    "title": "dance",
-    "color": "#11e2b9"
-  },
-  {
-    "id": 22,
-    "title": "pop",
-    "color": "#7071d9"
-  },
-  {
-    "id": 27,
-    "title": "trip",
-    "color": "#2ec27e"
-  },
-  {
-    "id": 30,
-    "title": "Sudanese folk",
-    "color": "#ffa000",
-    "mixcloud_key": "/genres/sudanese-folk/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/sudanese-folk/"
-  },
-  {
-    "id": 31,
-    "title": "Sundanese pop",
-    "color": "#cdab8f",
-    "mixcloud_key": "/genres/sundanese-pop/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/sundanese-pop/"
-  },
-  {
-    "id": 32,
-    "title": "Avant-Garde",
-    "color": "#e28dff",
-    "mixcloud_key": "/genres/avant-garde/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/avant-garde/"
-  },
-  {
-    "id": 33,
-    "title": "Experimental",
-    "color": "#5ccad9",
-    "mixcloud_key": "/genres/experimental/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/experimental/"
-  },
-  {
-    "id": 34,
-    "title": "Covers",
-    "color": "#129a9a",
-    "mixcloud_key": "/genres/covers/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/covers/"
-  },
-  {
-    "id": 35,
-    "title": "Jazz",
-    "color": "#e01b24",
-    "mixcloud_key": "/genres/jazz/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/jazz/"
-  },
-  {
-    "id": 36,
-    "title": "Rock",
-    "color": "#9daca0",
-    "mixcloud_key": "/genres/rock/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/rock/"
-  },
-  {
-    "id": 37,
-    "title": "Folk",
-    "color": "#26a269",
-    "mixcloud_key": "/genres/folk/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/folk/"
-  },
-  {
-    "id": 38,
-    "title": "Country",
-    "color": "#ffcd70",
-    "mixcloud_key": "/genres/country/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/country/"
-  },
-  {
-    "id": 39,
-    "title": "Prog",
-    "color": "#9a9996",
-    "mixcloud_key": "/genres/prog/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/prog/"
-  },
-  {
-    "id": 40,
-    "title": "Punk",
-    "color": "#f66151",
-    "mixcloud_key": "/genres/punk/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/punk/"
-  },
-  {
-    "id": 41,
-    "title": "Japanese",
-    "color": "#8f9df9",
-    "mixcloud_key": "/genres/japanese/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/japanese/"
-  },
-  {
-    "id": 42,
-    "title": "Soul",
-    "color": "#f686c4",
-    "mixcloud_key": "/genres/soul/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/soul/"
-  },
-  {
-    "id": 43,
-    "title": "Weirdo",
-    "color": "#e77ff7",
-    "mixcloud_key": "/genres/weirdo/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/weirdo/"
-  },
-  {
-    "id": 44,
-    "title": "Ukranian",
-    "color": "#f9f06b",
-    "mixcloud_key": "/genres/ukranian/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/ukranian/"
-  },
-  {
-    "id": 45,
-    "title": "Avant",
-    "color": "#f75e67",
-    "mixcloud_key": "/genres/avant/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/avant/"
-  },
-  {
-    "id": 46,
-    "title": "Christmas",
-    "color": "#5bc3f9",
-    "mixcloud_key": "/genres/christmas/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/christmas/"
-  },
-  {
-    "id": 47,
-    "title": "R&B",
-    "color": "#51fa4d",
-    "mixcloud_key": "/genres/rb/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/rb/"
-  },
-  {
-    "id": 48,
-    "title": "Psychadelic",
-    "color": "#9ff88e",
-    "mixcloud_key": "/genres/psychadelic/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/psychadelic/"
-  },
-  {
-    "id": 49,
-    "title": "D'angelo",
-    "color": "#7ee4fc",
-    "mixcloud_key": "/genres/dangelo/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/dangelo/"
-  },
-  {
-    "id": 50,
-    "title": "Metal",
-    "color": "#f99480",
-    "mixcloud_key": "/genres/metal/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/metal/"
-  },
-  {
-    "id": 51,
-    "title": "Throwback",
-    "color": "#b36bf4",
-    "mixcloud_key": "/genres/throwback/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/throwback/"
-  },
-  {
-    "id": 52,
-    "title": "Lounge",
-    "color": "#adf559",
-    "mixcloud_key": "/genres/lounge/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/lounge/"
-  },
-  {
-    "id": 53,
-    "title": "Azerbaijan",
-    "color": "#f36e6d",
-    "mixcloud_key": "/genres/azerbaijan/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/azerbaijan/"
-  },
-  {
-    "id": 54,
-    "title": "Gitara",
-    "color": "#f8bf8e",
-    "mixcloud_key": "/genres/gitara/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/gitara/"
-  },
-  {
-    "id": 55,
-    "title": "Electric banjo",
-    "color": "#6cf5e9",
-    "mixcloud_key": "/genres/electric-banjo/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/electric-banjo/"
-  },
-  {
-    "id": 56,
-    "title": "India",
-    "color": "#849ff9",
-    "mixcloud_key": "/genres/india/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/india/"
-  },
-  {
-    "id": 57,
-    "title": "Shahi baaja",
-    "color": "#44ebf9",
-    "mixcloud_key": "/genres/shahi-baaja/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/shahi-baaja/"
-  },
-  {
-    "id": 58,
-    "title": "Balochistan",
-    "color": "#da8cfb",
-    "mixcloud_key": "/genres/balochistan/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/balochistan/"
-  },
-  {
-    "id": 59,
-    "title": "Benju",
-    "color": "#94f357",
-    "mixcloud_key": "/genres/benju/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/benju/"
-  },
-  {
-    "id": 60,
-    "title": "Pakistan",
-    "color": "#72fcc7",
-    "mixcloud_key": "/genres/pakistan/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/pakistan/"
-  },
-  {
-    "id": 61,
-    "title": "Ambient",
-    "color": "#f755f8",
-    "mixcloud_key": "/genres/ambient/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/ambient/"
-  },
-  {
-    "id": 62,
-    "title": "Folkways",
-    "color": "#8df780",
-    "mixcloud_key": "/genres/folkways/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/folkways/"
-  },
-  {
-    "id": 63,
-    "title": "Palestine",
-    "color": "#7dbbf8",
-    "mixcloud_key": "/genres/palestine/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/palestine/"
-  },
-  {
-    "id": 64,
-    "title": "Electronic",
-    "color": "#6bfb8a",
-    "mixcloud_key": "/genres/electronic/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/electronic/"
-  },
-  {
-    "id": 65,
-    "title": "Spoken word",
-    "color": "#c9f67d",
-    "mixcloud_key": "/genres/spoken-word/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/spoken-word/"
-  },
-  {
-    "id": 66,
-    "title": "Avant-garde jazz",
-    "color": "#63f990",
-    "mixcloud_key": "/genres/avant-garde-jazz/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/avant-garde-jazz/"
-  },
-  {
-    "id": 67,
-    "title": "Improvisation",
-    "color": "#e76afb",
-    "mixcloud_key": "/genres/improvisation/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/improvisation/"
-  },
-  {
-    "id": 68,
-    "title": "Minimal Trance",
-    "color": "#e6f884",
-    "mixcloud_key": "/genres/minimal-trance/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/minimal-trance/"
-  },
-  {
-    "id": 69,
-    "title": "1970s algeria",
-    "color": "#5ff35f",
-    "mixcloud_key": "/genres/1970s-algeria/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/1970s-algeria/"
-  },
-  {
-    "id": 70,
-    "title": "Raï",
-    "color": "#57dff3",
-    "mixcloud_key": "/genres/rai/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/rai/"
-  },
-  {
-    "id": 71,
-    "title": "Krautrock",
-    "color": "#9781f9",
-    "mixcloud_key": "/genres/krautrock/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/krautrock/"
-  },
-  {
-    "id": 72,
-    "title": "Manuel Göttsching",
-    "color": "#87caf6",
-    "mixcloud_key": "/genres/manuel-gottsching/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/manuel-gottsching/"
-  },
-  {
-    "id": 73,
-    "title": "Colombia",
-    "color": "#c55cf4",
-    "mixcloud_key": "/genres/colombia/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/colombia/"
-  },
-  {
-    "id": 74,
-    "title": "Cumbia",
-    "color": "#c1f678",
-    "mixcloud_key": "/genres/cumbia/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/cumbia/"
-  },
-  {
-    "id": 75,
-    "title": "Cumbias rebajadas",
-    "color": "#f8626f",
-    "mixcloud_key": "/genres/cumbias-rebajadas/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/cumbias-rebajadas/"
-  },
-  {
-    "id": 76,
-    "title": "Brazil",
-    "color": "#9f5cf4",
-    "mixcloud_key": "/genres/brazil/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/brazil/"
-  },
-  {
-    "id": 77,
-    "title": "Tropicália",
-    "color": "#89f690",
-    "mixcloud_key": "/genres/tropicalia/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/tropicalia/"
-  },
-  {
-    "id": 78,
-    "title": "Africa",
-    "color": "#806bf7",
-    "mixcloud_key": "/genres/africa/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/africa/"
-  },
-  {
-    "id": 79,
-    "title": "ZAMBIA",
-    "color": "#eff572",
-    "mixcloud_key": "/genres/zambia/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/zambia/"
-  },
-  {
-    "id": 80,
-    "title": "Zamrock",
-    "color": "#7ecaf6",
-    "mixcloud_key": "/genres/zamrock/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/zamrock/"
-  },
-  {
-    "id": 81,
-    "title": "1960s",
-    "color": "#f67c8c",
-    "mixcloud_key": "/genres/1960s/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/1960s/"
-  },
-  {
-    "id": 82,
-    "title": "1970s",
-    "color": "#8198fb",
-    "mixcloud_key": "/genres/1970s/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/1970s/"
-  },
-  {
-    "id": 83,
-    "title": "Chamber pop",
-    "color": "#6cd7f5",
-    "mixcloud_key": "/genres/chamber-pop/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/chamber-pop/"
-  },
-  {
-    "id": 84,
-    "title": "Garage",
-    "color": "#8bd8fc",
-    "mixcloud_key": "/genres/garage/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/garage/"
-  },
-  {
-    "id": 85,
-    "title": "Cairo",
-    "color": "#7cf79b",
-    "mixcloud_key": "/genres/cairo/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/cairo/"
-  },
-  {
-    "id": 86,
-    "title": "Derekmonypeny",
-    "color": "#93fb4e",
-    "mixcloud_key": "/genres/derekmonypeny/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/derekmonypeny/"
-  },
-  {
-    "id": 87,
-    "title": "Egypt",
-    "color": "#9df563",
-    "mixcloud_key": "/genres/egypt/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/egypt/"
-  },
-  {
-    "id": 88,
-    "title": "Freedomoverspill",
-    "color": "#9269f6",
-    "mixcloud_key": "/genres/freedomoverspill/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/freedomoverspill/"
-  },
-  {
-    "id": 89,
-    "title": "Alice Coltrane",
-    "color": "#496bf8",
-    "mixcloud_key": "/genres/alice-coltrane/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/alice-coltrane/"
-  },
-  {
-    "id": 90,
-    "title": "Derek monypeny",
-    "color": "#86faac",
-    "mixcloud_key": "/genres/derek-monypeny/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/derek-monypeny/"
-  },
-  {
-    "id": 91,
-    "title": "Devotionalmusic",
-    "color": "#7c6af4",
-    "mixcloud_key": "/genres/devotionalmusic/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/devotionalmusic/"
-  },
-  {
-    "id": 92,
-    "title": "Moroccan",
-    "color": "#f9bc74",
-    "mixcloud_key": "/genres/moroccan/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/moroccan/"
-  },
-  {
-    "id": 93,
-    "title": "Morocco",
-    "color": "#d356f4",
-    "mixcloud_key": "/genres/morocco/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/morocco/"
-  },
-  {
-    "id": 94,
-    "title": "Najat Aatabou",
-    "color": "#e66100",
-    "mixcloud_key": "/genres/najat-aatabou/",
-    "mixcloud_url": "https://www.mixcloud.com/genres/najat-aatabou/"
-  }
+	{
+		"id": 4,
+		"title": "House",
+		"color": "#ff4848"
+	},
+	{
+		"id": 6,
+		"title": "Disco",
+		"color": "#c061cb"
+	},
+	{
+		"id": 12,
+		"title": "world",
+		"color": "#95cbff"
+	},
+	{
+		"id": 21,
+		"title": "dance",
+		"color": "#11e2b9"
+	},
+	{
+		"id": 22,
+		"title": "pop",
+		"color": "#7071d9"
+	},
+	{
+		"id": 27,
+		"title": "trip",
+		"color": "#2ec27e"
+	},
+	{
+		"id": 30,
+		"title": "Sudanese folk",
+		"color": "#ffa000",
+		"mixcloud_key": "/genres/sudanese-folk/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/sudanese-folk/"
+	},
+	{
+		"id": 31,
+		"title": "Sundanese pop",
+		"color": "#cdab8f",
+		"mixcloud_key": "/genres/sundanese-pop/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/sundanese-pop/"
+	},
+	{
+		"id": 32,
+		"title": "Avant-Garde",
+		"color": "#e28dff",
+		"mixcloud_key": "/genres/avant-garde/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/avant-garde/"
+	},
+	{
+		"id": 33,
+		"title": "Experimental",
+		"color": "#5ccad9",
+		"mixcloud_key": "/genres/experimental/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/experimental/"
+	},
+	{
+		"id": 34,
+		"title": "Covers",
+		"color": "#129a9a",
+		"mixcloud_key": "/genres/covers/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/covers/"
+	},
+	{
+		"id": 35,
+		"title": "Jazz",
+		"color": "#e01b24",
+		"mixcloud_key": "/genres/jazz/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/jazz/"
+	},
+	{
+		"id": 36,
+		"title": "Rock",
+		"color": "#9daca0",
+		"mixcloud_key": "/genres/rock/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/rock/"
+	},
+	{
+		"id": 37,
+		"title": "Folk",
+		"color": "#26a269",
+		"mixcloud_key": "/genres/folk/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/folk/"
+	},
+	{
+		"id": 38,
+		"title": "Country",
+		"color": "#ffcd70",
+		"mixcloud_key": "/genres/country/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/country/"
+	},
+	{
+		"id": 39,
+		"title": "Prog",
+		"color": "#9a9996",
+		"mixcloud_key": "/genres/prog/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/prog/"
+	},
+	{
+		"id": 40,
+		"title": "Punk",
+		"color": "#f66151",
+		"mixcloud_key": "/genres/punk/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/punk/"
+	},
+	{
+		"id": 41,
+		"title": "Japanese",
+		"color": "#8f9df9",
+		"mixcloud_key": "/genres/japanese/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/japanese/"
+	},
+	{
+		"id": 42,
+		"title": "Soul",
+		"color": "#f686c4",
+		"mixcloud_key": "/genres/soul/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/soul/"
+	},
+	{
+		"id": 43,
+		"title": "Weirdo",
+		"color": "#e77ff7",
+		"mixcloud_key": "/genres/weirdo/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/weirdo/"
+	},
+	{
+		"id": 44,
+		"title": "Ukranian",
+		"color": "#f9f06b",
+		"mixcloud_key": "/genres/ukranian/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/ukranian/"
+	},
+	{
+		"id": 45,
+		"title": "Avant",
+		"color": "#f75e67",
+		"mixcloud_key": "/genres/avant/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/avant/"
+	},
+	{
+		"id": 46,
+		"title": "Christmas",
+		"color": "#5bc3f9",
+		"mixcloud_key": "/genres/christmas/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/christmas/"
+	},
+	{
+		"id": 47,
+		"title": "R&B",
+		"color": "#51fa4d",
+		"mixcloud_key": "/genres/rb/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/rb/"
+	},
+	{
+		"id": 48,
+		"title": "Psychadelic",
+		"color": "#9ff88e",
+		"mixcloud_key": "/genres/psychadelic/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/psychadelic/"
+	},
+	{
+		"id": 49,
+		"title": "D'angelo",
+		"color": "#7ee4fc",
+		"mixcloud_key": "/genres/dangelo/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/dangelo/"
+	},
+	{
+		"id": 50,
+		"title": "Metal",
+		"color": "#f99480",
+		"mixcloud_key": "/genres/metal/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/metal/"
+	},
+	{
+		"id": 51,
+		"title": "Throwback",
+		"color": "#b36bf4",
+		"mixcloud_key": "/genres/throwback/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/throwback/"
+	},
+	{
+		"id": 52,
+		"title": "Lounge",
+		"color": "#adf559",
+		"mixcloud_key": "/genres/lounge/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/lounge/"
+	},
+	{
+		"id": 53,
+		"title": "Azerbaijan",
+		"color": "#f36e6d",
+		"mixcloud_key": "/genres/azerbaijan/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/azerbaijan/"
+	},
+	{
+		"id": 54,
+		"title": "Gitara",
+		"color": "#f8bf8e",
+		"mixcloud_key": "/genres/gitara/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/gitara/"
+	},
+	{
+		"id": 55,
+		"title": "Electric banjo",
+		"color": "#6cf5e9",
+		"mixcloud_key": "/genres/electric-banjo/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/electric-banjo/"
+	},
+	{
+		"id": 56,
+		"title": "India",
+		"color": "#849ff9",
+		"mixcloud_key": "/genres/india/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/india/"
+	},
+	{
+		"id": 57,
+		"title": "Shahi baaja",
+		"color": "#44ebf9",
+		"mixcloud_key": "/genres/shahi-baaja/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/shahi-baaja/"
+	},
+	{
+		"id": 58,
+		"title": "Balochistan",
+		"color": "#da8cfb",
+		"mixcloud_key": "/genres/balochistan/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/balochistan/"
+	},
+	{
+		"id": 59,
+		"title": "Benju",
+		"color": "#94f357",
+		"mixcloud_key": "/genres/benju/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/benju/"
+	},
+	{
+		"id": 60,
+		"title": "Pakistan",
+		"color": "#72fcc7",
+		"mixcloud_key": "/genres/pakistan/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/pakistan/"
+	},
+	{
+		"id": 61,
+		"title": "Ambient",
+		"color": "#f755f8",
+		"mixcloud_key": "/genres/ambient/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/ambient/"
+	},
+	{
+		"id": 62,
+		"title": "Folkways",
+		"color": "#8df780",
+		"mixcloud_key": "/genres/folkways/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/folkways/"
+	},
+	{
+		"id": 63,
+		"title": "Palestine",
+		"color": "#7dbbf8",
+		"mixcloud_key": "/genres/palestine/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/palestine/"
+	},
+	{
+		"id": 64,
+		"title": "Electronic",
+		"color": "#6bfb8a",
+		"mixcloud_key": "/genres/electronic/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/electronic/"
+	},
+	{
+		"id": 65,
+		"title": "Spoken word",
+		"color": "#c9f67d",
+		"mixcloud_key": "/genres/spoken-word/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/spoken-word/"
+	},
+	{
+		"id": 66,
+		"title": "Avant-garde jazz",
+		"color": "#63f990",
+		"mixcloud_key": "/genres/avant-garde-jazz/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/avant-garde-jazz/"
+	},
+	{
+		"id": 67,
+		"title": "Improvisation",
+		"color": "#e76afb",
+		"mixcloud_key": "/genres/improvisation/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/improvisation/"
+	},
+	{
+		"id": 68,
+		"title": "Minimal Trance",
+		"color": "#e6f884",
+		"mixcloud_key": "/genres/minimal-trance/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/minimal-trance/"
+	},
+	{
+		"id": 69,
+		"title": "1970s algeria",
+		"color": "#5ff35f",
+		"mixcloud_key": "/genres/1970s-algeria/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/1970s-algeria/"
+	},
+	{
+		"id": 70,
+		"title": "Raï",
+		"color": "#57dff3",
+		"mixcloud_key": "/genres/rai/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/rai/"
+	},
+	{
+		"id": 71,
+		"title": "Krautrock",
+		"color": "#9781f9",
+		"mixcloud_key": "/genres/krautrock/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/krautrock/"
+	},
+	{
+		"id": 72,
+		"title": "Manuel Göttsching",
+		"color": "#87caf6",
+		"mixcloud_key": "/genres/manuel-gottsching/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/manuel-gottsching/"
+	},
+	{
+		"id": 73,
+		"title": "Colombia",
+		"color": "#c55cf4",
+		"mixcloud_key": "/genres/colombia/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/colombia/"
+	},
+	{
+		"id": 74,
+		"title": "Cumbia",
+		"color": "#c1f678",
+		"mixcloud_key": "/genres/cumbia/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/cumbia/"
+	},
+	{
+		"id": 75,
+		"title": "Cumbias rebajadas",
+		"color": "#f8626f",
+		"mixcloud_key": "/genres/cumbias-rebajadas/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/cumbias-rebajadas/"
+	},
+	{
+		"id": 76,
+		"title": "Brazil",
+		"color": "#9f5cf4",
+		"mixcloud_key": "/genres/brazil/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/brazil/"
+	},
+	{
+		"id": 77,
+		"title": "Tropicália",
+		"color": "#89f690",
+		"mixcloud_key": "/genres/tropicalia/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/tropicalia/"
+	},
+	{
+		"id": 78,
+		"title": "Africa",
+		"color": "#806bf7",
+		"mixcloud_key": "/genres/africa/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/africa/"
+	},
+	{
+		"id": 79,
+		"title": "ZAMBIA",
+		"color": "#eff572",
+		"mixcloud_key": "/genres/zambia/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/zambia/"
+	},
+	{
+		"id": 80,
+		"title": "Zamrock",
+		"color": "#7ecaf6",
+		"mixcloud_key": "/genres/zamrock/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/zamrock/"
+	},
+	{
+		"id": 81,
+		"title": "1960s",
+		"color": "#f67c8c",
+		"mixcloud_key": "/genres/1960s/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/1960s/"
+	},
+	{
+		"id": 82,
+		"title": "1970s",
+		"color": "#8198fb",
+		"mixcloud_key": "/genres/1970s/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/1970s/"
+	},
+	{
+		"id": 83,
+		"title": "Chamber pop",
+		"color": "#6cd7f5",
+		"mixcloud_key": "/genres/chamber-pop/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/chamber-pop/"
+	},
+	{
+		"id": 84,
+		"title": "Garage",
+		"color": "#8bd8fc",
+		"mixcloud_key": "/genres/garage/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/garage/"
+	},
+	{
+		"id": 85,
+		"title": "Cairo",
+		"color": "#7cf79b",
+		"mixcloud_key": "/genres/cairo/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/cairo/"
+	},
+	{
+		"id": 86,
+		"title": "Derekmonypeny",
+		"color": "#93fb4e",
+		"mixcloud_key": "/genres/derekmonypeny/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/derekmonypeny/"
+	},
+	{
+		"id": 87,
+		"title": "Egypt",
+		"color": "#9df563",
+		"mixcloud_key": "/genres/egypt/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/egypt/"
+	},
+	{
+		"id": 88,
+		"title": "Freedomoverspill",
+		"color": "#9269f6",
+		"mixcloud_key": "/genres/freedomoverspill/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/freedomoverspill/"
+	},
+	{
+		"id": 89,
+		"title": "Alice Coltrane",
+		"color": "#496bf8",
+		"mixcloud_key": "/genres/alice-coltrane/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/alice-coltrane/"
+	},
+	{
+		"id": 90,
+		"title": "Derek monypeny",
+		"color": "#86faac",
+		"mixcloud_key": "/genres/derek-monypeny/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/derek-monypeny/"
+	},
+	{
+		"id": 91,
+		"title": "Devotionalmusic",
+		"color": "#7c6af4",
+		"mixcloud_key": "/genres/devotionalmusic/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/devotionalmusic/"
+	},
+	{
+		"id": 92,
+		"title": "Moroccan",
+		"color": "#f9bc74",
+		"mixcloud_key": "/genres/moroccan/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/moroccan/"
+	},
+	{
+		"id": 93,
+		"title": "Morocco",
+		"color": "#d356f4",
+		"mixcloud_key": "/genres/morocco/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/morocco/"
+	},
+	{
+		"id": 94,
+		"title": "Najat Aatabou",
+		"color": "#e66100",
+		"mixcloud_key": "/genres/najat-aatabou/",
+		"mixcloud_url": "https://www.mixcloud.com/genres/najat-aatabou/"
+	}
 ]
