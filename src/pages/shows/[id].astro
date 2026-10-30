@@ -23,7 +23,9 @@ export async function getStaticPaths() {
       props: {
         show: show,
         djs: await Promise.all(
-          show.djs.map(({ id }) => fetchDJ(pathToFileURL(`src/res/djs/${id}.json`))),
+          show.djs.map(({ id }) =>
+            fetchDJ(pathToFileURL(`src/res/djs/${id}.json`)),
+          ),
         ),
       },
     })),
@@ -58,29 +60,37 @@ const hydratedTags = hydrateTags(show, tags);
         {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
       </div>
     </div>
+
+    {
+      show.description !== undefined ? (
+        <div class="show-description" set:html={show.description} />
+      ) : null
+    }
   </section>
-  {djs.map((dj) => (
-    <a
-      class="show-dj"
-      href={`${base}/djs/${dj.id}`}
-      aria-label={`View ${dj.title}`}
-      aria-labelledby={`dj-${dj.id}`}
-    >
-      <h2 id={`dj-${dj.id}`} class="dj-name">
-        {dj.title}
-      </h2>
-      <div class="dj-profile">
-        <img
-          class="dj-portrait"
-          src={`${base}/${dj.image_large}`}
-          alt={dj.title}
-          loading="lazy"
-          decoding="async"
-        />
-        <div class="dj-bio" set:html={dj.bio} />
-      </div>
-    </a>
-  ))}
+  {
+    djs.map((dj) => (
+      <a
+        class="show-dj"
+        href={`${base}/djs/${dj.id}`}
+        aria-label={`View ${dj.title}`}
+        aria-labelledby={`dj-${dj.id}`}
+      >
+        <h2 id={`dj-${dj.id}`} class="dj-name">
+          {dj.title}
+        </h2>
+        <div class="dj-profile">
+          <img
+            class="dj-portrait"
+            src={`${base}/${dj.image_large}`}
+            alt={dj.title}
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="dj-bio" set:html={dj.bio} />
+        </div>
+      </a>
+    ))
+  }
 </BaseLayout>
 
 <style>
@@ -153,7 +163,11 @@ const hydratedTags = hydrateTags(show, tags);
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     align-items: center;
     gap: var(--grid-column-gap);
+    row-gap: var(--space-sm);
     margin-top: var(--grid-column-gap);
+  }
+  .show-description {
+    grid-column: 1 / -1;
   }
 
   .show-artwork {
@@ -189,6 +203,5 @@ const hydratedTags = hydrateTags(show, tags);
     .dj-profile {
       grid-template-columns: minmax(0, 1fr);
     }
-
   }
 </style>
