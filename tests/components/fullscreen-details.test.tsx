@@ -9,7 +9,7 @@ import {
 import type { TagMap } from "../../src/utils/fetch-tags";
 import fixtureShows from "../res/shows.json";
 
-const show = fixtureShows[0];
+const show = fixtureShows.data[0];
 if (!show) {
 	throw new Error("Expected a show fixture.");
 }

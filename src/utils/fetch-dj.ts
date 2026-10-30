@@ -20,9 +20,9 @@ export const fetchDJ = async (url: URL): Promise<HydratedDJ> => {
 	const source = await readFile(url, "utf8");
 	const data: unknown = JSON.parse(source);
 
-	if (!isMatching(HydratedDJPattern, data)) {
+	if (!isMatching({ data: HydratedDJPattern }, data)) {
 		throw new Error("Hydrated DJ data has an unexpected format.");
 	}
 
-	return data;
+	return data.data;
 };

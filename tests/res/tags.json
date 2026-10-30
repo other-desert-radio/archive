@@ -1,12 +1,16 @@
-[
-	{
-		"id": 1,
-		"title": "Electronic",
-		"color": "#c2c5c5"
-	},
-	{
-		"id": 2,
-		"title": "House",
-		"color": "#de3b54"
-	}
-]
+{
+	"version": 1,
+	"updatedAt": "2026-10-30T12:00:00.000Z",
+	"data": [
+		{
+			"id": 1,
+			"title": "Electronic",
+			"color": "#c2c5c5"
+		},
+		{
+			"id": 2,
+			"title": "House",
+			"color": "#de3b54"
+		}
+	]
+}
