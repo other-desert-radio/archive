@@ -13,7 +13,7 @@
 		"format": "./scripts/format",
 		"lint": "./scripts/lint",
 		"lint:format": "biome format .",
-		"lint:eslint": "eslint .",
+		"lint:eslint": "bun --bun eslint .",
 		"lint:shell": "find .githooks scripts -type f -exec sh -n {} +",
 		"lint:types": "tsc --noEmit --project tsconfig.lint.json",
 		"test": "bun test",

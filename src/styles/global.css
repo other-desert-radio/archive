@@ -31,7 +31,7 @@
 }
 
 :root {
-	--site-background-image: url("/archive-site/background.jpeg");
+	--site-background-image: url("/archive-site/background2.avif");
 	font-family: "Space Mono", monospace;
 	font-synthesis: none;
 	line-height: 1.5;
@@ -55,7 +55,7 @@ body {
 html {
 	height: 100%;
 	/* Safari also samples the root canvas beneath its translucent controls. */
-	background: var(--site-background-image) center / cover no-repeat;
+	background: var(--site-background-image) left top / auto repeat;
 }
 
 body {
@@ -71,7 +71,7 @@ body {
 	height: 100vh;
 	z-index: 0;
 	pointer-events: none;
-	background: var(--site-background-image) center / cover no-repeat;
+	background: var(--site-background-image) left top / auto repeat;
 }
 
 @supports (height: 100dvh) {

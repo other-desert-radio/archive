@@ -165,6 +165,8 @@ for (const [width, height] of [[320, 800], [332, 600], [600, 800], [601, 800], [
 			viewportHeight: innerHeight,
 			attachment: background.backgroundAttachment,
 			zIndex: background.zIndex,
+			repeat: background.backgroundRepeat,
+			size: background.backgroundSize,
 			canvasImage: getComputedStyle(document.documentElement).backgroundImage,
 			viewport: document.querySelector('meta[name="viewport"]').content,
 			touchAction: getComputedStyle(document.querySelector('.tabs a')).touchAction
@@ -177,7 +179,9 @@ for (const [width, height] of [[320, 800], [332, 600], [600, 800], [601, 800], [
 	assert.ok(layout.bottom >= layout.viewportHeight);
 	assert.equal(layout.attachment, "scroll");
 	assert.equal(layout.zIndex, "0");
-	assert.ok(layout.canvasImage.includes("background.jpeg"));
+	assert.equal(layout.repeat, "repeat");
+	assert.equal(layout.size, "auto");
+	assert.ok(layout.canvasImage.includes("background2.avif"));
 	assert.ok(layout.viewport.includes("viewport-fit=cover"));
 	assert.equal(layout.touchAction, "manipulation");
 	verifyPlayerLayout(width);
