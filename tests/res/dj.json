@@ -1,12 +1,16 @@
 {
-	"id": 1,
-	"title": "Test DJ One",
-	"image_small": "images/djs/1.jpg",
-	"image_large": "images/djs/1_large.jpg",
-	"bio": "<p>Test biography.</p>",
-	"socials": "<p>@testdjone</p>",
-	"showTitle": "Test Transmission",
-	"showDescription": "A test DJ show.",
-	"shows": [],
-	"tagIds": [1, 2]
+	"version": 1,
+	"updatedAt": "2026-10-30T12:00:00.000Z",
+	"data": {
+		"id": 1,
+		"title": "Test DJ One",
+		"image_small": "images/djs/1.jpg",
+		"image_large": "images/djs/1_large.jpg",
+		"bio": "<p>Test biography.</p>",
+		"socials": "<p>@testdjone</p>",
+		"showTitle": "Test Transmission",
+		"showDescription": "A test DJ show.",
+		"shows": [],
+		"tagIds": [1, 2]
+	}
 }

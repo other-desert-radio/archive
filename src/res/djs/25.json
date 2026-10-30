@@ -1,12 +1,16 @@
 {
-	"id": 25,
-	"title": "Kayla",
-	"image_small": "assets/djs/25_small.webp",
-	"image_large": "assets/djs/25_large.webp",
-	"bio": "<p>Kayla Cohen has been performing live as Itasca since around 2013, and lived in the Yucca Valley area from 2017-2022. Her show picks range from 1980s metal, to environmental sounds, to acid folk and instrumental music.</p>",
-	"socials": "<p>www.instagram.com/kayla_itasca</p>",
-	"showTitle": "Kayla's Mix",
-	"showDescription": "Kayla's Mix is a radio program by Kayla of Itasca.",
-	"shows": [],
-	"tagIds": []
+	"version": 1,
+	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"data": {
+		"id": 25,
+		"title": "Kayla",
+		"image_small": "assets/djs/25_small.webp",
+		"image_large": "assets/djs/25_large.webp",
+		"bio": "<p>Kayla Cohen has been performing live as Itasca since around 2013, and lived in the Yucca Valley area from 2017-2022. Her show picks range from 1980s metal, to environmental sounds, to acid folk and instrumental music.</p>",
+		"socials": "<p>www.instagram.com/kayla_itasca</p>",
+		"showTitle": "Kayla's Mix",
+		"showDescription": "Kayla's Mix is a radio program by Kayla of Itasca.",
+		"shows": [],
+		"tagIds": []
+	}
 }

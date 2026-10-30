@@ -10,7 +10,7 @@ import {
 import { useAudioState } from "../../src/stores/audio";
 import fixtureShows from "../res/shows.json";
 
-const fixtureShow = fixtureShows[0];
+const fixtureShow = fixtureShows.data[0];
 if (!fixtureShow) {
 	throw new Error("Expected a show fixture.");
 }

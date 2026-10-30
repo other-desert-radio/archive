@@ -9,7 +9,7 @@ import {
 import type { TagMap } from "../../src/utils/fetch-tags";
 import fixtureShows from "../res/shows.json";
 
-const show = fixtureShows[0];
+const show = fixtureShows.data[0];
 if (!show) {
 	throw new Error("Expected a show fixture.");
 }
@@ -32,7 +32,10 @@ test("fullscreen tags preserve show order, catalog colors and archive destinatio
 	assert.ok(html.includes('aria-label="Explore Pop"'));
 	assert.ok(html.includes("background-color:#ccbbaa"));
 	assert.ok(html.includes("background-color:#336699"));
-	assert.ok(html.indexOf(">Pop</div>") < html.indexOf(">Folk</div>"));
+	assert.ok(
+		html.indexOf('href="/archive-site/tags/4"') <
+			html.indexOf('href="/archive-site/tags/3"'),
+	);
 	assert.ok(html.includes('class="tag tag-large"'));
 });
 

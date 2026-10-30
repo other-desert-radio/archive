@@ -16,9 +16,9 @@ export async function fetchTags(url: URL): Promise<TagMap> {
 	const source = await readFile(url, "utf8");
 	const data: unknown = JSON.parse(source);
 
-	if (!isMatching(P.array(TagPattern), data)) {
+	if (!isMatching({ data: P.array(TagPattern) }, data)) {
 		throw new Error("Tag data has an unexpected format.");
 	}
 
-	return new Map(data.map((tag) => [tag.id, tag]));
+	return new Map(data.data.map((tag) => [tag.id, tag]));
 }

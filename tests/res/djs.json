@@ -1,16 +1,20 @@
-[
-	{
-		"id": 1,
-		"title": "Test DJ One",
-		"image_small": "images/djs/1.jpg",
-		"image_large": "images/djs/1_large.jpg",
-		"tagIds": [1, 2]
-	},
-	{
-		"id": 2,
-		"title": "Test DJ Two",
-		"image_small": "images/djs/2.png",
-		"image_large": "images/djs/2_large.png",
-		"tagIds": []
-	}
-]
+{
+	"version": 1,
+	"updatedAt": "2026-10-30T12:00:00.000Z",
+	"data": [
+		{
+			"id": 1,
+			"title": "Test DJ One",
+			"image_small": "images/djs/1.jpg",
+			"image_large": "images/djs/1_large.jpg",
+			"tagIds": [1, 2]
+		},
+		{
+			"id": 2,
+			"title": "Test DJ Two",
+			"image_small": "images/djs/2.png",
+			"image_large": "images/djs/2_large.png",
+			"tagIds": []
+		}
+	]
+}

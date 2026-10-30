@@ -1,12 +1,16 @@
 {
-	"id": 28,
-	"title": "No Translation",
-	"image_small": "assets/djs/28_small.webp",
-	"image_large": "assets/djs/28_large.webp",
-	"bio": "<p>No Translation is the creative project of Emma Palm, a Taiwanese-American musician and visual artist based in Los Angeles. Drawing from personal archives of field recordings, photography, and video, her work explores the intersections of sound, geography, memory, language, and identity.<br /><br />In her music, Emma weaves together vocals, synths, guqin (a traditional Chinese zither), and field recordings to construct immersive meditative soundscapes and dynamic textures. Her process is fluid—at times emerging from improvisation, experimentation and collaboration, and at other times taking shape through more deliberate, composed structures.</p>",
-	"socials": "<p>https://www.instagram.com/notranslation.wav/<br />https://no-translation.com/</p>",
-	"showTitle": "Odds and Ends",
-	"showDescription": "A collection of music from cassette tapes found at the Sky Village Swap Meet Most - some with original inserts and info, others with a few hand-written titles or blank with no info.",
-	"shows": [],
-	"tagIds": []
+	"version": 1,
+	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"data": {
+		"id": 28,
+		"title": "No Translation",
+		"image_small": "assets/djs/28_small.webp",
+		"image_large": "assets/djs/28_large.webp",
+		"bio": "<p>No Translation is the creative project of Emma Palm, a Taiwanese-American musician and visual artist based in Los Angeles. Drawing from personal archives of field recordings, photography, and video, her work explores the intersections of sound, geography, memory, language, and identity.<br /><br />In her music, Emma weaves together vocals, synths, guqin (a traditional Chinese zither), and field recordings to construct immersive meditative soundscapes and dynamic textures. Her process is fluid—at times emerging from improvisation, experimentation and collaboration, and at other times taking shape through more deliberate, composed structures.</p>",
+		"socials": "<p>https://www.instagram.com/notranslation.wav/<br />https://no-translation.com/</p>",
+		"showTitle": "Odds and Ends",
+		"showDescription": "A collection of music from cassette tapes found at the Sky Village Swap Meet Most - some with original inserts and info, others with a few hand-written titles or blank with no info.",
+		"shows": [],
+		"tagIds": []
+	}
 }

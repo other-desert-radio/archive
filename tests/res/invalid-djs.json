@@ -1,8 +1,12 @@
-[
-	{
-		"id": "not-a-number",
-		"title": "Invalid DJ",
-		"image_small": "images/djs/invalid.jpg",
-		"image_large": "images/djs/invalid_large.jpg"
-	}
-]
+{
+	"version": 1,
+	"updatedAt": "2026-10-30T12:00:00.000Z",
+	"data": [
+		{
+			"id": "not-a-number",
+			"title": "Invalid DJ",
+			"image_small": "images/djs/invalid.jpg",
+			"image_large": "images/djs/invalid_large.jpg"
+		}
+	]
+}

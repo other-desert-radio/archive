@@ -1,43 +1,47 @@
 {
-	"id": 18,
-	"title": "DJ Nasty Nate",
-	"image_small": "assets/djs/18_small.webp",
-	"image_large": "assets/djs/18_large.webp",
-	"bio": "<p>Nathaniel Ober is a sound-based installation artist living and working in Yucca Valley, CA. With a creative practice spanning installation, sculpture, sound, digital prototyping, astrophysics and the sciences, Ober's work is heavily inspired by, and often in collaboration with the natural world, and gives voice to the landscapes that surround us.</p>",
-	"socials": "<p>Nathanielober.com</p>",
-	"showTitle": "Halloween Industrial and more!",
-	"showDescription": "Things that go bump in the night. Lose yourself to the electric and eclectic vibes ~",
-	"shows": [
-		{
-			"id": 71,
-			"title": "Industrial Goth Special, July 20,  2026",
-			"date": "2026-07-20T00:00:00.000Z",
-			"duration": 2707,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/6/5/d/7e84-3b68-4d9c-a0ed-0f1bef9be9b9",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/6/5/d/7e84-3b68-4d9c-a0ed-0f1bef9be9b9",
-			"tagIds": [64, 102, 103, 104],
-			"url": "https://www.mixcloud.com/otherdesertradio/dj-nasty-nate-industrial-goth-dance-special-july-20-2026/"
-		},
-		{
-			"id": 69,
-			"title": "Helloween Volume 3",
-			"date": "2024-10-14T00:00:00.000Z",
-			"duration": 6728,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/0/c/6/7824-1bf9-46c9-a2e3-d1703b2c5a2e",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/0/c/6/7824-1bf9-46c9-a2e3-d1703b2c5a2e",
-			"tagIds": [33, 98, 102],
-			"url": "https://www.mixcloud.com/otherdesertradio/nathan-ober-aka-dj-nasty-nate-helloween-volume-3-october-14-2024/"
-		},
-		{
-			"id": 70,
-			"title": "Helloween Volume 2",
-			"date": "2023-10-16T00:00:00.000Z",
-			"duration": 6971,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/6/1/1/edad-0f6b-4c0a-bbe2-81baba5f532a",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/6/1/1/edad-0f6b-4c0a-bbe2-81baba5f532a",
-			"tagIds": [36, 50, 98, 102],
-			"url": "https://www.mixcloud.com/otherdesertradio/nathan-ober-aka-dj-nasty-nate-helloween-volume-2-october-16-2023/"
-		}
-	],
-	"tagIds": [33, 36, 50, 64, 98, 102, 103, 104]
+	"version": 1,
+	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"data": {
+		"id": 18,
+		"title": "DJ Nasty Nate",
+		"image_small": "assets/djs/18_small.webp",
+		"image_large": "assets/djs/18_large.webp",
+		"bio": "<p>Nathaniel Ober is a sound-based installation artist living and working in Yucca Valley, CA. With a creative practice spanning installation, sculpture, sound, digital prototyping, astrophysics and the sciences, Ober's work is heavily inspired by, and often in collaboration with the natural world, and gives voice to the landscapes that surround us.</p>",
+		"socials": "<p>Nathanielober.com</p>",
+		"showTitle": "Halloween Industrial and more!",
+		"showDescription": "Things that go bump in the night. Lose yourself to the electric and eclectic vibes ~",
+		"shows": [
+			{
+				"id": 71,
+				"title": "Industrial Goth Special, July 20,  2026",
+				"date": "2026-07-20T00:00:00.000Z",
+				"duration": 2707,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/6/5/d/7e84-3b68-4d9c-a0ed-0f1bef9be9b9",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/6/5/d/7e84-3b68-4d9c-a0ed-0f1bef9be9b9",
+				"tagIds": [64, 102, 103, 104],
+				"url": "https://www.mixcloud.com/otherdesertradio/dj-nasty-nate-industrial-goth-dance-special-july-20-2026/"
+			},
+			{
+				"id": 69,
+				"title": "Helloween Volume 3",
+				"date": "2024-10-14T00:00:00.000Z",
+				"duration": 6728,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/0/c/6/7824-1bf9-46c9-a2e3-d1703b2c5a2e",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/0/c/6/7824-1bf9-46c9-a2e3-d1703b2c5a2e",
+				"tagIds": [33, 98, 102],
+				"url": "https://www.mixcloud.com/otherdesertradio/nathan-ober-aka-dj-nasty-nate-helloween-volume-3-october-14-2024/"
+			},
+			{
+				"id": 70,
+				"title": "Helloween Volume 2",
+				"date": "2023-10-16T00:00:00.000Z",
+				"duration": 6971,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/6/1/1/edad-0f6b-4c0a-bbe2-81baba5f532a",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/6/1/1/edad-0f6b-4c0a-bbe2-81baba5f532a",
+				"tagIds": [36, 50, 98, 102],
+				"url": "https://www.mixcloud.com/otherdesertradio/nathan-ober-aka-dj-nasty-nate-helloween-volume-2-october-16-2023/"
+			}
+		],
+		"tagIds": [33, 36, 50, 64, 98, 102, 103, 104]
+	}
 }

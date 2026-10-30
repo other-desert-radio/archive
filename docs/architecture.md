@@ -94,6 +94,12 @@ Archive JSON is read from `src/res/` during builds and validated in
 `src/utils/`. The site has no database connection. Change contracts at these
 boundaries rather than introducing backend-only database conventions.
 
+Archive payload files use `{ version, updatedAt, data }` envelopes. Readers
+validate and unwrap `data`, preserving array payloads for shows, DJ summaries
+and tags, and an object payload for each full DJ profile. The tag reader
+returns its existing ID lookup map. Direct JSON imports also read `.data`.
+Envelope metadata is currently unused; `data_versions.json` is not consumed.
+
 ## Archive image fields
 
 Show records, DJ summaries, full DJ profiles, and DJs nested in shows carry

@@ -1,245 +1,249 @@
 {
-	"id": 13,
-	"title": "Justin Paszul",
-	"image_small": "assets/djs/13_small.webp",
-	"image_large": "assets/djs/13_large.webp",
-	"bio": "<p>Justin Paszul draws, paints, and writes when not working at the library</p>",
-	"socials": "<p>@justinpaszul, justinpaszul.com</p>",
-	"showTitle": "The Justin Paszul Radio Hour",
-	"showDescription": "A weekly surprise! 10-12 rotating shows with different themes plus one-offs and the occasional gimmick.",
-	"shows": [
-		{
-			"id": 9,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #28",
-			"date": "2026-09-07T00:00:00.000Z",
-			"duration": 3673,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/7/c/4/70c7-ef22-406a-a365-93fddf0a97a3",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/7/c/4/70c7-ef22-406a-a365-93fddf0a97a3",
-			"tagIds": [32, 33],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-28-september-7-2026/"
-		},
-		{
-			"id": 11,
-			"title": "Dance Party at Morgellons House #1",
-			"date": "2026-08-31T00:00:00.000Z",
-			"duration": 3675,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/3/4/1/d421-6a73-4d14-87bf-88afbde6b51a",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/3/4/1/d421-6a73-4d14-87bf-88afbde6b51a",
-			"tagIds": [21, 33],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-dance-party-at-morgellons-house-1-august-31-2026/"
-		},
-		{
-			"id": 12,
-			"title": "Constant Coverage #1",
-			"date": "2026-08-24T00:00:00.000Z",
-			"duration": 3594,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/b/7/a/e47e-c266-416c-aada-27c1528dd211",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/b/7/a/e47e-c266-416c-aada-27c1528dd211",
-			"tagIds": [34, 35, 36],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-constant-coverage-1-august-24-2026/"
-		},
-		{
-			"id": 13,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #27",
-			"date": "2026-08-17T00:00:00.000Z",
-			"duration": 3636,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/f/6/1/ebba-cb90-4b9e-b5f4-c52b51cc56e6",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/f/6/1/ebba-cb90-4b9e-b5f4-c52b51cc56e6",
-			"tagIds": [33, 37],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-27-august-17-2026/"
-		},
-		{
-			"id": 14,
-			"title": "Dylan Thomas's Pickup Truck #1",
-			"date": "2026-08-10T00:00:00.000Z",
-			"duration": 3515,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/6/5/0/cff2-ecb9-4bbf-8de0-29aa73605e9c",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/6/5/0/cff2-ecb9-4bbf-8de0-29aa73605e9c",
-			"tagIds": [38],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-dylan-thomass-pickup-truck-1-august-10-2026/"
-		},
-		{
-			"id": 16,
-			"title": "Lightning Rod #1",
-			"date": "2026-08-03T00:00:00.000Z",
-			"duration": 3378,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/b/6/2/0228-c3bb-4166-a27d-ec411358ee6a",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/b/6/2/0228-c3bb-4166-a27d-ec411358ee6a",
-			"tagIds": [12, 33, 35],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-lightning-rod-1-august-3-2026/"
-		},
-		{
-			"id": 17,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #26",
-			"date": "2026-07-27T00:00:00.000Z",
-			"duration": 3607,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/1/0/f/62ba-a377-407d-b6a7-4fd1b878ce1f",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/1/0/f/62ba-a377-407d-b6a7-4fd1b878ce1f",
-			"tagIds": [22, 33, 39, 40],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-25-july-27-2026/"
-		},
-		{
-			"id": 18,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #25",
-			"date": "2026-07-13T00:00:00.000Z",
-			"duration": 3604,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/3/5/c/b8b2-710a-4191-88a4-9279116d98d6",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/3/5/c/b8b2-710a-4191-88a4-9279116d98d6",
-			"tagIds": [33, 41, 42],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-25-june-22-2026/"
-		},
-		{
-			"id": 20,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #24",
-			"date": "2026-06-29T00:00:00.000Z",
-			"duration": 3405,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/5/d/5/3c5d-0746-4d29-b9ba-67bb5ce241a9",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/5/d/5/3c5d-0746-4d29-b9ba-67bb5ce241a9",
-			"tagIds": [33, 43],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-24-june-22-2026/"
-		},
-		{
-			"id": 21,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #23",
-			"date": "2026-06-08T00:00:00.000Z",
-			"duration": 3625,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/2/a/1/bea4-0ba4-4c26-a6bf-402742da44f9",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/2/a/1/bea4-0ba4-4c26-a6bf-402742da44f9",
-			"tagIds": [12, 33],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-23-june-8-2026/"
-		},
-		{
-			"id": 22,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #22",
-			"date": "2026-05-25T00:00:00.000Z",
-			"duration": 3626,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/5/f/d/07c6-8858-4f8e-942a-366d8be9b97d",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/5/f/d/07c6-8858-4f8e-942a-366d8be9b97d",
-			"tagIds": [12, 33],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-22-may-25-2026/"
-		},
-		{
-			"id": 23,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #21",
-			"date": "2026-05-11T00:00:00.000Z",
-			"duration": 3616,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/8/7/c/c561-2ce3-4c63-b8e1-72f00a2fa6d7",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/8/7/c/c561-2ce3-4c63-b8e1-72f00a2fa6d7",
-			"tagIds": [12, 33],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-21-may-11-2026/"
-		},
-		{
-			"id": 26,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #20",
-			"date": "2026-04-20T00:00:00.000Z",
-			"duration": 3608,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/1/8/2/0827-485e-4b81-8947-74ce20c09bec",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/1/8/2/0827-485e-4b81-8947-74ce20c09bec",
-			"tagIds": [12, 33, 41, 44],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-20-april-20-2026/"
-		},
-		{
-			"id": 55,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #19",
-			"date": "2026-04-06T00:00:00.000Z",
-			"duration": 3446,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/7/d/c/db6d-2eac-4b7d-8d42-a39bbd613a4f",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/7/d/c/db6d-2eac-4b7d-8d42-a39bbd613a4f",
-			"tagIds": [],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-19-april-6-2026/"
-		},
-		{
-			"id": 56,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #18",
-			"date": "2026-03-23T00:00:00.000Z",
-			"duration": 3473,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/5/b/a/1a7a-e9da-48a2-aa92-595c27c34c84",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/5/b/a/1a7a-e9da-48a2-aa92-595c27c34c84",
-			"tagIds": [],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-18-march-23-2026/"
-		},
-		{
-			"id": 58,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #17",
-			"date": "2026-03-02T00:00:00.000Z",
-			"duration": 3642,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/5/4/8/8421-4c4a-4ede-b219-d0d4d32fc070",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/5/4/8/8421-4c4a-4ede-b219-d0d4d32fc070",
-			"tagIds": [12, 33, 41],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-17-march-2-2026/"
-		},
-		{
-			"id": 66,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #15",
-			"date": "2026-02-02T00:00:00.000Z",
-			"duration": 3559,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/f/1/9/53b5-7e6b-4d11-ab43-0ba9117ba530",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/f/1/9/53b5-7e6b-4d11-ab43-0ba9117ba530",
-			"tagIds": [21, 33, 95],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-15-february-2-2026/"
-		},
-		{
-			"id": 60,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #10",
-			"date": "2025-11-24T00:00:00.000Z",
-			"duration": 3645,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/4/d/e/78da-d3f5-47d8-b3f7-f63ae2c69542",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/4/d/e/78da-d3f5-47d8-b3f7-f63ae2c69542",
-			"tagIds": [33, 50, 64],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-10-november-24-2025/"
-		},
-		{
-			"id": 61,
-			"title": "From the Mixed-Up Files of Axaxaxas Mlö #1",
-			"date": "2025-07-07T00:00:00.000Z",
-			"duration": 3439,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/a/a/a/e921-1fdd-4155-83f7-2a96331dd261",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/a/a/a/e921-1fdd-4155-83f7-2a96331dd261",
-			"tagIds": [12, 33, 37],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-1-july-7-2025/"
-		},
-		{
-			"id": 62,
-			"title": "An Evening of Stand-Up Cosmogony, Hour #4",
-			"date": "2025-05-19T00:00:00.000Z",
-			"duration": 3602,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/8/4/d/00bc-2765-4c4c-8a1f-21d0af08ead9",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/8/4/d/00bc-2765-4c4c-8a1f-21d0af08ead9",
-			"tagIds": [],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-an-evening-of-stand-up-cosmogony-hour-4-may-19-2025/"
-		},
-		{
-			"id": 63,
-			"title": "An Evening of Stand-Up Cosmogony, Hour #3",
-			"date": "2025-04-21T00:00:00.000Z",
-			"duration": 3724,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/8/d/b/a274-7065-4cec-a66b-f94c93e179be",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/8/d/b/a274-7065-4cec-a66b-f94c93e179be",
-			"tagIds": [],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-an-evening-of-stand-up-cosmogony-hour-3-april-21-2025/"
-		},
-		{
-			"id": 64,
-			"title": "An Evening of Stand-Up Cosmogony, Hour #2",
-			"date": "2025-03-24T00:00:00.000Z",
-			"duration": 3610,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/5/2/c/72e4-40cb-44bd-8fdc-d2606235b74d",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/5/2/c/72e4-40cb-44bd-8fdc-d2606235b74d",
-			"tagIds": [],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-an-evening-of-stand-up-cosmogony-hour-2-march-24-2025/"
-		},
-		{
-			"id": 65,
-			"title": "An Evening of Stand-Up Cosmogony, Hour #1",
-			"date": "2025-03-03T00:00:00.000Z",
-			"duration": 3520,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/3/c/a/f1be-ea2a-40df-ad2f-6566bdefc095",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/3/c/a/f1be-ea2a-40df-ad2f-6566bdefc095",
-			"tagIds": [],
-			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-an-evening-of-stand-up-cosmogony-part-1-march-3-2025/"
-		}
-	],
-	"tagIds": [
-		12, 21, 22, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 50, 64, 95
-	]
+	"version": 1,
+	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"data": {
+		"id": 13,
+		"title": "Justin Paszul",
+		"image_small": "assets/djs/13_small.webp",
+		"image_large": "assets/djs/13_large.webp",
+		"bio": "<p>Justin Paszul draws, paints, and writes when not working at the library</p>",
+		"socials": "<p>@justinpaszul, justinpaszul.com</p>",
+		"showTitle": "The Justin Paszul Radio Hour",
+		"showDescription": "A weekly surprise! 10-12 rotating shows with different themes plus one-offs and the occasional gimmick.",
+		"shows": [
+			{
+				"id": 9,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #28",
+				"date": "2026-09-07T00:00:00.000Z",
+				"duration": 3673,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/7/c/4/70c7-ef22-406a-a365-93fddf0a97a3",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/7/c/4/70c7-ef22-406a-a365-93fddf0a97a3",
+				"tagIds": [32, 33],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-28-september-7-2026/"
+			},
+			{
+				"id": 11,
+				"title": "Dance Party at Morgellons House #1",
+				"date": "2026-08-31T00:00:00.000Z",
+				"duration": 3675,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/3/4/1/d421-6a73-4d14-87bf-88afbde6b51a",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/3/4/1/d421-6a73-4d14-87bf-88afbde6b51a",
+				"tagIds": [21, 33],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-dance-party-at-morgellons-house-1-august-31-2026/"
+			},
+			{
+				"id": 12,
+				"title": "Constant Coverage #1",
+				"date": "2026-08-24T00:00:00.000Z",
+				"duration": 3594,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/b/7/a/e47e-c266-416c-aada-27c1528dd211",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/b/7/a/e47e-c266-416c-aada-27c1528dd211",
+				"tagIds": [34, 35, 36],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-constant-coverage-1-august-24-2026/"
+			},
+			{
+				"id": 13,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #27",
+				"date": "2026-08-17T00:00:00.000Z",
+				"duration": 3636,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/f/6/1/ebba-cb90-4b9e-b5f4-c52b51cc56e6",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/f/6/1/ebba-cb90-4b9e-b5f4-c52b51cc56e6",
+				"tagIds": [33, 37],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-27-august-17-2026/"
+			},
+			{
+				"id": 14,
+				"title": "Dylan Thomas's Pickup Truck #1",
+				"date": "2026-08-10T00:00:00.000Z",
+				"duration": 3515,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/6/5/0/cff2-ecb9-4bbf-8de0-29aa73605e9c",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/6/5/0/cff2-ecb9-4bbf-8de0-29aa73605e9c",
+				"tagIds": [38],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-dylan-thomass-pickup-truck-1-august-10-2026/"
+			},
+			{
+				"id": 16,
+				"title": "Lightning Rod #1",
+				"date": "2026-08-03T00:00:00.000Z",
+				"duration": 3378,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/b/6/2/0228-c3bb-4166-a27d-ec411358ee6a",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/b/6/2/0228-c3bb-4166-a27d-ec411358ee6a",
+				"tagIds": [12, 33, 35],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-lightning-rod-1-august-3-2026/"
+			},
+			{
+				"id": 17,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #26",
+				"date": "2026-07-27T00:00:00.000Z",
+				"duration": 3607,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/1/0/f/62ba-a377-407d-b6a7-4fd1b878ce1f",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/1/0/f/62ba-a377-407d-b6a7-4fd1b878ce1f",
+				"tagIds": [22, 33, 39, 40],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-25-july-27-2026/"
+			},
+			{
+				"id": 18,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #25",
+				"date": "2026-07-13T00:00:00.000Z",
+				"duration": 3604,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/3/5/c/b8b2-710a-4191-88a4-9279116d98d6",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/3/5/c/b8b2-710a-4191-88a4-9279116d98d6",
+				"tagIds": [33, 41, 42],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-25-june-22-2026/"
+			},
+			{
+				"id": 20,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #24",
+				"date": "2026-06-29T00:00:00.000Z",
+				"duration": 3405,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/5/d/5/3c5d-0746-4d29-b9ba-67bb5ce241a9",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/5/d/5/3c5d-0746-4d29-b9ba-67bb5ce241a9",
+				"tagIds": [33, 43],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-24-june-22-2026/"
+			},
+			{
+				"id": 21,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #23",
+				"date": "2026-06-08T00:00:00.000Z",
+				"duration": 3625,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/2/a/1/bea4-0ba4-4c26-a6bf-402742da44f9",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/2/a/1/bea4-0ba4-4c26-a6bf-402742da44f9",
+				"tagIds": [12, 33],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-23-june-8-2026/"
+			},
+			{
+				"id": 22,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #22",
+				"date": "2026-05-25T00:00:00.000Z",
+				"duration": 3626,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/5/f/d/07c6-8858-4f8e-942a-366d8be9b97d",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/5/f/d/07c6-8858-4f8e-942a-366d8be9b97d",
+				"tagIds": [12, 33],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-22-may-25-2026/"
+			},
+			{
+				"id": 23,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #21",
+				"date": "2026-05-11T00:00:00.000Z",
+				"duration": 3616,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/8/7/c/c561-2ce3-4c63-b8e1-72f00a2fa6d7",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/8/7/c/c561-2ce3-4c63-b8e1-72f00a2fa6d7",
+				"tagIds": [12, 33],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-21-may-11-2026/"
+			},
+			{
+				"id": 26,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #20",
+				"date": "2026-04-20T00:00:00.000Z",
+				"duration": 3608,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/1/8/2/0827-485e-4b81-8947-74ce20c09bec",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/1/8/2/0827-485e-4b81-8947-74ce20c09bec",
+				"tagIds": [12, 33, 41, 44],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-20-april-20-2026/"
+			},
+			{
+				"id": 55,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #19",
+				"date": "2026-04-06T00:00:00.000Z",
+				"duration": 3446,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/7/d/c/db6d-2eac-4b7d-8d42-a39bbd613a4f",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/7/d/c/db6d-2eac-4b7d-8d42-a39bbd613a4f",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-19-april-6-2026/"
+			},
+			{
+				"id": 56,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #18",
+				"date": "2026-03-23T00:00:00.000Z",
+				"duration": 3473,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/5/b/a/1a7a-e9da-48a2-aa92-595c27c34c84",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/5/b/a/1a7a-e9da-48a2-aa92-595c27c34c84",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-18-march-23-2026/"
+			},
+			{
+				"id": 58,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #17",
+				"date": "2026-03-02T00:00:00.000Z",
+				"duration": 3642,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/5/4/8/8421-4c4a-4ede-b219-d0d4d32fc070",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/5/4/8/8421-4c4a-4ede-b219-d0d4d32fc070",
+				"tagIds": [12, 33, 41],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-17-march-2-2026/"
+			},
+			{
+				"id": 66,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #15",
+				"date": "2026-02-02T00:00:00.000Z",
+				"duration": 3559,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/f/1/9/53b5-7e6b-4d11-ab43-0ba9117ba530",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/f/1/9/53b5-7e6b-4d11-ab43-0ba9117ba530",
+				"tagIds": [21, 33, 95],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-15-february-2-2026/"
+			},
+			{
+				"id": 60,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #10",
+				"date": "2025-11-24T00:00:00.000Z",
+				"duration": 3645,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/4/d/e/78da-d3f5-47d8-b3f7-f63ae2c69542",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/4/d/e/78da-d3f5-47d8-b3f7-f63ae2c69542",
+				"tagIds": [33, 50, 64],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-10-november-24-2025/"
+			},
+			{
+				"id": 61,
+				"title": "From the Mixed-Up Files of Axaxaxas Mlö #1",
+				"date": "2025-07-07T00:00:00.000Z",
+				"duration": 3439,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/a/a/a/e921-1fdd-4155-83f7-2a96331dd261",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/a/a/a/e921-1fdd-4155-83f7-2a96331dd261",
+				"tagIds": [12, 33, 37],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-1-july-7-2025/"
+			},
+			{
+				"id": 62,
+				"title": "An Evening of Stand-Up Cosmogony, Hour #4",
+				"date": "2025-05-19T00:00:00.000Z",
+				"duration": 3602,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/8/4/d/00bc-2765-4c4c-8a1f-21d0af08ead9",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/8/4/d/00bc-2765-4c4c-8a1f-21d0af08ead9",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-an-evening-of-stand-up-cosmogony-hour-4-may-19-2025/"
+			},
+			{
+				"id": 63,
+				"title": "An Evening of Stand-Up Cosmogony, Hour #3",
+				"date": "2025-04-21T00:00:00.000Z",
+				"duration": 3724,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/8/d/b/a274-7065-4cec-a66b-f94c93e179be",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/8/d/b/a274-7065-4cec-a66b-f94c93e179be",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-an-evening-of-stand-up-cosmogony-hour-3-april-21-2025/"
+			},
+			{
+				"id": 64,
+				"title": "An Evening of Stand-Up Cosmogony, Hour #2",
+				"date": "2025-03-24T00:00:00.000Z",
+				"duration": 3610,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/5/2/c/72e4-40cb-44bd-8fdc-d2606235b74d",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/5/2/c/72e4-40cb-44bd-8fdc-d2606235b74d",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-an-evening-of-stand-up-cosmogony-hour-2-march-24-2025/"
+			},
+			{
+				"id": 65,
+				"title": "An Evening of Stand-Up Cosmogony, Hour #1",
+				"date": "2025-03-03T00:00:00.000Z",
+				"duration": 3520,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/3/c/a/f1be-ea2a-40df-ad2f-6566bdefc095",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/3/c/a/f1be-ea2a-40df-ad2f-6566bdefc095",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-an-evening-of-stand-up-cosmogony-part-1-march-3-2025/"
+			}
+		],
+		"tagIds": [
+			12, 21, 22, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 50, 64, 95
+		]
+	}
 }

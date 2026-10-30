@@ -1,23 +1,27 @@
 {
-	"id": 11,
-	"title": "DJ AKĀSHA",
-	"image_small": "assets/djs/11_small.webp",
-	"image_large": "assets/djs/11_large.webp",
-	"bio": "<p>Originating in San Francisco’s mid-’90s jungle and drum &amp; bass scene, DJ AKĀSHA has spent over two decades shaping dance floors across the globe. After cutting his teeth at seminal Bay Area weeklies like Phunkatech and Eklectic, AKĀSHA rode out the early 2000s with a UK stint in Brighton, landing festival slots at Glastonbury and The Big Chill, and billings alongside legends like DJ Hype, Nicky Blackmarket, Sound Tribe Sector 9, and J. Boogie (to name a few).<br /><br />AKĀSHA is currently focused on the studio and production side, releasing music under various monikers, with the latest release in the Summer of 2026.<br /><br />Check out his special (and rare) lofi set for Other Desert Radio, and look out for future transmissions for ODR.</p>",
-	"socials": "<p>@akashyadidntknow</p>",
-	"showTitle": "Roadside Disco",
-	"showDescription": "A 90s rave DJ/producer, mixing a vinyl-only eclectic mix of classic/modern tracks *by hand*",
-	"shows": [
-		{
-			"id": 54,
-			"title": "Roadside Disco",
-			"date": "2022-07-22T00:00:00.000Z",
-			"duration": 2043,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/c/0/f/6794-bc9a-42fb-9b39-13b2a4adcaf6",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/c/0/f/6794-bc9a-42fb-9b39-13b2a4adcaf6",
-			"tagIds": [6, 21, 22],
-			"url": "https://www.mixcloud.com/otherdesertradio/dj-akasha-roadside-disco-july-22-2022/"
-		}
-	],
-	"tagIds": [4, 6, 21, 22]
+	"version": 1,
+	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"data": {
+		"id": 11,
+		"title": "DJ AKĀSHA",
+		"image_small": "assets/djs/11_small.webp",
+		"image_large": "assets/djs/11_large.webp",
+		"bio": "<p>Originating in San Francisco’s mid-’90s jungle and drum &amp; bass scene, DJ AKĀSHA has spent over two decades shaping dance floors across the globe. After cutting his teeth at seminal Bay Area weeklies like Phunkatech and Eklectic, AKĀSHA rode out the early 2000s with a UK stint in Brighton, landing festival slots at Glastonbury and The Big Chill, and billings alongside legends like DJ Hype, Nicky Blackmarket, Sound Tribe Sector 9, and J. Boogie (to name a few).<br /><br />AKĀSHA is currently focused on the studio and production side, releasing music under various monikers, with the latest release in the Summer of 2026.<br /><br />Check out his special (and rare) lofi set for Other Desert Radio, and look out for future transmissions for ODR.</p>",
+		"socials": "<p>@akashyadidntknow</p>",
+		"showTitle": "Roadside Disco",
+		"showDescription": "A 90s rave DJ/producer, mixing a vinyl-only eclectic mix of classic/modern tracks *by hand*",
+		"shows": [
+			{
+				"id": 54,
+				"title": "Roadside Disco",
+				"date": "2022-07-22T00:00:00.000Z",
+				"duration": 2043,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/c/0/f/6794-bc9a-42fb-9b39-13b2a4adcaf6",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/c/0/f/6794-bc9a-42fb-9b39-13b2a4adcaf6",
+				"tagIds": [6, 21, 22],
+				"url": "https://www.mixcloud.com/otherdesertradio/dj-akasha-roadside-disco-july-22-2022/"
+			}
+		],
+		"tagIds": [4, 6, 21, 22]
+	}
 }

@@ -5,7 +5,7 @@ import Miniplayer from "../../src/components/miniplayer";
 import { AudioStore, type AudioTrack, StoresProvider } from "../../src/stores";
 import fixtureShows from "../res/shows.json";
 
-const fixtureShow = fixtureShows[0];
+const fixtureShow = fixtureShows.data[0];
 if (!fixtureShow) {
 	throw new Error("Expected a show fixture.");
 }

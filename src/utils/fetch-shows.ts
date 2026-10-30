@@ -29,9 +29,9 @@ export const fetchShows = async (url: URL): Promise<Show[]> => {
 	const source = await readFile(url, "utf8");
 	const data: unknown = JSON.parse(source);
 
-	if (!isMatching(P.array(ShowPattern), data)) {
+	if (!isMatching({ data: P.array(ShowPattern) }, data)) {
 		throw new Error("Show data has an unexpected format.");
 	}
 
-	return data;
+	return data.data;
 };

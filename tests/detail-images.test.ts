@@ -11,6 +11,7 @@ const escapeAttribute = (value: string) =>
 	value
 		.replaceAll("&", "&amp;")
 		.replaceAll('"', "&quot;")
+		.replaceAll("'", "&#x27;")
 		.replaceAll("<", "&lt;")
 		.replaceAll(">", "&gt;");
 
@@ -30,14 +31,14 @@ test("built show and DJ detail pages render large artwork with alt text and page
 				`dist/${category}/${record.id}/index.html`,
 				"utf8",
 			);
-			const tagClass = category === "shows" ? "tag tag-large" : "tag";
+			const tagClass = "tag tag-large";
 			const tags =
-				html.match(new RegExp(`<div\\b[^>]*class="${tagClass}"[^>]*>`, "g")) ??
+				html.match(new RegExp(`<a\\b[^>]*class="${tagClass}"[^>]*>`, "g")) ??
 				[];
 			assert.equal(
 				tags.length,
 				record.tagIds.length,
-				`${category}/${record.id} should render ${category === "shows" ? "large" : "normal"} tags`,
+				`${category}/${record.id} should render large tags`,
 			);
 			const image = (html.match(/<img\b[^>]*>/g) ?? []).find((tag) =>
 				tag.includes(

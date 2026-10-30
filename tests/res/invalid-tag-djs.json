@@ -1,8 +1,12 @@
-[
-	{
-		"id": 1,
-		"title": "DJ Without Tags",
-		"image_small": "images/djs/1.jpg",
-		"image_large": "images/djs/1_large.jpg"
-	}
-]
+{
+	"version": 1,
+	"updatedAt": "2026-10-30T12:00:00.000Z",
+	"data": [
+		{
+			"id": 1,
+			"title": "DJ Without Tags",
+			"image_small": "images/djs/1.jpg",
+			"image_large": "images/djs/1_large.jpg"
+		}
+	]
+}

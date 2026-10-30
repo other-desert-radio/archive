@@ -1,12 +1,16 @@
 {
-	"id": 31,
-	"title": "Milk Thistle",
-	"image_small": "assets/djs/31_small.webp",
-	"image_large": "assets/djs/31_large.webp",
-	"bio": "<p>Milk thistle is an apothecary and community space that recently reopened in Joshuatree and previously existed for 2 1/2 years in Yucca Valley. We offer workshops and have a tiny gallery. We like to share accessible information about herbs.</p>",
-	"socials": "<p>Milkthistleapothecary</p>",
-	"showTitle": "Milk Thistle dispatches",
-	"showDescription": "This is an occasional podcast to talk about astrology and herbalism, not much music!",
-	"shows": [],
-	"tagIds": []
+	"version": 1,
+	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"data": {
+		"id": 31,
+		"title": "Milk Thistle",
+		"image_small": "assets/djs/31_small.webp",
+		"image_large": "assets/djs/31_large.webp",
+		"bio": "<p>Milk thistle is an apothecary and community space that recently reopened in Joshuatree and previously existed for 2 1/2 years in Yucca Valley. We offer workshops and have a tiny gallery. We like to share accessible information about herbs.</p>",
+		"socials": "<p>Milkthistleapothecary</p>",
+		"showTitle": "Milk Thistle dispatches",
+		"showDescription": "This is an occasional podcast to talk about astrology and herbalism, not much music!",
+		"shows": [],
+		"tagIds": []
+	}
 }

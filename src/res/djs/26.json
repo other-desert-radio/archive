@@ -1,12 +1,16 @@
 {
-	"id": 26,
-	"title": "DEV01D",
-	"image_small": "assets/djs/26_small.webp",
-	"image_large": "assets/djs/26_large.webp",
-	"bio": "<p>DEV01D is a DJ, producer, and live musician based in California. They are classically trained and compose experimental electronic soundscapes using CDJs, hardware synthesizers, and field recordings.</p>",
-	"socials": "<p>Instagram: dev.wxyz // website: https://devynwhite.cargo.site/</p>",
-	"showTitle": "Tantalizing Temperament",
-	"showDescription": "A three-month collection of emotions spoken through a mix of genres, provoking the listener to experience the range of the human experience.",
-	"shows": [],
-	"tagIds": []
+	"version": 1,
+	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"data": {
+		"id": 26,
+		"title": "DEV01D",
+		"image_small": "assets/djs/26_small.webp",
+		"image_large": "assets/djs/26_large.webp",
+		"bio": "<p>DEV01D is a DJ, producer, and live musician based in California. They are classically trained and compose experimental electronic soundscapes using CDJs, hardware synthesizers, and field recordings.</p>",
+		"socials": "<p>Instagram: dev.wxyz // website: https://devynwhite.cargo.site/</p>",
+		"showTitle": "Tantalizing Temperament",
+		"showDescription": "A three-month collection of emotions spoken through a mix of genres, provoking the listener to experience the range of the human experience.",
+		"shows": [],
+		"tagIds": []
+	}
 }

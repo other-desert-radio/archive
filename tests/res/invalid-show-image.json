@@ -1,13 +1,17 @@
-[
-	{
-		"id": 1,
-		"title": "Invalid Image",
-		"date": "2026-05-25",
-		"duration": 3600,
-		"image_small": "image with spaces.jpg",
-		"image_large": "image with spaces_large.jpg",
-		"djs": [],
-		"tagIds": [],
-		"url": "https://www.mixcloud.com/example/show/"
-	}
-]
+{
+	"version": 1,
+	"updatedAt": "2026-10-30T12:00:00.000Z",
+	"data": [
+		{
+			"id": 1,
+			"title": "Invalid Image",
+			"date": "2026-05-25",
+			"duration": 3600,
+			"image_small": "image with spaces.jpg",
+			"image_large": "image with spaces_large.jpg",
+			"djs": [],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/example/show/"
+		}
+	]
+}
