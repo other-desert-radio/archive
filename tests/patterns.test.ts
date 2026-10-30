@@ -26,10 +26,7 @@ test("matches HTTP(S) URLs only", () => {
 
 test("matches absolute and relative asset references without whitespace", () => {
 	assert.equal(isMatching(AssetReferencePattern, "images/shows/1.jpg"), true);
-	assert.equal(
-		isMatching(AssetReferencePattern, "/archive-site/image.webp"),
-		true,
-	);
+	assert.equal(isMatching(AssetReferencePattern, "/archive/image.webp"), true);
 	assert.equal(
 		isMatching(AssetReferencePattern, "https://cdn.example.com/image.jpg"),
 		true,

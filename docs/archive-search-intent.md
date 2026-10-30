@@ -93,7 +93,7 @@ Two alternatives remain available:
 | JSON in `public/` | Existing exports already contain exactly the needed data; simplest delivery |
 | Astro-generated JSON | Build combines data, removes fields, precomputes search text, or generates revisions |
 
-Both become static files on GitHub Pages. A `GET()` in an Astro static route is not a server endpoint at runtime. Keep one authoritative source, update build-time readers if files move, and respect the `/archive-site/` base path.
+Both become static files on GitHub Pages. A `GET()` in an Astro static route is not a server endpoint at runtime. Keep one authoritative source, update build-time readers if files move, and respect the `/archive/` base path.
 
 Stable filenames such as `shows.json`, `djs.json`, and `tags.json` are acceptable. **Hashed filenames are optional**, not a requirement; the user questioned their necessity.
 
@@ -173,7 +173,7 @@ The original proposal includes playlists, current playback, playback history, an
 - Save progress periodically and on meaningful events; avoid per-frame writes and unload-only persistence. Cap history and save committed searches rather than keystrokes.
 - Confirm Mixcloud progress/end signals before promising resume/completion behavior.
 - Personal data is local to the browser/profile/origin, can be cleared or evicted, and does not sync. Export/import is recommended if playlists should last.
-- Use an archive-specific database name: origin storage is not isolated by `/archive-site/`. A custom-domain move does not automatically migrate local data.
+- Use an archive-specific database name: origin storage is not isolated by `/archive/`. A custom-domain move does not automatically migrate local data.
 - Cached metadata does not make pages, images, or external audio fully offline.
 
 The user raised [WebKit bug 226547](https://bugs.webkit.org/show_bug.cgi?id=226547). It concerned database opens hanging without success/error callbacks on older Safari/iOS; a maintainer reported the fix shipped in iOS 14.7 beta 4. It is not evidence that the same bug affects current Safari.

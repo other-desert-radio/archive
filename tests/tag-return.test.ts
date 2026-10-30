@@ -5,8 +5,8 @@ import { getTagReturn } from "../src/utils/tag-return";
 const tags = [{ id: 21, title: "Experimental" }];
 
 test("returns to the known tag with a normalized base path", () => {
-	assert.deepEqual(getTagReturn("?fromTag=21", "/archive-site/", tags), {
-		href: "/archive-site/tags/21",
+	assert.deepEqual(getTagReturn("?fromTag=21", "/archive/", tags), {
+		href: "/archive/tags/21",
 		label: "EXPERIMENTAL",
 	});
 	assert.equal(getTagReturn("?fromTag=21", "/", tags)?.href, "/tags/21");
@@ -20,6 +20,6 @@ test("keeps the default destination for absent, malformed, or unknown tags", () 
 		"?fromTag=21abc",
 		"?fromTag=https://example.com",
 	]) {
-		assert.equal(getTagReturn(search, "/archive-site", tags), undefined);
+		assert.equal(getTagReturn(search, "/archive", tags), undefined);
 	}
 });

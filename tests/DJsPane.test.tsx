@@ -24,7 +24,7 @@ const tags = new Map([[1, { id: 1, title: "Ambient", color: "#000000" }]]);
 
 test("renders an empty message when no DJs are supplied", () => {
 	const markup = renderToStaticMarkup(
-		<DJsPane base="/archive-site/" djs={[]} tags={tags} />,
+		<DJsPane base="/archive/" djs={[]} tags={tags} />,
 	);
 
 	assert.equal(markup, "<p>No DJs found.</p>");
@@ -32,15 +32,15 @@ test("renders an empty message when no DJs are supplied", () => {
 
 test("renders base-aware links for supplied DJs", () => {
 	const markup = renderToStaticMarkup(
-		<DJsPane base="/archive-site/" djs={djs} tags={tags} />,
+		<DJsPane base="/archive/" djs={djs} tags={tags} />,
 	);
 
-	assert.match(markup, /href="\/archive-site\/djs\/11"/);
-	assert.match(markup, /href="\/archive-site\/djs\/16"/);
-	assert.match(markup, /src="\/archive-site\/images\/djs\/11.jpg"/);
+	assert.match(markup, /href="\/archive\/djs\/11"/);
+	assert.match(markup, /href="\/archive\/djs\/16"/);
+	assert.match(markup, /src="\/archive\/images\/djs\/11.jpg"/);
 	assert.match(
 		markup,
-		/<img[^>]+src="\/archive-site\/images\/djs\/16.png"[^>]+alt="DJ Emocean"/,
+		/<img[^>]+src="\/archive\/images\/djs\/16.png"[^>]+alt="DJ Emocean"/,
 	);
 	assert.match(markup, /<img[^>]+alt="DJ AKĀSHA"/);
 	const images = markup.match(/<img\b[^>]*>/g) ?? [];
@@ -50,7 +50,7 @@ test("renders base-aware links for supplied DJs", () => {
 		assert.match(image, /decoding="async"/);
 	}
 	assert.doesNotMatch(markup, /_large/);
-	assert.doesNotMatch(markup, /\/archive-site\/\//);
+	assert.doesNotMatch(markup, /\/archive\/\//);
 	assert.match(markup, />DJ AKĀSHA</);
 	assert.match(markup, />DJ Emocean</);
 	assert.match(markup, />Ambient</);
@@ -63,7 +63,7 @@ test("logs an error and skips a missing tag", () => {
 
 	try {
 		const markup = renderToStaticMarkup(
-			<DJsPane base="/archive-site/" djs={djs} tags={new Map()} />,
+			<DJsPane base="/archive/" djs={djs} tags={new Map()} />,
 		);
 
 		assert.doesNotMatch(markup, />Ambient</);

@@ -8,6 +8,6 @@ test("normalizes root hosting for URL suffixes", () => {
 });
 
 test("normalizes a deployment subpath with or without a trailing slash", () => {
-	assert.equal(getBasePath("/archive-site/"), "/archive-site");
-	assert.equal(getBasePath("/archive-site"), "/archive-site");
+	assert.equal(getBasePath("/archive/"), "/archive");
+	assert.equal(getBasePath("/archive"), "/archive");
 });

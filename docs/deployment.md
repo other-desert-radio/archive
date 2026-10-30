@@ -1,7 +1,7 @@
 # Deployment
 
 The site is static Astro hosted on GitHub Pages. `astro.config.mjs` owns
-`output`, `site` and the `/archive-site` base path. Preserve base-path-aware
+`output`, `site` and the `/archive` base path. Preserve base-path-aware
 internal and asset URLs; do not introduce a server runtime without a concrete
 requirement.
 
