@@ -67,35 +67,38 @@ const hydratedTags = hydrateTags(show, tags);
         <div class="show-description" set:html={show.description} />
       ) : null
     }
+    <div class="show-djs">
+      {
+        djs.map((dj) => (
+          <a
+            class="show-dj"
+            href={`${base}/djs/${dj.id}`}
+            aria-label={`View ${dj.title}`}
+            aria-labelledby={`dj-${dj.id}`}
+          >
+            <h2 id={`dj-${dj.id}`} class="dj-name">
+              {dj.title}
+            </h2>
+            <div class="dj-profile">
+              <img
+                class="dj-portrait"
+                src={`${base}/${dj.image_large}`}
+                alt={dj.title}
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="dj-bio" set:html={dj.bio} />
+            </div>
+          </a>
+        ))
+      }
+    </div>
   </section>
-  {
-    djs.map((dj) => (
-      <a
-        class="show-dj"
-        href={`${base}/djs/${dj.id}`}
-        aria-label={`View ${dj.title}`}
-        aria-labelledby={`dj-${dj.id}`}
-      >
-        <h2 id={`dj-${dj.id}`} class="dj-name">
-          {dj.title}
-        </h2>
-        <div class="dj-profile">
-          <img
-            class="dj-portrait"
-            src={`${base}/${dj.image_large}`}
-            alt={dj.title}
-            loading="lazy"
-            decoding="async"
-          />
-          <div class="dj-bio" set:html={dj.bio} />
-        </div>
-      </a>
-    ))
-  }
 </BaseLayout>
 
 <style>
   .show-dj {
+    --dj-artwork-size: calc(var(--density-unit) * 7.5);
     display: block;
     width: min(100%, calc(var(--density-unit) * 72));
     margin-top: var(--grid-column-gap);
@@ -122,8 +125,8 @@ const hydratedTags = hydrateTags(show, tags);
 
   .dj-name {
     margin: 0 0 var(--space-sm);
-    font-size: var(--font-title);
-    font-weight: 400;
+    font-size: calc(var(--font-body) * 1.25);
+    font-weight: 700;
     overflow-wrap: anywhere;
   }
 
