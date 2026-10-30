@@ -11,6 +11,7 @@ const ShowPattern = {
 	title: P.string,
 	date: IsoDatePattern,
 	duration: P.number,
+	description: P.optional(P.string),
 	image_small: AssetReferencePattern,
 	image_large: AssetReferencePattern,
 	djs: P.array({
