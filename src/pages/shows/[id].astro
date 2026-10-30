@@ -43,6 +43,15 @@ const hydratedTags = hydrateTags(show, tags);
   returning_page="shows"
   title={`${show.title} | Other Desert Radio`}
 >
+  <div class="show-info">
+    <header class="show-header">
+      <h1 id="show-title" class="show-title">{show.title}</h1>
+      <p class="show-date">{formatDate(show.date)}</p>
+    </header>
+    <div class="tag-container">
+      {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
+    </div>
+  </div>
   <section class="show-grid" aria-labelledby="show-title">
     <div class="show-artwork">
       <PlayableShowArtwork
@@ -53,16 +62,6 @@ const hydratedTags = hydrateTags(show, tags);
         client:load
       />
     </div>
-    <div class="show-info">
-      <header class="show-header">
-        <h1 id="show-title" class="show-title">{show.title}</h1>
-        <p class="show-date">{formatDate(show.date)}</p>
-      </header>
-      <div class="tag-container">
-        {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
-      </div>
-    </div>
-
     {
       show.description !== undefined ? (
         <div class="show-description" set:html={show.description} />
@@ -182,7 +181,7 @@ const hydratedTags = hydrateTags(show, tags);
   }
 
   .show-title {
-    margin: 0 0 var(--space-lg);
+    margin: 0;
     font-size: clamp(var(--font-title), 4.5vw, calc(var(--font-title) * 2.5));
     line-height: 1.4;
   }
