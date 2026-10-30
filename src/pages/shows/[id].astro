@@ -52,7 +52,10 @@ const hydratedTags = hydrateTags(show, tags);
       {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
     </div>
   </div>
-  <section class="show-grid" aria-labelledby="show-title">
+  <section
+    class:list={["show-grid", { "has-description": show.description !== undefined }]}
+    aria-labelledby="show-title"
+  >
     <div class="show-artwork">
       <PlayableShowArtwork
         show={show}
@@ -164,14 +167,30 @@ const hydratedTags = hydrateTags(show, tags);
 
   .show-grid {
     display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    align-items: center;
+    grid-template-columns: minmax(0, 1fr);
+    width: min(100%, calc(var(--density-unit) * 48));
+    margin-inline: auto;
+    align-items: start;
     gap: var(--grid-column-gap);
     row-gap: var(--space-sm);
     margin-top: var(--grid-column-gap);
   }
+
+  .show-grid.has-description {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    width: 100%;
+  }
+
   .show-description {
-    grid-column: 1 / -1;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .show-djs {
+    grid-column: 1;
+    min-width: 0;
   }
 
   .show-artwork {
@@ -217,8 +236,15 @@ const hydratedTags = hydrateTags(show, tags);
       align-items: flex-start;
     }
 
-    .show-grid {
+    .show-grid,
+    .show-grid.has-description {
       grid-template-columns: minmax(0, 1fr);
+      width: 100%;
+    }
+
+    .show-description {
+      grid-column: auto;
+      grid-row: auto;
     }
     .dj-profile {
       grid-template-columns: minmax(0, 1fr);
