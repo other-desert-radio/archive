@@ -54,8 +54,10 @@ const hydratedTags = hydrateTags(show, tags);
       />
     </div>
     <div class="show-info">
-      <h1 id="show-title" class="show-title">{show.title}</h1>
-      <p class="show-date">{formatDate(show.date)}</p>
+      <header class="show-header">
+        <h1 id="show-title" class="show-title">{show.title}</h1>
+        <p class="show-date">{formatDate(show.date)}</p>
+      </header>
       <div class="tag-container">
         {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
       </div>
