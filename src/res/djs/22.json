@@ -1,6 +1,6 @@
 {
-	"version": 3,
-	"updatedAt": "2026-10-30T18:44:57.481Z",
+	"version": 4,
+	"updatedAt": "2026-10-30T18:51:15.215Z",
 	"data": {
 		"id": 22,
 		"title": "Lodi Dottie",
@@ -14,6 +14,7 @@
 			{
 				"id": 67,
 				"title": "Looking Glass with Lodi Dottie Episode 7",
+				"description": "<p>Cuidad Lineal - El Eslabon<br />Borghesia - Z.M.R.<br />Esplendor Geométrico - Moscú Está Helado <br />Figure Study - Divide<br />El Escuadrón Del Ritmo - Hielo Congelado <br />Das Ding - Reassurance Ritual<br />Peine Perdue - Coeur Brise<br />Deux - Felicita <br />N.A. Pop 2000 - Panic in Your Mind<br />Figure Study - Lesson One<br />Ford Proco - Central De Datos<br />Hard Corps - Dirty<br />Crash Course In Science - Flying Turns<br />In Trance 95 - Presidente<br />Xeno &amp; Oaklander - Angélique<br />Miss Kittin and The Hacker - The Building<br />Philippe Laurent - Distorsion</p>",
 				"date": "2026-08-03T00:00:00.000Z",
 				"duration": 3416,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/f/8/4/869e-96c9-4d49-b343-c64c0bcd2b65",

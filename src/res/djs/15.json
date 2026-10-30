@@ -1,6 +1,6 @@
 {
-	"version": 3,
-	"updatedAt": "2026-10-30T18:44:57.481Z",
+	"version": 4,
+	"updatedAt": "2026-10-30T18:51:15.215Z",
 	"data": {
 		"id": 15,
 		"title": "temporal emissions",
@@ -64,6 +64,7 @@
 			{
 				"id": 39,
 				"title": "Episode 2",
+				"description": "<p>Temporal Emissions radio explores the spirit, energy and consciousness of humanity through the language of rhythm and vibration for the curious mind and wandering ear.</p>",
 				"date": "2023-09-04T00:00:00.000Z",
 				"duration": 3531,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/d/f/1/04cd-e079-4e2c-9e17-e7991794520b",
@@ -74,6 +75,7 @@
 			{
 				"id": 40,
 				"title": "Episode 1",
+				"description": "<p>exploring the spirit, energy and consciousness of humanity through the language of rhythm and vibration for the curious mind and wandering ear</p>",
 				"date": "2023-06-26T00:00:00.000Z",
 				"duration": 3648,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/b/7/0/f77f-3085-42b1-8da0-684aaf4e9a5b",

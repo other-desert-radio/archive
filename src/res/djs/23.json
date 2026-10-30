@@ -1,6 +1,6 @@
 {
-	"version": 3,
-	"updatedAt": "2026-10-30T18:44:57.481Z",
+	"version": 4,
+	"updatedAt": "2026-10-30T18:51:15.215Z",
 	"data": {
 		"id": 23,
 		"title": "Gabriel Valenzuela",
@@ -14,6 +14,7 @@
 			{
 				"id": 101,
 				"title": "1",
+				"description": "<p>Gabriel Valenzuela's first all-vinyl bedroom mix recorded at Lodi Dottie's Flamingo Heights trailer.  ♫ Ambient, Experimental, Electronic ♫</p>",
 				"date": "2026-02-09T00:00:00.000Z",
 				"duration": 3214,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/3/b/b/3bf1-9293-465e-8b23-ec86be087482",

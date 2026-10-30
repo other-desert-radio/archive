@@ -1,6 +1,6 @@
 {
-	"version": 3,
-	"updatedAt": "2026-10-30T18:44:57.481Z",
+	"version": 4,
+	"updatedAt": "2026-10-30T18:51:15.215Z",
 	"data": {
 		"id": 16,
 		"title": "DJ Emocean",
@@ -14,6 +14,7 @@
 			{
 				"id": 97,
 				"title": "Play is as it Lays Episode 7: PISCES LOVES VIRGO",
+				"description": "<p>A set built on the idea that opposites don't meet in the middle — they hold each other in place.<br />It opens almost still, with Taraneh and Sade, and climbs slowly through Nicolas Jaar and a Soulwax remix of Robyn before settling into a long run of house: Cinthie's unvarnished Berlin functionality sitting next to ANOTR's vocal warmth, Sofia Kourtesis next to Moby and Avalon Emerson. Precision and feeling, trading places.<br /><br /><br />Tracey Thorn appears twice. Once in the middle, inside a Four Tet production where every element is placed with total control. And again at the very end, singing \"Protection\" over Massive Attack's dub, where nothing is controlled at all. Same voice, twenty-nine years apart, holding up in both climates.<br />The set closes in the same key it opened in.</p>",
 				"date": "2026-09-21T00:00:00.000Z",
 				"duration": 4241,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/2/9/f/7628-970a-4617-8177-4207d7316b77",
@@ -24,6 +25,7 @@
 			{
 				"id": 15,
 				"title": "Play is as it Lays Episode 6: LEO ENERGY - SULTRY SUMMER",
+				"description": "<p>Summer heat. Leo season. The moment when confidence becomes magnetism and the dancefloor becomes your stage.<br />This set is unapologetic sensuality. It opens sultry—not vulnerable, but assured. Groovy, confident, eyes-on-you energy. The kind of summer where you know exactly what you want and you're not shy about it. <br /><br />The peak moment is pure self-assurance—you-being-exactly-who-you-are energy. Then it retreats luxuriously through deep house, but never loses heat. Locklead's \"Moon\" and Montano's \"Shadows Don't Lie\" keep the sensuality alive as the intensity drops. Close with Madonna &amp; William Orbit's \"Erotica\"—the ultimate statement: this is mine.<br /><br />This is Leo energy: hot, theatrical, generous with pleasure, unapologetic about desire. Summer as performance art.</p>",
 				"date": "2026-08-03T00:00:00.000Z",
 				"duration": 3764,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/b/a/b/afe0-3802-41b1-9072-2ffc1ace1a25",
@@ -34,6 +36,7 @@
 			{
 				"id": 19,
 				"title": "Play is as it Lays Episode 5: CANCER SEASON SUMMER CLUB ENERGY",
+				"description": "<p>Summer Solstice. Cancer season. The moment of peak light before the turn inward—and this 17-track set mirrors that exact emotional arc.<br />It opens vulnerable with Jessie Ware asking \"Please\" over a Ross from Friends remix—Cancer arriving with their heart already exposed, no pretense. Then it builds a circle: underground club luminaries (TOKIMONSTA, D. Seinfeld, The Martinez Brothers) alongside trusted pop voices (Charli XCX, Madonna). This isn't a climb toward ego; it's a gathering of the real ones, the people worth protecting.</p>",
 				"date": "2026-06-29T00:00:00.000Z",
 				"duration": 4395,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/7/9/b/8f68-c5fe-466f-9769-87e6d86e4512",
@@ -54,6 +57,7 @@
 			{
 				"id": 27,
 				"title": "Play is as it Lays Episode 3: ARIES SEASON: DANCE AS RESISTANCE",
+				"description": "<p>The first sign. New beginnings. Ruled by Mars, the god of war — this is confident, not combative. Burning bright, not burning down. Bold, energetic, impulsive — 16 tracks of euphoric refusal to let the world dim your light. Dancing as an act of survival. The fight for peace and joy.</p>",
 				"date": "2026-04-06T00:00:00.000Z",
 				"duration": 4357,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/b/1/2/1bf0-284b-4ad6-8fe2-591fca9b3322",
@@ -64,6 +68,7 @@
 			{
 				"id": 57,
 				"title": "Play is as it Lays Episode 2: PISCES DREAMS: DEVOTION TO TERPSICHORE",
+				"description": "<p>🌊 PISCES DREAMS 🌊<br />Pisces in retrograde. Emotional, playful, sexy, soft, euphoric.<br />Dive deep into hyperpop and surface through ballroom energy, peaking with jungle, then floating back down through dreamy house to an iconic disco finale.<br />For the water signs who cry on the dancefloor and call it healing.<br />DJ Emocean | Pisces Season 2026 ♓✨</p>",
 				"date": "2026-03-09T00:00:00.000Z",
 				"duration": 4615,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/b/9/1/cf90-8d8b-4549-aa34-e6b9db0a0bcd",
@@ -74,6 +79,7 @@
 			{
 				"id": 59,
 				"title": "Play is as it Lays Episode 1",
+				"description": "<p>This is music I’m into at the moment. As a Pisces Queen with deep feelings, I follow a stream of vibes and play it as it lays.</p>",
 				"date": "2026-02-16T00:00:00.000Z",
 				"duration": 3600,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/5/2/b/e511-697c-4ed8-af32-83aa76c34331",

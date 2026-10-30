@@ -1,6 +1,6 @@
 {
-	"version": 3,
-	"updatedAt": "2026-10-30T18:44:57.481Z",
+	"version": 4,
+	"updatedAt": "2026-10-30T18:51:15.215Z",
 	"data": {
 		"id": 19,
 		"title": "K Sera Sarah",
@@ -44,6 +44,7 @@
 			{
 				"id": 121,
 				"title": "Take Shape: Episode One",
+				"description": "<p>K Sera Sarah's (infamous host of Beyond Karaoke) debut episode of Take Shape. Dance/Electronica from the 2010s</p>",
 				"date": "2022-04-25T00:00:00.000Z",
 				"duration": 3554,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/a/0/d/79fb-eeb8-418b-a2db-0f89825b3606",
@@ -54,6 +55,7 @@
 			{
 				"id": 73,
 				"title": "Beyond Karaoke Ep. X - Treachery of Images",
+				"description": "<p>Host and KJ K Sera Sarah turns song interpretation into a fine art in this brand new episode that examines the Treachery of Images. Join in on this historic art world critique from PoMo to FOMO, featuring artists David Bowie, Yoko Ono, Joseph Beuys, Geneva Jacuzzi, and MORE!</p>",
 				"date": "2021-05-10T00:00:00.000Z",
 				"duration": 6367,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/7/8/7/c419-f80d-487c-b080-5bfac29e80c9",
@@ -64,6 +66,7 @@
 			{
 				"id": 76,
 				"title": "Beyond Karaoke Episode IX - Orphans",
+				"description": "<p>Feel like it’s the hard knock life for YOU? Join host and KJ K Sera Sarah as we search for our lost futures with guidance from Gillian Welch, Ozzy Osbourne, Joy Division, Laurie Anderson, and MORE!</p>",
 				"date": "2021-04-05T00:00:00.000Z",
 				"duration": 5993,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/7/0/7/0ec4-96b9-47a6-a606-c9412ef9bb4c",
@@ -74,6 +77,7 @@
 			{
 				"id": 79,
 				"title": "Beyond Karaoke Episode VIII - Where is My Qualia?",
+				"description": "<p>What is consciousness? Is it even real?? Join host and KJ K Sera Sarah on a journey to the center of our universal mind! Just lay down on this couch and let’s drink to our mental health as we listen to the voices of Siouxsie and the Banshees, X-Ray Spex, Electric Eels, The Fall, and MORE!</p>",
 				"date": "2021-02-01T00:00:00.000Z",
 				"duration": 5404,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/2/3/5/98f4-7150-40ea-ba04-28157f9fe722",
@@ -84,6 +88,7 @@
 			{
 				"id": 81,
 				"title": "Beyond Karaoke Episode VII - The Zodiac + Other Myths",
+				"description": "<p>Happy New Year! Are you on the edge of your seat wondering what 2021 has in store? Host and KJ K Sera Sarah takes a celestial journey through the zodiac in this episode of mythical proportions! Introducing very special guest and cosmic consultant Aurora Dawn who beams in horoscopes for every sign along the way! Tune in for astrological anthems from The Prodigy, Danzig, Janelle Monae, Throbbing Gristle, and MORE!</p>",
 				"date": "2021-01-04T00:00:00.000Z",
 				"duration": 7618,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/3/4/2/7397-3374-4179-99f8-8a15b2e15894",
@@ -104,6 +109,7 @@
 			{
 				"id": 85,
 				"title": "Beyond Karaoke Episode V - Life, Death, & Existential Dread",
+				"description": "<p>Are you ready to stare into the abyss? Host and KJ K Sera Sarah is on a search to find the meaning of life! Let’s peel back the layers of this onion we call existence with the music of Queen, Motorhead, Molly Nilsson, Diamanda Galas, and MORE!</p>",
 				"date": "2020-11-02T00:00:00.000Z",
 				"duration": 5400,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/5/9/3/9d30-57c5-4195-8615-e13888adf524",
@@ -114,6 +120,7 @@
 			{
 				"id": 86,
 				"title": "Beyond Karaoke Episode IV - Diegetic not Diegetic",
+				"description": "<p>Host and KJ K Sera Sarah is getting her kicks above the waistline with a heady brew of musical numbers from stage and film! Using philosophy as our guiding star, we are going to figure out if the voices are real, and if so, where are they coming from? Get ready to act out to songs from the musicals Hair, FAME, The Apple, Hamilton, and MORE! Hail Zeus!</p>",
 				"date": "2020-10-05T00:00:00.000Z",
 				"duration": 4798,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
@@ -124,6 +131,7 @@
 			{
 				"id": 88,
 				"title": "Beyond Karaoke Episode III - Labor",
+				"description": "<p>Host and KJ K Sera Sarah is ready to celebrate the Labor Day holiday with a little Mandatory Overtime! Because it's always 9 to 5 somewhere! In this episode we focus our lens on labor history, both personal and political, with the music of Dolly Parton, Suburban Lawns, Orville Peck, Childish Gambino, and MORE!</p>",
 				"date": "2020-09-07T00:00:00.000Z",
 				"duration": 4252,
 				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/2/5/6/ca8c-e5e8-4da4-be40-2ccaef1e3497",
