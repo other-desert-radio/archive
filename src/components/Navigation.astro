@@ -113,7 +113,11 @@ const title = (() => {
       return;
     }
 
-    const destination = getTagReturn(location.search, import.meta.env.BASE_URL, tags);
+    const destination = getTagReturn(
+      location.search,
+      import.meta.env.BASE_URL,
+      tags.data,
+    );
     const href = destination?.href ?? link.dataset["returnHref"];
     const text = destination?.label ?? link.dataset["returnLabel"];
     if (!href || !text) {

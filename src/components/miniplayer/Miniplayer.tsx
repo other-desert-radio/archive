@@ -13,7 +13,7 @@ import styles from "./Miniplayer.module.css";
 import TrackTitle from "./TrackTitle";
 import { usePlayerPresentation } from "./usePlayerPresentation";
 
-const tags = new Map(tagCatalog.map((tag) => [tag.id, tag]));
+const tags = new Map(tagCatalog.data.map((tag) => [tag.id, tag]));
 
 export default function Miniplayer({ base }: { base: string }) {
 	const audio = useAudioState();
