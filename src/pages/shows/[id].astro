@@ -53,7 +53,10 @@ const hydratedTags = hydrateTags(show, tags);
     </div>
   </div>
   <section
-    class:list={["show-grid", { "has-description": show.description !== undefined }]}
+    class:list={[
+      "show-grid",
+      { "has-description": show.description !== undefined },
+    ]}
     aria-labelledby="show-title"
   >
     <div class="show-artwork">
@@ -67,7 +70,12 @@ const hydratedTags = hydrateTags(show, tags);
     </div>
     {
       show.description !== undefined ? (
-        <div class="show-description" set:html={show.description} />
+        <section class="show-description" aria-labelledby="description-title">
+          <h2 id="description-title" class="description-title">
+            DESCRIPTION
+          </h2>
+          <div class="description-content" set:html={show.description} />
+        </section>
       ) : null
     }
     <div class="show-djs">
@@ -101,7 +109,7 @@ const hydratedTags = hydrateTags(show, tags);
 
 <style>
   .show-dj {
-    --dj-artwork-size: calc(var(--density-unit) * 7.5);
+    --dj-artwork-size: calc(var(--density-unit) * 5.5);
     display: block;
     width: min(100%, calc(var(--density-unit) * 72));
     margin-top: var(--grid-column-gap);
@@ -186,6 +194,22 @@ const hydratedTags = hydrateTags(show, tags);
     grid-row: 1 / span 2;
     min-width: 0;
     overflow-wrap: anywhere;
+    border-left: var(--border-secondary) solid currentColor;
+    padding-left: var(--space-lg);
+  }
+
+  .description-title {
+    margin: 0 0 var(--space-sm);
+    font-size: var(--font-small-title);
+    font-weight: 700;
+  }
+
+  .description-content > :global(:first-child) {
+    margin-top: 0;
+  }
+
+  .description-content > :global(:last-child) {
+    margin-bottom: 0;
   }
 
   .show-djs {
