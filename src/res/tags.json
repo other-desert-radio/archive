@@ -1,6 +1,6 @@
 {
-	"version": 1,
-	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"version": 2,
+	"updatedAt": "2026-10-30T18:44:57.481Z",
 	"data": [
 		{
 			"id": 4,
@@ -542,6 +542,566 @@
 			"color": "#ea8ef6",
 			"mixcloud_key": "/genres/post-punk/",
 			"mixcloud_url": "https://www.mixcloud.com/genres/post-punk/"
+		},
+		{
+			"id": 106,
+			"title": "Baldessari",
+			"color": "#5af69f",
+			"mixcloud_key": "/genres/baldessari/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/baldessari/"
+		},
+		{
+			"id": 107,
+			"title": "Beyond karaoke",
+			"color": "#a054f8",
+			"mixcloud_key": "/genres/beyond-karaoke/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/beyond-karaoke/"
+		},
+		{
+			"id": 108,
+			"title": "Picasso",
+			"color": "#f77c80",
+			"mixcloud_key": "/genres/picasso/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/picasso/"
+		},
+		{
+			"id": 109,
+			"title": "Warhol",
+			"color": "#595ff2",
+			"mixcloud_key": "/genres/warhol/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/warhol/"
+		},
+		{
+			"id": 110,
+			"title": "Yoko Ono",
+			"color": "#fa7996",
+			"mixcloud_key": "/genres/yoko-ono/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/yoko-ono/"
+		},
+		{
+			"id": 111,
+			"title": "Freak folk",
+			"color": "#fa5df3",
+			"mixcloud_key": "/genres/freak-folk/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/freak-folk/"
+		},
+		{
+			"id": 112,
+			"title": "Psych",
+			"color": "#f6d566",
+			"mixcloud_key": "/genres/psych/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/psych/"
+		},
+		{
+			"id": 113,
+			"title": "Derek monypeny",
+			"color": "#cafb5b",
+			"mixcloud_key": "/genres/derek-monypeny/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/derek-monypeny/"
+		},
+		{
+			"id": 114,
+			"title": "Psychedelic",
+			"color": "#f75d64",
+			"mixcloud_key": "/genres/psychedelic/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/psychedelic/"
+		},
+		{
+			"id": 115,
+			"title": "UK psych",
+			"color": "#5da7f8",
+			"mixcloud_key": "/genres/uk-psych/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/uk-psych/"
+		},
+		{
+			"id": 116,
+			"title": "Vashtibunyan",
+			"color": "#f6834b",
+			"mixcloud_key": "/genres/vashtibunyan/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/vashtibunyan/"
+		},
+		{
+			"id": 117,
+			"title": "Don Cherry",
+			"color": "#f367ef",
+			"mixcloud_key": "/genres/don-cherry/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/don-cherry/"
+		},
+		{
+			"id": 118,
+			"title": "Freedom overspill",
+			"color": "#82f972",
+			"mixcloud_key": "/genres/freedom-overspill/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/freedom-overspill/"
+		},
+		{
+			"id": 119,
+			"title": "Terry Riley",
+			"color": "#c0fb4d",
+			"mixcloud_key": "/genres/terry-riley/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/terry-riley/"
+		},
+		{
+			"id": 120,
+			"title": "Heavy",
+			"color": "#ae56fa",
+			"mixcloud_key": "/genres/heavy/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/heavy/"
+		},
+		{
+			"id": 121,
+			"title": "Progressive rock",
+			"color": "#5ed6fb",
+			"mixcloud_key": "/genres/progressive-rock/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/progressive-rock/"
+		},
+		{
+			"id": 122,
+			"title": "Beyondhope",
+			"color": "#6dfad1",
+			"mixcloud_key": "/genres/beyondhope/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/beyondhope/"
+		},
+		{
+			"id": 123,
+			"title": "Education",
+			"color": "#acf75f",
+			"mixcloud_key": "/genres/education/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/education/"
+		},
+		{
+			"id": 124,
+			"title": "K sera sarah",
+			"color": "#ccf985",
+			"mixcloud_key": "/genres/k-sera-sarah/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/k-sera-sarah/"
+		},
+		{
+			"id": 125,
+			"title": "Catherinechristerhennix",
+			"color": "#f5a754",
+			"mixcloud_key": "/genres/catherinechristerhennix/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/catherinechristerhennix/"
+		},
+		{
+			"id": 126,
+			"title": "#elianeradigue",
+			"color": "#be75f5",
+			"mixcloud_key": "/genres/elianeradigue/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/elianeradigue/"
+		},
+		{
+			"id": 127,
+			"title": "Minimalism",
+			"color": "#fbc982",
+			"mixcloud_key": "/genres/minimalism/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/minimalism/"
+		},
+		{
+			"id": 128,
+			"title": "Paulineoliveros",
+			"color": "#f4cb75",
+			"mixcloud_key": "/genres/paulineoliveros/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/paulineoliveros/"
+		},
+		{
+			"id": 129,
+			"title": "2021",
+			"color": "#c0f66d",
+			"mixcloud_key": "/genres/2021/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/2021/"
+		},
+		{
+			"id": 130,
+			"title": "Horoscopes",
+			"color": "#fb7ab0",
+			"mixcloud_key": "/genres/horoscopes/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/horoscopes/"
+		},
+		{
+			"id": 131,
+			"title": "Zodiac",
+			"color": "#f775b3",
+			"mixcloud_key": "/genres/zodiac/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/zodiac/"
+		},
+		{
+			"id": 132,
+			"title": "International",
+			"color": "#85fcf4",
+			"mixcloud_key": "/genres/international/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/international/"
+		},
+		{
+			"id": 133,
+			"title": "Oud",
+			"color": "#f46a53",
+			"mixcloud_key": "/genres/oud/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/oud/"
+		},
+		{
+			"id": 134,
+			"title": "Moondog",
+			"color": "#9af57a",
+			"mixcloud_key": "/genres/moondog/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/moondog/"
+		},
+		{
+			"id": 135,
+			"title": "Politics",
+			"color": "#955cf6",
+			"mixcloud_key": "/genres/politics/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/politics/"
+		},
+		{
+			"id": 136,
+			"title": "Religion",
+			"color": "#b373fa",
+			"mixcloud_key": "/genres/religion/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/religion/"
+		},
+		{
+			"id": 137,
+			"title": "70's pop",
+			"color": "#fbca74",
+			"mixcloud_key": "/genres/70s-pop/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/70s-pop/"
+		},
+		{
+			"id": 138,
+			"title": "Novelty Hits",
+			"color": "#74d4fa",
+			"mixcloud_key": "/genres/novelty-hits/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/novelty-hits/"
+		},
+		{
+			"id": 139,
+			"title": "One Hit Wonders",
+			"color": "#99f569",
+			"mixcloud_key": "/genres/one-hit-wonders/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/one-hit-wonders/"
+		},
+		{
+			"id": 140,
+			"title": "Beyond hope",
+			"color": "#f17151",
+			"mixcloud_key": "/genres/beyond-hope/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/beyond-hope/"
+		},
+		{
+			"id": 141,
+			"title": "Death",
+			"color": "#fb85d6",
+			"mixcloud_key": "/genres/death/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/death/"
+		},
+		{
+			"id": 142,
+			"title": "DREAD",
+			"color": "#f49573",
+			"mixcloud_key": "/genres/dread/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/dread/"
+		},
+		{
+			"id": 143,
+			"title": "Life",
+			"color": "#88f68e",
+			"mixcloud_key": "/genres/life/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/life/"
+		},
+		{
+			"id": 144,
+			"title": "Musicals",
+			"color": "#fa8bc0",
+			"mixcloud_key": "/genres/musicals/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/musicals/"
+		},
+		{
+			"id": 145,
+			"title": "Turkish psych",
+			"color": "#889afa",
+			"mixcloud_key": "/genres/turkish-psych/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/turkish-psych/"
+		},
+		{
+			"id": 146,
+			"title": "9 to 5",
+			"color": "#744ef4",
+			"mixcloud_key": "/genres/9-to-5/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/9-to-5/"
+		},
+		{
+			"id": 147,
+			"title": "Labor",
+			"color": "#f14d75",
+			"mixcloud_key": "/genres/labor/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/labor/"
+		},
+		{
+			"id": 148,
+			"title": "Suburban lawns",
+			"color": "#9287fb",
+			"mixcloud_key": "/genres/suburban-lawns/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/suburban-lawns/"
+		},
+		{
+			"id": 149,
+			"title": "Paranoia",
+			"color": "#45f9bb",
+			"mixcloud_key": "/genres/paranoia/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/paranoia/"
+		},
+		{
+			"id": 150,
+			"title": "Sci-fi",
+			"color": "#f482b9",
+			"mixcloud_key": "/genres/sci-fi/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/sci-fi/"
+		},
+		{
+			"id": 151,
+			"title": "America",
+			"color": "#5ed0fa",
+			"mixcloud_key": "/genres/america/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/america/"
+		},
+		{
+			"id": 152,
+			"title": "Anti-war",
+			"color": "#67d8f6",
+			"mixcloud_key": "/genres/anti-war/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/anti-war/"
+		},
+		{
+			"id": 153,
+			"title": "July 4",
+			"color": "#af8ff8",
+			"mixcloud_key": "/genres/july-4/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/july-4/"
+		},
+		{
+			"id": 154,
+			"title": "Satanic",
+			"color": "#5ff4dc",
+			"mixcloud_key": "/genres/satanic/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/satanic/"
+		},
+		{
+			"id": 155,
+			"title": "War and resistance",
+			"color": "#78f356",
+			"mixcloud_key": "/genres/war-and-resistance/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/war-and-resistance/"
+		},
+		{
+			"id": 156,
+			"title": "Mauritania",
+			"color": "#fada77",
+			"mixcloud_key": "/genres/mauritania/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/mauritania/"
+		},
+		{
+			"id": 157,
+			"title": "Film",
+			"color": "#f76ea7",
+			"mixcloud_key": "/genres/film/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/film/"
+		},
+		{
+			"id": 158,
+			"title": "Shoegaze",
+			"color": "#4c5ef1",
+			"mixcloud_key": "/genres/shoegaze/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/shoegaze/"
+		},
+		{
+			"id": 159,
+			"title": "Hip Hop",
+			"color": "#7ef67e",
+			"mixcloud_key": "/genres/hip-hop/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/hip-hop/"
+		},
+		{
+			"id": 160,
+			"title": "Deep house",
+			"color": "#74f960",
+			"mixcloud_key": "/genres/deep-house/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/deep-house/"
+		},
+		{
+			"id": 161,
+			"title": "Electronica",
+			"color": "#46f9ad",
+			"mixcloud_key": "/genres/electronica/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/electronica/"
+		},
+		{
+			"id": 162,
+			"title": "Weird",
+			"color": "#bd6df5",
+			"mixcloud_key": "/genres/weird/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/weird/"
+		},
+		{
+			"id": 163,
+			"title": "Korean",
+			"color": "#fb8c93",
+			"mixcloud_key": "/genres/korean/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/korean/"
+		},
+		{
+			"id": 164,
+			"title": "Mongolian",
+			"color": "#d053f2",
+			"mixcloud_key": "/genres/mongolian/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/mongolian/"
+		},
+		{
+			"id": 165,
+			"title": "Funk",
+			"color": "#9e8ff9",
+			"mixcloud_key": "/genres/funk/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/funk/"
+		},
+		{
+			"id": 166,
+			"title": "Japan",
+			"color": "#48ebf6",
+			"mixcloud_key": "/genres/japan/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/japan/"
+		},
+		{
+			"id": 167,
+			"title": "Afrika",
+			"color": "#f262b6",
+			"mixcloud_key": "/genres/afrika/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/afrika/"
+		},
+		{
+			"id": 168,
+			"title": "Reissues",
+			"color": "#4af375",
+			"mixcloud_key": "/genres/reissues/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/reissues/"
+		},
+		{
+			"id": 169,
+			"title": "Contemporary jazz",
+			"color": "#fb5d91",
+			"mixcloud_key": "/genres/contemporary-jazz/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/contemporary-jazz/"
+		},
+		{
+			"id": 170,
+			"title": "Continental jazz",
+			"color": "#eff34c",
+			"mixcloud_key": "/genres/continental-jazz/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/continental-jazz/"
+		},
+		{
+			"id": 171,
+			"title": "Zeuhl",
+			"color": "#fae34f",
+			"mixcloud_key": "/genres/zeuhl/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/zeuhl/"
+		},
+		{
+			"id": 172,
+			"title": "New wave",
+			"color": "#f9d461",
+			"mixcloud_key": "/genres/new-wave/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/new-wave/"
+		},
+		{
+			"id": 173,
+			"title": "Kraut",
+			"color": "#d765f3",
+			"mixcloud_key": "/genres/kraut/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/kraut/"
+		},
+		{
+			"id": 174,
+			"title": "Reggae",
+			"color": "#68f574",
+			"mixcloud_key": "/genres/reggae/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/reggae/"
+		},
+		{
+			"id": 175,
+			"title": "Classical",
+			"color": "#73f6df",
+			"mixcloud_key": "/genres/classical/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/classical/"
+		},
+		{
+			"id": 176,
+			"title": "Fiji",
+			"color": "#8db5f9",
+			"mixcloud_key": "/genres/fiji/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/fiji/"
+		},
+		{
+			"id": 177,
+			"title": "Iraq",
+			"color": "#a7f973",
+			"mixcloud_key": "/genres/iraq/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/iraq/"
+		},
+		{
+			"id": 178,
+			"title": "Norway",
+			"color": "#69f89e",
+			"mixcloud_key": "/genres/norway/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/norway/"
+		},
+		{
+			"id": 179,
+			"title": "29 Palms",
+			"color": "#9e4cfa",
+			"mixcloud_key": "/genres/29-palms/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/29-palms/"
+		},
+		{
+			"id": 180,
+			"title": "Lodi dottie",
+			"color": "#f8809c",
+			"mixcloud_key": "/genres/lodi-dottie/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/lodi-dottie/"
+		},
+		{
+			"id": 181,
+			"title": "Muzizmu",
+			"color": "#acf46b",
+			"mixcloud_key": "/genres/muzizmu/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/muzizmu/"
+		},
+		{
+			"id": 182,
+			"title": "White label vinyl",
+			"color": "#73d4f8",
+			"mixcloud_key": "/genres/white-label-vinyl/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/white-label-vinyl/"
+		},
+		{
+			"id": 183,
+			"title": "Surf",
+			"color": "#f7e872",
+			"mixcloud_key": "/genres/surf/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/surf/"
+		},
+		{
+			"id": 184,
+			"title": "2010s",
+			"color": "#6df85a",
+			"mixcloud_key": "/genres/2010s/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/2010s/"
+		},
+		{
+			"id": 185,
+			"title": "Italo disco",
+			"color": "#fb85f5",
+			"mixcloud_key": "/genres/italo-disco/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/italo-disco/"
 		}
 	]
 }

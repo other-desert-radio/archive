@@ -1,6 +1,6 @@
 {
-	"version": 1,
-	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"version": 3,
+	"updatedAt": "2026-10-30T18:44:57.481Z",
 	"data": {
 		"id": 23,
 		"title": "Gabriel Valenzuela",
@@ -10,7 +10,18 @@
 		"socials": "<p>@gabriel_._._._._._._._._._._._</p>",
 		"showTitle": "Waiting Room",
 		"showDescription": "You have now entered the queue, welcome to the waiting room.",
-		"shows": [],
-		"tagIds": []
+		"shows": [
+			{
+				"id": 101,
+				"title": "1",
+				"date": "2026-02-09T00:00:00.000Z",
+				"duration": 3214,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/3/b/b/3bf1-9293-465e-8b23-ec86be087482",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/3/b/b/3bf1-9293-465e-8b23-ec86be087482",
+				"tagIds": [33, 61, 64],
+				"url": "https://www.mixcloud.com/otherdesertradio/gabriel-valenzuela-1-february-9-2026/"
+			}
+		],
+		"tagIds": [33, 61, 64]
 	}
 }

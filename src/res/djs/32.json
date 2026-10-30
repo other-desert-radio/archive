@@ -1,6 +1,6 @@
 {
-	"version": 1,
-	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"version": 3,
+	"updatedAt": "2026-10-30T18:44:57.481Z",
 	"data": {
 		"id": 32,
 		"title": "Dj Sensi",
@@ -10,7 +10,18 @@
 		"socials": "<p>Mtngrl_spence</p>",
 		"showTitle": "FGSG: Ep.1 also ones off shows that a mixtapes and collaborations",
 		"showDescription": "Selecting from the home library SENSI choosing from vinyls, cassettes and one day files from the archives.",
-		"shows": [],
+		"shows": [
+			{
+				"id": 115,
+				"title": "Mixtape",
+				"date": "2025-06-23T00:00:00.000Z",
+				"duration": 1823,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/0/b/3/3b70-3084-48f3-bba8-8f4237af00d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/0/b/3/3b70-3084-48f3-bba8-8f4237af00d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/dj-sensi-mixtape-june-23-2025/"
+			}
+		],
 		"tagIds": []
 	}
 }

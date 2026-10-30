@@ -1,6 +1,6 @@
 {
-	"version": 1,
-	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"version": 3,
+	"updatedAt": "2026-10-30T18:44:57.481Z",
 	"data": {
 		"id": 19,
 		"title": "K Sera Sarah",
@@ -10,7 +10,152 @@
 		"socials": "<p>@waybeyondhope // @_beyondkaraoke // linktr.ee/beyondhope</p>",
 		"showTitle": "Beyond Karaoke: Episode X: [Title]",
 		"showDescription": "Join your host K Sera as we take a deep dive on a hand-picked selection of deep cuts in this semi-monthly radio program dedicated to the meaning of music and beyond",
-		"shows": [],
-		"tagIds": []
+		"shows": [
+			{
+				"id": 118,
+				"title": "Take Shape: Episode Four",
+				"date": "2023-04-10T00:00:00.000Z",
+				"duration": 7145,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/b/c/1/423d-3440-42a6-899e-a5d6ad4b1702",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/b/c/1/423d-3440-42a6-899e-a5d6ad4b1702",
+				"tagIds": [22, 37, 38],
+				"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-take-shape-episode-four-april-10-2023/"
+			},
+			{
+				"id": 119,
+				"title": "Take Shape: Episode Three",
+				"date": "2022-08-02T00:00:00.000Z",
+				"duration": 3577,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/2/6/8/ffc2-ec7e-496b-b175-b4a98ce03eac",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/2/6/8/ffc2-ec7e-496b-b175-b4a98ce03eac",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-take-shape-episode-three-august-2-2022/"
+			},
+			{
+				"id": 120,
+				"title": "Take Shape: Episode Two",
+				"date": "2022-05-09T00:00:00.000Z",
+				"duration": 3570,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/8/a/2/f50b-b8c1-43d0-840b-20b4add979bb",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/8/a/2/f50b-b8c1-43d0-840b-20b4add979bb",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-tape-shape-episode-two-may-9-2022/"
+			},
+			{
+				"id": 121,
+				"title": "Take Shape: Episode One",
+				"date": "2022-04-25T00:00:00.000Z",
+				"duration": 3554,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/a/0/d/79fb-eeb8-418b-a2db-0f89825b3606",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/a/0/d/79fb-eeb8-418b-a2db-0f89825b3606",
+				"tagIds": [21, 161, 184],
+				"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sara-take-shape-episode-one-april-25-2022/"
+			},
+			{
+				"id": 73,
+				"title": "Beyond Karaoke Ep. X - Treachery of Images",
+				"date": "2021-05-10T00:00:00.000Z",
+				"duration": 6367,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/7/8/7/c419-f80d-487c-b080-5bfac29e80c9",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/7/8/7/c419-f80d-487c-b080-5bfac29e80c9",
+				"tagIds": [106, 107, 108, 109, 110],
+				"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-treachery-of-images-may-10-2021/"
+			},
+			{
+				"id": 76,
+				"title": "Beyond Karaoke Episode IX - Orphans",
+				"date": "2021-04-05T00:00:00.000Z",
+				"duration": 5993,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/7/0/7/0ec4-96b9-47a6-a606-c9412ef9bb4c",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/7/0/7/0ec4-96b9-47a6-a606-c9412ef9bb4c",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-beyond-karaoke-episode-9-orphans-april-5-2021/"
+			},
+			{
+				"id": 79,
+				"title": "Beyond Karaoke Episode VIII - Where is My Qualia?",
+				"date": "2021-02-01T00:00:00.000Z",
+				"duration": 5404,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/2/3/5/98f4-7150-40ea-ba04-28157f9fe722",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/2/3/5/98f4-7150-40ea-ba04-28157f9fe722",
+				"tagIds": [36, 122, 123, 124],
+				"url": "https://www.mixcloud.com/otherdesertradio/k-serah-sarahs-beyond-hope-where-is-my-qualia-february-1-2021/"
+			},
+			{
+				"id": 81,
+				"title": "Beyond Karaoke Episode VII - The Zodiac + Other Myths",
+				"date": "2021-01-04T00:00:00.000Z",
+				"duration": 7618,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/3/4/2/7397-3374-4179-99f8-8a15b2e15894",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/3/4/2/7397-3374-4179-99f8-8a15b2e15894",
+				"tagIds": [122, 124, 129, 130, 131],
+				"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-vii-the-zodiac-other-myths-january-4-2021/"
+			},
+			{
+				"id": 83,
+				"title": "Beyond Karaoke Episode VI - Religion + Politics: A Holiday Special",
+				"date": "2020-12-07T00:00:00.000Z",
+				"duration": 5269,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/a/8/5/743d-498c-4b7c-a6cc-4e490344aaf1",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/a/8/5/743d-498c-4b7c-a6cc-4e490344aaf1",
+				"tagIds": [36, 134, 135, 136],
+				"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-vi-religion-politics-a-holiday-special-december-7-2020/"
+			},
+			{
+				"id": 85,
+				"title": "Beyond Karaoke Episode V - Life, Death, & Existential Dread",
+				"date": "2020-11-02T00:00:00.000Z",
+				"duration": 5400,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/5/9/3/9d30-57c5-4195-8615-e13888adf524",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/5/9/3/9d30-57c5-4195-8615-e13888adf524",
+				"tagIds": [107, 140, 141, 142, 143],
+				"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-v-life-death-existential-dread-november-2-2020/"
+			},
+			{
+				"id": 86,
+				"title": "Beyond Karaoke Episode IV - Diegetic not Diegetic",
+				"date": "2020-10-05T00:00:00.000Z",
+				"duration": 4798,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [124, 140, 144],
+				"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-iv-diagetic-not-diagetic-october-5-2020/"
+			},
+			{
+				"id": 88,
+				"title": "Beyond Karaoke Episode III - Labor",
+				"date": "2020-09-07T00:00:00.000Z",
+				"duration": 4252,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/2/5/6/ca8c-e5e8-4da4-be40-2ccaef1e3497",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/2/5/6/ca8c-e5e8-4da4-be40-2ccaef1e3497",
+				"tagIds": [107, 123, 146, 147, 148],
+				"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-iii-labor-september-7-2020/"
+			},
+			{
+				"id": 90,
+				"title": "Beyond Karaoke Episode II - Sci Fi and Paranoia",
+				"date": "2020-08-03T00:00:00.000Z",
+				"duration": 4695,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/7/6/e/34f8-9fbc-4286-8be7-62b60469ac4e",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/7/6/e/34f8-9fbc-4286-8be7-62b60469ac4e",
+				"tagIds": [107, 149, 150],
+				"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-s-beyond-karaoke-episode-ii-sci-fi-and-paranoia-august-3-2020/"
+			},
+			{
+				"id": 92,
+				"title": "Beyond Hope Episode I - War and Resistance",
+				"date": "2020-07-04T00:00:00.000Z",
+				"duration": 4497,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/f/6/d/6863-4793-437e-bd20-b946983cb6f6",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/f/6/d/6863-4793-437e-bd20-b946983cb6f6",
+				"tagIds": [151, 152, 153, 154, 155],
+				"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-war-and-resistance-july-4-2020/"
+			}
+		],
+		"tagIds": [
+			21, 22, 36, 37, 38, 106, 107, 108, 109, 110, 122, 123, 124, 129, 130, 131,
+			134, 135, 136, 140, 141, 142, 143, 144, 146, 147, 148, 149, 150, 151, 152,
+			153, 154, 155, 161, 184
+		]
 	}
 }

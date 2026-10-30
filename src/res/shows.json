@@ -1,7 +1,115 @@
 {
-	"version": 1,
-	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"version": 2,
+	"updatedAt": "2026-10-30T18:44:57.481Z",
 	"data": [
+		{
+			"id": 99,
+			"title": "Constant Coverage #2",
+			"date": "2026-10-19T00:00:00.000Z",
+			"duration": 3659,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/f/2/5/a861-db80-4a6f-9e67-fc0a4c73880d",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/f/2/5/a861-db80-4a6f-9e67-fc0a4c73880d",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-constant-coverage-2-october-19-2026/"
+		},
+		{
+			"id": 94,
+			"title": "Lightning Rod #2",
+			"date": "2026-10-12T00:00:00.000Z",
+			"duration": 3558,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/c/2/b/d5b7-5951-4a35-b573-dfcb788768e1",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/c/2/b/d5b7-5951-4a35-b573-dfcb788768e1",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [33, 132, 157, 158],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-lightning-rod-2-october-12-2026/"
+		},
+		{
+			"id": 95,
+			"title": "From the Mixed-Up Files of Axaxaxas Mlö #29",
+			"date": "2026-10-05T00:00:00.000Z",
+			"duration": 3600,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/c/7/d/e573-ba5b-4d87-819a-1ade96b65158",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/c/7/d/e573-ba5b-4d87-819a-1ade96b65158",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [33, 43],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-26-october-5-2026/"
+		},
+		{
+			"id": 96,
+			"title": "Infinite Waiting Room #1",
+			"date": "2026-09-28T00:00:00.000Z",
+			"duration": 3556,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/d/2/6/fbeb-fec7-4231-b0bb-1d8027ca9494",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/d/2/6/fbeb-fec7-4231-b0bb-1d8027ca9494",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [37, 64, 159],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-infinite-waiting-room-1-september-28-2026/"
+		},
+		{
+			"id": 97,
+			"title": "Play is as it Lays Episode 7: PISCES LOVES VIRGO",
+			"date": "2026-09-21T00:00:00.000Z",
+			"duration": 4241,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/2/9/f/7628-970a-4617-8177-4207d7316b77",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/2/9/f/7628-970a-4617-8177-4207d7316b77",
+			"djs": [
+				{
+					"id": 16,
+					"title": "DJ Emocean",
+					"image_small": "assets/djs/16_small.webp",
+					"image_large": "assets/djs/16_large.webp"
+				}
+			],
+			"tagIds": [4, 21, 22, 160, 161],
+			"url": "https://www.mixcloud.com/otherdesertradio/dj-emocean-play-is-as-it-lays-episode-7-pisces-loves-virgo-september-21-2026/"
+		},
+		{
+			"id": 98,
+			"title": "An Evening of Stand-up Cosmogyny Hour#5",
+			"date": "2026-09-21T00:00:00.000Z",
+			"duration": 3600,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/4/c/9/2f44-e616-4630-b5f1-a332967daaa5",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/4/c/9/2f44-e616-4630-b5f1-a332967daaa5",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [33, 35, 162],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-an-evening-of-stand-up-cosmogyny-hour5-september-21-2026/"
+		},
 		{
 			"id": 8,
 			"title": "Freedom Overspill Radio Hour #32, Sudanese 60s-70s",
@@ -489,6 +597,42 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/dj-emocean-play-is-as-it-lays-episode-1-february-16-2026/"
 		},
 		{
+			"id": 100,
+			"title": "From the Mixed-Up Files of Axaxaxas Mlö #16",
+			"date": "2026-02-16T00:00:00.000Z",
+			"duration": 3604,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/f/c/b/bc95-8376-4604-9cec-1200b134e2eb",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/f/c/b/bc95-8376-4604-9cec-1200b134e2eb",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [33, 37, 163, 164],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-16-february-16-2026/"
+		},
+		{
+			"id": 101,
+			"title": "1",
+			"date": "2026-02-09T00:00:00.000Z",
+			"duration": 3214,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/3/b/b/3bf1-9293-465e-8b23-ec86be087482",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/3/b/b/3bf1-9293-465e-8b23-ec86be087482",
+			"djs": [
+				{
+					"id": 23,
+					"title": "Gabriel Valenzuela",
+					"image_small": "assets/djs/23_small.webp",
+					"image_large": "assets/djs/23_large.webp"
+				}
+			],
+			"tagIds": [33, 61, 64],
+			"url": "https://www.mixcloud.com/otherdesertradio/gabriel-valenzuela-1-february-9-2026/"
+		},
+		{
 			"id": 66,
 			"title": "From the Mixed-Up Files of Axaxaxas Mlö #15",
 			"date": "2026-02-02T00:00:00.000Z",
@@ -505,6 +649,42 @@
 			],
 			"tagIds": [21, 33, 95],
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-15-february-2-2026/"
+		},
+		{
+			"id": 102,
+			"title": "From the Mixed-Up Files of Axaxaxas Mlö #14",
+			"date": "2026-01-19T00:00:00.000Z",
+			"duration": 3485,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/4/f/d/3682-47d9-4ace-a784-9ce8cc3c146b",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/4/f/d/3682-47d9-4ace-a784-9ce8cc3c146b",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [33, 78, 165, 166],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-14-january-19-2026/"
+		},
+		{
+			"id": 103,
+			"title": "From the Mixed-Up Files of Axaxaxas Mlö #13",
+			"date": "2026-01-05T00:00:00.000Z",
+			"duration": 3841,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/f/3/9/9494-4e8a-48df-8e22-d6bd2390571b",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/f/3/9/9494-4e8a-48df-8e22-d6bd2390571b",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [33, 37, 64, 78, 166],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-13-january-5-2026/"
 		},
 		{
 			"id": 28,
@@ -525,6 +705,24 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-7-december-22-2025/"
 		},
 		{
+			"id": 104,
+			"title": "From the Mixed-Up Files of Axaxaxas Mlö #12",
+			"date": "2025-12-22T00:00:00.000Z",
+			"duration": 3796,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/6/2/f/8c50-adc8-4cf9-b2b9-b4da451f2fb1",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/6/2/f/8c50-adc8-4cf9-b2b9-b4da451f2fb1",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [167, 168],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-12-december-22-2025/"
+		},
+		{
 			"id": 29,
 			"title": "Episode 6",
 			"date": "2025-12-08T00:00:00.000Z",
@@ -541,6 +739,24 @@
 			],
 			"tagIds": [36, 48],
 			"url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-6-december-8-2025/"
+		},
+		{
+			"id": 105,
+			"title": "From the Mixed-Up Files of Axaxaxas Mlö #11",
+			"date": "2025-12-08T00:00:00.000Z",
+			"duration": 3572,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/a/f/8/402f-42f6-4ae5-83fb-d9a9a400c0eb",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/a/f/8/402f-42f6-4ae5-83fb-d9a9a400c0eb",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [22, 33, 169],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-11-december-8-2025/"
 		},
 		{
 			"id": 60,
@@ -579,6 +795,42 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-5-dangelo-special-november-10-2025/"
 		},
 		{
+			"id": 106,
+			"title": "From the Mixed-Up Files of Axaxaxas Mlö #9",
+			"date": "2025-11-10T00:00:00.000Z",
+			"duration": 3657,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/3/9/e/a858-463b-468d-8725-5514ddf9535f",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/3/9/e/a858-463b-468d-8725-5514ddf9535f",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [33, 37, 165],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-9-november-3-2025/"
+		},
+		{
+			"id": 107,
+			"title": "From the Mangled-Up Files of Axaxaxas Mlloween",
+			"date": "2025-10-27T00:00:00.000Z",
+			"duration": 3639,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/e/5/2/59a6-97a5-4f5f-9338-ad2e70d52e60",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/e/5/2/59a6-97a5-4f5f-9338-ad2e70d52e60",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [33, 98, 170],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mangled-up-files-of-axaxaxas-mlloween-october-27-2025/"
+		},
+		{
 			"id": 31,
 			"title": "Volume 2",
 			"date": "2025-10-20T00:00:00.000Z",
@@ -595,6 +847,78 @@
 			],
 			"tagIds": [21, 51],
 			"url": "https://www.mixcloud.com/otherdesertradio/muzizmu-volume-2-october-20-2025/"
+		},
+		{
+			"id": 108,
+			"title": "From the Mixed-Up Files of Axaxaxas Mlö #8",
+			"date": "2025-10-20T00:00:00.000Z",
+			"duration": 3643,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/1/1/9/28ca-52b8-49c9-a771-834c76d6cd5a",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/1/1/9/28ca-52b8-49c9-a771-834c76d6cd5a",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [33, 35, 170, 171],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-8-october-20-2025/"
+		},
+		{
+			"id": 109,
+			"title": "From the Mixed-Up Files of Axaxaxas Mlö #7",
+			"date": "2025-10-06T00:00:00.000Z",
+			"duration": 3528,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/6/1/e/5230-fbdc-4bb9-871f-43b78410604e",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/6/1/e/5230-fbdc-4bb9-871f-43b78410604e",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [33, 37, 132],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-7-october-6-2025/"
+		},
+		{
+			"id": 110,
+			"title": "From the Mixed-Up Files of Axaxaxas Mlö #6",
+			"date": "2025-09-22T00:00:00.000Z",
+			"duration": 3574,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/a/6/3/2d05-5db8-4302-b733-c941a2e0f1e0",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/a/6/3/2d05-5db8-4302-b733-c941a2e0f1e0",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [33, 37, 61, 172],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-6-september-22-2025/"
+		},
+		{
+			"id": 111,
+			"title": "From the Mixed-Up Files of Axaxaxas Mlö #5",
+			"date": "2025-09-08T00:00:00.000Z",
+			"duration": 3411,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/5/b/2/dc0f-aedc-4470-9c75-5efd15e6e175",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/5/b/2/dc0f-aedc-4470-9c75-5efd15e6e175",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [22, 74, 173, 174],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-5-september-8-2025/"
 		},
 		{
 			"id": 32,
@@ -615,6 +939,24 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-4-september-2-2025/"
 		},
 		{
+			"id": 112,
+			"title": "From the Mixed-Up Files of Axaxaxas Mlö #4",
+			"date": "2025-08-18T00:00:00.000Z",
+			"duration": 3523,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/d/5/8/e126-9ea9-421b-86f1-48b3cc5811c9",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/d/5/8/e126-9ea9-421b-86f1-48b3cc5811c9",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [22, 165, 175],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-4-august-18-2025/"
+		},
+		{
 			"id": 33,
 			"title": "Boiling Rice Set",
 			"date": "2025-08-11T00:00:00.000Z",
@@ -633,6 +975,42 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/muzizmu-boiling-rice-set-august-11-2025/"
 		},
 		{
+			"id": 113,
+			"title": "From the Mixed-Up Files of Axaxaxas Mlö #3",
+			"date": "2025-08-11T00:00:00.000Z",
+			"duration": 3456,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/f/5/2/4f8a-18c5-4d49-a8f9-b1219adcbc2e",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/f/5/2/4f8a-18c5-4d49-a8f9-b1219adcbc2e",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [12, 33, 158],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-3-august-11-2025/"
+		},
+		{
+			"id": 114,
+			"title": "From the Mixed-Up Files of Axaxaxas Mlö #2",
+			"date": "2025-07-21T00:00:00.000Z",
+			"duration": 3527,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/a/4/5/4e1e-3944-4c8e-ba49-df85a36b08db",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/a/4/5/4e1e-3944-4c8e-ba49-df85a36b08db",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				}
+			],
+			"tagIds": [33, 56, 176, 177, 178],
+			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-2-july-21-2025/"
+		},
+		{
 			"id": 61,
 			"title": "From the Mixed-Up Files of Axaxaxas Mlö #1",
 			"date": "2025-07-07T00:00:00.000Z",
@@ -649,6 +1027,48 @@
 			],
 			"tagIds": [12, 33, 37],
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-1-july-7-2025/"
+		},
+		{
+			"id": 115,
+			"title": "Mixtape",
+			"date": "2025-06-23T00:00:00.000Z",
+			"duration": 1823,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/0/b/3/3b70-3084-48f3-bba8-8f4237af00d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/0/b/3/3b70-3084-48f3-bba8-8f4237af00d4",
+			"djs": [
+				{
+					"id": 32,
+					"title": "Dj Sensi",
+					"image_small": "assets/djs/32_small.webp",
+					"image_large": "assets/djs/32_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/dj-sensi-mixtape-june-23-2025/"
+		},
+		{
+			"id": 116,
+			"title": "live at white label vinyl 29 palms 5.20.25",
+			"date": "2025-05-26T00:00:00.000Z",
+			"duration": 4185,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/e/b/7/189e-5f48-444b-9f0b-cad7c35e5cd8",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/e/b/7/189e-5f48-444b-9f0b-cad7c35e5cd8",
+			"djs": [
+				{
+					"id": 14,
+					"title": "muzizmu",
+					"image_small": "assets/djs/14_small.webp",
+					"image_large": "assets/djs/14_large.webp"
+				},
+				{
+					"id": 22,
+					"title": "Lodi Dottie",
+					"image_small": "assets/djs/22_small.webp",
+					"image_large": "assets/djs/22_large.webp"
+				}
+			],
+			"tagIds": [179, 180, 181, 182],
+			"url": "https://www.mixcloud.com/otherdesertradio/lodi-dottie-x-muzizmu-live-at-white-label-vinyl-29-palms-52025-may-26-2025/"
 		},
 		{
 			"id": 62,
@@ -721,6 +1141,60 @@
 			],
 			"tagIds": [],
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-an-evening-of-stand-up-cosmogony-part-1-march-3-2025/"
+		},
+		{
+			"id": 123,
+			"title": "Looking Glass Episode 6: Heart of the Mojave and beyond ♡",
+			"date": "2025-02-23T00:00:00.000Z",
+			"duration": 3570,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/3/6/b/5069-efff-4fb4-979f-3f02aef98d85",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/3/6/b/5069-efff-4fb4-979f-3f02aef98d85",
+			"djs": [
+				{
+					"id": 22,
+					"title": "Lodi Dottie",
+					"image_small": "assets/djs/22_small.webp",
+					"image_large": "assets/djs/22_large.webp"
+				}
+			],
+			"tagIds": [33, 35],
+			"url": "https://www.mixcloud.com/otherdesertradio/looking-glass-with-lodi-dottie-episode-6-heart-of-the-mojave-and-beyond-february-23-2025/"
+		},
+		{
+			"id": 117,
+			"title": "Freedom Overspill Radio Hour Episode 30, Japanese Surf 1966-1971",
+			"date": "2025-02-03T00:00:00.000Z",
+			"duration": 3241,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/d/3/6/0bfb-07c4-4838-b7b5-53c8ac5a8f08",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/d/3/6/0bfb-07c4-4838-b7b5-53c8ac5a8f08",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [40, 41, 183],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-30-japanese-surf-february-3-2025/"
+		},
+		{
+			"id": 124,
+			"title": "Looking Glass Episode 5: Discoween Special",
+			"date": "2024-10-28T00:00:00.000Z",
+			"duration": 3619,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/2/2/2/9da3-7635-4e55-9708-48f3ef6eade4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/2/2/2/9da3-7635-4e55-9708-48f3ef6eade4",
+			"djs": [
+				{
+					"id": 22,
+					"title": "Lodi Dottie",
+					"image_small": "assets/djs/22_small.webp",
+					"image_large": "assets/djs/22_large.webp"
+				}
+			],
+			"tagIds": [98, 185],
+			"url": "https://www.mixcloud.com/otherdesertradio/looking-glass-with-lodi-dottie-episode-5-discoween-special-october-28-2024/"
 		},
 		{
 			"id": 69,
@@ -903,6 +1377,24 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-25-the-necks-june-5-2023/"
 		},
 		{
+			"id": 118,
+			"title": "Take Shape: Episode Four",
+			"date": "2023-04-10T00:00:00.000Z",
+			"duration": 7145,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/b/c/1/423d-3440-42a6-899e-a5d6ad4b1702",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/b/c/1/423d-3440-42a6-899e-a5d6ad4b1702",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [22, 37, 38],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-take-shape-episode-four-april-10-2023/"
+		},
+		{
 			"id": 42,
 			"title": "Freedom Overspill Radio Hour Episode 24, 1970s Algeria",
 			"date": "2023-02-27T00:00:00.000Z",
@@ -957,6 +1449,24 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-22-experimental-gamelan-august-22-2022/"
 		},
 		{
+			"id": 119,
+			"title": "Take Shape: Episode Three",
+			"date": "2022-08-02T00:00:00.000Z",
+			"duration": 3577,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/2/6/8/ffc2-ec7e-496b-b175-b4a98ce03eac",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/2/6/8/ffc2-ec7e-496b-b175-b4a98ce03eac",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-take-shape-episode-three-august-2-2022/"
+		},
+		{
 			"id": 54,
 			"title": "Roadside Disco",
 			"date": "2022-07-22T00:00:00.000Z",
@@ -991,6 +1501,42 @@
 			],
 			"tagIds": [73, 74, 75],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-rdio-hour-ep-21-cumbias-rebajadas-july-4-2022/"
+		},
+		{
+			"id": 120,
+			"title": "Take Shape: Episode Two",
+			"date": "2022-05-09T00:00:00.000Z",
+			"duration": 3570,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/8/a/2/f50b-b8c1-43d0-840b-20b4add979bb",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/8/a/2/f50b-b8c1-43d0-840b-20b4add979bb",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-tape-shape-episode-two-may-9-2022/"
+		},
+		{
+			"id": 121,
+			"title": "Take Shape: Episode One",
+			"date": "2022-04-25T00:00:00.000Z",
+			"duration": 3554,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/a/0/d/79fb-eeb8-418b-a2db-0f89825b3606",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/a/0/d/79fb-eeb8-418b-a2db-0f89825b3606",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [21, 161, 184],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sara-take-shape-episode-one-april-25-2022/"
 		},
 		{
 			"id": 46,
@@ -1153,6 +1699,402 @@
 			],
 			"tagIds": [88, 92, 93, 94],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-12-moroccan-mix-week-of-june-7-2021/"
+		},
+		{
+			"id": 73,
+			"title": "Beyond Karaoke Ep. X - Treachery of Images",
+			"date": "2021-05-10T00:00:00.000Z",
+			"duration": 6367,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/7/8/7/c419-f80d-487c-b080-5bfac29e80c9",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/7/8/7/c419-f80d-487c-b080-5bfac29e80c9",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [106, 107, 108, 109, 110],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-treachery-of-images-may-10-2021/"
+		},
+		{
+			"id": 122,
+			"title": "Freedom Overspill Radio Hour Ep. 11, Sounds of Black Liberation",
+			"date": "2021-05-10T00:00:00.000Z",
+			"duration": 3552,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/9/8/c/5921-a801-4ba1-a09d-92a1c37d4c5d",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/9/8/c/5921-a801-4ba1-a09d-92a1c37d4c5d",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-11-sounds-of-black-liberation-may-10-2021/"
+		},
+		{
+			"id": 74,
+			"title": "Freedom Overspill Radio Hour Episode Ten - Freak Folk",
+			"date": "2021-04-12T00:00:00.000Z",
+			"duration": 3738,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/f/b/b/a902-d907-49cb-bf29-7266597a7f83",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/f/b/b/a902-d907-49cb-bf29-7266597a7f83",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [111, 112],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-10-freak-folks-april-12-2021/"
+		},
+		{
+			"id": 75,
+			"title": "Freedom Overspill Radio Hour Episode Nine, U.K. Psychedelic Folk",
+			"date": "2021-04-05T00:00:00.000Z",
+			"duration": 3432,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/b/0/f/a370-f522-40a3-8144-9fa64165adee",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/b/0/f/a370-f522-40a3-8144-9fa64165adee",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [88, 113, 114, 115, 116],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-9-uk-psychedelic-folk-april-5-2021/"
+		},
+		{
+			"id": 76,
+			"title": "Beyond Karaoke Episode IX - Orphans",
+			"date": "2021-04-05T00:00:00.000Z",
+			"duration": 5993,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/7/0/7/0ec4-96b9-47a6-a606-c9412ef9bb4c",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/7/0/7/0ec4-96b9-47a6-a606-c9412ef9bb4c",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-beyond-karaoke-episode-9-orphans-april-5-2021/"
+		},
+		{
+			"id": 77,
+			"title": "Freedom Overspill Episode Eight, Terry Riley + Don Cherry, Unreleased",
+			"date": "2021-03-08T00:00:00.000Z",
+			"duration": 3602,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/2/4/2/6470-ce13-4ca4-8bc6-2f0ee48b71d3",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/2/4/2/6470-ce13-4ca4-8bc6-2f0ee48b71d3",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [61, 113, 117, 118, 119],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-episode-8-terry-riley-don-cherry-unreleased-march-8-2021/"
+		},
+		{
+			"id": 78,
+			"title": "Freedom Overspill Episode Seven, Heavy Japan",
+			"date": "2021-02-15T00:00:00.000Z",
+			"duration": 7202,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/1/d/b/55c7-c683-429e-8095-7e7e4ebe627b",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/1/d/b/55c7-c683-429e-8095-7e7e4ebe627b",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [33, 36, 41, 120, 121],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-episode-vii-heavy-japan-february-15-2021/"
+		},
+		{
+			"id": 79,
+			"title": "Beyond Karaoke Episode VIII - Where is My Qualia?",
+			"date": "2021-02-01T00:00:00.000Z",
+			"duration": 5404,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/2/3/5/98f4-7150-40ea-ba04-28157f9fe722",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/2/3/5/98f4-7150-40ea-ba04-28157f9fe722",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [36, 122, 123, 124],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-serah-sarahs-beyond-hope-where-is-my-qualia-february-1-2021/"
+		},
+		{
+			"id": 80,
+			"title": "Freedom Overspill Episode Six, Minimalism",
+			"date": "2021-01-25T00:00:00.000Z",
+			"duration": 3680,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/0/5/0/ee5d-18f5-452a-b303-54f6ab5d6fb5",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/0/5/0/ee5d-18f5-452a-b303-54f6ab5d6fb5",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [61, 125, 126, 127, 128],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-episode-six-minimalism-january-26-2020/"
+		},
+		{
+			"id": 81,
+			"title": "Beyond Karaoke Episode VII - The Zodiac + Other Myths",
+			"date": "2021-01-04T00:00:00.000Z",
+			"duration": 7618,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/3/4/2/7397-3374-4179-99f8-8a15b2e15894",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/3/4/2/7397-3374-4179-99f8-8a15b2e15894",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [122, 124, 129, 130, 131],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-vii-the-zodiac-other-myths-january-4-2021/"
+		},
+		{
+			"id": 82,
+			"title": "Freedom Overspill Episode Five, Oud Masters",
+			"date": "2020-12-14T00:00:00.000Z",
+			"duration": 3582,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/4/0/6/e1fc-3973-41f3-89af-511dbce6bed0",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/4/0/6/e1fc-3973-41f3-89af-511dbce6bed0",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [132, 133],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypenys-freedom-overspill-radio-hour-episode-5-oud-masters-december-14-2020/"
+		},
+		{
+			"id": 83,
+			"title": "Beyond Karaoke Episode VI - Religion + Politics: A Holiday Special",
+			"date": "2020-12-07T00:00:00.000Z",
+			"duration": 5269,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/a/8/5/743d-498c-4b7c-a6cc-4e490344aaf1",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/a/8/5/743d-498c-4b7c-a6cc-4e490344aaf1",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [36, 134, 135, 136],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-vi-religion-politics-a-holiday-special-december-7-2020/"
+		},
+		{
+			"id": 84,
+			"title": "Freedom Overspill Episode Four: 70s pop",
+			"date": "2020-11-16T00:00:00.000Z",
+			"duration": 3599,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [36, 137, 138, 139],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-episode-four-70s-pop-november-16-2020/"
+		},
+		{
+			"id": 85,
+			"title": "Beyond Karaoke Episode V - Life, Death, & Existential Dread",
+			"date": "2020-11-02T00:00:00.000Z",
+			"duration": 5400,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/5/9/3/9d30-57c5-4195-8615-e13888adf524",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/5/9/3/9d30-57c5-4195-8615-e13888adf524",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [107, 140, 141, 142, 143],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-v-life-death-existential-dread-november-2-2020/"
+		},
+		{
+			"id": 87,
+			"title": "Freedom Overspill Episode Three",
+			"date": "2020-10-06T00:00:00.000Z",
+			"duration": 3568,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [145],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-episode-3-october-6-2020/"
+		},
+		{
+			"id": 86,
+			"title": "Beyond Karaoke Episode IV - Diegetic not Diegetic",
+			"date": "2020-10-05T00:00:00.000Z",
+			"duration": 4798,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [124, 140, 144],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-iv-diagetic-not-diagetic-october-5-2020/"
+		},
+		{
+			"id": 88,
+			"title": "Beyond Karaoke Episode III - Labor",
+			"date": "2020-09-07T00:00:00.000Z",
+			"duration": 4252,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/2/5/6/ca8c-e5e8-4da4-be40-2ccaef1e3497",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/2/5/6/ca8c-e5e8-4da4-be40-2ccaef1e3497",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [107, 123, 146, 147, 148],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-iii-labor-september-7-2020/"
+		},
+		{
+			"id": 89,
+			"title": "Freedom Overspill Episode Two",
+			"date": "2020-08-31T00:00:00.000Z",
+			"duration": 3621,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-episode-two-august-31-2020/"
+		},
+		{
+			"id": 90,
+			"title": "Beyond Karaoke Episode II - Sci Fi and Paranoia",
+			"date": "2020-08-03T00:00:00.000Z",
+			"duration": 4695,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/7/6/e/34f8-9fbc-4286-8be7-62b60469ac4e",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/7/6/e/34f8-9fbc-4286-8be7-62b60469ac4e",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [107, 149, 150],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-s-beyond-karaoke-episode-ii-sci-fi-and-paranoia-august-3-2020/"
+		},
+		{
+			"id": 91,
+			"title": "Freedom Overspill Episode One",
+			"date": "2020-08-03T00:00:00.000Z",
+			"duration": 3592,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-freedom-overspill-episode-one-august-3-2020/"
+		},
+		{
+			"id": 92,
+			"title": "Beyond Hope Episode I - War and Resistance",
+			"date": "2020-07-04T00:00:00.000Z",
+			"duration": 4497,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/f/6/d/6863-4793-437e-bd20-b946983cb6f6",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/f/6/d/6863-4793-437e-bd20-b946983cb6f6",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [151, 152, 153, 154, 155],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-war-and-resistance-july-4-2020/"
+		},
+		{
+			"id": 93,
+			"title": "Mauritania Mix",
+			"date": "2020-04-13T00:00:00.000Z",
+			"duration": 3593,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [78, 156],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-mauritania-mix/"
 		}
 	]
 }

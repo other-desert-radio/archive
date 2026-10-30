@@ -1,6 +1,6 @@
 {
-	"version": 1,
-	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"version": 3,
+	"updatedAt": "2026-10-30T18:44:57.481Z",
 	"data": {
 		"id": 16,
 		"title": "DJ Emocean",
@@ -11,6 +11,16 @@
 		"showTitle": "Play It As It Lays",
 		"showDescription": "Play It As It Lays is a series of curated dance sets, each one a complete mood. DJ Emocean explores themes through carefully selected tracks—sultry grooves, pop moments, underground heat—creating immersive listening experiences designed for both the body and the heart.",
 		"shows": [
+			{
+				"id": 97,
+				"title": "Play is as it Lays Episode 7: PISCES LOVES VIRGO",
+				"date": "2026-09-21T00:00:00.000Z",
+				"duration": 4241,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/2/9/f/7628-970a-4617-8177-4207d7316b77",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/2/9/f/7628-970a-4617-8177-4207d7316b77",
+				"tagIds": [4, 21, 22, 160, 161],
+				"url": "https://www.mixcloud.com/otherdesertradio/dj-emocean-play-is-as-it-lays-episode-7-pisces-loves-virgo-september-21-2026/"
+			},
 			{
 				"id": 15,
 				"title": "Play is as it Lays Episode 6: LEO ENERGY - SULTRY SUMMER",
@@ -72,6 +82,6 @@
 				"url": "https://www.mixcloud.com/otherdesertradio/dj-emocean-play-is-as-it-lays-episode-1-february-16-2026/"
 			}
 		],
-		"tagIds": [4, 6, 21, 22, 47, 64]
+		"tagIds": [4, 6, 21, 22, 47, 64, 160, 161]
 	}
 }

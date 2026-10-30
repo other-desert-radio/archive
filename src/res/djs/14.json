@@ -1,6 +1,6 @@
 {
-	"version": 1,
-	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"version": 3,
+	"updatedAt": "2026-10-30T18:44:57.481Z",
 	"data": {
 		"id": 14,
 		"title": "muzizmu",
@@ -50,8 +50,18 @@
 				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/0/a/7/3dc1-8ec3-4899-8749-ea9ac8fcfdd5",
 				"tagIds": [4, 21, 52],
 				"url": "https://www.mixcloud.com/otherdesertradio/muzizmu-boiling-rice-set-august-11-2025/"
+			},
+			{
+				"id": 116,
+				"title": "live at white label vinyl 29 palms 5.20.25",
+				"date": "2025-05-26T00:00:00.000Z",
+				"duration": 4185,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/e/b/7/189e-5f48-444b-9f0b-cad7c35e5cd8",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/e/b/7/189e-5f48-444b-9f0b-cad7c35e5cd8",
+				"tagIds": [179, 180, 181, 182],
+				"url": "https://www.mixcloud.com/otherdesertradio/lodi-dottie-x-muzizmu-live-at-white-label-vinyl-29-palms-52025-may-26-2025/"
 			}
 		],
-		"tagIds": [4, 21, 27, 51, 52]
+		"tagIds": [4, 21, 27, 51, 52, 179, 180, 181, 182]
 	}
 }
