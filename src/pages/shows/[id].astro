@@ -112,7 +112,6 @@ const hydratedTags = hydrateTags(show, tags);
     --dj-artwork-size: calc(var(--density-unit) * 5.5);
     display: block;
     width: min(100%, calc(var(--density-unit) * 72));
-    margin-top: var(--grid-column-gap);
     padding: var(--space-sm);
     border: 2px dashed transparent;
     color: black;
@@ -213,6 +212,9 @@ const hydratedTags = hydrateTags(show, tags);
   }
 
   .show-djs {
+    display: grid;
+    align-content: start;
+    gap: var(--grid-column-gap);
     grid-column: 1;
     min-width: 0;
   }
