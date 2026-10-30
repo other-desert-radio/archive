@@ -87,17 +87,17 @@ const hydratedTags = hydrateTags(show, tags);
             aria-label={`View ${dj.title}`}
             aria-labelledby={`dj-${dj.id}`}
           >
-            <h2 id={`dj-${dj.id}`} class="dj-name">
-              {dj.title}
-            </h2>
+            <img
+              class="dj-portrait"
+              src={`${base}/${dj.image_large}`}
+              alt={dj.title}
+              loading="lazy"
+              decoding="async"
+            />
             <div class="dj-profile">
-              <img
-                class="dj-portrait"
-                src={`${base}/${dj.image_large}`}
-                alt={dj.title}
-                loading="lazy"
-                decoding="async"
-              />
+              <h2 id={`dj-${dj.id}`} class="dj-name">
+                {dj.title}
+              </h2>
               <div class="dj-bio" set:html={dj.bio} />
             </div>
           </a>
@@ -110,7 +110,12 @@ const hydratedTags = hydrateTags(show, tags);
 <style>
   .show-dj {
     --dj-artwork-size: calc(var(--density-unit) * 5.5);
-    display: block;
+    display: grid;
+    grid-template-columns:
+      minmax(0, var(--dj-artwork-size))
+      minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-sm);
     width: min(100%, calc(var(--density-unit) * 72));
     padding: var(--space-sm);
     border: 2px dashed transparent;
@@ -141,12 +146,7 @@ const hydratedTags = hydrateTags(show, tags);
   }
 
   .dj-profile {
-    display: grid;
-    grid-template-columns:
-      minmax(0, var(--dj-artwork-size))
-      minmax(0, 1fr);
-    align-items: start;
-    gap: var(--space-lg);
+    min-width: 0;
   }
 
   .dj-portrait {
@@ -272,7 +272,7 @@ const hydratedTags = hydrateTags(show, tags);
       grid-column: auto;
       grid-row: auto;
     }
-    .dj-profile {
+    .show-dj {
       grid-template-columns: minmax(0, 1fr);
     }
   }
