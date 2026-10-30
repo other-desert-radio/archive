@@ -6,7 +6,7 @@ import process from "node:process";
 import { URL } from "node:url";
 
 const session = "archive-density";
-const base = process.env["ARCHIVE_PREVIEW_URL"] ?? "http://127.0.0.1:4321/archive-site";
+const base = process.env["ARCHIVE_PREVIEW_URL"] ?? "http://127.0.0.1:4321/archive";
 function browser(...args) {
 	return execFileSync("agent-browser", ["--session", session, ...args], {
 		encoding: "utf8",
@@ -165,6 +165,9 @@ for (const [width, height] of [[320, 800], [332, 600], [600, 800], [601, 800], [
 			viewportHeight: innerHeight,
 			attachment: background.backgroundAttachment,
 			zIndex: background.zIndex,
+			repeat: background.backgroundRepeat,
+			size: background.backgroundSize,
+			layerImage: background.backgroundImage,
 			canvasImage: getComputedStyle(document.documentElement).backgroundImage,
 			viewport: document.querySelector('meta[name="viewport"]').content,
 			touchAction: getComputedStyle(document.querySelector('.tabs a')).touchAction
@@ -177,7 +180,10 @@ for (const [width, height] of [[320, 800], [332, 600], [600, 800], [601, 800], [
 	assert.ok(layout.bottom >= layout.viewportHeight);
 	assert.equal(layout.attachment, "scroll");
 	assert.equal(layout.zIndex, "0");
-	assert.ok(layout.canvasImage.includes("background.jpeg"));
+	assert.equal(layout.repeat, "repeat");
+	assert.equal(layout.size, "auto");
+	assert.ok(layout.canvasImage.includes(width <= 600 ? "background2-vertical.avif" : "background2.avif"));
+	assert.equal(layout.layerImage, layout.canvasImage);
 	assert.ok(layout.viewport.includes("viewport-fit=cover"));
 	assert.equal(layout.touchAction, "manipulation");
 	verifyPlayerLayout(width);
@@ -269,7 +275,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 			heartHidden: getComputedStyle(player.querySelector('[class*="desktop-actions"]')).display === 'none',
 			fullscreenHeartVisible: heart.getBoundingClientRect().width > 0,
 			djsVisible: djLinks.length > 0 && djLinks.every(link => link.getBoundingClientRect().width > 0),
-			djDestinations: djLinks.every(link => link.getAttribute('href').startsWith('/archive-site/djs/')),
+			djDestinations: djLinks.every(link => link.getAttribute('href').startsWith('/archive/djs/')),
 			closeVisible: player.querySelector('[aria-label="Close player"]').getBoundingClientRect().width > 0,
 			artworkVisible: artwork.getBoundingClientRect().width > 0 && artwork.getBoundingClientRect().height > 0,
 			artworkWidth: artwork.getBoundingClientRect().width,
@@ -286,9 +292,9 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 			artworkCenterY: artwork.getBoundingClientRect().y + artwork.getBoundingClientRect().height / 2,
 			frameCenterY: frame.getBoundingClientRect().y + frame.getBoundingClientRect().height / 2,
 			matchingTitle: artwork.alt === title.textContent && title.textContent.length > 0,
-			showLink: title.getAttribute('href').startsWith('/archive-site/shows/'),
+			showLink: title.getAttribute('href').startsWith('/archive/shows/'),
 			tagsVisible: tagLinks.length > 0 && tagLinks.every(link => link.getBoundingClientRect().height > 0),
-			tagDestinations: tagLinks.every(link => link.getAttribute('href').startsWith('/archive-site/tags/')),
+			tagDestinations: tagLinks.every(link => link.getAttribute('href').startsWith('/archive/tags/')),
 			overflow: document.documentElement.scrollWidth > innerWidth
 		};
 	})()`);

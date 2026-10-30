@@ -60,7 +60,9 @@ buttons use `touch-action: manipulation` to avoid waiting for double taps.
 The shared layout renders a decorative fixed background layer at z-index 0,
 with page content above it. Its height is `100dvh` (`100vh` fallback), so it
 tracks the visible viewport as mobile browser controls expand or collapse.
-The root canvas uses the same image, and `viewport-fit=cover` allows it to
+Both layers tile `background2.avif` at its native size, switching to the 90°
+clockwise-rotated `background2-vertical.avif` at 600px and below. The root canvas uses
+the same image, and `viewport-fit=cover` allows it to
 extend into safe areas; keep safe-area padding on content, not the image.
 Use neither fixed background attachment nor a negative-z-index pseudo-element.
 Navigation vertical padding belongs to the return link and title text only.

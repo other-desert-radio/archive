@@ -74,7 +74,7 @@ test("card renders accessible play/pause controls and retains the selected overl
 	const render = () =>
 		renderToStaticMarkup(
 			<StoresProvider stores={{ audioStore }}>
-				<ShowCard show={show} base="/archive-site" tags={new Map()} />
+				<ShowCard show={show} base="/archive" tags={new Map()} />
 			</StoresProvider>,
 		);
 	assert.ok(render().includes('aria-label="Play Show"'));
@@ -98,7 +98,7 @@ test("detail artwork shares player state and loads its image eagerly", () => {
 			<StoresProvider stores={{ audioStore }}>
 				<PlayableShowArtwork
 					show={show}
-					base="/archive-site/"
+					base="/archive/"
 					loading="eager"
 					border="secondary"
 				/>
@@ -107,7 +107,7 @@ test("detail artwork shares player state and loads its image eagerly", () => {
 	assert.match(render(), /aria-label="Play Show"/);
 	assert.match(render(), /loading="eager"/);
 	assert.match(render(), /image-border-secondary/);
-	assert.doesNotMatch(render(), /\/archive-site\/\//);
+	assert.doesNotMatch(render(), /\/archive\/\//);
 	audioStore.select(mixcloudShowTrack(show));
 	assert.match(render(), /aria-label="Pause Show"/);
 	assert.match(render(), /data-selected="true"/);

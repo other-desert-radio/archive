@@ -89,7 +89,7 @@ It also checks viewport background sizing and
 horizontal overflow at 320px, 332px, 750px and 1440px. Physical iOS rendering
 and external Mixcloud playback require a device check.
 
-For DJ card CSS changes, check `/archive-site/djs` at 320px, 332px, 750px
+For DJ card CSS changes, check `/archive/djs` at 320px, 332px, 750px
 and desktop widths. Names/tags must wrap without horizontal overflow or page
 scale changes when switching from SHOWS to DJs. Server-rendered tests cannot
 compute layout. For broader layout changes, use the acceptance guidance in

@@ -23,18 +23,18 @@ test("fullscreen tags preserve show order, catalog colors and archive destinatio
 	const html = renderToStaticMarkup(
 		<FullscreenTags
 			show={{ ...show, tagIds: [4, 3] }}
-			base="/archive-site"
+			base="/archive"
 			tags={tags}
 		/>,
 	);
-	assert.ok(html.includes('href="/archive-site/tags/4"'));
-	assert.ok(html.includes('href="/archive-site/tags/3"'));
+	assert.ok(html.includes('href="/archive/tags/4"'));
+	assert.ok(html.includes('href="/archive/tags/3"'));
 	assert.ok(html.includes('aria-label="Explore Pop"'));
 	assert.ok(html.includes("background-color:#ccbbaa"));
 	assert.ok(html.includes("background-color:#336699"));
 	assert.ok(
-		html.indexOf('href="/archive-site/tags/4"') <
-			html.indexOf('href="/archive-site/tags/3"'),
+		html.indexOf('href="/archive/tags/4"') <
+			html.indexOf('href="/archive/tags/3"'),
 	);
 	assert.ok(html.includes('class="tag tag-large"'));
 });
@@ -59,13 +59,13 @@ test("fullscreen DJs render every name and portrait with archive links", () => {
 					},
 				],
 			}}
-			base="/archive-site"
+			base="/archive"
 		/>,
 	);
-	assert.ok(html.includes('href="/archive-site/djs/12"'));
-	assert.ok(html.includes('href="/archive-site/djs/13"'));
-	assert.ok(html.includes('src="/archive-site/first.jpg"'));
-	assert.ok(html.includes('src="/archive-site/second.jpg"'));
+	assert.ok(html.includes('href="/archive/djs/12"'));
+	assert.ok(html.includes('href="/archive/djs/13"'));
+	assert.ok(html.includes('src="/archive/first.jpg"'));
+	assert.ok(html.includes('src="/archive/second.jpg"'));
 	assert.ok(html.includes('aria-label="View First DJ"'));
 	assert.ok(html.includes("Second DJ</span>"));
 });
@@ -89,10 +89,10 @@ test("fullscreen DJs omit absent DJs and missing portraits", () => {
 });
 
 test("fullscreen heart renders a labeled outline button", () => {
-	const html = renderToStaticMarkup(<FullscreenHeart base="/archive-site" />);
+	const html = renderToStaticMarkup(<FullscreenHeart base="/archive" />);
 	assert.ok(html.includes('aria-label="Favorite show"'));
 	assert.ok(html.includes('fill="none"'));
-	assert.ok(html.includes('href="/archive-site/assets/icons/heart.svg#heart"'));
+	assert.ok(html.includes('href="/archive/assets/icons/heart.svg#heart"'));
 });
 
 test("shows without tags render no tag links", () => {
