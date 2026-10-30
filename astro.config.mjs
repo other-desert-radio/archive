@@ -7,7 +7,7 @@ import react from "@astrojs/react";
 export default defineConfig({
 	output: "static",
 	site: "https://other-desert-radio.github.io",
-	base: "/archive-site",
+	base: "/archive",
 	integrations: [react()],
 	vite: {
 		plugins: [

@@ -6,7 +6,7 @@ import { SquareShowCard } from "../src/components/shows";
 test("links large show artwork to the show detail page with an accessible label", () => {
 	const markup = renderToStaticMarkup(
 		<SquareShowCard
-			base="/archive-site/"
+			base="/archive/"
 			show={{
 				id: 1,
 				title: "Test Show",
@@ -24,6 +24,6 @@ test("links large show artwork to the show detail page with an accessible label"
 	assert.match(markup, /loading="lazy"/);
 	assert.match(markup, /decoding="async"/);
 	assert.ok(markup.includes('alt="Test Show"'));
-	assert.ok(markup.includes('href="/archive-site/shows/1"'));
+	assert.ok(markup.includes('href="/archive/shows/1"'));
 	assert.ok(markup.includes('aria-label="View Test Show"'));
 });

@@ -21,13 +21,13 @@ function selectedMarkup(track: AudioTrack) {
 	audioStore.select(track);
 	return renderToStaticMarkup(
 		<StoresProvider stores={{ audioStore }}>
-			<Miniplayer base="/archive-site" />
+			<Miniplayer base="/archive" />
 		</StoresProvider>,
 	);
 }
 
 test("idle miniplayer renders no widget", () => {
-	assert.equal(renderToStaticMarkup(<Miniplayer base="/archive-site" />), "");
+	assert.equal(renderToStaticMarkup(<Miniplayer base="/archive" />), "");
 });
 
 test("Mixcloud renders one widget and one title without hover expansion", () => {
@@ -77,7 +77,7 @@ test("clearing a selected track removes the player content", () => {
 	assert.equal(
 		renderToStaticMarkup(
 			<StoresProvider stores={{ audioStore }}>
-				<Miniplayer base="/archive-site" />
+				<Miniplayer base="/archive" />
 			</StoresProvider>,
 		),
 		"",
@@ -106,7 +106,7 @@ test("metadata links each DJ and the show using the configured base path", () =>
 		},
 		source: { kind: "mixcloud", cloudcastKey: "/dj/show/" },
 	});
-	const base = "/archive-site";
+	const base = "/archive";
 	assert.ok(
 		html.includes(
 			`href="${base}/djs/12" aria-label="View First DJ">First DJ</a>`,
