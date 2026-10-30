@@ -15,6 +15,7 @@ and standards. None of these links automatically imports another file.
 | [Development workflow](development-workflow.md) | Choosing chunked/one-shot mode, reviewing stages, starting development, hooks or persistent plans. |
 | [Deployment](deployment.md) | Changing hosting/build configuration or base-path URLs; GitHub Pages and production checks. |
 | [SHOWS design](shows-ui-guideline.md) | Changing SHOWS presentation/search/filter behavior; observed design evidence and unimplemented proposals, not current code contracts. |
+| [Archive search and storage intent](archive-search-intent.md) | User goals, terminology, ShowStore boundaries, pagination, initialization, and local storage proposals; decisions and open choices, not implemented behavior. |
 
 There is no database or server runtime in this repository. Archive JSON
 integration belongs to Architecture and the validators in `src/utils/`;

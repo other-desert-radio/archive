@@ -1,12 +1,16 @@
 {
-	"id": 27,
-	"title": "Lindsey Cooper Andersen",
-	"image_small": "assets/djs/27_small.webp",
-	"image_large": "assets/djs/27_large.webp",
-	"bio": "<p>Lindsey Andersen is a radical artist, musician, and community builder based in Twentynine Palms, California. Her work spans performance art, large-scale sculpture, experimental music, and collaborative, community-based projects. She is the founder of STAGEFRIGHT, an inclusive performance art band that blends alter-egos, live music, costume, and chaotic rituals to create spaces where audience and performer merge. Grounded in art as social practice, Andersen runs an underground junk art residency (Wonder Domes) where she hosts artists, performances, screenings, and workshops. She is also a teacher for Groundwork Arts public after-school program where she brings a passion for youth empowerment, and helping students build creative &amp; technical skills.</p>",
-	"socials": "<p>@lindseycandersen</p>",
-	"showTitle": "Mojave Mouth",
-	"showDescription": "a deeper look into the lives of people inhabiting wonder valley",
-	"shows": [],
-	"tagIds": []
+	"version": 1,
+	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"data": {
+		"id": 27,
+		"title": "Lindsey Cooper Andersen",
+		"image_small": "assets/djs/27_small.webp",
+		"image_large": "assets/djs/27_large.webp",
+		"bio": "<p>Lindsey Andersen is a radical artist, musician, and community builder based in Twentynine Palms, California. Her work spans performance art, large-scale sculpture, experimental music, and collaborative, community-based projects. She is the founder of STAGEFRIGHT, an inclusive performance art band that blends alter-egos, live music, costume, and chaotic rituals to create spaces where audience and performer merge. Grounded in art as social practice, Andersen runs an underground junk art residency (Wonder Domes) where she hosts artists, performances, screenings, and workshops. She is also a teacher for Groundwork Arts public after-school program where she brings a passion for youth empowerment, and helping students build creative &amp; technical skills.</p>",
+		"socials": "<p>@lindseycandersen</p>",
+		"showTitle": "Mojave Mouth",
+		"showDescription": "a deeper look into the lives of people inhabiting wonder valley",
+		"shows": [],
+		"tagIds": []
+	}
 }

@@ -1,12 +1,16 @@
 {
-	"id": 24,
-	"title": "Desert Dove Radio",
-	"image_small": "assets/djs/24_small.webp",
-	"image_large": "assets/djs/24_large.webp",
-	"bio": "<p>Desert Dove Radio is Aidan Koch</p>",
-	"socials": "<p>@aidanalexiskoch</p>",
-	"showTitle": "Desert Dove",
-	"showDescription": "I grew up obsessively listening to anime OPs and cassettes of Georges Collinet's Afropop my dad recorded directly from the radio while reading Robert Jordan's The Wheel of Time series. This show is like that.",
-	"shows": [],
-	"tagIds": []
+	"version": 1,
+	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"data": {
+		"id": 24,
+		"title": "Desert Dove Radio",
+		"image_small": "assets/djs/24_small.webp",
+		"image_large": "assets/djs/24_large.webp",
+		"bio": "<p>Desert Dove Radio is Aidan Koch</p>",
+		"socials": "<p>@aidanalexiskoch</p>",
+		"showTitle": "Desert Dove",
+		"showDescription": "I grew up obsessively listening to anime OPs and cassettes of Georges Collinet's Afropop my dad recorded directly from the radio while reading Robert Jordan's The Wheel of Time series. This show is like that.",
+		"shows": [],
+		"tagIds": []
+	}
 }

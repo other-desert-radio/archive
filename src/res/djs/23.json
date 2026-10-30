@@ -1,12 +1,16 @@
 {
-	"id": 23,
-	"title": "Gabriel Valenzuela",
-	"image_small": "assets/djs/23_small.webp",
-	"image_large": "assets/djs/23_large.webp",
-	"bio": "<p>Gabriel Valenzuela grew up in the low desert, now based in Yucca Valley. Drummer + tape enthusiast + Saskia's dad. Promises more mixes are coming.</p>",
-	"socials": "<p>@gabriel_._._._._._._._._._._._</p>",
-	"showTitle": "Waiting Room",
-	"showDescription": "You have now entered the queue, welcome to the waiting room.",
-	"shows": [],
-	"tagIds": []
+	"version": 1,
+	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"data": {
+		"id": 23,
+		"title": "Gabriel Valenzuela",
+		"image_small": "assets/djs/23_small.webp",
+		"image_large": "assets/djs/23_large.webp",
+		"bio": "<p>Gabriel Valenzuela grew up in the low desert, now based in Yucca Valley. Drummer + tape enthusiast + Saskia's dad. Promises more mixes are coming.</p>",
+		"socials": "<p>@gabriel_._._._._._._._._._._._</p>",
+		"showTitle": "Waiting Room",
+		"showDescription": "You have now entered the queue, welcome to the waiting room.",
+		"shows": [],
+		"tagIds": []
+	}
 }

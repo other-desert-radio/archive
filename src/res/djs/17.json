@@ -1,23 +1,27 @@
 {
-	"id": 17,
-	"title": "Hans F. Wagner",
-	"image_small": "assets/djs/17_small.webp",
-	"image_large": "assets/djs/17_large.webp",
-	"bio": "<p>Hans F. Wagner, artist, lives among the Pacific West. He writes, paints, and records music in his studio at Bogus Thunder, shoveling out whorls on a long mesa slanting towards the Isosceles Triangle.</p>",
-	"socials": "<p>@meadow_lair and meadowlair3000.com and blog: armchairwind.blogspot.com/</p>",
-	"showTitle": "Hans F. Wagner - Reading and Sound Collage: A Tale of the Ragged Mountains (Poe/Chain), John Zoon (hans f. wagner) & General Baby (jon nielsen) - The Lost Gamma Gulch Tapes",
-	"showDescription": "Guitar collage, sound collage, and language.",
-	"shows": [
-		{
-			"id": 68,
-			"title": "Reading and Sound Collage: A Tale of the Ragged Mountains (Poe/Chain)",
-			"date": "2021-10-25T00:00:00.000Z",
-			"duration": 2377,
-			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/9/6/6/5fc9-a90d-4dcf-a18e-4f7c980f91d8",
-			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/9/6/6/5fc9-a90d-4dcf-a18e-4f7c980f91d8",
-			"tagIds": [97, 98, 99, 100, 101],
-			"url": "https://www.mixcloud.com/otherdesertradio/hans-f-wagner-reading-and-sound-collage-a-tale-of-the-ragged-mountains-poechain-oct-25-2021/"
-		}
-	],
-	"tagIds": [97, 98, 99, 100, 101]
+	"version": 1,
+	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"data": {
+		"id": 17,
+		"title": "Hans F. Wagner",
+		"image_small": "assets/djs/17_small.webp",
+		"image_large": "assets/djs/17_large.webp",
+		"bio": "<p>Hans F. Wagner, artist, lives among the Pacific West. He writes, paints, and records music in his studio at Bogus Thunder, shoveling out whorls on a long mesa slanting towards the Isosceles Triangle.</p>",
+		"socials": "<p>@meadow_lair and meadowlair3000.com and blog: armchairwind.blogspot.com/</p>",
+		"showTitle": "Hans F. Wagner - Reading and Sound Collage: A Tale of the Ragged Mountains (Poe/Chain), John Zoon (hans f. wagner) & General Baby (jon nielsen) - The Lost Gamma Gulch Tapes",
+		"showDescription": "Guitar collage, sound collage, and language.",
+		"shows": [
+			{
+				"id": 68,
+				"title": "Reading and Sound Collage: A Tale of the Ragged Mountains (Poe/Chain)",
+				"date": "2021-10-25T00:00:00.000Z",
+				"duration": 2377,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/9/6/6/5fc9-a90d-4dcf-a18e-4f7c980f91d8",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/9/6/6/5fc9-a90d-4dcf-a18e-4f7c980f91d8",
+				"tagIds": [97, 98, 99, 100, 101],
+				"url": "https://www.mixcloud.com/otherdesertradio/hans-f-wagner-reading-and-sound-collage-a-tale-of-the-ragged-mountains-poechain-oct-25-2021/"
+			}
+		],
+		"tagIds": [97, 98, 99, 100, 101]
+	}
 }

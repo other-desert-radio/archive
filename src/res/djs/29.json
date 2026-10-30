@@ -1,12 +1,16 @@
 {
-	"id": 29,
-	"title": "LUVWAVE",
-	"image_small": "assets/djs/29_small.webp",
-	"image_large": "assets/djs/29_large.webp",
-	"bio": "<p>LUVWAVE currently resides in an other other desert city, but sends in diary transmissions from exile time to time.</p>",
-	"socials": "<p>https://www.patreon.com/AnitaHatesCars?utm_campaign=creatorshare_creator</p>",
-	"showTitle": "WARTIME/PEACETIME PRODUCTS",
-	"showDescription": "I hope you feel just as adaptable while indignant about your right to continue on existing.",
-	"shows": [],
-	"tagIds": []
+	"version": 1,
+	"updatedAt": "2026-10-30T17:06:52.553Z",
+	"data": {
+		"id": 29,
+		"title": "LUVWAVE",
+		"image_small": "assets/djs/29_small.webp",
+		"image_large": "assets/djs/29_large.webp",
+		"bio": "<p>LUVWAVE currently resides in an other other desert city, but sends in diary transmissions from exile time to time.</p>",
+		"socials": "<p>https://www.patreon.com/AnitaHatesCars?utm_campaign=creatorshare_creator</p>",
+		"showTitle": "WARTIME/PEACETIME PRODUCTS",
+		"showDescription": "I hope you feel just as adaptable while indignant about your right to continue on existing.",
+		"shows": [],
+		"tagIds": []
+	}
 }

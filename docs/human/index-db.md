@@ -52,6 +52,7 @@ to prevent fetching all of the shows for this comparsion, maybe we should consid
     id: number,
     title: string,
     createdAt: timestamp,
+    updatedAt: timestamp,
     shows: [{
         id: number,
         addedAt: timestamp,
@@ -65,7 +66,7 @@ to prevent fetching all of the shows for this comparsion, maybe we should consid
 ```json
 [{
     showId: number,
-    duration: number,
+    positionsInSeconds: number,
     startedAt: timestamp
 }]
 ```
@@ -75,9 +76,8 @@ to prevent fetching all of the shows for this comparsion, maybe we should consid
 ```json
 [{
     showId: number,
-    duration: number,
     startedAt: timestamp
-    finishedAt: timestamp
+    compleltedAt: timestamp
 }]
 ```
 
