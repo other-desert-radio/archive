@@ -110,11 +110,8 @@ const hydratedTags = hydrateTags(show, tags);
 <style>
   .show-dj {
     --dj-artwork-size: calc(var(--density-unit) * 5.5);
-    display: grid;
-    grid-template-columns:
-      minmax(0, var(--dj-artwork-size))
-      minmax(0, 1fr);
-    align-items: start;
+    display: flex;
+    align-items: flex-start;
     gap: var(--space-sm);
     width: min(100%, calc(var(--density-unit) * 72));
     padding: var(--space-sm);
@@ -146,12 +143,16 @@ const hydratedTags = hydrateTags(show, tags);
   }
 
   .dj-profile {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     min-width: 0;
   }
 
   .dj-portrait {
     display: block;
-    width: 100%;
+    width: var(--dj-artwork-size);
+    flex-shrink: 0;
     max-width: var(--dj-artwork-size);
     height: auto;
     aspect-ratio: 1;
@@ -212,8 +213,8 @@ const hydratedTags = hydrateTags(show, tags);
   }
 
   .show-djs {
-    display: grid;
-    align-content: start;
+    display: flex;
+    flex-direction: column;
     gap: var(--grid-column-gap);
     grid-column: 1;
     min-width: 0;
@@ -273,7 +274,12 @@ const hydratedTags = hydrateTags(show, tags);
       grid-row: auto;
     }
     .show-dj {
-      grid-template-columns: minmax(0, 1fr);
+      flex-direction: column;
+    }
+
+    .dj-profile {
+      flex: initial;
+      width: 100%;
     }
   }
 </style>
