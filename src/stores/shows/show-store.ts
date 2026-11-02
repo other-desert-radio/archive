@@ -13,6 +13,9 @@ type ShowsExport = {
 };
 
 export class ShowStore {
+	private shows: Map<number, Show> = new Map();
+	private showObjectStore: DBStore<Show, number>;
+
 	constructor(
 		private readonly database: Database,
 		private readonly versionsStore: VersionsStore,
@@ -20,7 +23,9 @@ export class ShowStore {
 		this.showObjectStore = database.getObjectStore("shows");
 	}
 
-	initialize(): void {
+	async initialize(base = import.meta.env.BASE_URL): Promise<void> {
+		const cached = await this.showObjectStore.getAll();
+		this.shows = new Map(cached.map((show) => [show.id, show]));
 		console.log(
 			`[ShowStore] cached revision: ${this.versionsStore.getCached("shows") ?? "none"}`,
 		);
@@ -28,11 +33,20 @@ export class ShowStore {
 			`[ShowStore] show data_version: ${this.versionsStore.getPublished("shows")}`,
 		);
 
-		// Compare revisions and refresh the catalog before loading shows into memory.
+		const updated = await this.fetchUpdatedShows(base);
+		if (updated) {
+			await this.saveShows(updated);
+			this.shows = new Map(updated.data.map((show) => [show.id, show]));
+		}
+		console.log(`[ShowStore] loaded ${this.shows.size} shows into memory`);
 	}
 
-	get(id: number): Promise<Show | undefined> {
-		return this.showObjectStore.get(id);
+	get(id: number): Show | undefined {
+		return this.shows.get(id);
+	}
+
+	getAll(): Show[] {
+		return [...this.shows.values()];
 	}
 
 	async fetchShows(base = import.meta.env.BASE_URL): Promise<ShowsExport> {
@@ -69,6 +83,7 @@ export class ShowStore {
 	async saveShows(exported: ShowsExport): Promise<void> {
 		const startedAt = Date.now();
 		console.log(`[ShowStore] saving revision ${exported.version}`);
+		// TODO: investigate incremental upserts and deletions if mobile import timings justify them.
 		await this.database.transaction([
 			{ store: "shows", action: "clear" },
 			...exported.data.map<TransactionOperation>((show) => ({
@@ -87,6 +102,4 @@ export class ShowStore {
 			`[ShowStore] saved revision ${exported.version} in ${Date.now() - startedAt}ms`,
 		);
 	}
-
-	private showObjectStore: DBStore<Show, number>;
 }

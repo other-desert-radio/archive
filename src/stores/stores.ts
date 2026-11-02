@@ -22,9 +22,7 @@ export function createStores(database: Database = createIndexedDB()): Stores {
 		initialize() {
 			initialization ??= versionsStore
 				.initialize()
-				.then(() => {
-					showStore.initialize();
-				})
+				.then(() => showStore.initialize())
 				.catch((error: unknown) => {
 					initialization = undefined;
 					throw error;

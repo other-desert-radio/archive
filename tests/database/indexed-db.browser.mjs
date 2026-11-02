@@ -14,6 +14,13 @@ export async function runIndexedDBChecks() {
 		target: "browser",
 	});
 	assert.ok(bundle.success, "Database module must bundle");
+	const storesBundle = await build({
+		entrypoints: ["src/stores/stores.ts"],
+		target: "browser",
+		define: { "import.meta.env.BASE_URL": JSON.stringify("/") },
+	});
+	assert.ok(storesBundle.success, "Stores module must bundle");
+	let showDownloads = 0;
 	const server = serve({
 		port: 0,
 		fetch(request) {
@@ -22,6 +29,19 @@ export async function runIndexedDBChecks() {
 					return new Response(bundle.outputs[0], {
 						headers: { "Content-Type": "application/javascript" },
 					});
+				case "/stores.js":
+					return new Response(storesBundle.outputs[0], {
+						headers: { "Content-Type": "application/javascript" },
+					});
+				case "/resources/data_versions.json":
+					return Response.json({
+						shows: { id: 1, updatedAt: "2026-10-30T12:00:00.000Z" },
+						djs: { id: 1, updatedAt: "2026-10-30T12:00:00.000Z" },
+						tags: { id: 1, updatedAt: "2026-10-30T12:00:00.000Z" },
+					});
+				case "/resources/shows.json":
+					showDownloads++;
+					return new Response(file("tests/res/shows.json"));
 				case "/fixture.json":
 					return new Response(file("tests/res/shows.json"));
 				default:
@@ -157,6 +177,27 @@ export async function runIndexedDBChecks() {
 			return { title, reopened: await store.getAll() };
 		})()`));
 		assert.deepEqual(persisted, { title: "Committed", reopened: [] });
+		const initialized = JSON.parse(await browser("eval", `(async () => {
+			const { createStores } = await import(new URL('/stores.js', location.href).href);
+			const first = createStores();
+			await first.initialize();
+			const firstShows = first.showStore.getAll();
+			if (!firstShows.length) throw new Error('Expected imported shows');
+			if (first.showStore.get(firstShows[0].id) !== firstShows[0]) {
+				throw new Error('Lookup must use the same in-memory record');
+			}
+			const second = createStores();
+			await second.initialize();
+			return {
+				first: firstShows.length,
+				second: second.showStore.getAll().length,
+				cached: second.versionsStore.getCached('shows'),
+			};
+		})()`));
+		assert.ok(initialized.first > 0);
+		assert.equal(initialized.second, initialized.first);
+		assert.equal(initialized.cached, 1);
+		assert.equal(showDownloads, 1, "A matching local revision must not download shows again");
 	} finally {
 		try {
 			await browser("close");

@@ -15,18 +15,11 @@ test("construction does not open browser storage", () => {
 	new ShowStore(database, new VersionsStore(database));
 });
 
-test("get delegates numeric IDs to the shows object store", async () => {
+test("lookups use memory without opening storage before initialization", () => {
 	const database = createIndexedDB();
-	const versions = new VersionsStore(database);
-	const objectStore = database.getObjectStore("shows");
-	const read = mock.method(objectStore, "get", async () => undefined);
-	mock.method(database, "getObjectStore", () => objectStore);
-	const store = new ShowStore(database, versions);
-	assert.equal(await store.get(42), undefined);
-	assert.deepEqual(
-		read.mock.calls.map((call) => call.arguments),
-		[[42]],
-	);
+	const store = new ShowStore(database, new VersionsStore(database));
+	assert.equal(store.get(42), undefined);
+	assert.deepEqual(store.getAll(), []);
 });
 
 test("fetches the shows export and its revision under the configured base", async () => {
@@ -196,4 +189,85 @@ test("a failed catalog transaction rejects without refreshing cached revisions",
 		/Write failed/,
 	);
 	assert.equal(refresh.mock.callCount(), 0);
+});
+
+function setupInitialization(cachedRevision: number | undefined) {
+	const database = createIndexedDB();
+	const versions = new VersionsStore(database);
+	mock.method(versions, "getPublished", () => 4);
+	mock.method(versions, "getCached", () => cachedRevision);
+	mock.method(versions, "refreshCached", async () => {});
+	const objectStore = database.getObjectStore("shows");
+	const read = mock.method(
+		objectStore,
+		"getAll",
+		async () => fixtureShows.data,
+	);
+	mock.method(database, "getObjectStore", () => objectStore);
+	const write = mock.method(database, "transaction", async () => {});
+	return { store: new ShowStore(database, versions), read, write };
+}
+
+test("matching revisions load cached shows once and serve synchronous memory lookups", async () => {
+	const fetchMock = mock.fn(async () => {
+		throw new Error("Unexpected fetch");
+	});
+	globalThis.fetch = fetchMock as unknown as typeof fetch;
+	const { store, read, write } = setupInitialization(4);
+	await store.initialize("/archive/");
+	assert.deepEqual(store.getAll(), fixtureShows.data);
+	for (const show of fixtureShows.data) {
+		assert.deepEqual(store.get(show.id), show);
+	}
+	store.getAll().pop();
+	assert.equal(store.getAll().length, fixtureShows.data.length);
+	assert.equal(read.mock.callCount(), 1);
+	assert.equal(write.mock.callCount(), 0);
+	assert.equal(fetchMock.mock.callCount(), 0);
+});
+
+test("updated catalog replaces memory only after the save commits", async () => {
+	const updated = {
+		version: 4,
+		updatedAt: "2026-11-02T19:09:00.560Z",
+		data: [],
+	};
+	globalThis.fetch = mock.fn(async () =>
+		Response.json(updated),
+	) as unknown as typeof fetch;
+	const { store, write } = setupInitialization(3);
+	const commit = Promise.withResolvers<void>();
+	const started = Promise.withResolvers<void>();
+	write.mock.mockImplementation(() => {
+		started.resolve();
+		return commit.promise;
+	});
+	const loading = store.initialize("/archive/");
+	await started.promise;
+	assert.deepEqual(store.getAll(), fixtureShows.data);
+	commit.resolve();
+	await loading;
+	assert.deepEqual(store.getAll(), []);
+	assert.equal(write.mock.callCount(), 1);
+});
+
+test("failed downloads and writes retain cached shows in memory and allow retry", async () => {
+	const { store, write } = setupInitialization(3);
+	globalThis.fetch = mock.fn(async () => {
+		throw new Error("Offline");
+	}) as unknown as typeof fetch;
+	await assert.rejects(store.initialize("/archive/"), /Offline/);
+	assert.deepEqual(store.getAll(), fixtureShows.data);
+	assert.equal(write.mock.callCount(), 0);
+	globalThis.fetch = mock.fn(async () =>
+		Response.json({ version: 4, data: [] }),
+	) as unknown as typeof fetch;
+	write.mock.mockImplementation(async () => {
+		throw new Error("Write failed");
+	});
+	await assert.rejects(store.initialize("/archive/"), /Write failed/);
+	assert.deepEqual(store.getAll(), fixtureShows.data);
+	write.mock.mockImplementation(async () => {});
+	await store.initialize("/archive/");
+	assert.deepEqual(store.getAll(), []);
 });

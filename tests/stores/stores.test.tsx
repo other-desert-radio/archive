@@ -142,3 +142,25 @@ test("failed initialization rejects and permits retry", async () => {
 	await injected.initialize();
 	assert.equal(attempts, 2);
 });
+
+test("shared initialization awaits ShowStore completion and propagates its errors", async () => {
+	const injected = createStores();
+	mock.method(injected.versionsStore, "initialize", async () => {});
+	const loading = Promise.withResolvers<void>();
+	mock.method(injected.showStore, "initialize", () => loading.promise);
+	let settled = false;
+	const initialize = injected.initialize();
+	void initialize.then(
+		() => {
+			settled = true;
+		},
+		() => {
+			settled = true;
+		},
+	);
+	await Promise.resolve();
+	await Promise.resolve();
+	assert.equal(settled, false);
+	loading.reject(new Error("Show refresh failed"));
+	await assert.rejects(initialize, /Show refresh failed/);
+});
