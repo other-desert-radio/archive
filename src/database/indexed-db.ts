@@ -7,9 +7,64 @@ import type {
 } from "./types";
 
 export function createIndexedDB(): Database {
+	let connection: Promise<IDBDatabase> | undefined;
+
 	// Open lazily so creating stores does not access browser APIs during SSR.
 	async function openDatabase(): Promise<IDBDatabase> {
-		throw new Error("Not implemented");
+		if (connection) {
+			return connection;
+		}
+		connection = new Promise<IDBDatabase>((resolve, reject) => {
+			const request = indexedDB.open("odr-archive", 1);
+			let abandoned = false;
+			const timeout = setTimeout(() => {
+				fail(new Error("Opening archive storage timed out"));
+			}, 5000);
+			function fail(error: Error) {
+				abandoned = true;
+				clearTimeout(timeout);
+				reject(error);
+			}
+			request.onupgradeneeded = () => {
+				if (abandoned) {
+					request.transaction?.abort();
+					return;
+				}
+				const db = request.result;
+				db.createObjectStore("shows", { keyPath: "id" });
+				db.createObjectStore("metadata", { keyPath: "key" });
+			};
+			request.onerror = () => {
+				fail(request.error ?? new Error("Cannot open archive storage"));
+			};
+			request.onblocked = () => {
+				fail(
+					new Error(
+						"Archive storage upgrade blocked; close other archive tabs",
+					),
+				);
+			};
+			request.onsuccess = () => {
+				clearTimeout(timeout);
+				const db = request.result;
+				if (abandoned) {
+					db.close();
+					return;
+				}
+				db.onversionchange = () => {
+					db.close();
+					connection = undefined;
+				};
+				db.onclose = () => {
+					connection = undefined;
+				};
+				resolve(db);
+			};
+		}).catch((error: unknown) => {
+			connection = undefined;
+			throw error;
+		});
+		return connection;
 	}
 
 	return {
