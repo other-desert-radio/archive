@@ -61,3 +61,22 @@ test("loads a validated hydrated DJ from a file URL", async () => {
 		tagIds: [1, 2],
 	});
 });
+
+test("DJ profiles accept missing optional metadata and normalize null bios", async () => {
+	const directory = await mkdtemp(join(tmpdir(), "archive-dj-"));
+	try {
+		const file = join(directory, "dj.json");
+		const data = { id: 39, title: "Modular Monday", shows: [], tagIds: [] };
+		for (const bio of [undefined, null, "<p>Biography</p>"]) {
+			await writeFile(file, JSON.stringify({ data: { ...data, bio } }));
+			assert.deepEqual(await fetchDJ(pathToFileURL(file)), {
+				...data,
+				bio: bio ?? undefined,
+			});
+		}
+		await writeFile(file, JSON.stringify({ data: { ...data, bio: 42 } }));
+		await assert.rejects(fetchDJ(pathToFileURL(file)), /unexpected format/);
+	} finally {
+		await rm(directory, { recursive: true, force: true });
+	}
+});

@@ -51,12 +51,16 @@ const hydratedTags = hydrateTags(dj, tags);
 
   <div class="dj-grid">
     <div class="dj-column">
-      <img
-        class="dj-photo image-border-primary"
-        decoding="async"
-        src={`${base}/${dj.image_large}`}
-        alt={dj.title}
-      />
+      {
+        dj.image_large && (
+          <img
+            class="dj-photo image-border-primary"
+            decoding="async"
+            src={`${base}/${dj.image_large}`}
+            alt={dj.title}
+          />
+        )
+      }
       <div set:html={dj.socials} />
     </div>
     <div class="dj-column">

@@ -87,13 +87,15 @@ const hydratedTags = hydrateTags(show, tags);
             aria-label={`View ${dj.title}`}
             aria-labelledby={`dj-${dj.id}`}
           >
-            <img
-              class="dj-portrait"
-              src={`${base}/${dj.image_large}`}
-              alt={dj.title}
-              loading="lazy"
-              decoding="async"
-            />
+            {dj.image_large && (
+              <img
+                class="dj-portrait"
+                src={`${base}/${dj.image_large}`}
+                alt={dj.title}
+                loading="lazy"
+                decoding="async"
+              />
+            )}
             <div class="dj-profile">
               <h2 id={`dj-${dj.id}`} class="dj-name">
                 {dj.title}

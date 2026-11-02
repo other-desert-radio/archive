@@ -11,7 +11,6 @@ const escapeAttribute = (value: string) =>
 	value
 		.replaceAll("&", "&amp;")
 		.replaceAll('"', "&quot;")
-		.replaceAll("'", "&#x27;")
 		.replaceAll("<", "&lt;")
 		.replaceAll(">", "&gt;");
 
@@ -40,16 +39,23 @@ test("built show and DJ detail pages render large artwork with alt text and page
 				record.tagIds.length,
 				`${category}/${record.id} should render large tags`,
 			);
+			if (!record.image_large) {
+				assert.doesNotMatch(html, /src="[^"]*undefined/);
+				continue;
+			}
+			const imageLarge = record.image_large;
 			const image = (html.match(/<img\b[^>]*>/g) ?? []).find((tag) =>
 				tag.includes(
-					`src="${category === "djs" ? "/archive/" : ""}${escapeAttribute(record.image_large)}"`,
+					`src="${category === "djs" ? "/archive/" : ""}${escapeAttribute(imageLarge)}"`,
 				),
 			);
 			assert.ok(image, `${category}/${record.id} should render large artwork`);
 			assert.doesNotMatch(image, /loading="lazy"/);
 			assert.match(image, /decoding="async"/);
 			assert.ok(
-				image.includes(`alt="${escapeAttribute(record.title)}"`),
+				image
+					.replaceAll("&#x27;", "'")
+					.includes(`alt="${escapeAttribute(record.title)}"`),
 				`${category}/${record.id}: ${image}`,
 			);
 		}

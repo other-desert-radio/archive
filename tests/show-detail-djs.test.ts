@@ -19,8 +19,12 @@ test("show details include each associated DJ's profile and biography", async ()
 			const dj = await fetchDJ(pathToFileURL(`src/res/djs/${id}.json`));
 			assert.ok(html.includes(`aria-labelledby="dj-${id}"`));
 			assert.ok(html.includes(`href="/archive/djs/${id}"`));
-			assert.ok(html.includes(`src="/archive/${dj.image_large}"`));
-			assert.ok(html.includes(dj.bio));
+			if (dj.image_large) {
+				assert.ok(html.includes(`src="/archive/${dj.image_large}"`));
+			}
+			if (dj.bio) {
+				assert.ok(html.includes(dj.bio));
+			}
 		}
 	}
 });

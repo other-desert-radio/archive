@@ -16,7 +16,7 @@ const contracts = [
 
 for (const { name, fixture, load } of contracts) {
 	for (const field of ["image_small", "image_large"]) {
-		test(`${name} reject a missing ${field}`, async () => {
+		test(`${name} validate a missing ${field}`, async () => {
 			const directory = await mkdtemp(join(tmpdir(), "archive-images-"));
 			try {
 				const data = JSON.parse(await readFile(`tests/res/${fixture}`, "utf8"));
@@ -24,7 +24,11 @@ for (const { name, fixture, load } of contracts) {
 				delete record[field];
 				const file = join(directory, "data.json");
 				await writeFile(file, JSON.stringify(data));
-				await assert.rejects(load(pathToFileURL(file)), /unexpected format/);
+				if (name === "shows") {
+					await assert.rejects(load(pathToFileURL(file)), /unexpected format/);
+				} else {
+					await load(pathToFileURL(file));
+				}
 			} finally {
 				await rm(directory, { recursive: true, force: true });
 			}
@@ -33,7 +37,7 @@ for (const { name, fixture, load } of contracts) {
 }
 
 for (const field of ["image_small", "image_large"]) {
-	test(`shows reject an invalid ${field} and nested DJs missing ${field}`, async () => {
+	test(`shows reject an invalid ${field} but accept nested DJs missing ${field}`, async () => {
 		const directory = await mkdtemp(join(tmpdir(), "archive-images-"));
 		try {
 			const file = join(directory, "data.json");
@@ -56,10 +60,7 @@ for (const field of ["image_small", "image_large"]) {
 			const data = JSON.parse(await readFile("tests/res/shows.json", "utf8"));
 			delete data.data[0].djs[0][field];
 			await writeFile(file, JSON.stringify(data));
-			await assert.rejects(
-				fetchShows(pathToFileURL(file)),
-				/unexpected format/,
-			);
+			await fetchShows(pathToFileURL(file));
 		} finally {
 			await rm(directory, { recursive: true, force: true });
 		}
