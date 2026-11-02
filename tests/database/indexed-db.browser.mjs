@@ -68,6 +68,7 @@ export async function runIndexedDBChecks() {
 			await remove();
 			const database = createIndexedDB();
 			const shows = database.getObjectStore('shows');
+			const metadata = database.getObjectStore('metadata');
 			const initial = await Promise.all([shows.getAll(), shows.get(42)]);
 			check(initial[0].length === 0 && initial[1] === undefined, 'Empty reads');
 			const db = await inspect();
@@ -88,6 +89,23 @@ export async function runIndexedDBChecks() {
 			await shows.delete(42);
 			await shows.delete(42);
 			check(await shows.get(42) === undefined, 'Delete and missing delete');
+			await metadata.set({ key: 'shows', revision: 1 });
+			check((await metadata.get('shows')).revision === 1, 'String-keyed metadata CRUD');
+			check((await metadata.getAll()).length === 1, 'Metadata getAll');
+			await metadata.delete('shows');
+			check(await metadata.get('shows') === undefined, 'Metadata delete');
+			await database.transaction([
+				{ store: 'shows', action: 'set', value: { ...fixture, id: 99 } },
+				{ store: 'shows', action: 'delete', key: 99 },
+				{ store: 'metadata', action: 'set', value: { key: 'shows', revision: 2 } },
+				{ store: 'metadata', action: 'delete', key: 'shows' },
+			]);
+			check(await shows.get(99) === undefined && await metadata.get('shows') === undefined, 'Typed batch deletes');
+			await database.transaction([
+				{ store: 'metadata', action: 'set', value: { key: 'shows', revision: 3 } },
+				{ store: 'metadata', action: 'clear' },
+			]);
+			check((await metadata.getAll()).length === 0, 'Metadata batch clear');
 			await database.transaction([]);
 			await database.transaction([
 				{ store: 'shows', action: 'set', value: { ...fixture, id: 99 } },

@@ -1,18 +1,24 @@
 import type { Show } from "../utils/fetch-shows";
 
-export type StoreName = "shows";
+export type StoreSchema = {
+	shows: { value: Show; key: number };
+	// local cache of data_versions.json
+	metadata: { value: { key: string; revision: number }; key: string };
+};
 
-export type TransactionOperation =
-	| { store: "shows"; action: "clear" }
-	| { store: "shows"; action: "set"; value: Show }
-	| {
-			store: "metadata";
-			action: "set";
-			value: { key: "shows"; revision: number };
-	  };
+export type StoreName = keyof StoreSchema;
+
+export type TransactionOperation = {
+	[N in StoreName]:
+		| { store: N; action: "clear" }
+		| { store: N; action: "set"; value: StoreSchema[N]["value"] }
+		| { store: N; action: "delete"; key: StoreSchema[N]["key"] };
+}[StoreName];
 
 export type Database = {
-	getObjectStore(name: StoreName): DBStore<Show, number>;
+	getObjectStore<N extends StoreName>(
+		name: N,
+	): DBStore<StoreSchema[N]["value"], StoreSchema[N]["key"]>;
 	// Commit the batch in order, or roll it all back; resolve only after commit.
 	transaction(operations: TransactionOperation[]): Promise<void>;
 };

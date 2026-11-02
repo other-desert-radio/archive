@@ -1,8 +1,8 @@
-import type { Show } from "../utils/fetch-shows";
 import type {
 	Database,
 	DBStore,
 	StoreName,
+	StoreSchema,
 	TransactionOperation,
 } from "./types";
 
@@ -91,29 +91,33 @@ export function createIndexedDB(): Database {
 	}
 
 	return {
-		getObjectStore(name: StoreName): DBStore<Show, number> {
+		getObjectStore<N extends StoreName>(
+			name: N,
+		): DBStore<StoreSchema[N]["value"], StoreSchema[N]["key"]> {
+			type Value = StoreSchema[N]["value"];
+			type Key = StoreSchema[N]["key"];
 			return {
-				get(key: number): Promise<Show | undefined> {
+				get(key: Key): Promise<Value | undefined> {
 					return execute([name], "readonly", (tx) => {
-						const request: IDBRequest<Show | undefined> = tx
+						const request: IDBRequest<Value | undefined> = tx
 							.objectStore(name)
 							.get(key);
 						return () => request.result;
 					});
 				},
-				getAll(): Promise<Show[]> {
+				getAll(): Promise<Value[]> {
 					return execute([name], "readonly", (tx) => {
-						const request: IDBRequest<Show[]> = tx.objectStore(name).getAll();
+						const request: IDBRequest<Value[]> = tx.objectStore(name).getAll();
 						return () => request.result;
 					});
 				},
-				set(value: Show): Promise<void> {
+				set(value: Value): Promise<void> {
 					return execute([name], "readwrite", (tx) => {
 						tx.objectStore(name).put(value);
 						return () => undefined;
 					});
 				},
-				delete(key: number): Promise<void> {
+				delete(key: Key): Promise<void> {
 					return execute([name], "readwrite", (tx) => {
 						tx.objectStore(name).delete(key);
 						return () => undefined;
@@ -132,6 +136,9 @@ export function createIndexedDB(): Database {
 					switch (operation.action) {
 						case "clear":
 							store.clear();
+							break;
+						case "delete":
+							store.delete(operation.key);
 							break;
 						case "set":
 							store.put(operation.value);
