@@ -6,8 +6,8 @@ import DJsPane from "../components/dj/DJsPane.tsx";
 import { fetchDJs } from "../utils/fetch-djs";
 import { fetchTags } from "../utils/fetch-tags";
 
-const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
-const djs = await fetchDJs(pathToFileURL("src/res/djs_brief.json"));
+const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
+const djs = await fetchDJs(pathToFileURL("public/resources/djs_brief.json"));
 const base = import.meta.env.BASE_URL;
 ---
 

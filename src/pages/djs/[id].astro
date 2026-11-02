@@ -14,14 +14,14 @@ const base = getBasePath();
 
 /** Generates static DJ detail pages from the archive summary during Astro builds. */
 export async function getStaticPaths() {
-  const djs = await fetchDJs(pathToFileURL("src/res/djs_brief.json"));
-  const shows = await fetchShows(pathToFileURL("src/res/shows.json"));
+  const djs = await fetchDJs(pathToFileURL("public/resources/djs_brief.json"));
+  const shows = await fetchShows(pathToFileURL("public/resources/shows.json"));
 
   return Promise.all(
     djs.map(async ({ id }) => ({
       params: { id: String(id) },
       props: {
-        dj: await fetchDJ(pathToFileURL(`src/res/djs/${id}.json`)),
+        dj: await fetchDJ(pathToFileURL(`public/resources/djs/${id}.json`)),
         djShows: shows.filter((show) => show.djs.some((dj) => dj.id === id)),
       },
     })),
@@ -34,7 +34,7 @@ type Props = {
 };
 
 const { dj, djShows } = Astro.props as Props;
-const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
+const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
 
 const hydratedTags = hydrateTags(dj, tags);
 ---

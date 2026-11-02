@@ -15,11 +15,11 @@ type Props = {
   djs: HydratedDJ[];
 };
 export async function getStaticPaths() {
-  const shows = await fetchShows(pathToFileURL("src/res/shows.json"));
-  const djs = await fetchDJs(pathToFileURL("src/res/djs_brief.json"));
-  const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
+  const shows = await fetchShows(pathToFileURL("public/resources/shows.json"));
+  const djs = await fetchDJs(pathToFileURL("public/resources/djs_brief.json"));
+  const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
   const profiles = await Promise.all(
-    djs.map(({ id }) => fetchDJ(pathToFileURL(`src/res/djs/${id}.json`))),
+    djs.map(({ id }) => fetchDJ(pathToFileURL(`public/resources/djs/${id}.json`))),
   );
 
   return Array.from(tags.values()).map((tag) => ({

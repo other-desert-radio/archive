@@ -16,10 +16,12 @@ const escapeAttribute = (value: string) =>
 
 test("built show and DJ detail pages render large artwork with alt text and page-specific tag sizes", async () => {
 	execFileSync("bun", ["run", "build"], { stdio: "pipe", timeout: 30_000 });
-	const shows = await fetchShows(pathToFileURL("src/res/shows.json"));
-	const djs = await fetchDJs(pathToFileURL("src/res/djs_brief.json"));
+	const shows = await fetchShows(pathToFileURL("public/resources/shows.json"));
+	const djs = await fetchDJs(pathToFileURL("public/resources/djs_brief.json"));
 	const profiles = await Promise.all(
-		djs.map((dj) => fetchDJ(pathToFileURL(`src/res/djs/${dj.id}.json`))),
+		djs.map((dj) =>
+			fetchDJ(pathToFileURL(`public/resources/djs/${dj.id}.json`)),
+		),
 	);
 	for (const [category, records] of [
 		["shows", shows],
