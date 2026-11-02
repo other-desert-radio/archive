@@ -8,6 +8,7 @@ type Props = {
 	children: ReactNode;
 };
 
+// Overrides the shared stores for descendants, allowing isolated instances in tests.
 export function StoresProvider({ stores, children }: Props) {
 	return (
 		<StoresContext.Provider value={stores}>{children}</StoresContext.Provider>

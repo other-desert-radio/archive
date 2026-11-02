@@ -10,12 +10,16 @@ import { fetchTags } from "../src/utils/fetch-tags";
 
 test("tag pages render only matching DJ cards with profiles and detail links", async () => {
 	execFileSync("bun", ["run", "build"], { stdio: "pipe", timeout: 30_000 });
-	const summaries = await fetchDJs(pathToFileURL("src/res/djs_brief.json"));
-	const profiles = await Promise.all(
-		summaries.map(({ id }) => fetchDJ(pathToFileURL(`src/res/djs/${id}.json`))),
+	const summaries = await fetchDJs(
+		pathToFileURL("public/resources/djs_brief.json"),
 	);
-	const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
-	const shows = await fetchShows(pathToFileURL("src/res/shows.json"));
+	const profiles = await Promise.all(
+		summaries.map(({ id }) =>
+			fetchDJ(pathToFileURL(`public/resources/djs/${id}.json`)),
+		),
+	);
+	const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
+	const shows = await fetchShows(pathToFileURL("public/resources/shows.json"));
 	for (const tag of tags.values()) {
 		const html = await readFile(`dist/tags/${tag.id}/index.html`, "utf8");
 		assert.ok(html.includes('href="/archive/explore"'));

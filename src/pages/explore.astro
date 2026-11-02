@@ -6,8 +6,8 @@ import { fetchTags } from "../utils/fetch-tags";
 import { fetchShows } from "../utils/fetch-shows";
 import { pathToFileURL } from "node:url";
 
-const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
-const shows = await fetchShows(pathToFileURL("src/res/shows.json"));
+const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
+const shows = await fetchShows(pathToFileURL("public/resources/shows.json"));
 const showCounts = new Map<number, number>();
 
 for (const show of shows) {

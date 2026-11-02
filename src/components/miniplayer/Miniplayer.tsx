@@ -1,4 +1,4 @@
-import tagCatalog from "../../res/tags.json";
+import tagCatalog from "../../../public/resources/tags.json";
 import type { AudioTrack } from "../../stores/audio";
 import { useAudioState } from "../../stores/audio";
 import MixcloudWidget from "../mixcloud";

@@ -49,7 +49,7 @@ the existing category component contain only SHOWS and DJs. Do not infer a
 new HISTORY route from this reference.
 
 The site is static Astro with React already configured. Backend-generated
-JSON in `src/res/` is validated at build time by `src/utils/`. Preserve
+JSON in `public/resources/` is validated at build time by `src/utils/`. Preserve
 static hosting and base-path-aware URLs. This guide does not introduce routes,
 dependencies, a data service, or a playback implementation.
 

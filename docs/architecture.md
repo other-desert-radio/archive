@@ -74,7 +74,7 @@ respective active category. Visible category tabs prefetch destination HTML
 using Astro's viewport strategy so touch navigation can reuse the HTTP cache
 without waiting for desktop hover. Astro retains its reduced-data and slow
 connection safeguards. `src/utils/fetch-djs.ts` reads and validates
-`src/res/djs_brief.json` at build time. The DJ page passes its summaries
+`public/resources/djs_brief.json` at build time. The DJ page passes its summaries
 to the server-rendered `DJsPane` component, which links each title to its
 static detail page. `src/pages/djs/[id].astro` loads the matching full DJ
 profile during the build and generates one static detail page per DJ; it
@@ -90,7 +90,7 @@ Shared density tokens and layout standards live in [CSS](css.md).
 Development commands live in [Workflow](development-workflow.md), verification
 in [Testing](testing.md), and hosting/base-path behavior in [Deployment](deployment.md).
 
-Archive JSON is read from `src/res/` during builds and validated in
+Archive JSON is read from `public/resources/` during builds and validated in
 `src/utils/`. The site has no database connection. Change contracts at these
 boundaries rather than introducing backend-only database conventions.
 

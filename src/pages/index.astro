@@ -6,8 +6,8 @@ import { ShowsPane } from "../components/shows";
 import { fetchShows } from "../utils/fetch-shows";
 import { fetchTags } from "../utils/fetch-tags";
 
-const tags = await fetchTags(pathToFileURL("src/res/tags.json"));
-const shows = await fetchShows(pathToFileURL("src/res/shows.json"));
+const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
+const shows = await fetchShows(pathToFileURL("public/resources/shows.json"));
 const base = import.meta.env.BASE_URL;
 ---
 

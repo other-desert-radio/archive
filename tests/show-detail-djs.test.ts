@@ -8,7 +8,7 @@ import { fetchShows } from "../src/utils/fetch-shows";
 
 test("show details include each associated DJ's profile and biography", async () => {
 	execFileSync("bun", ["run", "build"], { stdio: "pipe", timeout: 30_000 });
-	const shows = await fetchShows(pathToFileURL("src/res/shows.json"));
+	const shows = await fetchShows(pathToFileURL("public/resources/shows.json"));
 	for (const show of shows) {
 		const html = await readFile(`dist/shows/${show.id}/index.html`, "utf8");
 		assert.equal(
@@ -16,7 +16,9 @@ test("show details include each associated DJ's profile and biography", async ()
 			show.djs.length,
 		);
 		for (const { id } of show.djs) {
-			const dj = await fetchDJ(pathToFileURL(`src/res/djs/${id}.json`));
+			const dj = await fetchDJ(
+				pathToFileURL(`public/resources/djs/${id}.json`),
+			);
 			assert.ok(html.includes(`aria-labelledby="dj-${id}"`));
 			assert.ok(html.includes(`href="/archive/djs/${id}"`));
 			if (dj.image_large) {
