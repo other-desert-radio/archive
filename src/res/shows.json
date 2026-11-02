@@ -1,6 +1,6 @@
 {
-	"version": 3,
-	"updatedAt": "2026-10-30T18:51:15.215Z",
+	"version": 4,
+	"updatedAt": "2026-11-02T19:09:00.560Z",
 	"data": [
 		{
 			"id": 99,
@@ -22,6 +22,22 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-constant-coverage-2-october-19-2026/"
 		},
 		{
+			"id": 211,
+			"title": "Fall 2026",
+			"date": "2026-10-19T00:00:00.000Z",
+			"duration": 3454,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/9/8/b/f9a5-9678-4b1e-82ca-db78977a36c6",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/9/8/b/f9a5-9678-4b1e-82ca-db78977a36c6",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [33, 61, 175],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-fall-2026-october-19-2026/"
+		},
+		{
 			"id": 94,
 			"title": "Lightning Rod #2",
 			"description": "<p>WARNING: If you listen to only one song an hour, it would take two days to get to where we’re going. But we don’t recommend that, of course, and have condensed these selections for your maximum listening enjoyment. Please use safety gear when handling any and all lightning-related materials.</p>",
@@ -39,6 +55,24 @@
 			],
 			"tagIds": [33, 132, 157, 158],
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-lightning-rod-2-october-12-2026/"
+		},
+		{
+			"id": 212,
+			"title": "Pequeña Cretina + Lissajous SPECIAL",
+			"date": "2026-10-12T00:00:00.000Z",
+			"duration": 2793,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/6/d/f/55f4-fad1-42cd-9c4c-b7d6036da328",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/6/d/f/55f4-fad1-42cd-9c4c-b7d6036da328",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [21, 22, 42],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-lissajous-special-october-12-2026/"
 		},
 		{
 			"id": 95,
@@ -210,6 +244,24 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-constant-coverage-1-august-24-2026/"
 		},
 		{
+			"id": 130,
+			"title": "Volume XXXI",
+			"date": "2026-08-24T00:00:00.000Z",
+			"duration": 3600,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/0/d/0/9b7e-7b22-453b-9865-6beb1caf0cb2",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/0/d/0/9b7e-7b22-453b-9865-6beb1caf0cb2",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [33, 36, 37],
+			"url": "https://www.mixcloud.com/otherdesertradio/pequena-cretina-volume-xxxi-august-24-2026/"
+		},
+		{
 			"id": 13,
 			"title": "From the Mixed-Up Files of Axaxaxas Mlö #27",
 			"description": "<p>After a brief nap (we needed it!) a path re-emerges, and as with all paths, it is quite different than the one that came before. Will you walk it? Sing a song with us, to remind yourself that you are not alone.<br /><br /><br /><br />A5 Langst Vorbel<br /><br />EKTROVERDE Crescent (Live)<br /><br />MAHER SHALAL HASH BAZ Jaki - 23/1/2017<br /><br />ETURVL Lempilapset<br /><br />KAZUKI TOMOKAWA Muzan No Bi<br /><br />RADIO PALESTINE Voice of Peace?<br /><br />MAGIK MARKERS There is No Path Which is Not Straight<br /><br />L Faded Laago<br /><br />VIDEO LISZT Fade in Hong Kong<br /><br />VIVEICK RAJAGOPALAN, MC ALTAF, NOXIOUS D, MAHARYA, 100 RBH, MC TOD FOD India 91<br /><br />GRUPPA Nasrat<br /><br />MGZ Strange Life (Corrupted)<br /><br />LUCIDVOX Around<br /><br />SUNBURST Matatizo Nyumbani</p>",
@@ -287,7 +339,7 @@
 		},
 		{
 			"id": 67,
-			"title": "Looking Glass with Lodi Dottie Episode 7",
+			"title": "Looking Glass Episode 7",
 			"description": "<p>Cuidad Lineal - El Eslabon<br />Borghesia - Z.M.R.<br />Esplendor Geométrico - Moscú Está Helado <br />Figure Study - Divide<br />El Escuadrón Del Ritmo - Hielo Congelado <br />Das Ding - Reassurance Ritual<br />Peine Perdue - Coeur Brise<br />Deux - Felicita <br />N.A. Pop 2000 - Panic in Your Mind<br />Figure Study - Lesson One<br />Ford Proco - Central De Datos<br />Hard Corps - Dirty<br />Crash Course In Science - Flying Turns<br />In Trance 95 - Presidente<br />Xeno &amp; Oaklander - Angélique<br />Miss Kittin and The Hacker - The Building<br />Philippe Laurent - Distorsion</p>",
 			"date": "2026-08-03T00:00:00.000Z",
 			"duration": 3416,
@@ -359,6 +411,30 @@
 			],
 			"tagIds": [33, 41, 42],
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-25-june-22-2026/"
+		},
+		{
+			"id": 231,
+			"title": "What Primal Screams are Made of",
+			"date": "2026-07-13T00:00:00.000Z",
+			"duration": 3599,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/c/c/8/a0a4-76c0-42e6-bec9-f1b5977007cb",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/c/c/8/a0a4-76c0-42e6-bec9-f1b5977007cb",
+			"djs": [
+				{
+					"id": 13,
+					"title": "Justin Paszul",
+					"image_small": "assets/djs/13_small.webp",
+					"image_large": "assets/djs/13_large.webp"
+				},
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [33, 304],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-axaxaxas-ml%C3%B6-justin-paszul-what-primal-screams-are-made-of-july-13-2026/"
 		},
 		{
 			"id": 19,
@@ -644,6 +720,22 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-16-february-16-2026/"
 		},
 		{
+			"id": 245,
+			"title": "Lunar New Year, Year of the Firehorse",
+			"date": "2026-02-16T00:00:00.000Z",
+			"duration": 2423,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/0/1/d/28c2-6df4-4ff5-8ced-fff768af5385",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/0/1/d/28c2-6df4-4ff5-8ced-fff768af5385",
+			"djs": [
+				{
+					"id": 38,
+					"title": "Danielle"
+				}
+			],
+			"tagIds": [309, 310, 311],
+			"url": "https://www.mixcloud.com/otherdesertradio/danielle-lunar-new-year-year-of-the-firehorse-february-16-2026/"
+		},
+		{
 			"id": 101,
 			"title": "1",
 			"description": "<p>Gabriel Valenzuela's first all-vinyl bedroom mix recorded at Lodi Dottie's Flamingo Heights trailer.  ♫ Ambient, Experimental, Electronic ♫</p>",
@@ -699,6 +791,24 @@
 			],
 			"tagIds": [33, 78, 165, 166],
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-14-january-19-2026/"
+		},
+		{
+			"id": 131,
+			"title": "Fumbling Bush Forecast #14",
+			"date": "2026-01-19T00:00:00.000Z",
+			"duration": 5379,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/b/0/e/93ba-ff63-4872-a5a3-4774cb55e6e6",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/b/0/e/93ba-ff63-4872-a5a3-4774cb55e6e6",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-14-january-19-2025/"
 		},
 		{
 			"id": 103,
@@ -811,6 +921,24 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-10-november-24-2025/"
 		},
 		{
+			"id": 132,
+			"title": "Fumbling Bush Forecast #13",
+			"date": "2025-11-19T00:00:00.000Z",
+			"duration": 5399,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/e/d/5/1c12-af3f-4255-90e4-c9fdf6c099f7",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/e/d/5/1c12-af3f-4255-90e4-c9fdf6c099f7",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [37, 189, 190],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-13-november-19-2025/"
+		},
+		{
 			"id": 30,
 			"title": "Episode 5, D'Angelo Special",
 			"date": "2025-11-10T00:00:00.000Z",
@@ -902,6 +1030,24 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-8-october-20-2025/"
 		},
 		{
+			"id": 133,
+			"title": "Fumbling Bush Forecast #12",
+			"date": "2025-10-13T00:00:00.000Z",
+			"duration": 3605,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/a/4/0/b2ed-3123-4d90-a4f1-7670e8ce4255",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/a/4/0/b2ed-3123-4d90-a4f1-7670e8ce4255",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [37, 187, 191],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-12-october-13-2025/"
+		},
+		{
 			"id": 109,
 			"title": "From the Mixed-Up Files of Axaxaxas Mlö #7",
 			"date": "2025-10-06T00:00:00.000Z",
@@ -918,6 +1064,24 @@
 			],
 			"tagIds": [33, 37, 132],
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-7-october-6-2025/"
+		},
+		{
+			"id": 134,
+			"title": "Volume XXIX, HWY 62 ART TOURS ROAD TRIP",
+			"date": "2025-09-29T00:00:00.000Z",
+			"duration": 1967,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/1/7/6/3470-602b-4686-913e-cfcb28980b9c",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/1/7/6/3470-602b-4686-913e-cfcb28980b9c",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [192, 193, 194, 195],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xxix-hwy-62-art-tours-road-trip-september-29-2025/"
 		},
 		{
 			"id": 110,
@@ -993,6 +1157,24 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-4-august-18-2025/"
 		},
 		{
+			"id": 232,
+			"title": "Volume XXVIII, Book Club Edition III W Melissa Lozada-Oliva",
+			"date": "2025-08-18T00:00:00.000Z",
+			"duration": 3663,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/3/6/e/f87a-3136-4c0b-8f43-21e8fe5c9a75",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/3/6/e/f87a-3136-4c0b-8f43-21e8fe5c9a75",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [198, 305, 306],
+			"url": "https://www.mixcloud.com/otherdesertradio/hq-peque%C3%B1a-cretina-volume-xxviii-book-club-edition-iii-w-melissa-lozada-oliva-august-18-2025/"
+		},
+		{
 			"id": 33,
 			"title": "Boiling Rice Set",
 			"date": "2025-08-11T00:00:00.000Z",
@@ -1064,6 +1246,40 @@
 			],
 			"tagIds": [12, 33, 37],
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-1-july-7-2025/"
+		},
+		{
+			"id": 135,
+			"title": "Episode 9: 2010s mix",
+			"date": "2025-07-07T00:00:00.000Z",
+			"duration": 3856,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/e/b/1/32a8-a8b0-42e0-ae29-2027a9e04298",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/e/b/1/32a8-a8b0-42e0-ae29-2027a9e04298",
+			"djs": [
+				{
+					"id": 36,
+					"title": "Peacetime Product"
+				}
+			],
+			"tagIds": [21, 22, 184],
+			"url": "https://www.mixcloud.com/otherdesertradio/peacetime-product-episode-9-2010s-mix-july-7-2025/"
+		},
+		{
+			"id": 136,
+			"title": "Volume XXVII, Book Club Edition II W Harris Lahti",
+			"date": "2025-06-30T00:00:00.000Z",
+			"duration": 3083,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/5/f/a/2ec0-3a8a-4d58-9c21-7e4de549b30c",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/5/f/a/2ec0-3a8a-4d58-9c21-7e4de549b30c",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [196, 197, 198],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xxvii-book-club-edition-ii-w-harris-lahti-june-30-2025/"
 		},
 		{
 			"id": 115,
@@ -1144,6 +1360,44 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-an-evening-of-stand-up-cosmogony-hour-3-april-21-2025/"
 		},
 		{
+			"id": 137,
+			"title": "live at white label vinyl 29 palms 4.8.25",
+			"date": "2025-04-14T00:00:00.000Z",
+			"duration": 8416,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/0/3/e/ccd8-8ec3-4ce5-b039-d11cc5c6feb5",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/0/3/e/ccd8-8ec3-4ce5-b039-d11cc5c6feb5",
+			"djs": [
+				{
+					"id": 22,
+					"title": "Lodi Dottie",
+					"image_small": "assets/djs/22_small.webp",
+					"image_large": "assets/djs/22_large.webp"
+				},
+				{
+					"id": 36,
+					"title": "Peacetime Product"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/lodi-dottie-x-peacetime-product-live-at-white-label-vinyl-29-palms-4825-april-14-2025/"
+		},
+		{
+			"id": 233,
+			"title": "iaminconstantflux! KCSB guest mix",
+			"date": "2025-03-31T00:00:00.000Z",
+			"duration": 2659,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/7/3/a/6726-86cd-490c-aefa-a43db90c8ce8",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/7/3/a/6726-86cd-490c-aefa-a43db90c8ce8",
+			"djs": [
+				{
+					"id": 36,
+					"title": "Peacetime Product"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/peacetime-product-iaminconstantflux-kcsb-guest-mix-march-31-2025/"
+		},
+		{
 			"id": 64,
 			"title": "An Evening of Stand-Up Cosmogony, Hour #2",
 			"description": "<p>for the second night, following a brief warm-up act, we return to the emergent structures of narrative, pattern, and chaos competing for attention in our ever-expanding cosmos.</p>",
@@ -1161,6 +1415,62 @@
 			],
 			"tagIds": [],
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-an-evening-of-stand-up-cosmogony-hour-2-march-24-2025/"
+		},
+		{
+			"id": 138,
+			"title": "Archives Vol 1",
+			"date": "2025-03-24T00:00:00.000Z",
+			"duration": 3069,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/8/a/4/e1e7-c69a-46ef-90fe-baaf345ed8d7",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/8/a/4/e1e7-c69a-46ef-90fe-baaf345ed8d7",
+			"djs": [
+				{
+					"id": 36,
+					"title": "Peacetime Product"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/peacetime-product-archives-vol-1-march-24-2025/"
+		},
+		{
+			"id": 139,
+			"title": "Volume XXVI, Book Club Edition W Jesse Katz",
+			"date": "2025-03-17T00:00:00.000Z",
+			"duration": 5246,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/c/1/6/c030-6c47-42f1-9c16-9582d0760817",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/c/1/6/c030-6c47-42f1-9c16-9582d0760817",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [196, 199, 200],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xxvi-book-club-edition-w-jesse-katz-march-17-2025/"
+		},
+		{
+			"id": 140,
+			"title": "International Women's Day Mix 2025",
+			"date": "2025-03-10T00:00:00.000Z",
+			"duration": 2812,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/1/4/9/5780-961c-49cc-bf77-83fee978fb93",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/1/4/9/5780-961c-49cc-bf77-83fee978fb93",
+			"djs": [
+				{
+					"id": 22,
+					"title": "Lodi Dottie",
+					"image_small": "assets/djs/22_small.webp",
+					"image_large": "assets/djs/22_large.webp"
+				},
+				{
+					"id": 36,
+					"title": "Peacetime Product"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/peacetime-product-x-looking-glass-b2b-international-womens-day-mix-2025-march-10-2025/"
 		},
 		{
 			"id": 65,
@@ -1182,6 +1492,54 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-an-evening-of-stand-up-cosmogony-part-1-march-3-2025/"
 		},
 		{
+			"id": 141,
+			"title": "Episode 8: Oregon roadtrip mix",
+			"date": "2025-03-03T00:00:00.000Z",
+			"duration": 2230,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/6/f/6/164c-766e-4eb7-a7c9-9d445ca25896",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/6/f/6/164c-766e-4eb7-a7c9-9d445ca25896",
+			"djs": [
+				{
+					"id": 36,
+					"title": "Peacetime Product"
+				}
+			],
+			"tagIds": [33, 38, 201],
+			"url": "https://www.mixcloud.com/otherdesertradio/peacetime-product-episode-8-oregon-roadtrip-mix-march-3-2025/"
+		},
+		{
+			"id": 234,
+			"title": "Episode 5 - Carving Out a Path for Yourself",
+			"date": "2025-02-28T00:00:00.000Z",
+			"duration": 3799,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/c/0/b/44dc-706f-4709-b482-555c0b1519a7",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/c/0/b/44dc-706f-4709-b482-555c0b1519a7",
+			"djs": [
+				{
+					"id": 36,
+					"title": "Peacetime Product"
+				}
+			],
+			"tagIds": [4, 22, 159],
+			"url": "https://www.mixcloud.com/otherdesertradio/peacetime-product-episode-5-carving-out-a-path-for-yourself-february-28-2025/"
+		},
+		{
+			"id": 142,
+			"title": "Episode 7 - I found my old ipod",
+			"date": "2025-02-24T00:00:00.000Z",
+			"duration": 3227,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/e/0/9/1602-33d4-42e4-a261-9ed2344011a1",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/e/0/9/1602-33d4-42e4-a261-9ed2344011a1",
+			"djs": [
+				{
+					"id": 36,
+					"title": "Peacetime Product"
+				}
+			],
+			"tagIds": [22, 47, 188],
+			"url": "https://www.mixcloud.com/otherdesertradio/peacetime-product-episode-7-i-found-my-old-ipod-february-24-2025/"
+		},
+		{
 			"id": 123,
 			"title": "Looking Glass Episode 6: Heart of the Mojave and beyond ♡",
 			"date": "2025-02-23T00:00:00.000Z",
@@ -1200,6 +1558,22 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/looking-glass-with-lodi-dottie-episode-6-heart-of-the-mojave-and-beyond-february-23-2025/"
 		},
 		{
+			"id": 143,
+			"title": "Episode 6 - The OC Mixtape",
+			"date": "2025-02-17T00:00:00.000Z",
+			"duration": 2930,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/8/e/e/7ed7-a614-4268-a23c-95fc0b7070d0",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/8/e/e/7ed7-a614-4268-a23c-95fc0b7070d0",
+			"djs": [
+				{
+					"id": 36,
+					"title": "Peacetime Product"
+				}
+			],
+			"tagIds": [37, 188, 202],
+			"url": "https://www.mixcloud.com/otherdesertradio/peacetime-product-episode-6-the-oc-mixtape-february-17-2025/"
+		},
+		{
 			"id": 117,
 			"title": "Freedom Overspill Radio Hour Episode 30, Japanese Surf 1966-1971",
 			"date": "2025-02-03T00:00:00.000Z",
@@ -1216,6 +1590,40 @@
 			],
 			"tagIds": [40, 41, 183],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-30-japanese-surf-february-3-2025/"
+		},
+		{
+			"id": 246,
+			"title": "Heavy Lifters",
+			"date": "2025-01-20T00:00:00.000Z",
+			"duration": 3312,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/4/4/6/bbb7-1a55-4f22-8274-db4c4336063a",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/4/4/6/bbb7-1a55-4f22-8274-db4c4336063a",
+			"djs": [
+				{
+					"id": 38,
+					"title": "Danielle"
+				}
+			],
+			"tagIds": [21, 22],
+			"url": "https://www.mixcloud.com/otherdesertradio/danielle-heavy-lifters-january-20-2025/"
+		},
+		{
+			"id": 144,
+			"title": "Volume XXV,",
+			"date": "2025-01-06T00:00:00.000Z",
+			"duration": 7180,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/8/5/5/80c0-4b90-4d44-949a-2bb12686f167",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/8/5/5/80c0-4b90-4d44-949a-2bb12686f167",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [37, 40, 42],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xxv-january-6-2025/"
 		},
 		{
 			"id": 124,
@@ -1254,6 +1662,76 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/nathan-ober-aka-dj-nasty-nate-helloween-volume-3-october-14-2024/"
 		},
 		{
+			"id": 125,
+			"title": "Volume XXIV,",
+			"date": "2024-09-09T00:00:00.000Z",
+			"duration": 7341,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/7/e/c/2788-5a96-4bbf-8e97-f9e4a9ee9285",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/7/e/c/2788-5a96-4bbf-8e97-f9e4a9ee9285",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [37, 40, 159],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xxiv-september-9-2024/"
+		},
+		{
+			"id": 126,
+			"title": "Looking Glass Episode 4",
+			"date": "2024-08-26T00:00:00.000Z",
+			"duration": 5469,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/f/d/f/4acc-ec65-4930-9167-29b193e5418e",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/f/d/f/4acc-ec65-4930-9167-29b193e5418e",
+			"djs": [
+				{
+					"id": 22,
+					"title": "Lodi Dottie",
+					"image_small": "assets/djs/22_small.webp",
+					"image_large": "assets/djs/22_large.webp"
+				}
+			],
+			"tagIds": [33, 64, 158],
+			"url": "https://www.mixcloud.com/otherdesertradio/looking-glass-with-lodi-dottie-episode-4-august-26-2024/"
+		},
+		{
+			"id": 127,
+			"title": "Volume XXII,",
+			"date": "2024-08-05T00:00:00.000Z",
+			"duration": 7057,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/3/4/2/56b9-2e62-42ce-b45e-0aa7e21b2806",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/3/4/2/56b9-2e62-42ce-b45e-0aa7e21b2806",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [36, 37, 38, 186],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xxii-august-5-2024/"
+		},
+		{
+			"id": 145,
+			"title": "Episode 4 - I want my friend back so bad...",
+			"date": "2024-08-05T00:00:00.000Z",
+			"duration": 3121,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/e/7/9/638d-aeb7-4fec-9500-b708502d4b3e",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/e/7/9/638d-aeb7-4fec-9500-b708502d4b3e",
+			"djs": [
+				{
+					"id": 36,
+					"title": "Peacetime Product"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/peacetime-product-episode-3-august-5-2024/"
+		},
+		{
 			"id": 34,
 			"title": "Freedom Overspill Radio Hour Episode 29, Gitara",
 			"description": "<p>Guitar Music of Azerbaijan</p>",
@@ -1271,6 +1749,24 @@
 			],
 			"tagIds": [53, 54],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-29-gitara-july-22-2024/"
+		},
+		{
+			"id": 128,
+			"title": "Volume XXI,",
+			"date": "2024-07-22T00:00:00.000Z",
+			"duration": 7359,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/1/1/1/51f1-dd68-41cb-90ea-ccec3cb9e022",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/1/1/1/51f1-dd68-41cb-90ea-ccec3cb9e022",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [36, 42, 187],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xxi-july-22-2024/"
 		},
 		{
 			"id": 35,
@@ -1291,6 +1787,60 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-28-shahi-baaja-july-8-2024/"
 		},
 		{
+			"id": 129,
+			"title": "Volume XX, Live from High Desert Times",
+			"date": "2024-07-08T00:00:00.000Z",
+			"duration": 10794,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/c/5/9/e0b0-3c9f-4cf9-84a5-f4898500825b",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/c/5/9/e0b0-3c9f-4cf9-84a5-f4898500825b",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [42, 64, 188],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xx-live-from-high-desert-times-july-8-2024/"
+		},
+		{
+			"id": 146,
+			"title": "Volume XIX",
+			"date": "2024-06-23T00:00:00.000Z",
+			"duration": 7251,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/7/d/e/2ae9-ae24-4b31-8450-0dfeae441341",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/7/d/e/2ae9-ae24-4b31-8450-0dfeae441341",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [21, 37, 64],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xviii-june-23-2024/"
+		},
+		{
+			"id": 147,
+			"title": "Volume XVIII",
+			"date": "2024-06-10T00:00:00.000Z",
+			"duration": 7248,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/2/2/2/0dc4-371e-4d02-b8c1-6cf2a2669e2b",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/2/2/2/0dc4-371e-4d02-b8c1-6cf2a2669e2b",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [33, 42, 47],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xvii-june-10-2024/"
+		},
+		{
 			"id": 36,
 			"title": "Freedom Overspill Radio Hour Episode 27, Balochistan Benju",
 			"date": "2024-06-03T00:00:00.000Z",
@@ -1307,6 +1857,340 @@
 			],
 			"tagIds": [58, 59, 60],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-27-balochistan-benju-june-3-2024/"
+		},
+		{
+			"id": 148,
+			"title": "Episode 3 - Oakland to Oahu",
+			"date": "2024-06-03T00:00:00.000Z",
+			"duration": 3784,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/b/d/8/c40b-b0d8-41ff-9c7b-8ac7844a4aaf",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/b/d/8/c40b-b0d8-41ff-9c7b-8ac7844a4aaf",
+			"djs": [
+				{
+					"id": 36,
+					"title": "Peacetime Product"
+				}
+			],
+			"tagIds": [22, 64, 191],
+			"url": "https://www.mixcloud.com/otherdesertradio/peacetime-product-episode-3-oakland-to-oahu-june-3-2024/"
+		},
+		{
+			"id": 149,
+			"title": "Volume XVII",
+			"date": "2024-05-27T00:00:00.000Z",
+			"duration": 7140,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/9/b/4/8261-167a-449b-a47f-e9ec2bdf62bd",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/9/b/4/8261-167a-449b-a47f-e9ec2bdf62bd",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [32, 37, 40],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xvii-may-27-2024/"
+		},
+		{
+			"id": 150,
+			"title": "Volume XVI",
+			"date": "2024-05-13T00:00:00.000Z",
+			"duration": 7237,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/3/6/9/5373-a352-4918-b1ea-148b090f756e",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/3/6/9/5373-a352-4918-b1ea-148b090f756e",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [36, 40, 203],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xvi-may-13-2024/"
+		},
+		{
+			"id": 151,
+			"title": "Volume XV",
+			"date": "2024-04-29T00:00:00.000Z",
+			"duration": 7265,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/e/1/0/fb44-1c79-45bc-8e89-31079882d3c1",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/e/1/0/fb44-1c79-45bc-8e89-31079882d3c1",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [37, 42, 191],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xv-april-29-2024/"
+		},
+		{
+			"id": 152,
+			"title": "Earth Day 2024",
+			"date": "2024-04-22T00:00:00.000Z",
+			"duration": 3141,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/c/3/3/5547-608d-4578-b9b0-faa74c5b0b4a",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/c/3/3/5547-608d-4578-b9b0-faa74c5b0b4a",
+			"djs": [
+				{
+					"id": 24,
+					"title": "Desert Dove Radio",
+					"image_small": "assets/djs/24_small.webp",
+					"image_large": "assets/djs/24_large.webp"
+				}
+			],
+			"tagIds": [33, 37, 42, 61],
+			"url": "https://www.mixcloud.com/otherdesertradio/the-desert-dove-earth-day-2024-april-22-2024/"
+		},
+		{
+			"id": 154,
+			"title": "Volume XIV",
+			"date": "2024-04-15T00:00:00.000Z",
+			"duration": 7115,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/9/5/a/92c2-9738-43b8-8b97-7813f3398f7f",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/9/5/a/92c2-9738-43b8-8b97-7813f3398f7f",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [36, 42, 204],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xiv-april-15-2024/"
+		},
+		{
+			"id": 153,
+			"title": "Volume XIII",
+			"date": "2024-04-01T00:00:00.000Z",
+			"duration": 7322,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/6/4/2/f3e3-1ad6-4dd8-b8f3-b5dd146f95d1",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/6/4/2/f3e3-1ad6-4dd8-b8f3-b5dd146f95d1",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [36, 158, 204, 205],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xiii-april-1-2024/"
+		},
+		{
+			"id": 155,
+			"title": "Volume XII",
+			"date": "2024-03-18T00:00:00.000Z",
+			"duration": 7235,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/a/9/b/ca82-2b45-48ab-88a0-32088ac182d5",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/a/9/b/ca82-2b45-48ab-88a0-32088ac182d5",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [38, 104, 191],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xii-march-18-2024/"
+		},
+		{
+			"id": 156,
+			"title": "Volume XI",
+			"date": "2024-03-04T00:00:00.000Z",
+			"duration": 7235,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/c/d/9/c61c-cae6-42d3-a96a-03892c641007",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/c/d/9/c61c-cae6-42d3-a96a-03892c641007",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [22, 104, 206],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xi-march-4-2024/"
+		},
+		{
+			"id": 157,
+			"title": "Winter 2023-2024",
+			"date": "2024-02-26T00:00:00.000Z",
+			"duration": 3629,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/6/5/0/e14c-dd15-49af-9120-5166bb402768",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/6/5/0/e14c-dd15-49af-9120-5166bb402768",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [22, 33, 175, 207],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-winter-2023-2024-february-26-2024/"
+		},
+		{
+			"id": 236,
+			"title": "and kiss forever in the darkness",
+			"date": "2024-02-26T00:00:00.000Z",
+			"duration": 8643,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/8/3/f/959e-0d02-43d3-afd4-8f350152cfdb",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/8/3/f/959e-0d02-43d3-afd4-8f350152cfdb",
+			"djs": [
+				{
+					"id": 40,
+					"title": "DJ CHRI$TYLE"
+				}
+			],
+			"tagIds": [22, 37, 42, 187],
+			"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-and-kiss-forever-in-the-darkness-february-26-2024/"
+		},
+		{
+			"id": 158,
+			"title": "Volume X",
+			"date": "2024-02-19T00:00:00.000Z",
+			"duration": 7294,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/5/5/2/46ae-9277-44dc-9930-56773d00253b",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/5/5/2/46ae-9277-44dc-9930-56773d00253b",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [36, 50, 173, 208],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-x-february-19-2024/"
+		},
+		{
+			"id": 247,
+			"title": "Year of the Dragon",
+			"date": "2024-02-10T00:00:00.000Z",
+			"duration": 3002,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/4/7/d/0325-666a-47c7-ab24-55ff098df269",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/4/7/d/0325-666a-47c7-ab24-55ff098df269",
+			"djs": [
+				{
+					"id": 38,
+					"title": "Danielle"
+				}
+			],
+			"tagIds": [311, 312, 313, 314, 315],
+			"url": "https://www.mixcloud.com/otherdesertradio/danielle-year-of-the-dragon-february-10-2024/"
+		},
+		{
+			"id": 159,
+			"title": "Volume IX",
+			"date": "2024-02-05T00:00:00.000Z",
+			"duration": 7165,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/1/0/2/8c17-2b19-49fc-b833-aaa6fde0c0bc",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/1/0/2/8c17-2b19-49fc-b833-aaa6fde0c0bc",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [36, 42, 64],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-ix-february-5-2024/"
+		},
+		{
+			"id": 160,
+			"title": "Volume VIII",
+			"date": "2024-01-22T00:00:00.000Z",
+			"duration": 7297,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/1/2/9/86e7-ba70-4839-99ba-1e10b1d399f0",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/1/2/9/86e7-ba70-4839-99ba-1e10b1d399f0",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [209, 210, 211],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-viii-january-22-2024/"
+		},
+		{
+			"id": 161,
+			"title": "Volume VII",
+			"date": "2024-01-08T00:00:00.000Z",
+			"duration": 7196,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/3/c/8/6167-ae28-4b70-a164-6495cc924de4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/3/c/8/6167-ae28-4b70-a164-6495cc924de4",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [33, 40, 47, 191, 212],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-vii-january-8-2024/"
+		},
+		{
+			"id": 162,
+			"title": "Volume VI",
+			"date": "2023-12-25T00:00:00.000Z",
+			"duration": 7049,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/4/7/6/43fb-3e73-4b50-93a8-ea87e148f860",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/4/7/6/43fb-3e73-4b50-93a8-ea87e148f860",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [36, 40, 42],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-vi-december-25-2023/"
+		},
+		{
+			"id": 163,
+			"title": "Holiday Special",
+			"date": "2023-12-25T00:00:00.000Z",
+			"duration": 2601,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/b/5/d/0df9-949d-4418-bdfe-63e5106c1d76",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/b/5/d/0df9-949d-4418-bdfe-63e5106c1d76",
+			"djs": [
+				{
+					"id": 24,
+					"title": "Desert Dove Radio",
+					"image_small": "assets/djs/24_small.webp",
+					"image_large": "assets/djs/24_large.webp"
+				}
+			],
+			"tagIds": [22, 47, 175, 213, 214],
+			"url": "https://www.mixcloud.com/otherdesertradio/desert-dove-radio-hour-holiday-special-december-25-2023/"
+		},
+		{
+			"id": 164,
+			"title": "Volume V",
+			"date": "2023-12-11T00:00:00.000Z",
+			"duration": 7009,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/9/c/d/8de1-fb12-46f4-8449-3a9a24258315",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/9/c/d/8de1-fb12-46f4-8449-3a9a24258315",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [36, 37, 188, 215],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-v-december-11-2023/"
 		},
 		{
 			"id": 37,
@@ -1327,6 +2211,40 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-3-december-4-2023/"
 		},
 		{
+			"id": 165,
+			"title": "Volume IV",
+			"date": "2023-11-27T00:00:00.000Z",
+			"duration": 6884,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/d/d/8/2cff-40c6-4135-b4b0-e28b6cb35fc8",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/d/d/8/2cff-40c6-4135-b4b0-e28b6cb35fc8",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [32, 33, 37, 159],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-iv-november-27-2023/"
+		},
+		{
+			"id": 166,
+			"title": "Classical Guitar Selections",
+			"date": "2023-11-20T00:00:00.000Z",
+			"duration": 3587,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/2/4/8/4fc6-e480-461e-b56f-3cec331fdc70",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/2/4/8/4fc6-e480-461e-b56f-3cec331fdc70",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [175, 216, 217, 218],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-classical-guitar-selections-november-20-2023/"
+		},
+		{
 			"id": 38,
 			"title": "Freedom Overspill Radio Hour Episode 26, Palestine Lives",
 			"date": "2023-11-13T00:00:00.000Z",
@@ -1345,6 +2263,58 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-26-palestine-lives-november-13-2023/"
 		},
 		{
+			"id": 167,
+			"title": "Volume III",
+			"date": "2023-11-13T00:00:00.000Z",
+			"duration": 7281,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/2/a/c/ca1c-ac57-47b6-97df-9bf74317036f",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/2/a/c/ca1c-ac57-47b6-97df-9bf74317036f",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [32, 33, 47, 206],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-iii-november-13-2023/"
+		},
+		{
+			"id": 237,
+			"title": "Episode 2 - A fountain of free floating atoms....",
+			"date": "2023-11-08T00:00:00.000Z",
+			"duration": 5409,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/b/2/e/c21a-de62-4c3d-b28d-5f390d0da5c2",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/b/2/e/c21a-de62-4c3d-b28d-5f390d0da5c2",
+			"djs": [
+				{
+					"id": 36,
+					"title": "Peacetime Product"
+				}
+			],
+			"tagIds": [33, 35, 64, 188],
+			"url": "https://www.mixcloud.com/otherdesertradio/peacetime-product-episode-2-a-fountain-of-free-floating-atoms/"
+		},
+		{
+			"id": 168,
+			"title": "Volume II",
+			"date": "2023-10-30T00:00:00.000Z",
+			"duration": 7219,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/1/a/b/d068-854f-4ac3-afb0-fde0bd74b524",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/1/a/b/d068-854f-4ac3-afb0-fde0bd74b524",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [33, 36, 112],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-ii-october-30-2023/"
+		},
+		{
 			"id": 70,
 			"title": "Helloween Volume 2",
 			"date": "2023-10-16T00:00:00.000Z",
@@ -1361,6 +2331,42 @@
 			],
 			"tagIds": [36, 50, 98, 102],
 			"url": "https://www.mixcloud.com/otherdesertradio/nathan-ober-aka-dj-nasty-nate-helloween-volume-2-october-16-2023/"
+		},
+		{
+			"id": 169,
+			"title": "Volume I",
+			"date": "2023-09-25T00:00:00.000Z",
+			"duration": 7145,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/5/2/f/bd57-f19e-4787-abca-bad0984ef2b0",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/5/2/f/bd57-f19e-4787-abca-bad0984ef2b0",
+			"djs": [
+				{
+					"id": 21,
+					"title": "DJ Pequeña Cretina aka Alexandra Martinez",
+					"image_small": "assets/djs/21_small.webp",
+					"image_large": "assets/djs/21_large.webp"
+				}
+			],
+			"tagIds": [22, 37, 159, 219],
+			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-i-september-25-2023/"
+		},
+		{
+			"id": 170,
+			"title": "Transmission 8",
+			"date": "2023-09-18T00:00:00.000Z",
+			"duration": 3380,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/f/4/0/4ec9-e0e4-4409-839f-996d4b34d9b5",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/f/4/0/4ec9-e0e4-4409-839f-996d4b34d9b5",
+			"djs": [
+				{
+					"id": 24,
+					"title": "Desert Dove Radio",
+					"image_small": "assets/djs/24_small.webp",
+					"image_large": "assets/djs/24_large.webp"
+				}
+			],
+			"tagIds": [12, 22, 220],
+			"url": "https://www.mixcloud.com/otherdesertradio/the-desert-dove-transmission-8-september-18-2023/"
 		},
 		{
 			"id": 39,
@@ -1382,6 +2388,58 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-2-september-4-2023/"
 		},
 		{
+			"id": 239,
+			"title": "Looking Glass Episode 1",
+			"date": "2023-08-07T00:00:00.000Z",
+			"duration": 5168,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/9/e/6/bb3a-ffd5-4cdb-ae02-649e0399e06f",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/9/e/6/bb3a-ffd5-4cdb-ae02-649e0399e06f",
+			"djs": [
+				{
+					"id": 22,
+					"title": "Lodi Dottie",
+					"image_small": "assets/djs/22_small.webp",
+					"image_large": "assets/djs/22_large.webp"
+				}
+			],
+			"tagIds": [64, 112, 307, 308],
+			"url": "https://www.mixcloud.com/otherdesertradio/looking-glass-episode-1-august-7-2023/"
+		},
+		{
+			"id": 240,
+			"title": "Episode 1 - Old Beginnings + New Endings",
+			"date": "2023-08-04T00:00:00.000Z",
+			"duration": 3319,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/0/b/9/f351-6967-4869-acf5-1c3c927f84d2",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/0/b/9/f351-6967-4869-acf5-1c3c927f84d2",
+			"djs": [
+				{
+					"id": 36,
+					"title": "Peacetime Product"
+				}
+			],
+			"tagIds": [37, 48],
+			"url": "https://www.mixcloud.com/otherdesertradio/peacetime-product-episode-1-new-endings-old-beginnings/"
+		},
+		{
+			"id": 238,
+			"title": "Looking Glass Episode 2",
+			"date": "2023-08-02T00:00:00.000Z",
+			"duration": 3977,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/1/6/5/7f00-86e3-41f4-a7a5-9379554b90c9",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/1/6/5/7f00-86e3-41f4-a7a5-9379554b90c9",
+			"djs": [
+				{
+					"id": 22,
+					"title": "Lodi Dottie",
+					"image_small": "assets/djs/22_small.webp",
+					"image_large": "assets/djs/22_large.webp"
+				}
+			],
+			"tagIds": [64, 112, 235, 307],
+			"url": "https://www.mixcloud.com/otherdesertradio/looking-glass-episode-2-october-2-2023/"
+		},
+		{
 			"id": 40,
 			"title": "Episode 1",
 			"description": "<p>exploring the spirit, energy and consciousness of humanity through the language of rhythm and vibration for the curious mind and wandering ear</p>",
@@ -1401,6 +2459,40 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/temporal-emissions-episode-1-june-26-2023/"
 		},
 		{
+			"id": 171,
+			"title": "Flowers Cannot Grow Without Water",
+			"date": "2023-06-26T00:00:00.000Z",
+			"duration": 6691,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/f/0/9/981b-50ba-413f-9c54-2f7e1cf2eae5",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/f/0/9/981b-50ba-413f-9c54-2f7e1cf2eae5",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [37, 38, 42],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-flowers-cannot-grow-without-water-june-26-2023/"
+		},
+		{
+			"id": 172,
+			"title": "Tantalizing Temperament 5",
+			"date": "2023-06-26T00:00:00.000Z",
+			"duration": 3590,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/4/4/6/75a0-c16c-4e55-a631-92104ace2e28",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/4/4/6/75a0-c16c-4e55-a631-92104ace2e28",
+			"djs": [
+				{
+					"id": 26,
+					"title": "DEV01D",
+					"image_small": "assets/djs/26_small.webp",
+					"image_large": "assets/djs/26_large.webp"
+				}
+			],
+			"tagIds": [64, 221, 222],
+			"url": "https://www.mixcloud.com/otherdesertradio/dev01d-tantalizing-temperament-5-june-26-2023/"
+		},
+		{
 			"id": 41,
 			"title": "Freedom Overspill Radio Hour Episode 25, The Necks",
 			"date": "2023-06-05T00:00:00.000Z",
@@ -1417,6 +2509,42 @@
 			],
 			"tagIds": [33, 66, 67, 68],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-25-the-necks-june-5-2023/"
+		},
+		{
+			"id": 173,
+			"title": "Tantalizing Temperament Episode 4",
+			"date": "2023-04-17T00:00:00.000Z",
+			"duration": 3595,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/b/b/4/4c24-600f-46eb-b5c6-dd699ab1d15c",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/b/b/4/4c24-600f-46eb-b5c6-dd699ab1d15c",
+			"djs": [
+				{
+					"id": 26,
+					"title": "DEV01D",
+					"image_small": "assets/djs/26_small.webp",
+					"image_large": "assets/djs/26_large.webp"
+				}
+			],
+			"tagIds": [33, 64, 95],
+			"url": "https://www.mixcloud.com/otherdesertradio/devoid-divine-tantalizing-temperament-episode-4-april-17-2023/"
+		},
+		{
+			"id": 235,
+			"title": "Looking Glass Episode 3",
+			"date": "2023-04-14T00:00:00.000Z",
+			"duration": 3552,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/a/5/0/c695-cdec-4269-afc0-e18ff9ca89f0",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/a/5/0/c695-cdec-4269-afc0-e18ff9ca89f0",
+			"djs": [
+				{
+					"id": 22,
+					"title": "Lodi Dottie",
+					"image_small": "assets/djs/22_small.webp",
+					"image_large": "assets/djs/22_large.webp"
+				}
+			],
+			"tagIds": [33, 158, 191, 234],
+			"url": "https://www.mixcloud.com/otherdesertradio/looking-glass-episode-3-april-15-2023/"
 		},
 		{
 			"id": 118,
@@ -1455,6 +2583,90 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-24-1970s-algeria-february-27-2023/"
 		},
 		{
+			"id": 174,
+			"title": "Tantalizing Temperament Episode 3",
+			"date": "2023-02-06T00:00:00.000Z",
+			"duration": 3501,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/d/e/f/71f1-2da5-405c-8386-ea1290cf4060",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/d/e/f/71f1-2da5-405c-8386-ea1290cf4060",
+			"djs": [
+				{
+					"id": 26,
+					"title": "DEV01D",
+					"image_small": "assets/djs/26_small.webp",
+					"image_large": "assets/djs/26_large.webp"
+				}
+			],
+			"tagIds": [33, 223, 224],
+			"url": "https://www.mixcloud.com/otherdesertradio/devoid-divine-tantalizing-temperament-episode-3-february-6-2023/"
+		},
+		{
+			"id": 175,
+			"title": "Dreamy Apocalypse",
+			"date": "2023-01-23T00:00:00.000Z",
+			"duration": 3752,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/4/a/f/b2e6-673d-42fa-90dc-6cfdac1e7732",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/4/a/f/b2e6-673d-42fa-90dc-6cfdac1e7732",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [37, 225, 226, 227],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-dreamy-apocalypse-january-232023/"
+		},
+		{
+			"id": 248,
+			"title": "Space Heaters (a Christmas Mix)",
+			"date": "2022-12-19T00:00:00.000Z",
+			"duration": 6130,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/2/2/5/167b-fc84-49de-88c2-5691161be423",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/2/2/5/167b-fc84-49de-88c2-5691161be423",
+			"djs": [
+				{
+					"id": 40,
+					"title": "DJ CHRI$TYLE"
+				}
+			],
+			"tagIds": [46, 187, 234, 316],
+			"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-space-heaters-a-christmas-mix-december-19-2022/"
+		},
+		{
+			"id": 176,
+			"title": "Winter Thoughts, Organ + Piano Tunes",
+			"date": "2022-11-28T00:00:00.000Z",
+			"duration": 3435,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/7/2/f/e56a-d146-4fcc-a7d4-4bb8529125ab",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/7/2/f/e56a-d146-4fcc-a7d4-4bb8529125ab",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [175, 228, 229, 230],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-winter-thoughts-organ-piano-tunes-november-28-2022/"
+		},
+		{
+			"id": 177,
+			"title": "Tantalizing Temperament Episode 2",
+			"date": "2022-11-22T00:00:00.000Z",
+			"duration": 3564,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/f/e/5/c24b-ffa7-4834-a970-db74be70ecfd",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/f/e/5/c24b-ffa7-4834-a970-db74be70ecfd",
+			"djs": [
+				{
+					"id": 26,
+					"title": "DEV01D",
+					"image_small": "assets/djs/26_small.webp",
+					"image_large": "assets/djs/26_large.webp"
+				}
+			],
+			"tagIds": [61, 104, 231],
+			"url": "https://www.mixcloud.com/otherdesertradio/devoid-divine-tantalizing-temperament-episode-2-november-22-2022/"
+		},
+		{
 			"id": 43,
 			"title": "Freedom Overspill Radio Hour Episode 23, Manuel Göttsching",
 			"date": "2022-11-21T00:00:00.000Z",
@@ -1473,6 +2685,78 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-23-manuel-g%C3%B6ttsching-november-21-2022/"
 		},
 		{
+			"id": 241,
+			"title": "Industrial Halloween",
+			"date": "2022-10-24T00:00:00.000Z",
+			"duration": 7290,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/0/8/7/58a3-9e63-4c22-a491-b6e8f1b422a0",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/0/8/7/58a3-9e63-4c22-a491-b6e8f1b422a0",
+			"djs": [
+				{
+					"id": 18,
+					"title": "DJ Nasty Nate",
+					"image_small": "assets/djs/18_small.webp",
+					"image_large": "assets/djs/18_large.webp"
+				}
+			],
+			"tagIds": [98, 102],
+			"url": "https://www.mixcloud.com/otherdesertradio/nathan-ober-industrial-halloween-october-24-2022/"
+		},
+		{
+			"id": 178,
+			"title": "Fumbling Bush Forecast #11: Remote Quarantine Edition",
+			"date": "2022-10-03T00:00:00.000Z",
+			"duration": 5358,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/0/2/e/7002-f019-47a9-b3f9-bb8ae93624f9",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/0/2/e/7002-f019-47a9-b3f9-bb8ae93624f9",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-11-remote-quarantine-edition-october-3-2022/"
+		},
+		{
+			"id": 179,
+			"title": "Tantalizing Temperament Episode 1",
+			"date": "2022-09-19T00:00:00.000Z",
+			"duration": 3452,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/4/1/3/3c05-a6ad-46e9-a916-8d9c82e983f6",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/4/1/3/3c05-a6ad-46e9-a916-8d9c82e983f6",
+			"djs": [
+				{
+					"id": 26,
+					"title": "DEV01D",
+					"image_small": "assets/djs/26_small.webp",
+					"image_large": "assets/djs/26_large.webp"
+				}
+			],
+			"tagIds": [33, 64, 232, 233],
+			"url": "https://www.mixcloud.com/otherdesertradio/devoid-divine-tantalizing-temperament-episode-1-september-19-2022/"
+		},
+		{
+			"id": 242,
+			"title": "Beyond Karaoke Episode 12 - Free Will or Free Won't",
+			"date": "2022-09-09T00:00:00.000Z",
+			"duration": 5765,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/b/5/2/0b7d-b615-4063-a297-a0676c37c826",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/b/5/2/0b7d-b615-4063-a297-a0676c37c826",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-12-free-will-or-free-wont/"
+		},
+		{
 			"id": 44,
 			"title": "Freedom Overspill Radio Hour Ep. 22, Experimental Gamelan",
 			"date": "2022-08-22T00:00:00.000Z",
@@ -1489,6 +2773,22 @@
 			],
 			"tagIds": [],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-22-experimental-gamelan-august-22-2022/"
+		},
+		{
+			"id": 180,
+			"title": "Summer Moves 2022",
+			"date": "2022-08-15T00:00:00.000Z",
+			"duration": 4443,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/e/f/2/9e32-8fb7-4e3d-9f03-8530d8250e53",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/e/f/2/9e32-8fb7-4e3d-9f03-8530d8250e53",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [6, 61, 234],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-summer-moves-2022-august-15-2022/"
 		},
 		{
 			"id": 119,
@@ -1582,6 +2882,24 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sara-take-shape-episode-one-april-25-2022/"
 		},
 		{
+			"id": 243,
+			"title": "Earth Day 2022 Special",
+			"date": "2022-04-22T00:00:00.000Z",
+			"duration": 4762,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/1/b/9/ff76-1fa5-456e-b69e-ffb4fc8d7468",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/1/b/9/ff76-1fa5-456e-b69e-ffb4fc8d7468",
+			"djs": [
+				{
+					"id": 24,
+					"title": "Desert Dove Radio",
+					"image_small": "assets/djs/24_small.webp",
+					"image_large": "assets/djs/24_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/the-desert-dove-earth-day-2022-special/"
+		},
+		{
 			"id": 46,
 			"title": "Freedom Overspill Episode 20: Western Rock Meets the World",
 			"date": "2022-04-18T00:00:00.000Z",
@@ -1636,6 +2954,22 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-18-zamrock-february-28-2022/"
 		},
 		{
+			"id": 181,
+			"title": "Some Trees + Flowers + Basic Nice Things Like That",
+			"date": "2022-01-24T00:00:00.000Z",
+			"duration": 3380,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/b/3/2/2472-eca9-4d0a-a81d-99c79f2b70ab",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/b/3/2/2472-eca9-4d0a-a81d-99c79f2b70ab",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [37, 114, 235],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-trees-flowers-basic-nice-things-like-that-january-24-2022/"
+		},
+		{
 			"id": 49,
 			"title": "Freedom Overspill Ep. 17, Baroque/Chamber Pop 1960s-70s",
 			"date": "2022-01-17T00:00:00.000Z",
@@ -1652,6 +2986,58 @@
 			],
 			"tagIds": [22, 81, 82, 83, 84],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-ep-17-baroquechamber-pop-1960s-70s-january-17-2022/"
+		},
+		{
+			"id": 182,
+			"title": "Fumbling Bush Forecast #10",
+			"date": "2022-01-10T00:00:00.000Z",
+			"duration": 5403,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/f/6/c/d3df-01e9-4cfd-b2e2-a78273928031",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/f/6/c/d3df-01e9-4cfd-b2e2-a78273928031",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-10-january-10-2022/"
+		},
+		{
+			"id": 183,
+			"title": "Hungarian Readers Digest III: Jazz & Classical Special",
+			"date": "2021-12-13T00:00:00.000Z",
+			"duration": 3450,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/7/6/0/c626-952b-4196-8444-94fe2111f46a",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/7/6/0/c626-952b-4196-8444-94fe2111f46a",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [35, 175, 236],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-hungarian-readers-digest-iii-jazz-classical-special-december-13-2021/"
+		},
+		{
+			"id": 244,
+			"title": "Live at Furstwurld, Joshua Tree",
+			"date": "2021-12-11T00:00:00.000Z",
+			"duration": 1779,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 28,
+					"title": "No Translation",
+					"image_small": "assets/djs/28_small.webp",
+					"image_large": "assets/djs/28_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/no-translation-live-at-furstwurld-joshua-tree-121121/"
 		},
 		{
 			"id": 50,
@@ -1690,6 +3076,54 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/hans-f-wagner-reading-and-sound-collage-a-tale-of-the-ragged-mountains-poechain-oct-25-2021/"
 		},
 		{
+			"id": 184,
+			"title": "Hungarian Reader's Digest I, Punk Special Punk Különkiadás",
+			"date": "2021-10-18T00:00:00.000Z",
+			"duration": 3403,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/0/e/d/c137-03e1-4536-aab1-d29e867220fe",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/0/e/d/c137-03e1-4536-aab1-d29e867220fe",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [40, 237, 238, 239],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-hungarian-readers-digest-i-punk-special-punk-k%C3%BCl%C3%B6nkiad%C3%A1s-october-18-2021/"
+		},
+		{
+			"id": 249,
+			"title": "Episode VIII",
+			"date": "2021-10-18T00:00:00.000Z",
+			"duration": 5444,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/a/e/a/fd29-f34b-43ff-81d0-9f4b402903b9",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/a/e/a/fd29-f34b-43ff-81d0-9f4b402903b9",
+			"djs": [
+				{
+					"id": 41,
+					"title": "Paul Quattrone"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/pq-episode-viii-october-18-2021/"
+		},
+		{
+			"id": 185,
+			"title": "Shoals of Summer",
+			"date": "2021-09-21T00:00:00.000Z",
+			"duration": 4107,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/c/3/7/a8bd-ddd4-4806-b881-7949db628ba2",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/c/3/7/a8bd-ddd4-4806-b881-7949db628ba2",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [240, 241, 242, 243, 244],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-shoals-of-summer-september-21-2021/"
+		},
+		{
 			"id": 51,
 			"title": "Freedom Overspill Radio Hour Ep. 15, Devotional Music of Alice Coltrane",
 			"date": "2021-09-13T00:00:00.000Z",
@@ -1708,6 +3142,22 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-15-devotional-music-of-alice-coltrane-sept-132021/"
 		},
 		{
+			"id": 186,
+			"title": "Lebanese Reader's Digest II",
+			"date": "2021-08-23T00:00:00.000Z",
+			"duration": 3825,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/2/d/5/afd5-d22f-46d2-bb9e-16af62741f7c",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/2/d/5/afd5-d22f-46d2-bb9e-16af62741f7c",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [245, 246, 247],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-lebanese-readers-digest-ii-august-23-2021/"
+		},
+		{
 			"id": 52,
 			"title": "Freedom Overspill Radio Hour Ep. 14: Congotronics",
 			"date": "2021-08-16T00:00:00.000Z",
@@ -1724,6 +3174,60 @@
 			],
 			"tagIds": [],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-14-congotronics/"
+		},
+		{
+			"id": 187,
+			"title": "Transmission 7",
+			"date": "2021-08-16T00:00:00.000Z",
+			"duration": 3396,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/3/4/b/190e-05d6-4db8-830c-a325e90b849b",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/3/4/b/190e-05d6-4db8-830c-a325e90b849b",
+			"djs": [
+				{
+					"id": 24,
+					"title": "Desert Dove Radio",
+					"image_small": "assets/djs/24_small.webp",
+					"image_large": "assets/djs/24_large.webp"
+				}
+			],
+			"tagIds": [248, 249, 250],
+			"url": "https://www.mixcloud.com/otherdesertradio/the-desert-dove-transmission-6-august-16-2021/"
+		},
+		{
+			"id": 213,
+			"title": "Freedom Overspill Radio Hour Episode 13: Deep Fried Arizona",
+			"date": "2021-07-13T00:00:00.000Z",
+			"duration": 3607,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/0/5/8/a1ec-56f8-4762-b415-0c5859a61997",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/0/5/8/a1ec-56f8-4762-b415-0c5859a61997",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [88, 286, 287, 288],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-13-deep-fried-arizona/"
+		},
+		{
+			"id": 188,
+			"title": "Fumbling Bush Forecast #9",
+			"date": "2021-06-14T00:00:00.000Z",
+			"duration": 5399,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/5/2/6/028d-2624-4b61-abbe-772fe9403b49",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/5/2/6/028d-2624-4b61-abbe-772fe9403b49",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [190, 251, 252, 253],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil/"
 		},
 		{
 			"id": 53,
@@ -1782,6 +3286,90 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-11-sounds-of-black-liberation-may-10-2021/"
 		},
 		{
+			"id": 189,
+			"title": "Fumbling Bush Forecast #8",
+			"date": "2021-05-10T00:00:00.000Z",
+			"duration": 3595,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/4/f/3/1da9-24b0-40ac-81d6-36520b40a907",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/4/f/3/1da9-24b0-40ac-81d6-36520b40a907",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [254, 255],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-8-may-10-2021/"
+		},
+		{
+			"id": 250,
+			"title": "Awaken to the Emerald City Princess Ozma Fever Dream",
+			"date": "2021-05-10T00:00:00.000Z",
+			"duration": 6725,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/d/1/f/3084-170e-497c-963a-4ce8321c5906",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/d/1/f/3084-170e-497c-963a-4ce8321c5906",
+			"djs": [
+				{
+					"id": 40,
+					"title": "DJ CHRI$TYLE"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-awaken-to-the-emerald-city-princess-ozma-fever-dream-may-10-2021/"
+		},
+		{
+			"id": 251,
+			"title": "Unconditional Love",
+			"date": "2021-05-03T00:00:00.000Z",
+			"duration": 4208,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/b/6/f/471e-bc19-43f5-8757-4ba9f095899f",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/b/6/f/471e-bc19-43f5-8757-4ba9f095899f",
+			"djs": [
+				{
+					"id": 38,
+					"title": "Danielle"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/danielle-unconditional-love-may-3-2021/"
+		},
+		{
+			"id": 190,
+			"title": "Armenian Reader's Digest III, Water Finds its Crack",
+			"date": "2021-04-19T00:00:00.000Z",
+			"duration": 3970,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/f/7/1/8934-5b4e-4d95-884c-d11b5bd8ac5d",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/f/7/1/8934-5b4e-4d95-884c-d11b5bd8ac5d",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [256, 257],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-armenian-readers-digest-iii-water-finds-its-crack-april-19-2021/"
+		},
+		{
+			"id": 214,
+			"title": "Earth Day 2021",
+			"date": "2021-04-18T00:00:00.000Z",
+			"duration": 3390,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/0/a/4/08b2-e966-4a24-82b8-0b7cb4b71600",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/0/a/4/08b2-e966-4a24-82b8-0b7cb4b71600",
+			"djs": [
+				{
+					"id": 24,
+					"title": "Desert Dove Radio",
+					"image_small": "assets/djs/24_small.webp",
+					"image_large": "assets/djs/24_large.webp"
+				}
+			],
+			"tagIds": [248, 289, 290],
+			"url": "https://www.mixcloud.com/otherdesertradio/desert-dove-earth-day-2021-april-18-2021/"
+		},
+		{
 			"id": 74,
 			"title": "Freedom Overspill Radio Hour Episode Ten - Freak Folk",
 			"date": "2021-04-12T00:00:00.000Z",
@@ -1798,6 +3386,24 @@
 			],
 			"tagIds": [111, 112],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-10-freak-folks-april-12-2021/"
+		},
+		{
+			"id": 191,
+			"title": "Fumbling Bush Forecast #7 - Judee Sill",
+			"date": "2021-04-06T00:00:00.000Z",
+			"duration": 5401,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/7/5/c/405d-7461-4d88-b98e-0b94757fe72a",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/7/5/c/405d-7461-4d88-b98e-0b94757fe72a",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [190, 251],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-7-judee-sill-april-6-2021/"
 		},
 		{
 			"id": 75,
@@ -1835,6 +3441,22 @@
 			],
 			"tagIds": [],
 			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-beyond-karaoke-episode-9-orphans-april-5-2021/"
+		},
+		{
+			"id": 252,
+			"title": "Cybernetic Organisms: OVERDRIVE",
+			"date": "2021-03-15T00:00:00.000Z",
+			"duration": 4621,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/9/8/d/cd7d-ecf5-45ad-b3e9-a306a389aefb",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/9/8/d/cd7d-ecf5-45ad-b3e9-a306a389aefb",
+			"djs": [
+				{
+					"id": 40,
+					"title": "DJ CHRI$TYLE"
+				}
+			],
+			"tagIds": [317, 318, 319],
+			"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-cybernetic-organisms-overdrive-march-15-2021/"
 		},
 		{
 			"id": 77,
@@ -1893,6 +3515,24 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/k-serah-sarahs-beyond-hope-where-is-my-qualia-february-1-2021/"
 		},
 		{
+			"id": 192,
+			"title": "Fumbling Bush Forecast #6 with Guest Selector Miggy Littleton",
+			"date": "2021-02-01T00:00:00.000Z",
+			"duration": 5413,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/f/2/9/dddd-e100-416a-b15e-66ae3a5c2114",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/f/2/9/dddd-e100-416a-b15e-66ae3a5c2114",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-6-with-guest-selector-miggy-littleton-february-1-2021/"
+		},
+		{
 			"id": 80,
 			"title": "Freedom Overspill Episode Six, Minimalism",
 			"date": "2021-01-25T00:00:00.000Z",
@@ -1928,6 +3568,58 @@
 			],
 			"tagIds": [122, 124, 129, 130, 131],
 			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-vii-the-zodiac-other-myths-january-4-2021/"
+		},
+		{
+			"id": 193,
+			"title": "Fumbling Bush Forecast #5",
+			"date": "2021-01-04T00:00:00.000Z",
+			"duration": 5402,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/4/9/f/005a-9f78-4f72-b34f-0d7d606a91ce",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/4/9/f/005a-9f78-4f72-b34f-0d7d606a91ce",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [22, 37, 61, 254, 255],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-5-january-4-2021/"
+		},
+		{
+			"id": 194,
+			"title": "A Plateaux of Dürer, dedicated to Harold Budd (and buds)",
+			"date": "2020-12-21T00:00:00.000Z",
+			"duration": 2681,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/0/8/7/3220-e313-4303-9264-8aff680640a5",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/0/8/7/3220-e313-4303-9264-8aff680640a5",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [61, 258],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-a-plateaux-of-d%C3%BCrer-dedciated-to-harold-budd-and-buds-december-21-2020/"
+		},
+		{
+			"id": 215,
+			"title": "Desert Dove Transmission 6, Holiday Special",
+			"date": "2020-12-19T00:00:00.000Z",
+			"duration": 3385,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/1/0/e/eb25-684d-4cd7-8862-2ffdd101d09b",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/1/0/e/eb25-684d-4cd7-8862-2ffdd101d09b",
+			"djs": [
+				{
+					"id": 24,
+					"title": "Desert Dove Radio",
+					"image_small": "assets/djs/24_small.webp",
+					"image_large": "assets/djs/24_large.webp"
+				}
+			],
+			"tagIds": [159, 291, 292],
+			"url": "https://www.mixcloud.com/otherdesertradio/aidan-desert-dove-transmission-6-holiday-special-december-19-2020/"
 		},
 		{
 			"id": 82,
@@ -1967,6 +3659,56 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-vi-religion-politics-a-holiday-special-december-7-2020/"
 		},
 		{
+			"id": 195,
+			"title": "Fumbling Bush Forecast 4 Fun",
+			"date": "2020-12-07T00:00:00.000Z",
+			"duration": 5355,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/e/3/2/98e3-52aa-42a8-84a1-b3ba01609bdf",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/e/3/2/98e3-52aa-42a8-84a1-b3ba01609bdf",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [48, 187, 255, 259],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-4-fun-december-7-2020/"
+		},
+		{
+			"id": 216,
+			"title": "Episode V",
+			"date": "2020-11-30T00:00:00.000Z",
+			"duration": 4800,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/f/d/8/2735-43a5-4664-9149-68c58fde1df5",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/f/d/8/2735-43a5-4664-9149-68c58fde1df5",
+			"djs": [
+				{
+					"id": 41,
+					"title": "Paul Quattrone"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/paul-quattrone-episode-v-november-30-2020/"
+		},
+		{
+			"id": 196,
+			"title": "No Surrender Without Butter",
+			"date": "2020-11-23T00:00:00.000Z",
+			"duration": 3512,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/b/f/c/8673-6ea8-452b-9519-2b108d68260a",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/b/f/c/8673-6ea8-452b-9519-2b108d68260a",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [204, 260, 261, 262, 263],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-no-surrender-without-butter-november-23-2020/"
+		},
+		{
 			"id": 84,
 			"title": "Freedom Overspill Episode Four: 70s pop",
 			"description": "<p>70s pop presented to us by Derek Monypeny's Freedom Overspill hour, Episode 4.</p>",
@@ -1986,6 +3728,22 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-episode-four-70s-pop-november-16-2020/"
 		},
 		{
+			"id": 217,
+			"title": "Wave Goodbye to Nordstrom Music",
+			"date": "2020-11-10T00:00:00.000Z",
+			"duration": 4562,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/d/8/6/e854-6d35-4290-a503-8e20837738f3",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/d/8/6/e854-6d35-4290-a503-8e20837738f3",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [35, 52, 175, 293, 294],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-wave-goodbye-to-nordstrom-music/"
+		},
+		{
 			"id": 85,
 			"title": "Beyond Karaoke Episode V - Life, Death, & Existential Dread",
 			"description": "<p>Are you ready to stare into the abyss? Host and KJ K Sera Sarah is on a search to find the meaning of life! Let’s peel back the layers of this onion we call existence with the music of Queen, Motorhead, Molly Nilsson, Diamanda Galas, and MORE!</p>",
@@ -2003,6 +3761,74 @@
 			],
 			"tagIds": [107, 140, 141, 142, 143],
 			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-v-life-death-existential-dread-november-2-2020/"
+		},
+		{
+			"id": 197,
+			"title": "Fumbling Bush Forecast #3: New Ancestors",
+			"date": "2020-11-02T00:00:00.000Z",
+			"duration": 5402,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/d/b/3/bcc1-2145-40f8-8d27-39f058bb599b",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/d/b/3/bcc1-2145-40f8-8d27-39f058bb599b",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [89, 264, 265, 266],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-3-new-ancestors-november-2-2020/"
+		},
+		{
+			"id": 218,
+			"title": "Get Down Goblin Special October 2020",
+			"date": "2020-10-28T00:00:00.000Z",
+			"duration": 3234,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/b/3/a/358a-ce61-487e-bfed-c38a88e8b714",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/b/3/a/358a-ce61-487e-bfed-c38a88e8b714",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-get-down-goblin-special-october-2020/"
+		},
+		{
+			"id": 219,
+			"title": "Desert Dove Transmission 5",
+			"date": "2020-10-17T00:00:00.000Z",
+			"duration": 3525,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/f/2/f/1bcd-85e5-4d89-91a1-afe3db63b154",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/f/2/f/1bcd-85e5-4d89-91a1-afe3db63b154",
+			"djs": [
+				{
+					"id": 24,
+					"title": "Desert Dove Radio",
+					"image_small": "assets/djs/24_small.webp",
+					"image_large": "assets/djs/24_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/aidan-desert-dove-transmission-5-october-17-2020/"
+		},
+		{
+			"id": 198,
+			"title": "Armenian Reader's Digest II",
+			"date": "2020-10-11T00:00:00.000Z",
+			"duration": 3421,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/f/c/4/6593-5a7a-422b-a175-7abf8302a816",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/f/c/4/6593-5a7a-422b-a175-7abf8302a816",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [35, 228, 267, 268, 269],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-armenian-ii-readers-digest-october-11-2020/"
 		},
 		{
 			"id": 87,
@@ -2042,6 +3868,72 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-iv-diagetic-not-diagetic-october-5-2020/"
 		},
 		{
+			"id": 199,
+			"title": "Fumbling Bush Forecast #2",
+			"date": "2020-10-05T00:00:00.000Z",
+			"duration": 4561,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/9/d/f/ddaa-916d-49ca-8f8a-6582ea42a432",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/9/d/f/ddaa-916d-49ca-8f8a-6582ea42a432",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-2-october-5-2020/"
+		},
+		{
+			"id": 220,
+			"title": "Light and Eulogy, a spiritually sexual mix part 2",
+			"date": "2020-09-26T00:00:00.000Z",
+			"duration": 4935,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/9/f/6/b0de-1eb3-40f5-9bab-0d128e05b5f2",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/9/f/6/b0de-1eb3-40f5-9bab-0d128e05b5f2",
+			"djs": [
+				{
+					"id": 40,
+					"title": "DJ CHRI$TYLE"
+				}
+			],
+			"tagIds": [187, 295],
+			"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-light-and-eulogy-a-spiritually-sexual-mix-part-2/"
+		},
+		{
+			"id": 221,
+			"title": "Light and Eulogy, a spiritually sexual mix part 1",
+			"date": "2020-09-15T00:00:00.000Z",
+			"duration": 3580,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/7/2/9/d085-f57b-4f60-8b6b-25b0cc8b5204",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/7/2/9/d085-f57b-4f60-8b6b-25b0cc8b5204",
+			"djs": [
+				{
+					"id": 40,
+					"title": "DJ CHRI$TYLE"
+				}
+			],
+			"tagIds": [187, 295],
+			"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-light-and-eulogy-a-spiritually-sexual-mix-part-1/"
+		},
+		{
+			"id": 222,
+			"title": "Episode III",
+			"date": "2020-09-08T00:00:00.000Z",
+			"duration": 6052,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/b/5/e/0298-b4a7-4da4-bae8-b093319f34d1",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/b/5/e/0298-b4a7-4da4-bae8-b093319f34d1",
+			"djs": [
+				{
+					"id": 41,
+					"title": "Paul Quattrone"
+				}
+			],
+			"tagIds": [296, 297],
+			"url": "https://www.mixcloud.com/otherdesertradio/paul-quattrone-episode-4-week-of-september-8-2020/"
+		},
+		{
 			"id": 88,
 			"title": "Beyond Karaoke Episode III - Labor",
 			"description": "<p>Host and KJ K Sera Sarah is ready to celebrate the Labor Day holiday with a little Mandatory Overtime! Because it's always 9 to 5 somewhere! In this episode we focus our lens on labor history, both personal and political, with the music of Dolly Parton, Suburban Lawns, Orville Peck, Childish Gambino, and MORE!</p>",
@@ -2061,6 +3953,40 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-iii-labor-september-7-2020/"
 		},
 		{
+			"id": 200,
+			"title": "Fumbling Bush Forecast #1",
+			"date": "2020-09-07T00:00:00.000Z",
+			"duration": 3700,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/7/1/5/d66b-9647-4644-a163-2a892ad5b658",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/7/1/5/d66b-9647-4644-a163-2a892ad5b658",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [261, 270, 271, 272],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-1-september-7-2020/"
+		},
+		{
+			"id": 201,
+			"title": "Some Sort of Labor Day Special",
+			"date": "2020-09-07T00:00:00.000Z",
+			"duration": 2989,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/b/0/9/bdc7-becb-457a-bff4-4f4dff2bb519",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/b/0/9/bdc7-becb-457a-bff4-4f4dff2bb519",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [273, 274, 275, 276],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-x/"
+		},
+		{
 			"id": 89,
 			"title": "Freedom Overspill Episode Two",
 			"date": "2020-08-31T00:00:00.000Z",
@@ -2077,6 +4003,40 @@
 			],
 			"tagIds": [],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-episode-two-august-31-2020/"
+		},
+		{
+			"id": 223,
+			"title": "Desert Dove Transmission 4",
+			"date": "2020-08-29T00:00:00.000Z",
+			"duration": 3223,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/0/d/4/bf4b-9a62-4a15-b42f-5cb04dbe2ddd",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/0/d/4/bf4b-9a62-4a15-b42f-5cb04dbe2ddd",
+			"djs": [
+				{
+					"id": 24,
+					"title": "Desert Dove Radio",
+					"image_small": "assets/djs/24_small.webp",
+					"image_large": "assets/djs/24_large.webp"
+				}
+			],
+			"tagIds": [248],
+			"url": "https://www.mixcloud.com/otherdesertradio/aidan-desert-dove-transmission-4-august-29-2020/"
+		},
+		{
+			"id": 202,
+			"title": "Lebanese Reader's Digest",
+			"date": "2020-08-14T00:00:00.000Z",
+			"duration": 3701,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/7/d/e/90b0-a297-4f43-a243-5040e27d547e",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/7/d/e/90b0-a297-4f43-a243-5040e27d547e",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [246, 277, 278, 279],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-lebanese-readers-digest-august-14-2020/"
 		},
 		{
 			"id": 90,
@@ -2115,6 +4075,38 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-freedom-overspill-episode-one-august-3-2020/"
 		},
 		{
+			"id": 203,
+			"title": "Armenian Reader's Digest",
+			"date": "2020-07-21T00:00:00.000Z",
+			"duration": 3979,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/9/0/2/03ea-584a-4755-8af6-aebaea1f6000",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/9/0/2/03ea-584a-4755-8af6-aebaea1f6000",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-armenian-readers-digest-july-21-2020/"
+		},
+		{
+			"id": 204,
+			"title": "Be Water My Friend",
+			"date": "2020-07-13T00:00:00.000Z",
+			"duration": 3741,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-be-water-my-friend-july-13-2020/"
+		},
+		{
 			"id": 92,
 			"title": "Beyond Hope Episode I - War and Resistance",
 			"date": "2020-07-04T00:00:00.000Z",
@@ -2133,6 +4125,178 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-war-and-resistance-july-4-2020/"
 		},
 		{
+			"id": 205,
+			"title": "Mojave Window Optics pt. 2",
+			"date": "2020-06-01T00:00:00.000Z",
+			"duration": 2197,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/9/5/7/e820-2417-4e55-8794-df658cded35a",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/9/5/7/e820-2417-4e55-8794-df658cded35a",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [280, 281],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-mojave-window-optics-pt-2-june-1-2020/"
+		},
+		{
+			"id": 224,
+			"title": "Transmission II",
+			"date": "2020-06-01T00:00:00.000Z",
+			"duration": 3149,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/8/a/8/bc59-c2d1-446f-96fc-7a9aad7aecb1",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/8/a/8/bc59-c2d1-446f-96fc-7a9aad7aecb1",
+			"djs": [
+				{
+					"id": 24,
+					"title": "Desert Dove Radio",
+					"image_small": "assets/djs/24_small.webp",
+					"image_large": "assets/djs/24_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/aidan-desert-dove-transmission-ii-june-1-2020/"
+		},
+		{
+			"id": 206,
+			"title": "Fi Waja",
+			"date": "2020-05-18T00:00:00.000Z",
+			"duration": 3466,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [87, 267, 278, 282, 283],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-may-18-2020/"
+		},
+		{
+			"id": 225,
+			"title": "selected audio projectsss 2020",
+			"date": "2020-05-02T00:00:00.000Z",
+			"duration": 2706,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 18,
+					"title": "DJ Nasty Nate",
+					"image_small": "assets/djs/18_small.webp",
+					"image_large": "assets/djs/18_large.webp"
+				}
+			],
+			"tagIds": [61, 298],
+			"url": "https://www.mixcloud.com/otherdesertradio/nathan-ober-selected-audio-projectsss-2020/"
+		},
+		{
+			"id": 226,
+			"title": "Summer's Eve",
+			"date": "2020-05-02T00:00:00.000Z",
+			"duration": 1242,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 20,
+					"title": "Tara Jane O'Neil",
+					"image_small": "assets/djs/20_small.webp",
+					"image_large": "assets/djs/20_large.webp"
+				}
+			],
+			"tagIds": [190, 253],
+			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-tjo-summers-eve/"
+		},
+		{
+			"id": 227,
+			"title": "K Sera Sarah Does A Dozen Presented by:  Beyond Hope's Beyond Karaoke",
+			"date": "2020-05-02T00:00:00.000Z",
+			"duration": 4040,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/9/5/4/6a5e-5175-4842-86da-0ed678cf6ddc",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/9/5/4/6a5e-5175-4842-86da-0ed678cf6ddc",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [299, 300, 301, 302, 303],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-does-a-dozen-presented-by-beyond-hopes-beyond-karaoke/"
+		},
+		{
+			"id": 228,
+			"title": "ASEDR 6",
+			"date": "2020-05-02T00:00:00.000Z",
+			"duration": 2299,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 12,
+					"title": "Derek Monypeny",
+					"image_small": "assets/djs/12_small.webp",
+					"image_large": "assets/djs/12_large.webp"
+				}
+			],
+			"tagIds": [113],
+			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-asedr/"
+		},
+		{
+			"id": 207,
+			"title": "Anne Waldman + Thoughts",
+			"date": "2020-04-27T00:00:00.000Z",
+			"duration": 1890,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [284, 285],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-anne-waldman-thoughts-april-27-2020/"
+		},
+		{
+			"id": 229,
+			"title": "Episode I, Part 2",
+			"date": "2020-04-27T00:00:00.000Z",
+			"duration": 5432,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 41,
+					"title": "Paul Quattrone"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/paul-part-ii-april-27-2020/"
+		},
+		{
+			"id": 230,
+			"title": "Transmission I",
+			"date": "2020-04-20T00:00:00.000Z",
+			"duration": 4541,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/a/2/9/2c1e-c629-4f8d-9972-eba01737e8a8",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/a/2/9/2c1e-c629-4f8d-9972-eba01737e8a8",
+			"djs": [
+				{
+					"id": 24,
+					"title": "Desert Dove Radio",
+					"image_small": "assets/djs/24_small.webp",
+					"image_large": "assets/djs/24_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/aidan-desert-dove/"
+		},
+		{
 			"id": 93,
 			"title": "Mauritania Mix",
 			"date": "2020-04-13T00:00:00.000Z",
@@ -2149,6 +4313,54 @@
 			],
 			"tagIds": [78, 156],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-mauritania-mix/"
+		},
+		{
+			"id": 208,
+			"title": "Window Jazz",
+			"date": "2020-04-13T00:00:00.000Z",
+			"duration": 2513,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/cp/"
+		},
+		{
+			"id": 209,
+			"title": "Corona Qualm II",
+			"date": "2020-04-06T00:00:00.000Z",
+			"duration": 3770,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-corona-qualm-ii-april-6-2020/"
+		},
+		{
+			"id": 210,
+			"title": "Corona Calm I",
+			"date": "2020-04-06T00:00:00.000Z",
+			"duration": 4566,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-corona-calm-i-april-6-2020/"
 		}
 	]
 }

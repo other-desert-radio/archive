@@ -1,0 +1,298 @@
+{
+	"version": 5,
+	"updatedAt": "2026-11-02T19:09:00.560Z",
+	"data": {
+		"id": 37,
+		"title": "Caroline",
+		"bio": null,
+		"shows": [
+			{
+				"id": 211,
+				"title": "Fall 2026",
+				"date": "2026-10-19T00:00:00.000Z",
+				"duration": 3454,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/9/8/b/f9a5-9678-4b1e-82ca-db78977a36c6",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/9/8/b/f9a5-9678-4b1e-82ca-db78977a36c6",
+				"tagIds": [33, 61, 175],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-fall-2026-october-19-2026/"
+			},
+			{
+				"id": 157,
+				"title": "Winter 2023-2024",
+				"date": "2024-02-26T00:00:00.000Z",
+				"duration": 3629,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/6/5/0/e14c-dd15-49af-9120-5166bb402768",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/6/5/0/e14c-dd15-49af-9120-5166bb402768",
+				"tagIds": [22, 33, 175, 207],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-winter-2023-2024-february-26-2024/"
+			},
+			{
+				"id": 166,
+				"title": "Classical Guitar Selections",
+				"date": "2023-11-20T00:00:00.000Z",
+				"duration": 3587,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/2/4/8/4fc6-e480-461e-b56f-3cec331fdc70",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/2/4/8/4fc6-e480-461e-b56f-3cec331fdc70",
+				"tagIds": [175, 216, 217, 218],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-classical-guitar-selections-november-20-2023/"
+			},
+			{
+				"id": 171,
+				"title": "Flowers Cannot Grow Without Water",
+				"date": "2023-06-26T00:00:00.000Z",
+				"duration": 6691,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/f/0/9/981b-50ba-413f-9c54-2f7e1cf2eae5",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/f/0/9/981b-50ba-413f-9c54-2f7e1cf2eae5",
+				"tagIds": [37, 38, 42],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-flowers-cannot-grow-without-water-june-26-2023/"
+			},
+			{
+				"id": 175,
+				"title": "Dreamy Apocalypse",
+				"date": "2023-01-23T00:00:00.000Z",
+				"duration": 3752,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/4/a/f/b2e6-673d-42fa-90dc-6cfdac1e7732",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/4/a/f/b2e6-673d-42fa-90dc-6cfdac1e7732",
+				"tagIds": [37, 225, 226, 227],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-dreamy-apocalypse-january-232023/"
+			},
+			{
+				"id": 176,
+				"title": "Winter Thoughts, Organ + Piano Tunes",
+				"date": "2022-11-28T00:00:00.000Z",
+				"duration": 3435,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/7/2/f/e56a-d146-4fcc-a7d4-4bb8529125ab",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/7/2/f/e56a-d146-4fcc-a7d4-4bb8529125ab",
+				"tagIds": [175, 228, 229, 230],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-winter-thoughts-organ-piano-tunes-november-28-2022/"
+			},
+			{
+				"id": 180,
+				"title": "Summer Moves 2022",
+				"date": "2022-08-15T00:00:00.000Z",
+				"duration": 4443,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/e/f/2/9e32-8fb7-4e3d-9f03-8530d8250e53",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/e/f/2/9e32-8fb7-4e3d-9f03-8530d8250e53",
+				"tagIds": [6, 61, 234],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-summer-moves-2022-august-15-2022/"
+			},
+			{
+				"id": 181,
+				"title": "Some Trees + Flowers + Basic Nice Things Like That",
+				"date": "2022-01-24T00:00:00.000Z",
+				"duration": 3380,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/b/3/2/2472-eca9-4d0a-a81d-99c79f2b70ab",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/b/3/2/2472-eca9-4d0a-a81d-99c79f2b70ab",
+				"tagIds": [37, 114, 235],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-trees-flowers-basic-nice-things-like-that-january-24-2022/"
+			},
+			{
+				"id": 183,
+				"title": "Hungarian Readers Digest III: Jazz & Classical Special",
+				"date": "2021-12-13T00:00:00.000Z",
+				"duration": 3450,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/7/6/0/c626-952b-4196-8444-94fe2111f46a",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/7/6/0/c626-952b-4196-8444-94fe2111f46a",
+				"tagIds": [35, 175, 236],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-hungarian-readers-digest-iii-jazz-classical-special-december-13-2021/"
+			},
+			{
+				"id": 184,
+				"title": "Hungarian Reader's Digest I, Punk Special Punk Különkiadás",
+				"date": "2021-10-18T00:00:00.000Z",
+				"duration": 3403,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/0/e/d/c137-03e1-4536-aab1-d29e867220fe",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/0/e/d/c137-03e1-4536-aab1-d29e867220fe",
+				"tagIds": [40, 237, 238, 239],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-hungarian-readers-digest-i-punk-special-punk-k%C3%BCl%C3%B6nkiad%C3%A1s-october-18-2021/"
+			},
+			{
+				"id": 185,
+				"title": "Shoals of Summer",
+				"date": "2021-09-21T00:00:00.000Z",
+				"duration": 4107,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/c/3/7/a8bd-ddd4-4806-b881-7949db628ba2",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/c/3/7/a8bd-ddd4-4806-b881-7949db628ba2",
+				"tagIds": [240, 241, 242, 243, 244],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-shoals-of-summer-september-21-2021/"
+			},
+			{
+				"id": 186,
+				"title": "Lebanese Reader's Digest II",
+				"date": "2021-08-23T00:00:00.000Z",
+				"duration": 3825,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/2/d/5/afd5-d22f-46d2-bb9e-16af62741f7c",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/2/d/5/afd5-d22f-46d2-bb9e-16af62741f7c",
+				"tagIds": [245, 246, 247],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-lebanese-readers-digest-ii-august-23-2021/"
+			},
+			{
+				"id": 190,
+				"title": "Armenian Reader's Digest III, Water Finds its Crack",
+				"date": "2021-04-19T00:00:00.000Z",
+				"duration": 3970,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/f/7/1/8934-5b4e-4d95-884c-d11b5bd8ac5d",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/f/7/1/8934-5b4e-4d95-884c-d11b5bd8ac5d",
+				"tagIds": [256, 257],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-armenian-readers-digest-iii-water-finds-its-crack-april-19-2021/"
+			},
+			{
+				"id": 194,
+				"title": "A Plateaux of Dürer, dedicated to Harold Budd (and buds)",
+				"date": "2020-12-21T00:00:00.000Z",
+				"duration": 2681,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/0/8/7/3220-e313-4303-9264-8aff680640a5",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/0/8/7/3220-e313-4303-9264-8aff680640a5",
+				"tagIds": [61, 258],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-a-plateaux-of-d%C3%BCrer-dedciated-to-harold-budd-and-buds-december-21-2020/"
+			},
+			{
+				"id": 196,
+				"title": "No Surrender Without Butter",
+				"date": "2020-11-23T00:00:00.000Z",
+				"duration": 3512,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/b/f/c/8673-6ea8-452b-9519-2b108d68260a",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/b/f/c/8673-6ea8-452b-9519-2b108d68260a",
+				"tagIds": [204, 260, 261, 262, 263],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-no-surrender-without-butter-november-23-2020/"
+			},
+			{
+				"id": 217,
+				"title": "Wave Goodbye to Nordstrom Music",
+				"date": "2020-11-10T00:00:00.000Z",
+				"duration": 4562,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/d/8/6/e854-6d35-4290-a503-8e20837738f3",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/d/8/6/e854-6d35-4290-a503-8e20837738f3",
+				"tagIds": [35, 52, 175, 293, 294],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-wave-goodbye-to-nordstrom-music/"
+			},
+			{
+				"id": 218,
+				"title": "Get Down Goblin Special October 2020",
+				"date": "2020-10-28T00:00:00.000Z",
+				"duration": 3234,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/b/3/a/358a-ce61-487e-bfed-c38a88e8b714",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/b/3/a/358a-ce61-487e-bfed-c38a88e8b714",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-get-down-goblin-special-october-2020/"
+			},
+			{
+				"id": 198,
+				"title": "Armenian Reader's Digest II",
+				"date": "2020-10-11T00:00:00.000Z",
+				"duration": 3421,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/f/c/4/6593-5a7a-422b-a175-7abf8302a816",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/f/c/4/6593-5a7a-422b-a175-7abf8302a816",
+				"tagIds": [35, 228, 267, 268, 269],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-armenian-ii-readers-digest-october-11-2020/"
+			},
+			{
+				"id": 201,
+				"title": "Some Sort of Labor Day Special",
+				"date": "2020-09-07T00:00:00.000Z",
+				"duration": 2989,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/b/0/9/bdc7-becb-457a-bff4-4f4dff2bb519",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/b/0/9/bdc7-becb-457a-bff4-4f4dff2bb519",
+				"tagIds": [273, 274, 275, 276],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-x/"
+			},
+			{
+				"id": 202,
+				"title": "Lebanese Reader's Digest",
+				"date": "2020-08-14T00:00:00.000Z",
+				"duration": 3701,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/7/d/e/90b0-a297-4f43-a243-5040e27d547e",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/7/d/e/90b0-a297-4f43-a243-5040e27d547e",
+				"tagIds": [246, 277, 278, 279],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-lebanese-readers-digest-august-14-2020/"
+			},
+			{
+				"id": 203,
+				"title": "Armenian Reader's Digest",
+				"date": "2020-07-21T00:00:00.000Z",
+				"duration": 3979,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/9/0/2/03ea-584a-4755-8af6-aebaea1f6000",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/9/0/2/03ea-584a-4755-8af6-aebaea1f6000",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-armenian-readers-digest-july-21-2020/"
+			},
+			{
+				"id": 204,
+				"title": "Be Water My Friend",
+				"date": "2020-07-13T00:00:00.000Z",
+				"duration": 3741,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-be-water-my-friend-july-13-2020/"
+			},
+			{
+				"id": 205,
+				"title": "Mojave Window Optics pt. 2",
+				"date": "2020-06-01T00:00:00.000Z",
+				"duration": 2197,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/9/5/7/e820-2417-4e55-8794-df658cded35a",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/9/5/7/e820-2417-4e55-8794-df658cded35a",
+				"tagIds": [280, 281],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-mojave-window-optics-pt-2-june-1-2020/"
+			},
+			{
+				"id": 206,
+				"title": "Fi Waja",
+				"date": "2020-05-18T00:00:00.000Z",
+				"duration": 3466,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [87, 267, 278, 282, 283],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-may-18-2020/"
+			},
+			{
+				"id": 207,
+				"title": "Anne Waldman + Thoughts",
+				"date": "2020-04-27T00:00:00.000Z",
+				"duration": 1890,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [284, 285],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-anne-waldman-thoughts-april-27-2020/"
+			},
+			{
+				"id": 208,
+				"title": "Window Jazz",
+				"date": "2020-04-13T00:00:00.000Z",
+				"duration": 2513,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/cp/"
+			},
+			{
+				"id": 209,
+				"title": "Corona Qualm II",
+				"date": "2020-04-06T00:00:00.000Z",
+				"duration": 3770,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-corona-qualm-ii-april-6-2020/"
+			},
+			{
+				"id": 210,
+				"title": "Corona Calm I",
+				"date": "2020-04-06T00:00:00.000Z",
+				"duration": 4566,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-corona-calm-i-april-6-2020/"
+			}
+		],
+		"tagIds": [
+			6, 22, 33, 35, 37, 38, 40, 42, 52, 61, 87, 114, 175, 204, 207, 216, 217,
+			218, 225, 226, 227, 228, 229, 230, 234, 235, 236, 237, 238, 239, 240, 241,
+			242, 243, 244, 245, 246, 247, 256, 257, 258, 260, 261, 262, 263, 267, 268,
+			269, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 293,
+			294
+		]
+	}
+}

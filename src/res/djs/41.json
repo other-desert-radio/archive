@@ -1,0 +1,52 @@
+{
+	"version": 5,
+	"updatedAt": "2026-11-02T19:09:00.560Z",
+	"data": {
+		"id": 41,
+		"title": "Paul Quattrone",
+		"bio": null,
+		"shows": [
+			{
+				"id": 249,
+				"title": "Episode VIII",
+				"date": "2021-10-18T00:00:00.000Z",
+				"duration": 5444,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/a/e/a/fd29-f34b-43ff-81d0-9f4b402903b9",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/a/e/a/fd29-f34b-43ff-81d0-9f4b402903b9",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/pq-episode-viii-october-18-2021/"
+			},
+			{
+				"id": 216,
+				"title": "Episode V",
+				"date": "2020-11-30T00:00:00.000Z",
+				"duration": 4800,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/f/d/8/2735-43a5-4664-9149-68c58fde1df5",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/f/d/8/2735-43a5-4664-9149-68c58fde1df5",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/paul-quattrone-episode-v-november-30-2020/"
+			},
+			{
+				"id": 222,
+				"title": "Episode III",
+				"date": "2020-09-08T00:00:00.000Z",
+				"duration": 6052,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/b/5/e/0298-b4a7-4da4-bae8-b093319f34d1",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/b/5/e/0298-b4a7-4da4-bae8-b093319f34d1",
+				"tagIds": [296, 297],
+				"url": "https://www.mixcloud.com/otherdesertradio/paul-quattrone-episode-4-week-of-september-8-2020/"
+			},
+			{
+				"id": 229,
+				"title": "Episode I, Part 2",
+				"date": "2020-04-27T00:00:00.000Z",
+				"duration": 5432,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/paul-part-ii-april-27-2020/"
+			}
+		],
+		"tagIds": [296, 297]
+	}
+}

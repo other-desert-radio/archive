@@ -1,6 +1,6 @@
 {
-	"version": 4,
-	"updatedAt": "2026-10-30T18:51:15.215Z",
+	"version": 5,
+	"updatedAt": "2026-11-02T19:09:00.560Z",
 	"data": {
 		"id": 21,
 		"title": "DJ Pequeña Cretina aka Alexandra Martinez",
@@ -10,7 +10,322 @@
 		"socials": "<p>IG: alxndramartinez, Book Reviews and More: alexandramartinez.substack.com</p>",
 		"showTitle": "Pequeña Cretina",
 		"showDescription": "Pequeña Cretina is an ever-evolving experiment in sound centered around music but also interviews with authors and artists. Sometimes there's poetry readings, sometimes there's advice, sometimes there's just people screaming, tune in.",
-		"shows": [],
-		"tagIds": []
+		"shows": [
+			{
+				"id": 212,
+				"title": "Pequeña Cretina + Lissajous SPECIAL",
+				"date": "2026-10-12T00:00:00.000Z",
+				"duration": 2793,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/6/d/f/55f4-fad1-42cd-9c4c-b7d6036da328",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/6/d/f/55f4-fad1-42cd-9c4c-b7d6036da328",
+				"tagIds": [21, 22, 42],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-lissajous-special-october-12-2026/"
+			},
+			{
+				"id": 130,
+				"title": "Volume XXXI",
+				"date": "2026-08-24T00:00:00.000Z",
+				"duration": 3600,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/0/d/0/9b7e-7b22-453b-9865-6beb1caf0cb2",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/0/d/0/9b7e-7b22-453b-9865-6beb1caf0cb2",
+				"tagIds": [33, 36, 37],
+				"url": "https://www.mixcloud.com/otherdesertradio/pequena-cretina-volume-xxxi-august-24-2026/"
+			},
+			{
+				"id": 231,
+				"title": "What Primal Screams are Made of",
+				"date": "2026-07-13T00:00:00.000Z",
+				"duration": 3599,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/c/c/8/a0a4-76c0-42e6-bec9-f1b5977007cb",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/c/c/8/a0a4-76c0-42e6-bec9-f1b5977007cb",
+				"tagIds": [33, 304],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-axaxaxas-ml%C3%B6-justin-paszul-what-primal-screams-are-made-of-july-13-2026/"
+			},
+			{
+				"id": 134,
+				"title": "Volume XXIX, HWY 62 ART TOURS ROAD TRIP",
+				"date": "2025-09-29T00:00:00.000Z",
+				"duration": 1967,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/1/7/6/3470-602b-4686-913e-cfcb28980b9c",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/1/7/6/3470-602b-4686-913e-cfcb28980b9c",
+				"tagIds": [192, 193, 194, 195],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xxix-hwy-62-art-tours-road-trip-september-29-2025/"
+			},
+			{
+				"id": 232,
+				"title": "Volume XXVIII, Book Club Edition III W Melissa Lozada-Oliva",
+				"date": "2025-08-18T00:00:00.000Z",
+				"duration": 3663,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/3/6/e/f87a-3136-4c0b-8f43-21e8fe5c9a75",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/3/6/e/f87a-3136-4c0b-8f43-21e8fe5c9a75",
+				"tagIds": [198, 305, 306],
+				"url": "https://www.mixcloud.com/otherdesertradio/hq-peque%C3%B1a-cretina-volume-xxviii-book-club-edition-iii-w-melissa-lozada-oliva-august-18-2025/"
+			},
+			{
+				"id": 136,
+				"title": "Volume XXVII, Book Club Edition II W Harris Lahti",
+				"date": "2025-06-30T00:00:00.000Z",
+				"duration": 3083,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/5/f/a/2ec0-3a8a-4d58-9c21-7e4de549b30c",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/5/f/a/2ec0-3a8a-4d58-9c21-7e4de549b30c",
+				"tagIds": [196, 197, 198],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xxvii-book-club-edition-ii-w-harris-lahti-june-30-2025/"
+			},
+			{
+				"id": 139,
+				"title": "Volume XXVI, Book Club Edition W Jesse Katz",
+				"date": "2025-03-17T00:00:00.000Z",
+				"duration": 5246,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/c/1/6/c030-6c47-42f1-9c16-9582d0760817",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/c/1/6/c030-6c47-42f1-9c16-9582d0760817",
+				"tagIds": [196, 199, 200],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xxvi-book-club-edition-w-jesse-katz-march-17-2025/"
+			},
+			{
+				"id": 144,
+				"title": "Volume XXV,",
+				"date": "2025-01-06T00:00:00.000Z",
+				"duration": 7180,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/8/5/5/80c0-4b90-4d44-949a-2bb12686f167",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/8/5/5/80c0-4b90-4d44-949a-2bb12686f167",
+				"tagIds": [37, 40, 42],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xxv-january-6-2025/"
+			},
+			{
+				"id": 125,
+				"title": "Volume XXIV,",
+				"date": "2024-09-09T00:00:00.000Z",
+				"duration": 7341,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/7/e/c/2788-5a96-4bbf-8e97-f9e4a9ee9285",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/7/e/c/2788-5a96-4bbf-8e97-f9e4a9ee9285",
+				"tagIds": [37, 40, 159],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xxiv-september-9-2024/"
+			},
+			{
+				"id": 127,
+				"title": "Volume XXII,",
+				"date": "2024-08-05T00:00:00.000Z",
+				"duration": 7057,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/3/4/2/56b9-2e62-42ce-b45e-0aa7e21b2806",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/3/4/2/56b9-2e62-42ce-b45e-0aa7e21b2806",
+				"tagIds": [36, 37, 38, 186],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xxii-august-5-2024/"
+			},
+			{
+				"id": 128,
+				"title": "Volume XXI,",
+				"date": "2024-07-22T00:00:00.000Z",
+				"duration": 7359,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/1/1/1/51f1-dd68-41cb-90ea-ccec3cb9e022",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/1/1/1/51f1-dd68-41cb-90ea-ccec3cb9e022",
+				"tagIds": [36, 42, 187],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xxi-july-22-2024/"
+			},
+			{
+				"id": 129,
+				"title": "Volume XX, Live from High Desert Times",
+				"date": "2024-07-08T00:00:00.000Z",
+				"duration": 10794,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/c/5/9/e0b0-3c9f-4cf9-84a5-f4898500825b",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/c/5/9/e0b0-3c9f-4cf9-84a5-f4898500825b",
+				"tagIds": [42, 64, 188],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xx-live-from-high-desert-times-july-8-2024/"
+			},
+			{
+				"id": 146,
+				"title": "Volume XIX",
+				"date": "2024-06-23T00:00:00.000Z",
+				"duration": 7251,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/7/d/e/2ae9-ae24-4b31-8450-0dfeae441341",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/7/d/e/2ae9-ae24-4b31-8450-0dfeae441341",
+				"tagIds": [21, 37, 64],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xviii-june-23-2024/"
+			},
+			{
+				"id": 147,
+				"title": "Volume XVIII",
+				"date": "2024-06-10T00:00:00.000Z",
+				"duration": 7248,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/2/2/2/0dc4-371e-4d02-b8c1-6cf2a2669e2b",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/2/2/2/0dc4-371e-4d02-b8c1-6cf2a2669e2b",
+				"tagIds": [33, 42, 47],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xvii-june-10-2024/"
+			},
+			{
+				"id": 149,
+				"title": "Volume XVII",
+				"date": "2024-05-27T00:00:00.000Z",
+				"duration": 7140,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/9/b/4/8261-167a-449b-a47f-e9ec2bdf62bd",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/9/b/4/8261-167a-449b-a47f-e9ec2bdf62bd",
+				"tagIds": [32, 37, 40],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xvii-may-27-2024/"
+			},
+			{
+				"id": 150,
+				"title": "Volume XVI",
+				"date": "2024-05-13T00:00:00.000Z",
+				"duration": 7237,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/3/6/9/5373-a352-4918-b1ea-148b090f756e",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/3/6/9/5373-a352-4918-b1ea-148b090f756e",
+				"tagIds": [36, 40, 203],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xvi-may-13-2024/"
+			},
+			{
+				"id": 151,
+				"title": "Volume XV",
+				"date": "2024-04-29T00:00:00.000Z",
+				"duration": 7265,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/e/1/0/fb44-1c79-45bc-8e89-31079882d3c1",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/e/1/0/fb44-1c79-45bc-8e89-31079882d3c1",
+				"tagIds": [37, 42, 191],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xv-april-29-2024/"
+			},
+			{
+				"id": 154,
+				"title": "Volume XIV",
+				"date": "2024-04-15T00:00:00.000Z",
+				"duration": 7115,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/9/5/a/92c2-9738-43b8-8b97-7813f3398f7f",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/9/5/a/92c2-9738-43b8-8b97-7813f3398f7f",
+				"tagIds": [36, 42, 204],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xiv-april-15-2024/"
+			},
+			{
+				"id": 153,
+				"title": "Volume XIII",
+				"date": "2024-04-01T00:00:00.000Z",
+				"duration": 7322,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/6/4/2/f3e3-1ad6-4dd8-b8f3-b5dd146f95d1",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/6/4/2/f3e3-1ad6-4dd8-b8f3-b5dd146f95d1",
+				"tagIds": [36, 158, 204, 205],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xiii-april-1-2024/"
+			},
+			{
+				"id": 155,
+				"title": "Volume XII",
+				"date": "2024-03-18T00:00:00.000Z",
+				"duration": 7235,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/a/9/b/ca82-2b45-48ab-88a0-32088ac182d5",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/a/9/b/ca82-2b45-48ab-88a0-32088ac182d5",
+				"tagIds": [38, 104, 191],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xii-march-18-2024/"
+			},
+			{
+				"id": 156,
+				"title": "Volume XI",
+				"date": "2024-03-04T00:00:00.000Z",
+				"duration": 7235,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/c/d/9/c61c-cae6-42d3-a96a-03892c641007",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/c/d/9/c61c-cae6-42d3-a96a-03892c641007",
+				"tagIds": [22, 104, 206],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-xi-march-4-2024/"
+			},
+			{
+				"id": 158,
+				"title": "Volume X",
+				"date": "2024-02-19T00:00:00.000Z",
+				"duration": 7294,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/5/5/2/46ae-9277-44dc-9930-56773d00253b",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/5/5/2/46ae-9277-44dc-9930-56773d00253b",
+				"tagIds": [36, 50, 173, 208],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-x-february-19-2024/"
+			},
+			{
+				"id": 159,
+				"title": "Volume IX",
+				"date": "2024-02-05T00:00:00.000Z",
+				"duration": 7165,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/1/0/2/8c17-2b19-49fc-b833-aaa6fde0c0bc",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/1/0/2/8c17-2b19-49fc-b833-aaa6fde0c0bc",
+				"tagIds": [36, 42, 64],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-ix-february-5-2024/"
+			},
+			{
+				"id": 160,
+				"title": "Volume VIII",
+				"date": "2024-01-22T00:00:00.000Z",
+				"duration": 7297,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/1/2/9/86e7-ba70-4839-99ba-1e10b1d399f0",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/1/2/9/86e7-ba70-4839-99ba-1e10b1d399f0",
+				"tagIds": [209, 210, 211],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-viii-january-22-2024/"
+			},
+			{
+				"id": 161,
+				"title": "Volume VII",
+				"date": "2024-01-08T00:00:00.000Z",
+				"duration": 7196,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/3/c/8/6167-ae28-4b70-a164-6495cc924de4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/3/c/8/6167-ae28-4b70-a164-6495cc924de4",
+				"tagIds": [33, 40, 47, 191, 212],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-vii-january-8-2024/"
+			},
+			{
+				"id": 162,
+				"title": "Volume VI",
+				"date": "2023-12-25T00:00:00.000Z",
+				"duration": 7049,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/4/7/6/43fb-3e73-4b50-93a8-ea87e148f860",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/4/7/6/43fb-3e73-4b50-93a8-ea87e148f860",
+				"tagIds": [36, 40, 42],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-vi-december-25-2023/"
+			},
+			{
+				"id": 164,
+				"title": "Volume V",
+				"date": "2023-12-11T00:00:00.000Z",
+				"duration": 7009,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/9/c/d/8de1-fb12-46f4-8449-3a9a24258315",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/9/c/d/8de1-fb12-46f4-8449-3a9a24258315",
+				"tagIds": [36, 37, 188, 215],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-v-december-11-2023/"
+			},
+			{
+				"id": 165,
+				"title": "Volume IV",
+				"date": "2023-11-27T00:00:00.000Z",
+				"duration": 6884,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/d/d/8/2cff-40c6-4135-b4b0-e28b6cb35fc8",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/d/d/8/2cff-40c6-4135-b4b0-e28b6cb35fc8",
+				"tagIds": [32, 33, 37, 159],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-iv-november-27-2023/"
+			},
+			{
+				"id": 167,
+				"title": "Volume III",
+				"date": "2023-11-13T00:00:00.000Z",
+				"duration": 7281,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/2/a/c/ca1c-ac57-47b6-97df-9bf74317036f",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/2/a/c/ca1c-ac57-47b6-97df-9bf74317036f",
+				"tagIds": [32, 33, 47, 206],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-iii-november-13-2023/"
+			},
+			{
+				"id": 168,
+				"title": "Volume II",
+				"date": "2023-10-30T00:00:00.000Z",
+				"duration": 7219,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/1/a/b/d068-854f-4ac3-afb0-fde0bd74b524",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/1/a/b/d068-854f-4ac3-afb0-fde0bd74b524",
+				"tagIds": [33, 36, 112],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-ii-october-30-2023/"
+			},
+			{
+				"id": 169,
+				"title": "Volume I",
+				"date": "2023-09-25T00:00:00.000Z",
+				"duration": 7145,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/5/2/f/bd57-f19e-4787-abca-bad0984ef2b0",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/5/2/f/bd57-f19e-4787-abca-bad0984ef2b0",
+				"tagIds": [22, 37, 159, 219],
+				"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-i-september-25-2023/"
+			}
+		],
+		"tagIds": [
+			21, 22, 32, 33, 36, 37, 38, 40, 42, 47, 50, 64, 104, 112, 158, 159, 173,
+			186, 187, 188, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 203, 204,
+			205, 206, 208, 209, 210, 211, 212, 215, 219, 304, 305, 306
+		]
 	}
 }

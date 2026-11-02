@@ -19,13 +19,15 @@ export default function DJCard({ dj, base, tags }: Props) {
 				aria-label={`View ${dj.title}`}
 				className={styles["artwork"]}
 			>
-				<img
-					className={`${styles["image"]} image-border-primary`}
-					src={`${base}/${dj.image_small}`}
-					alt={dj.title}
-					loading="lazy"
-					decoding="async"
-				/>
+				{dj.image_small && (
+					<img
+						className={`${styles["image"]} image-border-primary`}
+						src={`${base}/${dj.image_small}`}
+						alt={dj.title}
+						loading="lazy"
+						decoding="async"
+					/>
+				)}
 			</a>
 
 			<div className={styles["trailing-content"]}>

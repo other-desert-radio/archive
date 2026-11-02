@@ -1,6 +1,6 @@
 {
-	"version": 4,
-	"updatedAt": "2026-10-30T18:51:15.215Z",
+	"version": 5,
+	"updatedAt": "2026-11-02T19:09:00.560Z",
 	"data": {
 		"id": 22,
 		"title": "Lodi Dottie",
@@ -13,7 +13,7 @@
 		"shows": [
 			{
 				"id": 67,
-				"title": "Looking Glass with Lodi Dottie Episode 7",
+				"title": "Looking Glass Episode 7",
 				"description": "<p>Cuidad Lineal - El Eslabon<br />Borghesia - Z.M.R.<br />Esplendor Geométrico - Moscú Está Helado <br />Figure Study - Divide<br />El Escuadrón Del Ritmo - Hielo Congelado <br />Das Ding - Reassurance Ritual<br />Peine Perdue - Coeur Brise<br />Deux - Felicita <br />N.A. Pop 2000 - Panic in Your Mind<br />Figure Study - Lesson One<br />Ford Proco - Central De Datos<br />Hard Corps - Dirty<br />Crash Course In Science - Flying Turns<br />In Trance 95 - Presidente<br />Xeno &amp; Oaklander - Angélique<br />Miss Kittin and The Hacker - The Building<br />Philippe Laurent - Distorsion</p>",
 				"date": "2026-08-03T00:00:00.000Z",
 				"duration": 3416,
@@ -31,6 +31,26 @@
 				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/e/b/7/189e-5f48-444b-9f0b-cad7c35e5cd8",
 				"tagIds": [179, 180, 181, 182],
 				"url": "https://www.mixcloud.com/otherdesertradio/lodi-dottie-x-muzizmu-live-at-white-label-vinyl-29-palms-52025-may-26-2025/"
+			},
+			{
+				"id": 137,
+				"title": "live at white label vinyl 29 palms 4.8.25",
+				"date": "2025-04-14T00:00:00.000Z",
+				"duration": 8416,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/0/3/e/ccd8-8ec3-4ce5-b039-d11cc5c6feb5",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/0/3/e/ccd8-8ec3-4ce5-b039-d11cc5c6feb5",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/lodi-dottie-x-peacetime-product-live-at-white-label-vinyl-29-palms-4825-april-14-2025/"
+			},
+			{
+				"id": 140,
+				"title": "International Women's Day Mix 2025",
+				"date": "2025-03-10T00:00:00.000Z",
+				"duration": 2812,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/1/4/9/5780-961c-49cc-bf77-83fee978fb93",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/1/4/9/5780-961c-49cc-bf77-83fee978fb93",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/peacetime-product-x-looking-glass-b2b-international-womens-day-mix-2025-march-10-2025/"
 			},
 			{
 				"id": 123,
@@ -51,8 +71,51 @@
 				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/2/2/2/9da3-7635-4e55-9708-48f3ef6eade4",
 				"tagIds": [98, 185],
 				"url": "https://www.mixcloud.com/otherdesertradio/looking-glass-with-lodi-dottie-episode-5-discoween-special-october-28-2024/"
+			},
+			{
+				"id": 126,
+				"title": "Looking Glass Episode 4",
+				"date": "2024-08-26T00:00:00.000Z",
+				"duration": 5469,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/f/d/f/4acc-ec65-4930-9167-29b193e5418e",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/f/d/f/4acc-ec65-4930-9167-29b193e5418e",
+				"tagIds": [33, 64, 158],
+				"url": "https://www.mixcloud.com/otherdesertradio/looking-glass-with-lodi-dottie-episode-4-august-26-2024/"
+			},
+			{
+				"id": 239,
+				"title": "Looking Glass Episode 1",
+				"date": "2023-08-07T00:00:00.000Z",
+				"duration": 5168,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/9/e/6/bb3a-ffd5-4cdb-ae02-649e0399e06f",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/9/e/6/bb3a-ffd5-4cdb-ae02-649e0399e06f",
+				"tagIds": [64, 112, 307, 308],
+				"url": "https://www.mixcloud.com/otherdesertradio/looking-glass-episode-1-august-7-2023/"
+			},
+			{
+				"id": 238,
+				"title": "Looking Glass Episode 2",
+				"date": "2023-08-02T00:00:00.000Z",
+				"duration": 3977,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/1/6/5/7f00-86e3-41f4-a7a5-9379554b90c9",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/1/6/5/7f00-86e3-41f4-a7a5-9379554b90c9",
+				"tagIds": [64, 112, 235, 307],
+				"url": "https://www.mixcloud.com/otherdesertradio/looking-glass-episode-2-october-2-2023/"
+			},
+			{
+				"id": 235,
+				"title": "Looking Glass Episode 3",
+				"date": "2023-04-14T00:00:00.000Z",
+				"duration": 3552,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/a/5/0/c695-cdec-4269-afc0-e18ff9ca89f0",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/a/5/0/c695-cdec-4269-afc0-e18ff9ca89f0",
+				"tagIds": [33, 158, 191, 234],
+				"url": "https://www.mixcloud.com/otherdesertradio/looking-glass-episode-3-april-15-2023/"
 			}
 		],
-		"tagIds": [33, 35, 64, 96, 98, 179, 180, 181, 182, 185]
+		"tagIds": [
+			33, 35, 64, 96, 98, 112, 158, 179, 180, 181, 182, 185, 191, 234, 235, 307,
+			308
+		]
 	}
 }

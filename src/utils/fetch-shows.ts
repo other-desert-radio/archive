@@ -17,8 +17,8 @@ const ShowPattern = {
 	djs: P.array({
 		id: P.number,
 		title: P.string,
-		image_small: P.string,
-		image_large: P.string,
+		image_small: P.optional(P.string),
+		image_large: P.optional(P.string),
 	}),
 	tagIds: P.array(P.number),
 	url: HttpUrlPattern,

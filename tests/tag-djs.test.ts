@@ -45,9 +45,13 @@ test("tag pages render only matching DJ cards with profiles and detail links", a
 				card.includes(`href="/archive/djs/${dj.id}?fromTag=${tag.id}"`),
 			);
 			assert.ok(card.includes(`aria-label="View ${dj.title}"`));
-			assert.ok(card.includes(`src="/archive/${dj.image_large}"`));
-			assert.ok(card.includes(`alt="${dj.title}"`));
-			assert.ok(card.includes(dj.bio), `tag ${tag.id}: DJ ${dj.id} bio`);
+			if (dj.image_large) {
+				assert.ok(card.includes(`src="/archive/${dj.image_large}"`));
+				assert.ok(card.includes(`alt="${dj.title}"`));
+			}
+			if (dj.bio) {
+				assert.ok(card.includes(dj.bio), `tag ${tag.id}: DJ ${dj.id} bio`);
+			}
 		}
 	}
 });

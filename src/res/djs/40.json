@@ -1,0 +1,72 @@
+{
+	"version": 5,
+	"updatedAt": "2026-11-02T19:09:00.560Z",
+	"data": {
+		"id": 40,
+		"title": "DJ CHRI$TYLE",
+		"bio": null,
+		"shows": [
+			{
+				"id": 236,
+				"title": "and kiss forever in the darkness",
+				"date": "2024-02-26T00:00:00.000Z",
+				"duration": 8643,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/8/3/f/959e-0d02-43d3-afd4-8f350152cfdb",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/8/3/f/959e-0d02-43d3-afd4-8f350152cfdb",
+				"tagIds": [22, 37, 42, 187],
+				"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-and-kiss-forever-in-the-darkness-february-26-2024/"
+			},
+			{
+				"id": 248,
+				"title": "Space Heaters (a Christmas Mix)",
+				"date": "2022-12-19T00:00:00.000Z",
+				"duration": 6130,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/2/2/5/167b-fc84-49de-88c2-5691161be423",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/2/2/5/167b-fc84-49de-88c2-5691161be423",
+				"tagIds": [46, 187, 234, 316],
+				"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-space-heaters-a-christmas-mix-december-19-2022/"
+			},
+			{
+				"id": 250,
+				"title": "Awaken to the Emerald City Princess Ozma Fever Dream",
+				"date": "2021-05-10T00:00:00.000Z",
+				"duration": 6725,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/d/1/f/3084-170e-497c-963a-4ce8321c5906",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/d/1/f/3084-170e-497c-963a-4ce8321c5906",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-awaken-to-the-emerald-city-princess-ozma-fever-dream-may-10-2021/"
+			},
+			{
+				"id": 252,
+				"title": "Cybernetic Organisms: OVERDRIVE",
+				"date": "2021-03-15T00:00:00.000Z",
+				"duration": 4621,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/9/8/d/cd7d-ecf5-45ad-b3e9-a306a389aefb",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/9/8/d/cd7d-ecf5-45ad-b3e9-a306a389aefb",
+				"tagIds": [317, 318, 319],
+				"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-cybernetic-organisms-overdrive-march-15-2021/"
+			},
+			{
+				"id": 220,
+				"title": "Light and Eulogy, a spiritually sexual mix part 2",
+				"date": "2020-09-26T00:00:00.000Z",
+				"duration": 4935,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/9/f/6/b0de-1eb3-40f5-9bab-0d128e05b5f2",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/9/f/6/b0de-1eb3-40f5-9bab-0d128e05b5f2",
+				"tagIds": [187, 295],
+				"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-light-and-eulogy-a-spiritually-sexual-mix-part-2/"
+			},
+			{
+				"id": 221,
+				"title": "Light and Eulogy, a spiritually sexual mix part 1",
+				"date": "2020-09-15T00:00:00.000Z",
+				"duration": 3580,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/7/2/9/d085-f57b-4f60-8b6b-25b0cc8b5204",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/7/2/9/d085-f57b-4f60-8b6b-25b0cc8b5204",
+				"tagIds": [187, 295],
+				"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-light-and-eulogy-a-spiritually-sexual-mix-part-1/"
+			}
+		],
+		"tagIds": [22, 37, 42, 46, 187, 234, 295, 316, 317, 318, 319]
+	}
+}

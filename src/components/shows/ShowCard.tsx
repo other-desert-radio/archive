@@ -25,13 +25,15 @@ const renderDJs = (djs: Show["djs"], base: string) =>
 			className={styles["dj-container"]}
 			aria-label={`View ${dj.title}`}
 		>
-			<img
-				className={`${styles["dj-image"]} image-border-secondary`}
-				src={`${base}/${dj.image_small}`}
-				alt={dj.title}
-				loading="lazy"
-				decoding="async"
-			/>
+			{dj.image_small && (
+				<img
+					className={`${styles["dj-image"]} image-border-secondary`}
+					src={`${base}/${dj.image_small}`}
+					alt={dj.title}
+					loading="lazy"
+					decoding="async"
+				/>
+			)}
 			<span className={styles["dj-name-title"]}>{dj.title}</span>
 		</a>
 	));

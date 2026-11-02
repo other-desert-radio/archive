@@ -1,6 +1,6 @@
 {
-	"version": 4,
-	"updatedAt": "2026-10-30T18:51:15.215Z",
+	"version": 5,
+	"updatedAt": "2026-11-02T19:09:00.560Z",
 	"data": {
 		"id": 12,
 		"title": "Derek Monypeny",
@@ -194,6 +194,16 @@
 				"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-ep-14-congotronics/"
 			},
 			{
+				"id": 213,
+				"title": "Freedom Overspill Radio Hour Episode 13: Deep Fried Arizona",
+				"date": "2021-07-13T00:00:00.000Z",
+				"duration": 3607,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/0/5/8/a1ec-56f8-4762-b415-0c5859a61997",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/0/5/8/a1ec-56f8-4762-b415-0c5859a61997",
+				"tagIds": [88, 286, 287, 288],
+				"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-13-deep-fried-arizona/"
+			},
+			{
 				"id": 53,
 				"title": "Freedom Overspill Radio Hour Episode 12 - Moroccan Mix",
 				"description": "<p>Freedom Overspill Radio Hour brings us an hour of Moroccan music.</p>",
@@ -318,6 +328,16 @@
 				"url": "https://www.mixcloud.com/otherdesertradio/derek-freedom-overspill-episode-one-august-3-2020/"
 			},
 			{
+				"id": 228,
+				"title": "ASEDR 6",
+				"date": "2020-05-02T00:00:00.000Z",
+				"duration": 2299,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [113],
+				"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-asedr/"
+			},
+			{
 				"id": 93,
 				"title": "Mauritania Mix",
 				"date": "2020-04-13T00:00:00.000Z",
@@ -333,7 +353,7 @@
 			63, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82,
 			83, 84, 85, 87, 88, 89, 91, 92, 93, 94, 111, 112, 113, 114, 115, 116, 117,
 			118, 119, 120, 121, 125, 126, 127, 128, 132, 133, 137, 138, 139, 145, 156,
-			183
+			183, 286, 287, 288
 		]
 	}
 }
