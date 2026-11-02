@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
-import test from "node:test";
+import { mock, test } from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
+import { createIndexedDB } from "../../src/database/indexed-db";
+import type { StoreName } from "../../src/database/types";
 import {
 	createStores,
 	StoresProvider,
@@ -91,4 +93,68 @@ test("injected playback does not change the idle server hydration snapshot", () 
 		),
 		"<span>idle</span>",
 	);
+});
+
+test("server rendering never initializes browser storage", () => {
+	const injected = createStores();
+	const initialize = mock.method(injected, "initialize", async () => {
+		throw new Error("Must not initialize during SSR");
+	});
+	renderToStaticMarkup(
+		<StoresProvider stores={injected}>
+			<ServerSnapshotProbe />
+		</StoresProvider>,
+	);
+	assert.equal(initialize.mock.callCount(), 0);
+});
+
+test("initialization shares one metadata read and passes its result to ShowStore", async () => {
+	for (const cached of [{ key: "shows", revision: 12 }, undefined]) {
+		const database = createIndexedDB();
+		const metadata = database.getObjectStore("metadata");
+		const read = mock.method(metadata, "get", async () => cached);
+		const getObjectStore = database.getObjectStore.bind(database);
+		mock.method(database, "getObjectStore", (name: StoreName) =>
+			name === "metadata" ? metadata : getObjectStore(name),
+		);
+		const injected = createStores(database);
+		const initialize = mock.method(
+			injected.showStore,
+			"initialize",
+			async () => {},
+		);
+		const first = injected.initialize();
+		assert.equal(first, injected.initialize());
+		await first;
+		await injected.initialize();
+		assert.deepEqual(
+			read.mock.calls.map((call) => call.arguments),
+			[["shows"]],
+		);
+		assert.deepEqual(
+			initialize.mock.calls.map((call) => call.arguments),
+			[[cached]],
+		);
+	}
+});
+
+test("failed initialization rejects and permits retry", async () => {
+	const database = createIndexedDB();
+	const metadata = database.getObjectStore("metadata");
+	let attempts = 0;
+	mock.method(metadata, "get", async () => {
+		if (++attempts === 1) {
+			throw new Error("Storage unavailable");
+		}
+		return undefined;
+	});
+	const getObjectStore = database.getObjectStore.bind(database);
+	mock.method(database, "getObjectStore", (name: StoreName) =>
+		name === "metadata" ? metadata : getObjectStore(name),
+	);
+	const injected = createStores(database);
+	mock.method(injected.showStore, "initialize", async () => {});
+	await assert.rejects(injected.initialize(), /Storage unavailable/);
+	await injected.initialize();
+	assert.equal(attempts, 2);
 });

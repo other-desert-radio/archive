@@ -1,4 +1,4 @@
-import type { Database, DBStore } from "../../database/types";
+import type { Database, DBStore, StoreSchema } from "../../database/types";
 import type { Show } from "../../utils/fetch-shows";
 
 type DataVersionEntry = {
@@ -13,12 +13,14 @@ type DataVersions = {
 export class ShowStore {
 	constructor(database: Database) {
 		this.showObjectStore = database.getObjectStore("shows");
-
-		this.initialize();
 	}
 
-	async initialize() {
-		// 1. read from the database, see if cache exists
+	async initialize(
+		cachedMetadata: StoreSchema["metadata"]["value"] | undefined,
+	) {
+		console.log(
+			`[ShowStore] cached revision: ${cachedMetadata?.revision ?? "none"}`,
+		);
 
 		// 2. compare cache version to data_versions.json
 		const { shows } = await this.fetchVersions();

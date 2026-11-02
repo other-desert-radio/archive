@@ -45,6 +45,13 @@ to avoid circular dependencies through the barrels.
 
 ## Request and rendering flow
 
+Store construction is side-effect free during server rendering. `useStores()`
+starts shared initialization in a React effect, which runs only in the browser.
+The composition root reads cached show revision metadata and passes it to
+`ShowStore.initialize()`. Concurrent consumers share one initialization promise;
+a failed attempt rejects and permits a later retry. Individual stores do not
+need browser guards in their constructors.
+
 `BaseLayout.astro` includes Astro's `ClientRouter` on every page, with root
 and body transition animations disabled and an immediate swap fallback.
 Internal archive links use client routing to preserve playback.
