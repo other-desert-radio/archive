@@ -1,3 +1,4 @@
+import { createIndexedDB } from "../database/indexed-db";
 import { AudioStore } from "./audio/audio-store";
 import { ShowStore } from "./shows/show-store";
 
@@ -7,7 +8,10 @@ export type Stores = {
 };
 
 export function createStores(): Stores {
-	return { audioStore: new AudioStore(), showStore: new ShowStore() };
+	return {
+		audioStore: new AudioStore(),
+		showStore: new ShowStore(createIndexedDB()),
+	};
 }
 
 // One shared set per browser module graph, retained across ClientRouter navigation.

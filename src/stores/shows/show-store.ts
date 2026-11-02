@@ -13,10 +13,11 @@ type DataVersions = {
 export class ShowStore {
 	constructor(database: Database) {
 		this.showObjectStore = database.getObjectStore("shows");
-		this.initalize();
+
+		this.initialize();
 	}
 
-	private async initalize() {
+	async initialize() {
 		// 1. read from the database, see if cache exists
 
 		// 2. compare cache version to data_versions.json
@@ -24,6 +25,8 @@ export class ShowStore {
 		console.log(`[ShowStore] show data_version: ${shows.id}`);
 
 		// 3. if out of date, print "updating" and update the database -- mark start and end time
+
+		// 4. load shows into memory
 	}
 
 	async fetchVersions(base = import.meta.env.BASE_URL): Promise<DataVersions> {
@@ -37,8 +40,8 @@ export class ShowStore {
 		return (await response.json()) as DataVersions; // validated by the server before generation
 	}
 
-	get(id: number) {
-		throw new Error(`${id} -- not implemented`);
+	get(id: number): Promise<Show | undefined> {
+		return this.showObjectStore.get(id);
 	}
 
 	private showObjectStore: DBStore<Show, number>;
