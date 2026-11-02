@@ -71,6 +71,10 @@ export class ShowStore {
 		if (published === this.versionsStore.getCached("shows")) {
 			return undefined;
 		}
+		console.log(
+			`%c[ShowStore] Downloading shows for IndexedDB — revision ${published}`,
+			"background: #173b75; color: #fff; font-weight: bold; padding: 4px 8px;",
+		);
 		const exported = await this.fetchShows(base);
 		if (exported.version !== published) {
 			throw new Error(
@@ -82,7 +86,10 @@ export class ShowStore {
 
 	async saveShows(exported: ShowsExport): Promise<void> {
 		const startedAt = Date.now();
-		console.log(`[ShowStore] saving revision ${exported.version}`);
+		console.log(
+			`%c[ShowStore] Saving ${exported.data.length} shows to IndexedDB — revision ${exported.version}`,
+			"background: #754600; color: #fff; font-weight: bold; padding: 4px 8px;",
+		);
 		// TODO: investigate incremental upserts and deletions if mobile import timings justify them.
 		await this.database.transaction([
 			{ store: "shows", action: "clear" },
@@ -99,7 +106,8 @@ export class ShowStore {
 		]);
 		await this.versionsStore.refreshCached();
 		console.log(
-			`[ShowStore] saved revision ${exported.version} in ${Date.now() - startedAt}ms`,
+			`%c[ShowStore] Saved ${exported.data.length} shows to IndexedDB — revision ${exported.version} in ${Date.now() - startedAt}ms`,
+			"background: #14532d; color: #fff; font-weight: bold; padding: 4px 8px;",
 		);
 	}
 }
