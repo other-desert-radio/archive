@@ -1,4 +1,8 @@
-import type { Database, DBStore } from "../../database/types";
+import type {
+	Database,
+	DBStore,
+	TransactionOperation,
+} from "../../database/types";
 import type { Show } from "../../utils/fetch-shows";
 import type { VersionsStore } from "../versions/versions-store";
 
@@ -10,7 +14,7 @@ type ShowsExport = {
 
 export class ShowStore {
 	constructor(
-		database: Database,
+		private readonly database: Database,
 		private readonly versionsStore: VersionsStore,
 	) {
 		this.showObjectStore = database.getObjectStore("shows");
@@ -60,6 +64,28 @@ export class ShowStore {
 			);
 		}
 		return exported;
+	}
+
+	async saveShows(exported: ShowsExport): Promise<void> {
+		const startedAt = Date.now();
+		console.log(`[ShowStore] saving revision ${exported.version}`);
+		await this.database.transaction([
+			{ store: "shows", action: "clear" },
+			...exported.data.map<TransactionOperation>((show) => ({
+				store: "shows",
+				action: "set",
+				value: show,
+			})),
+			{
+				store: "metadata",
+				action: "set",
+				value: { key: "shows", revision: exported.version },
+			},
+		]);
+		await this.versionsStore.refreshCached();
+		console.log(
+			`[ShowStore] saved revision ${exported.version} in ${Date.now() - startedAt}ms`,
+		);
 	}
 
 	private showObjectStore: DBStore<Show, number>;

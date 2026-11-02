@@ -3,6 +3,7 @@ import { afterEach, mock, test } from "node:test";
 import { createIndexedDB } from "../../../src/database/indexed-db";
 import { ShowStore } from "../../../src/stores/shows/show-store";
 import { VersionsStore } from "../../../src/stores/versions/versions-store";
+import fixtureShows from "../../res/shows.json";
 
 const originalFetch = globalThis.fetch;
 afterEach(() => {
@@ -122,4 +123,77 @@ test("a manifest/export mismatch rejects without changing cached revisions or wr
 	);
 	assert.equal(versions.getCached("shows"), 3);
 	assert.equal(writes.mock.callCount(), 0);
+});
+
+test("saves the complete catalog and revision in one batch, including empty catalogs", async () => {
+	for (const data of [fixtureShows.data, []]) {
+		const database = createIndexedDB();
+		const versions = new VersionsStore(database);
+		const writes = mock.method(database, "transaction", async () => {});
+		const refresh = mock.method(versions, "refreshCached", async () => {});
+		const store = new ShowStore(database, versions);
+		await store.saveShows({
+			version: 4,
+			updatedAt: "2026-11-02T19:09:00.560Z",
+			data,
+		});
+		assert.deepEqual(
+			writes.mock.calls.map((call) => call.arguments),
+			[
+				[
+					[
+						{ store: "shows", action: "clear" },
+						...data.map((show) => ({
+							store: "shows",
+							action: "set",
+							value: show,
+						})),
+						{
+							store: "metadata",
+							action: "set",
+							value: { key: "shows", revision: 4 },
+						},
+					],
+				],
+			],
+		);
+		assert.equal(refresh.mock.callCount(), 1);
+	}
+});
+
+test("cached revisions refresh only after the database transaction commits", async () => {
+	const database = createIndexedDB();
+	const versions = new VersionsStore(database);
+	const commit = Promise.withResolvers<void>();
+	mock.method(database, "transaction", () => commit.promise);
+	const refresh = mock.method(versions, "refreshCached", async () => {});
+	const store = new ShowStore(database, versions);
+	const save = store.saveShows({
+		version: 4,
+		updatedAt: "2026-11-02T19:09:00.560Z",
+		data: [],
+	});
+	assert.equal(refresh.mock.callCount(), 0);
+	commit.resolve();
+	await save;
+	assert.equal(refresh.mock.callCount(), 1);
+});
+
+test("a failed catalog transaction rejects without refreshing cached revisions", async () => {
+	const database = createIndexedDB();
+	const versions = new VersionsStore(database);
+	mock.method(database, "transaction", async () => {
+		throw new Error("Write failed");
+	});
+	const refresh = mock.method(versions, "refreshCached", async () => {});
+	const store = new ShowStore(database, versions);
+	await assert.rejects(
+		store.saveShows({
+			version: 4,
+			updatedAt: "2026-11-02T19:09:00.560Z",
+			data: [],
+		}),
+		/Write failed/,
+	);
+	assert.equal(refresh.mock.callCount(), 0);
 });
