@@ -43,5 +43,24 @@ export class ShowStore {
 		return (await response.json()) as ShowsExport;
 	}
 
+	async fetchUpdatedShows(
+		base = import.meta.env.BASE_URL,
+	): Promise<ShowsExport | undefined> {
+		const published = this.versionsStore.getPublished("shows");
+		if (published === undefined) {
+			throw new Error("Initialize versions before checking for show updates");
+		}
+		if (published === this.versionsStore.getCached("shows")) {
+			return undefined;
+		}
+		const exported = await this.fetchShows(base);
+		if (exported.version !== published) {
+			throw new Error(
+				`Show revision mismatch: expected ${published}, received ${exported.version}`,
+			);
+		}
+		return exported;
+	}
+
 	private showObjectStore: DBStore<Show, number>;
 }

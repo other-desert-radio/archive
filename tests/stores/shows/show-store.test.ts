@@ -68,3 +68,58 @@ test("show fetch propagates HTTP, network, and JSON failures without database wr
 	await assert.rejects(store.fetchShows("/archive/"), SyntaxError);
 	assert.equal(writes.mock.callCount(), 0);
 });
+
+test("matching revisions skip downloads and uninitialized versions reject", async () => {
+	const database = createIndexedDB();
+	const versions = new VersionsStore(database);
+	const store = new ShowStore(database, versions);
+	const fetchMock = mock.fn(async () => {
+		throw new Error("Unexpected fetch");
+	});
+	globalThis.fetch = fetchMock as unknown as typeof fetch;
+	await assert.rejects(
+		store.fetchUpdatedShows("/archive/"),
+		/Initialize versions/,
+	);
+	mock.method(versions, "getPublished", () => 4);
+	mock.method(versions, "getCached", () => 4);
+	assert.equal(await store.fetchUpdatedShows("/archive/"), undefined);
+	assert.equal(fetchMock.mock.callCount(), 0);
+});
+
+test("missing, older, and newer cached revisions fetch the published export", async () => {
+	const exported = {
+		version: 4,
+		updatedAt: "2026-11-02T19:09:00.560Z",
+		data: [],
+	};
+	for (const cached of [undefined, 3, 5]) {
+		const database = createIndexedDB();
+		const versions = new VersionsStore(database);
+		mock.method(versions, "getPublished", () => 4);
+		mock.method(versions, "getCached", () => cached);
+		const fetchMock = mock.fn(async () => Response.json(exported));
+		globalThis.fetch = fetchMock as unknown as typeof fetch;
+		const store = new ShowStore(database, versions);
+		assert.deepEqual(await store.fetchUpdatedShows("/archive/"), exported);
+		assert.equal(fetchMock.mock.callCount(), 1);
+	}
+});
+
+test("a manifest/export mismatch rejects without changing cached revisions or writing", async () => {
+	const database = createIndexedDB();
+	const writes = mock.method(database, "transaction", async () => {});
+	const versions = new VersionsStore(database);
+	mock.method(versions, "getPublished", () => 4);
+	mock.method(versions, "getCached", () => 3);
+	globalThis.fetch = mock.fn(async () =>
+		Response.json({ version: 5, data: [] }),
+	) as unknown as typeof fetch;
+	const store = new ShowStore(database, versions);
+	await assert.rejects(
+		store.fetchUpdatedShows("/archive/"),
+		/expected 4, received 5/,
+	);
+	assert.equal(versions.getCached("shows"), 3);
+	assert.equal(writes.mock.callCount(), 0);
+});
