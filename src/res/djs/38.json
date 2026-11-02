@@ -1,0 +1,52 @@
+{
+	"version": 5,
+	"updatedAt": "2026-11-02T19:09:00.560Z",
+	"data": {
+		"id": 38,
+		"title": "Danielle",
+		"bio": null,
+		"shows": [
+			{
+				"id": 245,
+				"title": "Lunar New Year, Year of the Firehorse",
+				"date": "2026-02-16T00:00:00.000Z",
+				"duration": 2423,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/0/1/d/28c2-6df4-4ff5-8ced-fff768af5385",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/0/1/d/28c2-6df4-4ff5-8ced-fff768af5385",
+				"tagIds": [309, 310, 311],
+				"url": "https://www.mixcloud.com/otherdesertradio/danielle-lunar-new-year-year-of-the-firehorse-february-16-2026/"
+			},
+			{
+				"id": 246,
+				"title": "Heavy Lifters",
+				"date": "2025-01-20T00:00:00.000Z",
+				"duration": 3312,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/4/4/6/bbb7-1a55-4f22-8274-db4c4336063a",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/4/4/6/bbb7-1a55-4f22-8274-db4c4336063a",
+				"tagIds": [21, 22],
+				"url": "https://www.mixcloud.com/otherdesertradio/danielle-heavy-lifters-january-20-2025/"
+			},
+			{
+				"id": 247,
+				"title": "Year of the Dragon",
+				"date": "2024-02-10T00:00:00.000Z",
+				"duration": 3002,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/4/7/d/0325-666a-47c7-ab24-55ff098df269",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/4/7/d/0325-666a-47c7-ab24-55ff098df269",
+				"tagIds": [311, 312, 313, 314, 315],
+				"url": "https://www.mixcloud.com/otherdesertradio/danielle-year-of-the-dragon-february-10-2024/"
+			},
+			{
+				"id": 251,
+				"title": "Unconditional Love",
+				"date": "2021-05-03T00:00:00.000Z",
+				"duration": 4208,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/b/6/f/471e-bc19-43f5-8757-4ba9f095899f",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/b/6/f/471e-bc19-43f5-8757-4ba9f095899f",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/danielle-unconditional-love-may-3-2021/"
+			}
+		],
+		"tagIds": [21, 22, 309, 310, 311, 312, 313, 314, 315]
+	}
+}

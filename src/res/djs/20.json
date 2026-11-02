@@ -1,16 +1,170 @@
 {
-	"version": 4,
-	"updatedAt": "2026-10-30T18:51:15.215Z",
+	"version": 5,
+	"updatedAt": "2026-11-02T19:09:00.560Z",
 	"data": {
 		"id": 20,
-		"title": "Tara Jane ONeil",
+		"title": "Tara Jane O'Neil",
 		"image_small": "assets/djs/20_small.webp",
 		"image_large": "assets/djs/20_large.webp",
 		"bio": "<p>Like several genie’s from a single lamp Tara Jane ONeil crosses genre boundaries and activity thresholds.  Musician, Songwriter, Visualist, DJ, Writer.  Provider of vibe.</p>",
 		"socials": "<p>https://www.instagram.com/tarajaneoneil/ and www.tarajaneoneil.com</p>",
 		"showTitle": "The Fumbling Bush Forecast",
 		"showDescription": "Periodic selections of music I like, often in response to the weather of the inner and outer worlds.",
-		"shows": [],
-		"tagIds": []
+		"shows": [
+			{
+				"id": 131,
+				"title": "Fumbling Bush Forecast #14",
+				"date": "2026-01-19T00:00:00.000Z",
+				"duration": 5379,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/b/0/e/93ba-ff63-4872-a5a3-4774cb55e6e6",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/b/0/e/93ba-ff63-4872-a5a3-4774cb55e6e6",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-14-january-19-2025/"
+			},
+			{
+				"id": 132,
+				"title": "Fumbling Bush Forecast #13",
+				"date": "2025-11-19T00:00:00.000Z",
+				"duration": 5399,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/e/d/5/1c12-af3f-4255-90e4-c9fdf6c099f7",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/e/d/5/1c12-af3f-4255-90e4-c9fdf6c099f7",
+				"tagIds": [37, 189, 190],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-13-november-19-2025/"
+			},
+			{
+				"id": 133,
+				"title": "Fumbling Bush Forecast #12",
+				"date": "2025-10-13T00:00:00.000Z",
+				"duration": 3605,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/a/4/0/b2ed-3123-4d90-a4f1-7670e8ce4255",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/a/4/0/b2ed-3123-4d90-a4f1-7670e8ce4255",
+				"tagIds": [37, 187, 191],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-12-october-13-2025/"
+			},
+			{
+				"id": 178,
+				"title": "Fumbling Bush Forecast #11: Remote Quarantine Edition",
+				"date": "2022-10-03T00:00:00.000Z",
+				"duration": 5358,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/0/2/e/7002-f019-47a9-b3f9-bb8ae93624f9",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/0/2/e/7002-f019-47a9-b3f9-bb8ae93624f9",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-11-remote-quarantine-edition-october-3-2022/"
+			},
+			{
+				"id": 182,
+				"title": "Fumbling Bush Forecast #10",
+				"date": "2022-01-10T00:00:00.000Z",
+				"duration": 5403,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/f/6/c/d3df-01e9-4cfd-b2e2-a78273928031",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/f/6/c/d3df-01e9-4cfd-b2e2-a78273928031",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-10-january-10-2022/"
+			},
+			{
+				"id": 188,
+				"title": "Fumbling Bush Forecast #9",
+				"date": "2021-06-14T00:00:00.000Z",
+				"duration": 5399,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/5/2/6/028d-2624-4b61-abbe-772fe9403b49",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/5/2/6/028d-2624-4b61-abbe-772fe9403b49",
+				"tagIds": [190, 251, 252, 253],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil/"
+			},
+			{
+				"id": 189,
+				"title": "Fumbling Bush Forecast #8",
+				"date": "2021-05-10T00:00:00.000Z",
+				"duration": 3595,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/4/f/3/1da9-24b0-40ac-81d6-36520b40a907",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/4/f/3/1da9-24b0-40ac-81d6-36520b40a907",
+				"tagIds": [254, 255],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-8-may-10-2021/"
+			},
+			{
+				"id": 191,
+				"title": "Fumbling Bush Forecast #7 - Judee Sill",
+				"date": "2021-04-06T00:00:00.000Z",
+				"duration": 5401,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/7/5/c/405d-7461-4d88-b98e-0b94757fe72a",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/7/5/c/405d-7461-4d88-b98e-0b94757fe72a",
+				"tagIds": [190, 251],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-7-judee-sill-april-6-2021/"
+			},
+			{
+				"id": 192,
+				"title": "Fumbling Bush Forecast #6 with Guest Selector Miggy Littleton",
+				"date": "2021-02-01T00:00:00.000Z",
+				"duration": 5413,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/f/2/9/dddd-e100-416a-b15e-66ae3a5c2114",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/f/2/9/dddd-e100-416a-b15e-66ae3a5c2114",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-6-with-guest-selector-miggy-littleton-february-1-2021/"
+			},
+			{
+				"id": 193,
+				"title": "Fumbling Bush Forecast #5",
+				"date": "2021-01-04T00:00:00.000Z",
+				"duration": 5402,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/4/9/f/005a-9f78-4f72-b34f-0d7d606a91ce",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/4/9/f/005a-9f78-4f72-b34f-0d7d606a91ce",
+				"tagIds": [22, 37, 61, 254, 255],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-5-january-4-2021/"
+			},
+			{
+				"id": 195,
+				"title": "Fumbling Bush Forecast 4 Fun",
+				"date": "2020-12-07T00:00:00.000Z",
+				"duration": 5355,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/e/3/2/98e3-52aa-42a8-84a1-b3ba01609bdf",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/e/3/2/98e3-52aa-42a8-84a1-b3ba01609bdf",
+				"tagIds": [48, 187, 255, 259],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-4-fun-december-7-2020/"
+			},
+			{
+				"id": 197,
+				"title": "Fumbling Bush Forecast #3: New Ancestors",
+				"date": "2020-11-02T00:00:00.000Z",
+				"duration": 5402,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/d/b/3/bcc1-2145-40f8-8d27-39f058bb599b",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/d/b/3/bcc1-2145-40f8-8d27-39f058bb599b",
+				"tagIds": [89, 264, 265, 266],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-3-new-ancestors-november-2-2020/"
+			},
+			{
+				"id": 199,
+				"title": "Fumbling Bush Forecast #2",
+				"date": "2020-10-05T00:00:00.000Z",
+				"duration": 4561,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/9/d/f/ddaa-916d-49ca-8f8a-6582ea42a432",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/9/d/f/ddaa-916d-49ca-8f8a-6582ea42a432",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-2-october-5-2020/"
+			},
+			{
+				"id": 200,
+				"title": "Fumbling Bush Forecast #1",
+				"date": "2020-09-07T00:00:00.000Z",
+				"duration": 3700,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/7/1/5/d66b-9647-4644-a163-2a892ad5b658",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/7/1/5/d66b-9647-4644-a163-2a892ad5b658",
+				"tagIds": [261, 270, 271, 272],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-1-september-7-2020/"
+			},
+			{
+				"id": 226,
+				"title": "Summer's Eve",
+				"date": "2020-05-02T00:00:00.000Z",
+				"duration": 1242,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [190, 253],
+				"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-tjo-summers-eve/"
+			}
+		],
+		"tagIds": [
+			22, 37, 48, 61, 89, 187, 189, 190, 191, 251, 252, 253, 254, 255, 259, 261,
+			264, 265, 266, 270, 271, 272
+		]
 	}
 }

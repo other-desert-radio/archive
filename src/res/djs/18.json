@@ -1,6 +1,6 @@
 {
-	"version": 4,
-	"updatedAt": "2026-10-30T18:51:15.215Z",
+	"version": 5,
+	"updatedAt": "2026-11-02T19:09:00.560Z",
 	"data": {
 		"id": 18,
 		"title": "DJ Nasty Nate",
@@ -40,8 +40,28 @@
 				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/6/1/1/edad-0f6b-4c0a-bbe2-81baba5f532a",
 				"tagIds": [36, 50, 98, 102],
 				"url": "https://www.mixcloud.com/otherdesertradio/nathan-ober-aka-dj-nasty-nate-helloween-volume-2-october-16-2023/"
+			},
+			{
+				"id": 241,
+				"title": "Industrial Halloween",
+				"date": "2022-10-24T00:00:00.000Z",
+				"duration": 7290,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/0/8/7/58a3-9e63-4c22-a491-b6e8f1b422a0",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/0/8/7/58a3-9e63-4c22-a491-b6e8f1b422a0",
+				"tagIds": [98, 102],
+				"url": "https://www.mixcloud.com/otherdesertradio/nathan-ober-industrial-halloween-october-24-2022/"
+			},
+			{
+				"id": 225,
+				"title": "selected audio projectsss 2020",
+				"date": "2020-05-02T00:00:00.000Z",
+				"duration": 2706,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [61, 298],
+				"url": "https://www.mixcloud.com/otherdesertradio/nathan-ober-selected-audio-projectsss-2020/"
 			}
 		],
-		"tagIds": [33, 36, 50, 64, 98, 102, 103, 104]
+		"tagIds": [33, 36, 50, 61, 64, 98, 102, 103, 104, 298]
 	}
 }

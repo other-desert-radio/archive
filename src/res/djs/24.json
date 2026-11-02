@@ -1,6 +1,6 @@
 {
-	"version": 4,
-	"updatedAt": "2026-10-30T18:51:15.215Z",
+	"version": 5,
+	"updatedAt": "2026-11-02T19:09:00.560Z",
 	"data": {
 		"id": 24,
 		"title": "Desert Dove Radio",
@@ -10,7 +10,121 @@
 		"socials": "<p>@aidanalexiskoch</p>",
 		"showTitle": "Desert Dove",
 		"showDescription": "I grew up obsessively listening to anime OPs and cassettes of Georges Collinet's Afropop my dad recorded directly from the radio while reading Robert Jordan's The Wheel of Time series. This show is like that.",
-		"shows": [],
-		"tagIds": []
+		"shows": [
+			{
+				"id": 152,
+				"title": "Earth Day 2024",
+				"date": "2024-04-22T00:00:00.000Z",
+				"duration": 3141,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/c/3/3/5547-608d-4578-b9b0-faa74c5b0b4a",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/c/3/3/5547-608d-4578-b9b0-faa74c5b0b4a",
+				"tagIds": [33, 37, 42, 61],
+				"url": "https://www.mixcloud.com/otherdesertradio/the-desert-dove-earth-day-2024-april-22-2024/"
+			},
+			{
+				"id": 163,
+				"title": "Holiday Special",
+				"date": "2023-12-25T00:00:00.000Z",
+				"duration": 2601,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/b/5/d/0df9-949d-4418-bdfe-63e5106c1d76",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/b/5/d/0df9-949d-4418-bdfe-63e5106c1d76",
+				"tagIds": [22, 47, 175, 213, 214],
+				"url": "https://www.mixcloud.com/otherdesertradio/desert-dove-radio-hour-holiday-special-december-25-2023/"
+			},
+			{
+				"id": 170,
+				"title": "Transmission 8",
+				"date": "2023-09-18T00:00:00.000Z",
+				"duration": 3380,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/f/4/0/4ec9-e0e4-4409-839f-996d4b34d9b5",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/f/4/0/4ec9-e0e4-4409-839f-996d4b34d9b5",
+				"tagIds": [12, 22, 220],
+				"url": "https://www.mixcloud.com/otherdesertradio/the-desert-dove-transmission-8-september-18-2023/"
+			},
+			{
+				"id": 243,
+				"title": "Earth Day 2022 Special",
+				"date": "2022-04-22T00:00:00.000Z",
+				"duration": 4762,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/1/b/9/ff76-1fa5-456e-b69e-ffb4fc8d7468",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/1/b/9/ff76-1fa5-456e-b69e-ffb4fc8d7468",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/the-desert-dove-earth-day-2022-special/"
+			},
+			{
+				"id": 187,
+				"title": "Transmission 7",
+				"date": "2021-08-16T00:00:00.000Z",
+				"duration": 3396,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/3/4/b/190e-05d6-4db8-830c-a325e90b849b",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/3/4/b/190e-05d6-4db8-830c-a325e90b849b",
+				"tagIds": [248, 249, 250],
+				"url": "https://www.mixcloud.com/otherdesertradio/the-desert-dove-transmission-6-august-16-2021/"
+			},
+			{
+				"id": 214,
+				"title": "Earth Day 2021",
+				"date": "2021-04-18T00:00:00.000Z",
+				"duration": 3390,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/0/a/4/08b2-e966-4a24-82b8-0b7cb4b71600",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/0/a/4/08b2-e966-4a24-82b8-0b7cb4b71600",
+				"tagIds": [248, 289, 290],
+				"url": "https://www.mixcloud.com/otherdesertradio/desert-dove-earth-day-2021-april-18-2021/"
+			},
+			{
+				"id": 215,
+				"title": "Desert Dove Transmission 6, Holiday Special",
+				"date": "2020-12-19T00:00:00.000Z",
+				"duration": 3385,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/1/0/e/eb25-684d-4cd7-8862-2ffdd101d09b",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/1/0/e/eb25-684d-4cd7-8862-2ffdd101d09b",
+				"tagIds": [159, 291, 292],
+				"url": "https://www.mixcloud.com/otherdesertradio/aidan-desert-dove-transmission-6-holiday-special-december-19-2020/"
+			},
+			{
+				"id": 219,
+				"title": "Desert Dove Transmission 5",
+				"date": "2020-10-17T00:00:00.000Z",
+				"duration": 3525,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/f/2/f/1bcd-85e5-4d89-91a1-afe3db63b154",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/f/2/f/1bcd-85e5-4d89-91a1-afe3db63b154",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/aidan-desert-dove-transmission-5-october-17-2020/"
+			},
+			{
+				"id": 223,
+				"title": "Desert Dove Transmission 4",
+				"date": "2020-08-29T00:00:00.000Z",
+				"duration": 3223,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/0/d/4/bf4b-9a62-4a15-b42f-5cb04dbe2ddd",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/0/d/4/bf4b-9a62-4a15-b42f-5cb04dbe2ddd",
+				"tagIds": [248],
+				"url": "https://www.mixcloud.com/otherdesertradio/aidan-desert-dove-transmission-4-august-29-2020/"
+			},
+			{
+				"id": 224,
+				"title": "Transmission II",
+				"date": "2020-06-01T00:00:00.000Z",
+				"duration": 3149,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/8/a/8/bc59-c2d1-446f-96fc-7a9aad7aecb1",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/8/a/8/bc59-c2d1-446f-96fc-7a9aad7aecb1",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/aidan-desert-dove-transmission-ii-june-1-2020/"
+			},
+			{
+				"id": 230,
+				"title": "Transmission I",
+				"date": "2020-04-20T00:00:00.000Z",
+				"duration": 4541,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/a/2/9/2c1e-c629-4f8d-9972-eba01737e8a8",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/a/2/9/2c1e-c629-4f8d-9972-eba01737e8a8",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/aidan-desert-dove/"
+			}
+		],
+		"tagIds": [
+			12, 22, 33, 37, 42, 47, 61, 159, 175, 213, 214, 220, 248, 249, 250, 289,
+			290, 291, 292
+		]
 	}
 }

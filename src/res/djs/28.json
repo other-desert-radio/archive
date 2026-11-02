@@ -1,6 +1,6 @@
 {
-	"version": 4,
-	"updatedAt": "2026-10-30T18:51:15.215Z",
+	"version": 5,
+	"updatedAt": "2026-11-02T19:09:00.560Z",
 	"data": {
 		"id": 28,
 		"title": "No Translation",
@@ -10,7 +10,18 @@
 		"socials": "<p>https://www.instagram.com/notranslation.wav/<br />https://no-translation.com/</p>",
 		"showTitle": "Odds and Ends",
 		"showDescription": "A collection of music from cassette tapes found at the Sky Village Swap Meet Most - some with original inserts and info, others with a few hand-written titles or blank with no info.",
-		"shows": [],
+		"shows": [
+			{
+				"id": 244,
+				"title": "Live at Furstwurld, Joshua Tree",
+				"date": "2021-12-11T00:00:00.000Z",
+				"duration": 1779,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/no-translation-live-at-furstwurld-joshua-tree-121121/"
+			}
+		],
 		"tagIds": []
 	}
 }
