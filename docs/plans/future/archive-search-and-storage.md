@@ -1,8 +1,8 @@
-# Archive catalog, playlists, history, and local storage intent
+# Future plan: archive catalog, playlists, history, and local storage
 
-Conversation outcomes, 2026-10-29. Use this reference when the user mentions the terms below. **This records design intent, not implemented behavior or authorization to build.** The user requested examples and discussion, then explicitly clarified not to implement the feature.
+Status: future work; not scheduled. Conversation outcomes recorded 2026-10-29, updated 2026-11-02. Use this reference when the user mentions the terms below. **This records design intent, not implemented behavior or authorization to build.** The user requested examples and discussion, then explicitly clarified not to implement the feature.
 
-The original [IndexedDB notes](human/index-db.md) remain human-maintained. This document replaces the earlier client-storage review.
+The original [IndexedDB notes](../../human/index-db.md) remain human-maintained. This document replaces the earlier client-storage review.
 
 ## User goals and constraints
 
@@ -107,18 +107,18 @@ A proposed manifest with stable filenames:
 
 ```json
 {
-  "shows": { "revision": "<content hash>" },
-  "djs": { "revision": "<content hash>" },
-  "tags": { "revision": "<content hash>" }
+  "shows": { "revision": 12 },
+  "djs": { "revision": 4 },
+  "tags": { "revision": 7 }
 }
 ```
 
-Generate revisions from actual exported content during the build. Keep dataset revision, IndexedDB schema version, and optional informational `updatedAt` distinct.
+The user prefers readable numeric revisions. Increment each dataset revision whenever its exported content changes, including edits and deletions; preferably automate this in the export process. Publish revisions with the matching data. Compare revisions for inequality, not only increases, so rollbacks work. Include the matching revision in each dataset to detect manifest/file mismatches; a revision number does not independently verify content like a hash. Keep dataset revision, IndexedDB schema version, and optional informational `updatedAt` distinct.
 
 If catalog persistence is adopted:
 
 1. Display cached data immediately; revalidate the manifest once per visit/session in the background.
-2. Fetch changed files with revalidation; verify their expected hashes and data format.
+2. Fetch changed files with revalidation; verify their matching numeric revisions and data format.
 3. Fetch/validate before opening the write transaction. Replace related datasets and revisions consistently, including deletions.
 4. Keep the previous snapshot if network, validation, deployment mismatch, or transaction failure occurs.
 5. Never clear personal data during catalog refresh. Handle blocked schema upgrades and connections from other tabs.
@@ -179,6 +179,26 @@ The original proposal includes playlists, current playback, playback history, an
 The user raised [WebKit bug 226547](https://bugs.webkit.org/show_bug.cgi?id=226547). It concerned database opens hanging without success/error callbacks on older Safari/iOS; a maintainer reported the fix shipped in iOS 14.7 beta 4. It is not evidence that the same bug affects current Safari.
 
 Design implication: bound database initialization with a timeout, keep browsing/playback independent of storage, and fall back to static JSON for catalog access. A timeout does not cancel the underlying open request; handle late connections safely. Report personal-data saves as unavailable/failed rather than pretending they succeeded. Do not add historical dummy-database workarounds without an explicit old-browser requirement.
+
+## Catalog versus personal object stores
+
+One IndexedDB database can contain multiple **object stores**, roughly like tables. Separate databases are not required. A possible layout is `shows`, `djs`, `tags`, `metadata` (catalog revisions), `playlists`, `playbackHistory`, `resumePositions`, and `searchHistory`; the exact layout is not finalized.
+
+Catalog records are replaceable public data. Personal records cannot be recovered from published JSON. Refresh only catalog stores and their revisions in a transaction; never delete/recreate the whole database for a catalog update. Personal records change only through user actions or explicit retention rules.
+
+Playlist entries reference stable `showId` values. A title edit updates the displayed catalog title while preserving the personal note. A removed show leaves an unavailable entry, not a deleted playlist item. IDs must never be reassigned to different recordings. IndexedDB does not enforce these references or join stores automatically; application code resolves them.
+
+## Proposed implementation sequence
+
+These steps are future work, not permission to start implementation. Recheck current source and existing ShowStore work before choosing files or contracts.
+
+- [ ] Confirm remaining product choices below and select the task's development mode.
+- [ ] Establish shared ShowStore initialization, validated catalog delivery, and failure/retry behavior without duplicating the full hydrated payload.
+- [ ] Add full-catalog Shows search and pagination, then scoped DJ/Explore search.
+- [ ] Establish personal-data object stores and migrations separately from optional catalog caching.
+- [ ] Add playlist editing, playback sessions/resume, and committed search history with defined retention and failure behavior.
+- [ ] If adopted, integrate numeric dataset revisions and transactional catalog refreshes.
+- [ ] Verify mobile performance, URL navigation, cross-tab behavior, and preservation of personal data during failures and updates.
 
 ## Open choices and verification
 
