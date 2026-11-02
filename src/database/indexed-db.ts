@@ -67,31 +67,79 @@ export function createIndexedDB(): Database {
 		return connection;
 	}
 
+	async function execute<T>(
+		names: string[],
+		mode: IDBTransactionMode,
+		queue: (tx: IDBTransaction) => () => T,
+	): Promise<T> {
+		const db = await openDatabase();
+		return new Promise<T>((resolve, reject) => {
+			const tx = db.transaction(names, mode);
+			let result: () => T;
+			let failure: unknown;
+			tx.oncomplete = () => resolve(result());
+			tx.onabort = () => {
+				reject(failure ?? tx.error ?? new Error("Archive transaction aborted"));
+			};
+			try {
+				result = queue(tx);
+			} catch (error) {
+				failure = error;
+				tx.abort();
+			}
+		});
+	}
+
 	return {
-		getObjectStore(_name: StoreName): DBStore<Show, number> {
+		getObjectStore(name: StoreName): DBStore<Show, number> {
 			return {
-				async get(_key: number): Promise<Show | undefined> {
-					await openDatabase();
-					throw new Error("Not implemented");
+				get(key: number): Promise<Show | undefined> {
+					return execute([name], "readonly", (tx) => {
+						const request: IDBRequest<Show | undefined> = tx
+							.objectStore(name)
+							.get(key);
+						return () => request.result;
+					});
 				},
-				async getAll(): Promise<Show[]> {
-					await openDatabase();
-					throw new Error("Not implemented");
+				getAll(): Promise<Show[]> {
+					return execute([name], "readonly", (tx) => {
+						const request: IDBRequest<Show[]> = tx.objectStore(name).getAll();
+						return () => request.result;
+					});
 				},
-				async set(_value: Show): Promise<void> {
-					await openDatabase();
-					throw new Error("Not implemented");
+				set(value: Show): Promise<void> {
+					return execute([name], "readwrite", (tx) => {
+						tx.objectStore(name).put(value);
+						return () => undefined;
+					});
 				},
-				async delete(_key: number): Promise<void> {
-					await openDatabase();
-					throw new Error("Not implemented");
+				delete(key: number): Promise<void> {
+					return execute([name], "readwrite", (tx) => {
+						tx.objectStore(name).delete(key);
+						return () => undefined;
+					});
 				},
 			};
 		},
-		async transaction(_operations: TransactionOperation[]): Promise<void> {
-			await openDatabase();
-			// Queue the full batch synchronously; resolve only on transaction commit.
-			throw new Error("Not implemented");
+		async transaction(operations: TransactionOperation[]): Promise<void> {
+			if (operations.length === 0) {
+				return;
+			}
+			const names = [...new Set(operations.map(({ store }) => store))];
+			await execute(names, "readwrite", (tx) => {
+				for (const operation of operations) {
+					const store = tx.objectStore(operation.store);
+					switch (operation.action) {
+						case "clear":
+							store.clear();
+							break;
+						case "set":
+							store.put(operation.value);
+							break;
+					}
+				}
+				return () => undefined;
+			});
 		},
 	};
 }

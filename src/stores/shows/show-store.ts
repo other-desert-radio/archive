@@ -1,3 +1,6 @@
+import type { Database, DBStore } from "../../database/types";
+import type { Show } from "../../utils/fetch-shows";
+
 type DataVersionEntry = {
 	id: number;
 	updatedAt: string;
@@ -8,7 +11,8 @@ type DataVersions = {
 	tags: DataVersionEntry;
 };
 export class ShowStore {
-	constructor() {
+	constructor(database: Database) {
+		this.showObjectStore = database.getObjectStore("shows");
 		this.initalize();
 	}
 
@@ -36,4 +40,6 @@ export class ShowStore {
 	get(id: number) {
 		throw new Error(`${id} -- not implemented`);
 	}
+
+	private showObjectStore: DBStore<Show, number>;
 }
