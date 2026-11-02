@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import { mock, test } from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { createIndexedDB } from "../../src/database/indexed-db";
-import type { StoreName } from "../../src/database/types";
 import {
 	createStores,
 	StoresProvider,
@@ -108,52 +107,37 @@ test("server rendering never initializes browser storage", () => {
 	assert.equal(initialize.mock.callCount(), 0);
 });
 
-test("initialization shares one metadata read and passes its result to ShowStore", async () => {
-	for (const cached of [{ key: "shows", revision: 12 }, undefined]) {
-		const database = createIndexedDB();
-		const metadata = database.getObjectStore("metadata");
-		const read = mock.method(metadata, "get", async () => cached);
-		const getObjectStore = database.getObjectStore.bind(database);
-		mock.method(database, "getObjectStore", (name: StoreName) =>
-			name === "metadata" ? metadata : getObjectStore(name),
-		);
-		const injected = createStores(database);
-		const initialize = mock.method(
-			injected.showStore,
-			"initialize",
-			async () => {},
-		);
-		const first = injected.initialize();
-		assert.equal(first, injected.initialize());
-		await first;
-		await injected.initialize();
-		assert.deepEqual(
-			read.mock.calls.map((call) => call.arguments),
-			[["shows"]],
-		);
-		assert.deepEqual(
-			initialize.mock.calls.map((call) => call.arguments),
-			[[cached]],
-		);
-	}
+test("initialization loads shared versions before initializing ShowStore", async () => {
+	const injected = createStores(createIndexedDB());
+	const order: string[] = [];
+	const versions = mock.method(
+		injected.versionsStore,
+		"initialize",
+		async () => {
+			order.push("versions");
+		},
+	);
+	const shows = mock.method(injected.showStore, "initialize", () => {
+		order.push("shows");
+	});
+	const first = injected.initialize();
+	assert.equal(first, injected.initialize());
+	await first;
+	await injected.initialize();
+	assert.deepEqual(order, ["versions", "shows"]);
+	assert.equal(versions.mock.callCount(), 1);
+	assert.equal(shows.mock.callCount(), 1);
 });
 
 test("failed initialization rejects and permits retry", async () => {
-	const database = createIndexedDB();
-	const metadata = database.getObjectStore("metadata");
+	const injected = createStores();
 	let attempts = 0;
-	mock.method(metadata, "get", async () => {
+	mock.method(injected.versionsStore, "initialize", async () => {
 		if (++attempts === 1) {
 			throw new Error("Storage unavailable");
 		}
-		return undefined;
 	});
-	const getObjectStore = database.getObjectStore.bind(database);
-	mock.method(database, "getObjectStore", (name: StoreName) =>
-		name === "metadata" ? metadata : getObjectStore(name),
-	);
-	const injected = createStores(database);
-	mock.method(injected.showStore, "initialize", async () => {});
+	mock.method(injected.showStore, "initialize", () => {});
 	await assert.rejects(injected.initialize(), /Storage unavailable/);
 	await injected.initialize();
 	assert.equal(attempts, 2);
