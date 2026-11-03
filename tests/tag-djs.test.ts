@@ -9,7 +9,9 @@ import { fetchDJs } from "../src/utils/fetch-djs";
 import { fetchShows } from "../src/utils/fetch-shows";
 import { fetchTags } from "../src/utils/fetch-tags";
 
-test("tag pages render only matching DJ cards with profiles and detail links", async () => {
+test("tag pages render only matching DJ cards with profiles and detail links", {
+	timeout: 30_000,
+}, async () => {
 	execFileSync("bun", ["run", "build"], {
 		stdio: "pipe",
 		timeout: 30_000,

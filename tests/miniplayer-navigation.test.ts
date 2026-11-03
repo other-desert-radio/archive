@@ -4,7 +4,9 @@ import { readdir, readFile } from "node:fs/promises";
 import process from "node:process";
 import test from "node:test";
 
-test("every built page hosts one hydrated, persisted miniplayer below its navigation", async () => {
+test("every built page hosts one hydrated, persisted miniplayer below its navigation", {
+	timeout: 30_000,
+}, async () => {
 	execFileSync("bun", ["run", "build"], {
 		stdio: "pipe",
 		timeout: 30_000,

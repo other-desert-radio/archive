@@ -93,7 +93,8 @@ server is serving them. For an existing build, run
 `bun tests/performance-budget.mjs` and `bun tests/mobile-navigation.browser.mjs`
 individually. Build-based tests explicitly set `NODE_ENV=production` for
 their child builds so Bun’s test environment does not emit development React
-into the production output.
+into the production output. Build-based tests allow 30 seconds for their build and
+assertions instead of Bun’s default five-second test timeout.
 
 ## Responsive browser checks
 

@@ -15,7 +15,9 @@ const escapeAttribute = (value: string) =>
 		.replaceAll("<", "&lt;")
 		.replaceAll(">", "&gt;");
 
-test("built show and DJ detail pages render large artwork with alt text and page-specific tag sizes", async () => {
+test("built show and DJ detail pages render large artwork with alt text and page-specific tag sizes", {
+	timeout: 30_000,
+}, async () => {
 	execFileSync("bun", ["run", "build"], {
 		stdio: "pipe",
 		timeout: 30_000,

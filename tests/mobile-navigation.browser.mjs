@@ -280,7 +280,9 @@ async function detailNavigation() {
           document.addEventListener('click', () => {
             sessionStorage.setItem('performance-tap', Date.now().toString());
           }, { once: true, capture: true });
-          const rect = document.querySelector(${JSON.stringify(link)}).getBoundingClientRect();
+          const target = document.querySelector(${JSON.stringify(link)});
+          target.scrollIntoView({ block: 'center' });
+          const rect = target.getBoundingClientRect();
           return { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 };
         })()`);
 				await touch.tap(point.x, point.y);
