@@ -1,8 +1,8 @@
 import { isMatching, P } from "ts-pattern";
 
-type WidgetEvent = {
-	on: (listener: () => void) => void;
-	off: (listener: () => void) => void;
+type WidgetEvent<Args extends unknown[] = []> = {
+	on: (listener: (...args: Args) => void) => void;
+	off: (listener: (...args: Args) => void) => void;
 };
 
 // Only the methods/events needed by the first playback adapter.
@@ -12,6 +12,17 @@ export type MixcloudWidget = {
 	play: () => PromiseLike<unknown>;
 	pause: () => PromiseLike<unknown>;
 	events: { play: WidgetEvent; pause: WidgetEvent; error: WidgetEvent };
+};
+
+/** Future history/resume contract; runtime validation is added at integration. */
+export type MixcloudPlaybackWidget = MixcloudWidget & {
+	/** False means Mixcloud refused the requested resume position. */
+	seek: (seconds: number) => PromiseLike<boolean>;
+	events: {
+		progress: WidgetEvent<[position: number, duration: number]>;
+		buffering: WidgetEvent;
+		ended: WidgetEvent;
+	};
 };
 
 export type MixcloudApi = {

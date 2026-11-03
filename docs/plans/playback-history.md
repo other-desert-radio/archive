@@ -20,8 +20,8 @@ Mode: chunked. Stop at each structure, scaffolding, and implementation review bo
 
 ## Chunks
 
-1. Structure: empty types, store, and focused test files. Created; awaiting review and scaffolding request.
-2. Types and scaffolding: documented types and store/adapter contracts, disconnected from working playback. Pending.
+1. Structure: empty types, store, and focused test files. Approved.
+2. Types and scaffolding: documented types, PlaybackStore signatures, and an extended widget contract. Disconnected from working playback; awaiting review.
 3. Storage: additive upgrade, independent initialization, reads, subscriptions, serialized writes, and focused tests. Pending.
 4. Tracking: session boundaries, timing, checkpoints, reload recovery, and real Mixcloud buffering/recovery verification. Pending.
 5. Resume: central adapter integration, failure handling, and complete verification. Pending.
@@ -48,4 +48,4 @@ Run focused checks per functional chunk. Finish with repository lint, check, tes
 
 ## Next action
 
-Review the empty file structure. After approval and a scaffolding request, implement only chunk 2.
+Review scaffolding. Approval authorizes chunk 3 (storage), not later integration chunks.
