@@ -1,3 +1,4 @@
+#!/usr/bin/env bun
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { isMatching, P } from "ts-pattern";

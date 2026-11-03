@@ -282,3 +282,18 @@ test("CLI reports counts on success and a nonzero exit with diagnostics on failu
 		assert.match(failure.stderr, /tags.json: cannot read JSON/);
 	});
 });
+
+test("executable CLI runs directly using Bun", async () => {
+	await fixture(async (directory) => {
+		const result = spawnSync("./scripts/validate-resources.ts", [directory], {
+			encoding: "utf8",
+			timeout: 5000,
+		});
+		assert.ifError(result.error);
+		assert.equal(result.status, 0, result.stderr);
+		assert.match(
+			result.stdout,
+			/Validated 1 shows, 2 DJs, 2 tags, and 2 profiles/,
+		);
+	});
+});
