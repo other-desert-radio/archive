@@ -18,7 +18,6 @@ function setup() {
 	return {
 		store: new PlaybackStore(database, {
 			now: () => 1_000_000 + elapsed,
-			monotonic: () => elapsed,
 		}),
 		read,
 		write,
@@ -48,7 +47,6 @@ test("initialization shares reads, notifies subscribers, and isolates returned r
 		updatedAt: 1,
 		startPosition: 0,
 		endPosition: 12,
-		playedSeconds: 12,
 	});
 	assert.deepEqual(store.get(42), record());
 	store.getAll().pop();
@@ -113,94 +111,104 @@ test("failed saves preserve memory and retry pending records on the next flush",
 	assert.equal(write.mock.callCount(), 2);
 });
 
-test("sessions count only after more than ten seconds, including across pauses", async () => {
+test("only completion counts a listen, from any starting position", async () => {
+	for (const start of [0, 120, 3599]) {
+		const { store, advance } = setup();
+		await store.progress(42, start);
+		advance(60_000);
+		await store.progress(42, 3600);
+		assert.equal(
+			store
+				.get(42)
+				?.history.filter((session) => session.completedAt !== undefined).length,
+			0,
+		);
+		await store.complete(42);
+		assert.equal(store.get(42)?.inProgress, false);
+		assert.equal(store.get(42)?.history[0]?.completedAt, 1_060_000);
+		assert.equal(store.get(42)?.history[0]?.startPosition, start);
+		assert.equal(store.get(42)?.history[0]?.endPosition, 3600);
+	}
+});
+
+test("interruptions and switching away preserve the same unfinished session", async () => {
 	const { store, advance } = setup();
 	await store.progress(42, 10);
-	advance(10_000);
-	await store.progress(42, 20);
-	assert.equal(
-		store.get(42)?.history.filter((session) => session.playedSeconds > 10)
-			.length,
-		0,
-	);
-	await store.suspend();
+	const original = store.get(42)?.history[0];
+	await store.flush();
 	advance(86_400_000);
-	await store.progress(42, 21);
-	assert.equal(store.get(42)?.history[0]?.playedSeconds, 10);
-	advance(1000);
-	await store.progress(42, 22);
-	assert.equal(store.get(42)?.history.length, 1);
-	assert.equal(store.get(42)?.history[0]?.playedSeconds, 11);
-});
-
-test("buffering stops time and seek jumps do not add skipped audio", async () => {
-	const { store, advance } = setup();
-	await store.progress(42, 0);
-	advance(2000);
-	await store.suspend();
-	advance(30_000);
-	await store.progress(42, 500);
-	advance(1000);
-	await store.progress(42, 1);
-	assert.equal(store.get(42)?.history[0]?.playedSeconds, 3);
-	assert.equal(store.get(42)?.positionInSeconds, 1);
-});
-
-test("stationary progress does not accumulate time", async () => {
-	const { store, advance } = setup();
-	await store.progress(42, 12);
-	advance(20_000);
-	await store.progress(42, 12);
-	advance(20_000);
-	await store.progress(42, 13);
-	assert.equal(store.get(42)?.history[0]?.playedSeconds, 0);
-});
-
-test("switch, clear, and completion end sessions; replay preserves history", async () => {
-	const { store, advance } = setup();
-	await store.progress(42, 10);
-	advance(11_000);
 	await store.progress(87, 0);
-	assert.equal(store.get(42)?.history[0]?.endedAt, 1_011_000);
-	assert.equal(store.get(42)?.inProgress, true);
-	await store.end(false);
-	assert.ok(store.get(87)?.history[0]?.endedAt);
+	await store.flush();
 	await store.progress(42, 0);
-	advance(12_000);
-	await store.progress(42, 12);
-	await store.end(true);
-	assert.equal(store.get(42)?.inProgress, false);
-	assert.equal(
-		store.get(42)?.history.filter((session) => session.playedSeconds > 10)
-			.length,
-		2,
-	);
-	await store.progress(42, 0);
+	await store.progress(42, 500);
+	assert.equal(store.get(42)?.history.length, 1);
+	assert.equal(store.get(42)?.history[0]?.startedAt, original?.startedAt);
+	assert.equal(store.get(42)?.history[0]?.startPosition, 10);
+	assert.equal(store.get(42)?.history[0]?.completedAt, undefined);
 	assert.equal(store.get(42)?.inProgress, true);
-	assert.equal(store.get(42)?.history.length, 3);
 });
 
-test("reload closes open sessions at the saved checkpoint and creates a separate session", async () => {
-	const { store, read } = setup();
-	read.mock.mockImplementation(async () => [
-		{
-			...record(180),
-			history: [
-				{
-					startedAt: 1000,
-					updatedAt: 20_000,
-					startPosition: 10,
-					endPosition: 180,
-					playedSeconds: 15,
-				},
-			],
-		},
-	]);
-	await store.initialize();
-	assert.equal(store.get(42)?.history[0]?.endedAt, 20_000);
+test("duplicate completion counts once; replay creates another session", async () => {
+	const { store, advance } = setup();
+	await store.complete(99);
+	assert.equal(store.get(99), undefined);
+	await store.progress(42, 3599);
+	await store.complete(42);
+	const completed = store.get(42);
+	advance(1000);
+	await store.complete(42);
+	assert.deepEqual(store.get(42), completed);
 	await store.progress(42, 0);
 	assert.equal(store.get(42)?.history.length, 2);
-	assert.equal(store.get(42)?.history[1]?.startPosition, 0);
+	assert.equal(store.get(42)?.inProgress, true);
+	assert.equal(store.get(42)?.history[1]?.completedAt, undefined);
+	await store.complete(42);
+	assert.equal(
+		store
+			.get(42)
+			?.history.filter((session) => session.completedAt !== undefined).length,
+		2,
+	);
+});
+
+test("reload leaves unfinished sessions open and resume reuses the same entry", async () => {
+	const { store, read, write } = setup();
+	const cached = {
+		...record(180),
+		history: [
+			{
+				startedAt: 1000,
+				updatedAt: 20_000,
+				startPosition: 10,
+				endPosition: 180,
+			},
+		],
+	};
+	read.mock.mockImplementation(async () => [structuredClone(cached)]);
+	await store.initialize();
+	assert.deepEqual(store.get(42), cached);
+	assert.equal(write.mock.callCount(), 0);
+	await store.progress(42, 181);
+	assert.equal(store.get(42)?.history.length, 1);
+	assert.equal(store.get(42)?.history[0]?.startedAt, 1000);
+	assert.equal(store.get(42)?.history[0]?.startPosition, 10);
+	assert.equal(store.get(42)?.history[0]?.completedAt, undefined);
+});
+
+test("new-session logging happens once per listen, not on resume", async () => {
+	const { store } = setup();
+	const log = mock.method(console, "log", () => {});
+	try {
+		await store.progress(42, 0);
+		await store.flush();
+		await store.progress(42, 12);
+		assert.equal(log.mock.callCount(), 1);
+		await store.complete(42);
+		await store.progress(42, 0);
+		assert.equal(log.mock.callCount(), 2);
+	} finally {
+		log.mock.restore();
+	}
 });
 
 test("five-second checkpoints and boundaries persist; failed checkpoints can retry", async () => {
@@ -215,7 +223,7 @@ test("five-second checkpoints and boundaries persist; failed checkpoints can ret
 	advance(1000);
 	await assert.rejects(store.progress(42, 5), /Disk full/);
 	assert.equal(store.get(42)?.positionInSeconds, 5);
-	await store.suspend();
+	await store.flush();
 	assert.equal(write.mock.callCount(), 3);
 });
 

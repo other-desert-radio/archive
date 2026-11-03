@@ -31,8 +31,6 @@ export class MixcloudAdapter {
 	private running = false;
 	private disposed = false;
 	private unsubscribe: () => void;
-	private previousPosition: number | undefined;
-	private sessionStarted = false;
 	private historyReady = false;
 	private completed = false;
 	private resumePosition: number | undefined;
@@ -54,7 +52,7 @@ export class MixcloudAdapter {
 		this.unsubscribe = store.subscribeRequests((request) => {
 			this.latestRequest = request;
 			if (request.action === "clear" || request.track !== this.loadedTrack) {
-				this.save(this.playback.end(false));
+				this.save(this.playback.flush());
 				if (this.loadedTrack && request.action !== "clear") {
 					const previous = this.playback.get(this.loadedTrack.show.id);
 					console.log(
@@ -68,8 +66,6 @@ export class MixcloudAdapter {
 						},
 					);
 				}
-				this.previousPosition = undefined;
-				this.sessionStarted = false;
 			}
 			const shouldPause = match(request)
 				// Stop the old show on clear, a source change, or a different track.
@@ -141,7 +137,7 @@ export class MixcloudAdapter {
 		}
 		this.disposed = true;
 		this.unsubscribe();
-		this.save(this.playback.suspend());
+		this.save(this.playback.flush());
 		if (this.widget) {
 			this.widget.events.play.off(this.onPlay);
 			this.widget.events.pause.off(this.onPause);
@@ -162,8 +158,6 @@ export class MixcloudAdapter {
 			return;
 		}
 		if (this.completed) {
-			this.previousPosition = undefined;
-			this.sessionStarted = false;
 			this.completed = false;
 		}
 		this.store.confirmPlaying(this.loadedTrack);
@@ -202,7 +196,6 @@ export class MixcloudAdapter {
 				.finally(() => {
 					if (this.loadedTrack === track) {
 						this.seeking = false;
-						this.previousPosition = undefined;
 						if (this.store.getSnapshot().status === "paused") {
 							void this.pauseGently(widget);
 						}
@@ -215,7 +208,7 @@ export class MixcloudAdapter {
 		if (!this.isCurrent() || !this.loadedTrack) {
 			return;
 		}
-		this.save(this.playback.suspend());
+		this.save(this.playback.flush());
 		this.store.confirmPaused(this.loadedTrack);
 	};
 
@@ -223,7 +216,7 @@ export class MixcloudAdapter {
 		if (!this.isCurrent() || !this.loadedTrack) {
 			return;
 		}
-		this.save(this.playback.suspend());
+		this.save(this.playback.flush());
 		this.store.reportError(
 			this.loadedTrack,
 			"Mixcloud playback failed. Try the widget controls.",
@@ -243,6 +236,7 @@ export class MixcloudAdapter {
 		if (
 			!this.isCurrent() ||
 			!this.historyReady ||
+			this.completed ||
 			this.seeking ||
 			!this.loadedTrack ||
 			this.store.getSnapshot().status !== "playing" ||
@@ -251,35 +245,27 @@ export class MixcloudAdapter {
 		) {
 			return;
 		}
-		const previous = this.previousPosition;
-		this.previousPosition = position;
-		if (previous === undefined) {
-			return;
-		}
-		if (!this.sessionStarted) {
-			if (position === previous) {
-				return;
-			}
-			this.sessionStarted = true;
-			this.save(this.playback.progress(this.loadedTrack.show.id, previous));
-		}
+
 		this.save(this.playback.progress(this.loadedTrack.show.id, position));
 	};
 
 	private onBuffering = () => {
 		if (this.isCurrent()) {
-			this.save(this.playback.suspend());
+			this.save(this.playback.flush());
 		}
 	};
 
 	private onEnded = () => {
-		if (!this.isCurrent() || !this.loadedTrack) {
+		if (
+			!this.isCurrent() ||
+			!this.loadedTrack ||
+			this.completed ||
+			!this.historyReady
+		) {
 			return;
 		}
-		this.save(this.playback.end(true));
+		this.save(this.playback.complete(this.loadedTrack.show.id));
 		this.completed = true;
-		this.previousPosition = undefined;
-		this.sessionStarted = false;
 		this.store.confirmPaused(this.loadedTrack);
 	};
 
@@ -326,8 +312,6 @@ export class MixcloudAdapter {
 					}
 					try {
 						this.loadedTrack = undefined;
-						this.previousPosition = undefined;
-						this.sessionStarted = false;
 						this.completed = false;
 						this.resumePosition = undefined;
 						this.seeking = false;
@@ -407,7 +391,7 @@ export class MixcloudAdapter {
 							break;
 					}
 				} catch {
-					this.save(this.playback.suspend());
+					this.save(this.playback.flush());
 					if (
 						!this.disposed &&
 						this.store.getRequestSnapshot()?.id === request.id

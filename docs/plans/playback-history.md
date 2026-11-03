@@ -80,8 +80,8 @@ Storage failures continue to leave playback working. If initialization cannot re
 
 ## Chunks and status
 
-1. Contracts: simplified types, API, and call flow recorded here. Awaiting review. Runtime source remains unchanged.
-2. Implementation: update store/types and adapter/widget callers together, replace timing tests with completion/session-continuity tests, and stop for review.
+1. Contracts: simplified types, API, and call flow approved.
+2. Implementation: updated the documented types, store, adapter, and page-exit caller. Removed elapsed accounting and automatic session closure. Added idempotent completion and suppression of trailing events. Replaced timing tests with completion, reload continuity, switch/clear continuity, and session-log coverage. All 47 focused store/Mixcloud tests pass. Awaiting review.
 3. Verification: check browser persistence, reload/resume continuity, and navigation; run final checks and update architecture documentation. Stop for final review.
 
 ## Verification
@@ -96,4 +96,4 @@ Storage failures continue to leave playback working. If initialization cannot re
 
 ## Next action
 
-Review the contracts chunk. After approval, implement chunk 2 only. The user must clear existing playback data before testing the new format. Abrupt termination can lose progress since the last checkpoint; completion depends on the widget ended event.
+Review implementation chunk 2. After approval, run chunk 3: browser persistence/resume checks, final verification commands, and architecture documentation updates. The user must clear existing playback data before testing the new format. Abrupt termination can lose progress since the last checkpoint; completion depends on the widget ended event.

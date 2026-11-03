@@ -36,7 +36,6 @@ function fixture() {
 	const writes = mock.method(database, "transaction", async () => {});
 	const playback = new PlaybackStore(database, {
 		now: () => 100000 + elapsed,
-		monotonic: () => elapsed,
 	});
 	const ready = deferred<MixcloudWidget>();
 	const calls: {
@@ -89,9 +88,9 @@ function fixture() {
 		},
 		events,
 	};
-	const select = (name: string) =>
+	const select = (name: string, id = show.id) =>
 		store.select({
-			show: { ...show, title: name },
+			show: { ...show, id, title: name },
 			source: { kind: "mixcloud", cloudcastKey: `/dj/${name}/` },
 		});
 	return {
@@ -499,7 +498,7 @@ test("resumes unfinished records on confirmed play; completed records start at z
 	}
 });
 
-test("progress tracks sessions, excludes buffering and pauses, and completes/replays", async () => {
+test("progress preserves an unfinished listen across buffering and pauses until completion", async () => {
 	const f = fixture();
 	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.select("tracked");
@@ -509,14 +508,14 @@ test("progress tracks sessions, excludes buffering and pauses, and completes/rep
 	await setImmediate();
 	f.events.play.emit();
 	f.events.progress.emit(10);
-	assert.equal(f.playback.get(show.id), undefined);
+	assert.equal(f.playback.get(show.id)?.history.length, 1);
 	f.events.progress.emit(11);
 	f.advance(11_000);
 	f.events.progress.emit(22);
 	f.events.buffering.emit();
 	f.advance(60_000);
 	f.events.progress.emit(23);
-	assert.equal(f.playback.get(show.id)?.history[0]?.playedSeconds, 11);
+	assert.equal(f.playback.get(show.id)?.history[0]?.completedAt, undefined);
 	f.events.pause.emit();
 	f.advance(60_000);
 	f.events.progress.emit(24);
@@ -527,9 +526,14 @@ test("progress tracks sessions, excludes buffering and pauses, and completes/rep
 	f.events.progress.emit(26);
 	assert.equal(f.playback.get(show.id)?.history.length, 1);
 	assert.equal(f.playback.get(show.id)?.history[0]?.startPosition, 10);
-	assert.equal(f.playback.get(show.id)?.history[0]?.playedSeconds, 12);
+	assert.equal(f.playback.get(show.id)?.history[0]?.completedAt, undefined);
 	f.events.ended.emit();
-	assert.equal(f.playback.get(show.id)?.inProgress, false);
+	const completed = f.playback.get(show.id);
+	assert.equal(completed?.inProgress, false);
+	assert.equal(completed?.history[0]?.completedAt, 232000);
+	f.events.ended.emit();
+	f.events.progress.emit(27);
+	assert.deepEqual(f.playback.get(show.id), completed);
 	f.store.play();
 	await setImmediate();
 	assert.deepEqual(f.seeks, [0]);
@@ -540,7 +544,7 @@ test("progress tracks sessions, excludes buffering and pauses, and completes/rep
 	adapter.dispose();
 });
 
-test("superseded events cannot add history and clear closes the current session", async () => {
+test("superseded events cannot add history and clear preserves the unfinished session", async () => {
 	const f = fixture();
 	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.select("first");
@@ -552,10 +556,56 @@ test("superseded events cannot add history and clear closes the current session"
 	f.events.progress.emit(0);
 	f.events.progress.emit(1);
 	f.store.clear();
-	assert.ok(f.playback.get(show.id)?.history[0]?.endedAt);
+	assert.equal(f.playback.get(show.id)?.history[0]?.completedAt, undefined);
+	assert.equal(f.playback.get(show.id)?.inProgress, true);
 	f.events.progress.emit(100);
 	assert.equal(f.playback.get(show.id)?.positionInSeconds, 1);
 	adapter.dispose();
+});
+
+test("switching away or clearing and reselecting resumes the same unfinished listen", async () => {
+	for (const action of ["switch", "clear"] as const) {
+		const f = fixture();
+		let adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
+		f.select("first");
+		f.ready.resolve(f.widget);
+		await setImmediate();
+		f.calls[0]?.result.resolve();
+		await setImmediate();
+		f.events.play.emit();
+		f.events.progress.emit(10);
+		f.advance(10_000);
+		f.events.progress.emit(20);
+		const original = f.playback.get(show.id)?.history[0];
+		assert.ok(original);
+		if (action === "switch") {
+			f.select("other", show.id + 1);
+			await setImmediate();
+			f.calls[1]?.result.resolve();
+			await setImmediate();
+			f.events.play.emit();
+			f.events.progress.emit(0);
+		} else {
+			f.store.clear();
+			adapter.dispose();
+			adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
+		}
+		f.select("first");
+		await setImmediate();
+		f.calls.at(-1)?.result.resolve();
+		await setImmediate();
+		f.events.play.emit();
+		await setImmediate();
+		f.events.progress.emit(21);
+		const resumed = f.playback.get(show.id);
+		assert.equal(resumed?.history.length, 1);
+		assert.equal(resumed?.history[0]?.startedAt, original.startedAt);
+		assert.equal(resumed?.history[0]?.startPosition, original.startPosition);
+		assert.equal(resumed?.history[0]?.completedAt, undefined);
+		assert.equal(resumed?.positionInSeconds, 21);
+		assert.deepEqual(f.seeks, [20]);
+		adapter.dispose();
+	}
 });
 
 test("latest pause or selection wins while resume seek is pending", async () => {

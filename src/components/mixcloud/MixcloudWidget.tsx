@@ -51,7 +51,7 @@ export default function MixcloudWidget({
 			playbackStore,
 		);
 		const onPageHide = () => {
-			void playbackStore.end(false).catch((error: unknown) => {
+			void playbackStore.flush().catch((error: unknown) => {
 				console.error("[PlaybackStore] page exit save failed", error);
 			});
 		};

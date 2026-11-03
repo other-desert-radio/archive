@@ -1,27 +1,25 @@
-/** Saved progress and listening sessions for one show; stored by showId. */
+/** Saved progress and listen history for one show, keyed by showId. */
 export type PlaybackRecord = {
 	/** IndexedDB key identifying the show. */
 	showId: number;
-	/** Unfinished playback, including a paused show; false after playback ends. */
+	/** True while the latest listen is unfinished, including across reloads. */
 	inProgress: boolean;
-	/** Latest known playback position in seconds, used for resume. */
+	/** Latest known position in seconds, used for resume. */
 	positionInSeconds: number;
-	/** Separate sessions, including those too short to count as listens. */
+	/** Completed listens and, if present, the latest unfinished listen. */
 	history: PlaybackSession[];
 };
 
-/** One session; pauses and internal archive navigation preserve it. */
+/** One listen attempt, preserved across interruptions until completion. */
 export type PlaybackSession = {
-	/** Time playback first advances, as Unix milliseconds. */
+	/** First confirmed playback progress, as Unix milliseconds. */
 	startedAt: number;
-	/** Latest checkpoint time as Unix milliseconds; closes sessions after reload. */
+	/** Latest progress checkpoint or completion time, as Unix milliseconds. */
 	updatedAt: number;
-	/** Session end time as Unix milliseconds; absent while open. */
-	endedAt?: number;
-	/** Actual position where the session began, in seconds. */
+	/** Unix milliseconds when playback reaches the end; absent while unfinished. */
+	completedAt?: number;
+	/** Actual reported position where this listen began, in seconds. */
 	startPosition: number;
-	/** Latest position in seconds; seeking can move it backward or forward. */
+	/** Latest reported position during this listen, in seconds. */
 	endPosition: number;
-	/** Playback seconds excluding pauses and buffering; > 10 counts as a listen. */
-	playedSeconds: number;
 };
