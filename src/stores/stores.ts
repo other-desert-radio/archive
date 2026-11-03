@@ -25,6 +25,7 @@ export function createStores(database: Database = createIndexedDB()): Stores {
 				.then(() => showStore.initialize())
 				.catch((error: unknown) => {
 					initialization = undefined;
+					versionsStore.invalidatePublished();
 					throw error;
 				});
 			return initialization;

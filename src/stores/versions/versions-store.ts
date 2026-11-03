@@ -35,6 +35,11 @@ export class VersionsStore {
 		return this.initialization;
 	}
 
+	invalidatePublished(): void {
+		this.initialization = undefined;
+		this.published = undefined;
+	}
+
 	private async load(base: string): Promise<void> {
 		const url = `${base.replace(/\/?$/, "/")}resources/data_versions.json`;
 		const response = await fetch(url, { cache: "no-cache" });

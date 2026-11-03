@@ -143,6 +143,52 @@ test("failed initialization rejects and permits retry", async () => {
 	assert.equal(attempts, 2);
 });
 
+test("retry refreshes the manifest after a deployment revision mismatch", async () => {
+	const database = createIndexedDB();
+	const objectStore = database.getObjectStore("shows");
+	mock.method(objectStore, "getAll", async () => []);
+	mock.method(database, "getObjectStore", () => objectStore);
+	const write = mock.method(database, "transaction", async () => {});
+	const injected = createStores(database);
+	const initializeVersions = injected.versionsStore.initialize.bind(
+		injected.versionsStore,
+	);
+	const initializeShows = injected.showStore.initialize.bind(
+		injected.showStore,
+	);
+	mock.method(injected.versionsStore, "initialize", () =>
+		initializeVersions("/archive/"),
+	);
+	mock.method(injected.showStore, "initialize", () =>
+		initializeShows("/archive/"),
+	);
+	let revision = 4;
+	let manifestFetches = 0;
+	const originalFetch = globalThis.fetch;
+	globalThis.fetch = mock.fn(async (url) => {
+		if (String(url).endsWith("data_versions.json")) {
+			manifestFetches++;
+			const version = { id: revision, updatedAt: fixtureShows.updatedAt };
+			return Response.json({ shows: version, djs: version, tags: version });
+		}
+		return Response.json({ ...fixtureShows, version: 5 });
+	}) as typeof fetch;
+	try {
+		await assert.rejects(injected.initialize(), /expected 4, received 5/);
+		assert.equal(write.mock.callCount(), 0);
+		revision = 5;
+		const retry = injected.initialize();
+		assert.equal(retry, injected.initialize());
+		await retry;
+		assert.equal(manifestFetches, 2);
+		assert.equal(injected.versionsStore.getPublished("shows"), 5);
+		assert.deepEqual(injected.showStore.getAll(), fixtureShows.data);
+		assert.equal(write.mock.callCount(), 1);
+	} finally {
+		globalThis.fetch = originalFetch;
+	}
+});
+
 test("shared initialization awaits ShowStore completion and propagates its errors", async () => {
 	const injected = createStores();
 	mock.method(injected.versionsStore, "initialize", async () => {});
