@@ -140,18 +140,22 @@ Browser stores use envelope versions and `data_versions.json` to refresh shows
 and tags. IndexedDB schema v3 adds a local `playback` store keyed by `showId`,
 preserving existing shows, tags, and committed revision metadata during upgrades.
 PlaybackStore provides independent local initialization, memory subscriptions,
-and serialized retryable saves. It tracks sessions across pauses, excludes
-buffering when suspended by its caller, and checkpoints on progress at five-second
-intervals and playback boundaries. Session `updatedAt` timestamps close previously
-open sessions at their last checkpoint after reload. A listen is a session with
-more than ten accumulated playback seconds. The Mixcloud adapter forwards progress,
-pause, buffering, error, and ended events, ignores stale selections, and closes
-sessions when selection changes or playback is cleared. Internal navigation keeps
-the session; page exit attempts a final save, with checkpoint recovery after reload.
+and serialized retryable saves. A listen counts when the Mixcloud widget emits
+`ended`, regardless of the starting position. Its history entry receives
+`completedAt`; duplicate completion events count once. Pause, buffering, errors,
+selection changes, clear, and reload preserve the unfinished session, including
+its original start time and position. Playback after completion creates a new
+session. There is no elapsed listening-time accounting or minimum duration.
+Progress checkpoints save at five-second intervals; interruption events flush
+pending records, and page exit attempts a final save. Initialization loads saved
+sessions without closing them. The adapter ignores stale selection events and
+trailing progress after completion until playback starts again.
 Resume seeks wait for the widget's play event: a seek immediately after load can
 report success but reset when audio starts. Tracking waits for the resume seek to
-settle and uses actual reported positions. Completed shows start over, preserving
-earlier sessions. Storage errors are logged without stopping playback; if the
+settle and uses actual reported positions. Replaying a completed show uses
+`widget.load()` to start over in the same iframe, preserving earlier sessions;
+seeking from the end can restart audio without another play event. Storage errors
+are logged without stopping playback; if the
 initial read fails, tracking is disabled for that selection to avoid overwriting
 unread history. A later selection retries initialization. Failed saves retain
 pending records and retry at subsequent checkpoints or playback boundaries.

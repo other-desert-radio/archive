@@ -15,7 +15,7 @@ Mode: chunked. This replaces the earlier ten-second/session-per-visit rules.
 
 ## Contract chunk: proposed types
 
-These replace the existing types in src/stores/playback/types.ts during the implementation chunk. Keep working source unchanged until the store and callers can change together.
+Implemented in src/stores/playback/types.ts, together with the store and adapter callers.
 
 ```ts
 /** Saved progress and listen history for one show, keyed by showId. */
@@ -81,8 +81,8 @@ Storage failures continue to leave playback working. If initialization cannot re
 ## Chunks and status
 
 1. Contracts: simplified types, API, and call flow approved.
-2. Implementation: updated the documented types, store, adapter, and page-exit caller. Removed elapsed accounting and automatic session closure. Added idempotent completion and suppression of trailing events. Replaced timing tests with completion, reload continuity, switch/clear continuity, and session-log coverage. All 47 focused store/Mixcloud tests pass. Awaiting review.
-3. Verification: check browser persistence, reload/resume continuity, and navigation; run final checks and update architecture documentation. Stop for final review.
+2. Implementation: updated the documented types, store, adapter, and page-exit caller. Removed elapsed accounting and automatic session closure. Added idempotent completion and suppression of trailing events. Replaced timing tests with completion, reload continuity, switch/clear continuity, and session-log coverage. All 47 focused store/Mixcloud tests pass. Approved.
+3. Verification: in progress. Browser persistence/navigation and initial live reload/resume/completion checks passed. Live replay exposed a widget quirk: seeking from the end can restart audio without another play event. Replay now uses the existing load path in the same iframe, and the regression test verifies that path. All 188 tests, lint, Astro checks, and build pass; final live recheck pending.
 
 ## Verification
 

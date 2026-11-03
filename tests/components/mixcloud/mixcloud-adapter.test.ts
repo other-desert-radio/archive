@@ -536,7 +536,11 @@ test("progress preserves an unfinished listen across buffering and pauses until 
 	assert.deepEqual(f.playback.get(show.id), completed);
 	f.store.play();
 	await setImmediate();
-	assert.deepEqual(f.seeks, [0]);
+	assert.equal(f.calls[1]?.key, "/dj/tracked/");
+	assert.equal(f.calls[1]?.autoplay, false);
+	assert.deepEqual(f.seeks, []);
+	f.calls[1]?.result.resolve();
+	await setImmediate();
 	f.events.play.emit();
 	f.events.progress.emit(0);
 	f.events.progress.emit(1);

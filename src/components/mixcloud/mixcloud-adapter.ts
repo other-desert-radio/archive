@@ -300,6 +300,10 @@ export class MixcloudAdapter {
 					this.loadedTrack = undefined;
 					continue;
 				}
+				// Seeking after ended can restart audio without another play event.
+				if (this.completed && request.action === "play") {
+					this.loadedTrack = undefined;
+				}
 				if (request.track !== this.loadedTrack) {
 					if (this.loadedTrack) {
 						await this.pauseGently(widget);
@@ -375,15 +379,6 @@ export class MixcloudAdapter {
 					switch (request.action) {
 						case "load":
 						case "play":
-							if (this.completed) {
-								await widget.seek(0);
-								if (
-									this.disposed ||
-									this.store.getRequestSnapshot()?.id !== request.id
-								) {
-									continue;
-								}
-							}
 							await widget.play();
 							break;
 						case "pause":
