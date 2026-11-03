@@ -43,8 +43,8 @@ by text heart and fullscreen buttons. Each DJ has its own link; shows without
 DJs omit the divider. Metadata uses a single line with ellipsis; the iframe has
 a maximum width of 40rem.
 
-From above 600px through 1023px, metadata wraps onto its own row. The widget sits
-left underneath with the desktop controls aligned right.
+From above 600px through 1023px, metadata wraps onto its own row. The widget fills
+the available width underneath alongside the desktop controls on the right.
 
 At 600px and below, the bar is fixed to the viewport bottom while navigation
 stays at the top. Metadata and desktop actions are hidden. A borderless,

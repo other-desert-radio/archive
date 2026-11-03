@@ -118,7 +118,6 @@
 
 	.widget-slot {
 		flex: 1 1 0;
-		max-width: 40rem;
 		margin-inline-start: 0;
 	}
 
