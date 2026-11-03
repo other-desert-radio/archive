@@ -87,7 +87,7 @@ Page size is undecided; **30–50** was an example, not an agreed requirement. N
 ## Static file generation
 
 User decision: skip full show-record validation in the browser and gate publishing
-with [archive resource validation](archive-publish-validation.md). Keep HTTP/JSON
+with [archive resource validation](../../deployment.md). Keep HTTP/JSON
 error handling and export/manifest revision checks. Existing build-time validators
 remain; references to validation below mean the publishing gate for show structure.
 

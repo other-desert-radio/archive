@@ -62,8 +62,8 @@ replaced only after a successful save. Failed refreshes retain cached records wh
 rejecting initialization. `get()` and `getAll()` read memory synchronously; callers
 must await shared initialization when they require fresh data. Browser show and tag fetches
 trust the first-party record structure, while checking HTTP status and export revision;
-the publish-time validation gate is planned in
-[archive publish validation](plans/future/archive-publish-validation.md).
+the [publishing gate](deployment.md) validates the built exports before upload
+and runs in PR checks.
 
 `BaseLayout.astro` includes Astro's `ClientRouter` on every page, with root
 and body transition animations disabled and an immediate swap fallback.

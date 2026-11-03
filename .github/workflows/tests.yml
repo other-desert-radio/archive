@@ -25,3 +25,9 @@ jobs:
 
       - name: Run tests
         run: bun run test
+
+      - name: Build site
+        run: bun run build
+
+      - name: Validate published resources
+        run: bun run validate:resources

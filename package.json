@@ -10,6 +10,7 @@
 		"check": "astro check",
 		"docs:check": "sh scripts/check-docs",
 		"build": "astro build",
+		"validate:resources": "bun scripts/validate-resources.ts",
 		"format": "./scripts/format",
 		"lint": "./scripts/lint",
 		"lint:format": "biome format .",

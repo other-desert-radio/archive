@@ -57,7 +57,7 @@ export class TagStore {
 		if (!response.ok) {
 			throw new Error(`Cannot fetch tags: ${response.status}`);
 		}
-		// Trust the first-party export; publish-time structure validation is planned.
+		// CI validates export structure before publishing, so browser loads skip record validation.
 		return (await response.json()) as TagsExport;
 	}
 

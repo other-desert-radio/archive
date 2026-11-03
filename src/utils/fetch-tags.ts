@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { isMatching, P } from "ts-pattern";
 
-const TagPattern = {
+export const TagPattern = {
 	id: P.number,
 	title: P.string,
 	color: P.string,

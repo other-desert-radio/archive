@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { isMatching, P } from "ts-pattern";
 
-const HydratedDJPattern = {
+export const HydratedDJPattern = {
 	id: P.number,
 	title: P.string,
 	image_small: P.optional(P.string),

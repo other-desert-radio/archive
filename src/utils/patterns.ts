@@ -19,3 +19,10 @@ export const HttpUrlPattern = P.string.regex(/^https?:\/\/[^\s/]+(?:[^\s]*)$/);
 export const AssetReferencePattern = P.string.regex(
 	/^(?:https?:\/\/[^\s/]+[^\s]*|\/?[^\s]+)$/,
 );
+
+export const VersionPattern = { id: P.number, updatedAt: IsoDatePattern };
+export const VersionsPattern = {
+	shows: VersionPattern,
+	djs: VersionPattern,
+	tags: VersionPattern,
+};
