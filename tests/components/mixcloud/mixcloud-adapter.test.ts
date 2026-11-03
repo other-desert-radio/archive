@@ -1,11 +1,13 @@
 import assert from "node:assert/strict";
-import test from "node:test";
+import { mock, test } from "node:test";
 import { setImmediate } from "node:timers/promises";
 import {
 	MixcloudAdapter,
 	type MixcloudWidget,
 } from "../../../src/components/mixcloud";
+import { createIndexedDB } from "../../../src/database/indexed-db";
 import { AudioStore } from "../../../src/stores/audio";
+import { PlaybackStore } from "../../../src/stores/playback/playback-store";
 import fixtureShows from "../../res/shows.json";
 
 const fixtureShow = fixtureShows.data[0];
@@ -26,6 +28,16 @@ function deferred<T>() {
 
 function fixture() {
 	const store = new AudioStore();
+	let elapsed = 0;
+	const database = createIndexedDB();
+	const objectStore = database.getObjectStore("playback");
+	mock.method(objectStore, "getAll", async () => []);
+	mock.method(database, "getObjectStore", () => objectStore);
+	const writes = mock.method(database, "transaction", async () => {});
+	const playback = new PlaybackStore(database, {
+		now: () => 100000 + elapsed,
+		monotonic: () => elapsed,
+	});
 	const ready = deferred<MixcloudWidget>();
 	const calls: {
 		key: string;
@@ -34,24 +46,36 @@ function fixture() {
 	}[] = [];
 	const playbackCommands: string[] = [];
 	const event = () => {
-		const listeners = new Set<() => void>();
+		const listeners = new Set<(position: number, duration: number) => void>();
 		return {
-			on: (listener: () => void) => {
+			on: (listener: (position: number, duration: number) => void) => {
 				listeners.add(listener);
 			},
-			off: (listener: () => void) => {
+			off: (listener: (position: number, duration: number) => void) => {
 				listeners.delete(listener);
 			},
-			emit: () => {
+			emit: (position = 0, duration = 3600) => {
 				for (const listener of listeners) {
-					listener();
+					listener(position, duration);
 				}
 			},
 			listeners,
 		};
 	};
-	const events = { play: event(), pause: event(), error: event() };
+	const events = {
+		play: event(),
+		pause: event(),
+		error: event(),
+		progress: event(),
+		buffering: event(),
+		ended: event(),
+	};
+	const seeks: number[] = [];
 	const widget: MixcloudWidget = {
+		seek: async (position) => {
+			seeks.push(position);
+			return true;
+		},
 		load: (key, autoplay) => {
 			const result = deferred<void>();
 			calls.push({ key, autoplay, result });
@@ -72,6 +96,12 @@ function fixture() {
 		});
 	return {
 		store,
+		playback,
+		writes,
+		seeks,
+		advance: (ms: number) => {
+			elapsed += ms;
+		},
 		events,
 		ready,
 		widget,
@@ -84,7 +114,7 @@ function fixture() {
 test("late mounting and readiness use the latest selection without confirming playback", async () => {
 	const f = fixture();
 	f.select("first");
-	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.select("latest");
 	f.store.pause();
 	assert.equal(f.calls.length, 0);
@@ -105,7 +135,7 @@ test("late mounting and readiness use the latest selection without confirming pl
 
 test("serializes loads and skips superseded intermediate selections", async () => {
 	const f = fixture();
-	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.ready.resolve(f.widget);
 	f.select("first");
 	await setImmediate();
@@ -124,7 +154,7 @@ test("serializes loads and skips superseded intermediate selections", async () =
 
 test("current load errors report to the store and a newer request retries", async () => {
 	const f = fixture();
-	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.select("first");
 	f.ready.resolve(f.widget);
 	await setImmediate();
@@ -132,6 +162,7 @@ test("current load errors report to the store and a newer request retries", asyn
 	await setImmediate();
 	assert.equal(f.store.getSnapshot().status, "error");
 	f.store.play();
+	await setImmediate();
 	assert.equal(f.calls.length, 2);
 	f.calls[1]?.result.resolve();
 	adapter.dispose();
@@ -139,7 +170,7 @@ test("current load errors report to the store and a newer request retries", asyn
 
 test("a superseded load error cannot overwrite a newer selection", async () => {
 	const f = fixture();
-	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.select("first");
 	f.ready.resolve(f.widget);
 	await setImmediate();
@@ -155,7 +186,7 @@ test("a superseded load error cannot overwrite a newer selection", async () => {
 test("clear or SAMCast selection before readiness produces no Mixcloud load", async () => {
 	for (const action of ["clear", "samcast"] as const) {
 		const f = fixture();
-		const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+		const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 		f.select("first");
 		if (action === "clear") f.store.clear();
 		else
@@ -173,7 +204,7 @@ test("clear or SAMCast selection before readiness produces no Mixcloud load", as
 test("disposal unsubscribes and ignores pending readiness or load errors", async () => {
 	for (const phase of ["ready", "load"] as const) {
 		const f = fixture();
-		const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+		const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 		f.select("first");
 		if (phase === "load") {
 			f.ready.resolve(f.widget);
@@ -192,7 +223,7 @@ test("disposal unsubscribes and ignores pending readiness or load errors", async
 
 test("readiness failure reports the current Mixcloud selection", async () => {
 	const f = fixture();
-	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.select("first");
 	f.ready.reject(new Error("not ready"));
 	await setImmediate();
@@ -202,7 +233,7 @@ test("readiness failure reports the current Mixcloud selection", async () => {
 
 test("selection plays after loading but does not confirm playback", async () => {
 	const f = fixture();
-	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.ready.resolve(f.widget);
 	f.select("first");
 	await setImmediate();
@@ -216,7 +247,7 @@ test("selection plays after loading but does not confirm playback", async () => 
 
 test("pause during loading replaces the original play intent", async () => {
 	const f = fixture();
-	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.select("first");
 	f.ready.resolve(f.widget);
 	await setImmediate();
@@ -234,7 +265,7 @@ test("clear and source changes pause immediately and after pending play settles"
 		const f = fixture();
 		const playing = deferred<void>();
 		f.widget.play = () => playing.promise;
-		const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+		const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 		f.select("first");
 		f.ready.resolve(f.widget);
 		await setImmediate();
@@ -269,7 +300,7 @@ test("pause reverses pending play and resume reuses the loaded show", async () =
 		plays++;
 		return plays === 1 ? playing.promise : Promise.resolve();
 	};
-	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.select("first");
 	f.ready.resolve(f.widget);
 	await setImmediate();
@@ -292,7 +323,7 @@ test("failed playback can retry without reloading the show", async () => {
 	f.widget.play = async () => {
 		throw new Error("autoplay blocked");
 	};
-	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.select("first");
 	f.ready.resolve(f.widget);
 	await setImmediate();
@@ -315,7 +346,7 @@ test("disposal pauses immediately and after pending play settles", async () => {
 	const f = fixture();
 	const playing = deferred<void>();
 	f.widget.play = () => playing.promise;
-	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.select("first");
 	f.ready.resolve(f.widget);
 	await setImmediate();
@@ -331,7 +362,7 @@ test("disposal pauses immediately and after pending play settles", async () => {
 test("uses the initial selection and latest requests across readiness and pending loads", async () => {
 	const f = fixture();
 	f.select("initial");
-	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.ready.resolve(f.widget);
 	await setImmediate();
 	assert.equal(f.calls[0]?.key, "/dj/initial/");
@@ -349,7 +380,7 @@ test("uses the initial selection and latest requests across readiness and pendin
 
 test("widget controls confirm playback and recover from widget errors without new requests", async () => {
 	const f = fixture();
-	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.select("first");
 	f.ready.resolve(f.widget);
 	await setImmediate();
@@ -372,7 +403,7 @@ test("widget controls confirm playback and recover from widget errors without ne
 
 test("events from the old show or an in-flight load cannot confirm a newer selection", async () => {
 	const f = fixture();
-	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.select("first");
 	f.ready.resolve(f.widget);
 	await setImmediate();
@@ -402,7 +433,7 @@ test("events from the old show or an in-flight load cannot confirm a newer selec
 
 test("disposal removes exact listeners and queued callbacks cannot update state", async () => {
 	const f = fixture();
-	const adapter = new MixcloudAdapter(f.store, f.ready.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.select("first");
 	f.ready.resolve(f.widget);
 	await setImmediate();
@@ -411,14 +442,224 @@ test("disposal removes exact listeners and queued callbacks cannot update state"
 	const callbacks = Object.values(f.events).flatMap((event) => [
 		...event.listeners,
 	]);
-	assert.equal(callbacks.length, 3);
+	assert.equal(callbacks.length, 6);
 	adapter.dispose();
 	adapter.dispose();
 	for (const event of Object.values(f.events)) {
 		assert.equal(event.listeners.size, 0);
 	}
 	for (const callback of callbacks) {
-		callback();
+		callback(0, 3600);
 	}
 	assert.equal(f.store.getSnapshot().status, "loading");
+});
+
+test("selection waits for local storage before loading the widget", async () => {
+	const f = fixture();
+	const storage = deferred<void>();
+	mock.method(f.playback, "initialize", () => storage.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
+	f.select("first");
+	f.ready.resolve(f.widget);
+	await setImmediate();
+	assert.equal(f.calls.length, 0);
+	storage.resolve();
+	await setImmediate();
+	assert.equal(f.calls.length, 1);
+	adapter.dispose();
+});
+
+test("resumes unfinished records on confirmed play; completed records start at zero", async () => {
+	for (const inProgress of [true, false]) {
+		const f = fixture();
+		f.playback.set({
+			showId: show.id,
+			inProgress,
+			positionInSeconds: 120,
+			history: [],
+		});
+		const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
+		f.select("resume");
+		f.ready.resolve(f.widget);
+		await setImmediate();
+		assert.deepEqual(f.seeks, []);
+		f.widget.seek = async (position) => {
+			assert.deepEqual(f.commands(), ["play"]);
+			f.seeks.push(position);
+			return true;
+		};
+		f.calls[0]?.result.resolve();
+		await setImmediate();
+		assert.deepEqual(f.seeks, []);
+		f.events.play.emit();
+		await setImmediate();
+		assert.deepEqual(f.seeks, inProgress ? [120] : []);
+		assert.deepEqual(f.commands(), ["play"]);
+		adapter.dispose();
+	}
+});
+
+test("progress tracks sessions, excludes buffering and pauses, and completes/replays", async () => {
+	const f = fixture();
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
+	f.select("tracked");
+	f.ready.resolve(f.widget);
+	await setImmediate();
+	f.calls[0]?.result.resolve();
+	await setImmediate();
+	f.events.play.emit();
+	f.events.progress.emit(10);
+	assert.equal(f.playback.get(show.id), undefined);
+	f.events.progress.emit(11);
+	f.advance(11_000);
+	f.events.progress.emit(22);
+	f.events.buffering.emit();
+	f.advance(60_000);
+	f.events.progress.emit(23);
+	assert.equal(f.playback.get(show.id)?.history[0]?.playedSeconds, 11);
+	f.events.pause.emit();
+	f.advance(60_000);
+	f.events.progress.emit(24);
+	assert.equal(f.playback.get(show.id)?.positionInSeconds, 23);
+	f.events.play.emit();
+	f.events.progress.emit(25);
+	f.advance(1000);
+	f.events.progress.emit(26);
+	assert.equal(f.playback.get(show.id)?.history.length, 1);
+	assert.equal(f.playback.get(show.id)?.history[0]?.startPosition, 10);
+	assert.equal(f.playback.get(show.id)?.history[0]?.playedSeconds, 12);
+	f.events.ended.emit();
+	assert.equal(f.playback.get(show.id)?.inProgress, false);
+	f.store.play();
+	await setImmediate();
+	assert.deepEqual(f.seeks, [0]);
+	f.events.play.emit();
+	f.events.progress.emit(0);
+	f.events.progress.emit(1);
+	assert.equal(f.playback.get(show.id)?.history.length, 2);
+	adapter.dispose();
+});
+
+test("superseded events cannot add history and clear closes the current session", async () => {
+	const f = fixture();
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
+	f.select("first");
+	f.ready.resolve(f.widget);
+	await setImmediate();
+	f.calls[0]?.result.resolve();
+	await setImmediate();
+	f.events.play.emit();
+	f.events.progress.emit(0);
+	f.events.progress.emit(1);
+	f.store.clear();
+	assert.ok(f.playback.get(show.id)?.history[0]?.endedAt);
+	f.events.progress.emit(100);
+	assert.equal(f.playback.get(show.id)?.positionInSeconds, 1);
+	adapter.dispose();
+});
+
+test("latest pause or selection wins while resume seek is pending", async () => {
+	for (const action of ["pause", "select"] as const) {
+		const f = fixture();
+		f.playback.set({
+			showId: show.id,
+			inProgress: true,
+			positionInSeconds: 120,
+			history: [],
+		});
+		const seeking = deferred<boolean>();
+		f.widget.seek = () => seeking.promise;
+		const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
+		f.select("first");
+		f.ready.resolve(f.widget);
+		await setImmediate();
+		f.calls[0]?.result.resolve();
+		await setImmediate();
+		f.events.play.emit();
+		await setImmediate();
+		f.events.progress.emit(0);
+		f.events.progress.emit(1);
+		assert.equal(f.playback.get(show.id)?.history.length, 0);
+		if (action === "pause") {
+			f.store.pause();
+			f.events.pause.emit();
+		} else {
+			f.select("next");
+		}
+		seeking.resolve(true);
+		await setImmediate();
+		assert.equal(
+			f.commands().filter((command) => command === "play").length,
+			1,
+		);
+		if (action === "pause") {
+			assert.equal(f.store.getSnapshot().status, "paused");
+		}
+		if (action === "select") {
+			assert.equal(f.calls[1]?.key, "/dj/next/");
+		}
+		adapter.dispose();
+	}
+});
+
+test("failed or refused seeking reports the problem and still allows playback", async () => {
+	const log = mock.method(console, "error", () => {});
+	try {
+		for (const failure of ["refused", "rejected"] as const) {
+			const f = fixture();
+			f.playback.set({
+				showId: show.id,
+				inProgress: true,
+				positionInSeconds: 120,
+				history: [],
+			});
+			f.widget.seek = async () => {
+				if (failure === "rejected") {
+					throw new Error("Seek failed");
+				}
+				return false;
+			};
+			const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
+			f.select("first");
+			f.ready.resolve(f.widget);
+			await setImmediate();
+			f.calls[0]?.result.resolve();
+			await setImmediate();
+			assert.deepEqual(f.commands(), ["play"]);
+			f.events.play.emit();
+			await setImmediate();
+			f.events.progress.emit(0);
+			f.events.progress.emit(1);
+			assert.equal(f.playback.get(show.id)?.history[0]?.startPosition, 0);
+			adapter.dispose();
+		}
+		assert.equal(log.mock.callCount(), 2);
+	} finally {
+		log.mock.restore();
+	}
+});
+
+test("failed storage initialization permits playback without overwriting unread history", async () => {
+	const f = fixture();
+	const initialize = mock.method(f.playback, "initialize", async () => {
+		throw new Error("Storage unavailable");
+	});
+	const log = mock.method(console, "error", () => {});
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
+	try {
+		f.select("first");
+		f.ready.resolve(f.widget);
+		await setImmediate();
+		f.calls[0]?.result.resolve();
+		await setImmediate();
+		assert.deepEqual(f.commands(), ["play"]);
+		f.events.play.emit();
+		f.events.progress.emit(0);
+		f.events.progress.emit(12);
+		assert.equal(f.playback.get(show.id), undefined);
+		assert.equal(initialize.mock.callCount(), 1);
+	} finally {
+		adapter.dispose();
+		log.mock.restore();
+	}
 });

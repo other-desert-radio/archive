@@ -4,6 +4,7 @@ import type {
 	AudioTrack,
 	PlaybackRequest,
 } from "../../stores/audio/audio-store";
+import type { PlaybackStore } from "../../stores/playback/playback-store";
 import type { MixcloudWidget } from "./mixcloud-api";
 
 /**
@@ -18,6 +19,7 @@ import type { MixcloudWidget } from "./mixcloud-api";
  * allowing an explicit reselection of the same show to load again.
  *
  * Loads with autoplay disabled, then applies the latest play/pause intent.
+ * Resume seeks wait for confirmed play because earlier seeks reset on startup.
  * Clear, source changes, and disposal pause the widget. Command completion
  * does not confirm playing or paused state; widget events confirm the loaded track.
  */
@@ -29,20 +31,46 @@ export class MixcloudAdapter {
 	private running = false;
 	private disposed = false;
 	private unsubscribe: () => void;
+	private previousPosition: number | undefined;
+	private sessionStarted = false;
+	private historyReady = false;
+	private completed = false;
+	private resumePosition: number | undefined;
+	private seeking = false;
 
 	/**
 	 * Seeds the latest selection, then caches requests until the widget is ready.
 	 * @param store Shared playback store; confirmations and errors use its selected track.
 	 * @param widgetReady Validated widget readiness promise from the iframe owner.
+	 * @param playback Local sessions and resume progress, independent of catalog refresh.
 	 * Readiness failure reports an error for the current Mixcloud selection.
 	 */
 	constructor(
 		private store: AudioStore,
 		widgetReady: PromiseLike<MixcloudWidget>,
+		private readonly playback: PlaybackStore,
 	) {
 		this.latestRequest = store.getRequestSnapshot();
 		this.unsubscribe = store.subscribeRequests((request) => {
 			this.latestRequest = request;
+			if (request.action === "clear" || request.track !== this.loadedTrack) {
+				this.save(this.playback.end(false));
+				if (this.loadedTrack && request.action !== "clear") {
+					const previous = this.playback.get(this.loadedTrack.show.id);
+					console.log(
+						"[PlaybackStore] Switching shows; saving previous position",
+						{
+							showId: this.loadedTrack.show.id,
+							nextShowId: request.track.show.id,
+							positionInSeconds: previous?.positionInSeconds,
+							inProgress: previous?.inProgress,
+							session: previous?.history.at(-1),
+						},
+					);
+				}
+				this.previousPosition = undefined;
+				this.sessionStarted = false;
+			}
 			const shouldPause = match(request)
 				// Stop the old show on clear, a source change, or a different track.
 				// Track identity allows reselection while preserving play/pause intent.
@@ -76,6 +104,9 @@ export class MixcloudAdapter {
 				widget.events.play.on(this.onPlay);
 				widget.events.pause.on(this.onPause);
 				widget.events.error.on(this.onError);
+				widget.events.progress.on(this.onProgress);
+				widget.events.buffering.on(this.onBuffering);
+				widget.events.ended.on(this.onEnded);
 				// Includes requests made before mounting or during widget initialization.
 				void this.processRequests();
 			},
@@ -110,10 +141,14 @@ export class MixcloudAdapter {
 		}
 		this.disposed = true;
 		this.unsubscribe();
+		this.save(this.playback.suspend());
 		if (this.widget) {
 			this.widget.events.play.off(this.onPlay);
 			this.widget.events.pause.off(this.onPause);
 			this.widget.events.error.off(this.onError);
+			this.widget.events.progress.off(this.onProgress);
+			this.widget.events.buffering.off(this.onBuffering);
+			this.widget.events.ended.off(this.onEnded);
 		}
 		void this.pauseGently();
 		this.widget = undefined;
@@ -123,28 +158,126 @@ export class MixcloudAdapter {
 	// Events have no show identity. Ignore them during loads and use the store's
 	// identity check to reject callbacks after selection changes or clear.
 	private onPlay = () => {
-		if (this.disposed || !this.loadedTrack) {
+		if (!this.isCurrent() || !this.loadedTrack || this.seeking) {
 			return;
 		}
+		if (this.completed) {
+			this.previousPosition = undefined;
+			this.sessionStarted = false;
+			this.completed = false;
+		}
 		this.store.confirmPlaying(this.loadedTrack);
+		if (this.resumePosition !== undefined && this.widget) {
+			const position = this.resumePosition;
+			const track = this.loadedTrack;
+			const widget = this.widget;
+			this.resumePosition = undefined;
+			this.seeking = true;
+			// Mixcloud accepts an earlier seek but resets it when audio starts.
+			void Promise.resolve()
+				.then(() => {
+					if (this.isCurrent() && this.loadedTrack === track) {
+						return widget.seek(position);
+					}
+					return undefined;
+				})
+				.then((allowed) => {
+					if (allowed === false) {
+						console.error("[PlaybackStore] Mixcloud refused resume position");
+					}
+				})
+				.catch((error: unknown) => {
+					console.error("[PlaybackStore] resume seek failed", error);
+				})
+				.finally(() => {
+					if (this.loadedTrack === track) {
+						this.seeking = false;
+						this.previousPosition = undefined;
+						if (this.store.getSnapshot().status === "paused") {
+							void this.pauseGently(widget);
+						}
+					}
+				});
+		}
 	};
 
 	private onPause = () => {
-		if (this.disposed || !this.loadedTrack) {
+		if (!this.isCurrent() || !this.loadedTrack) {
 			return;
 		}
+		this.save(this.playback.suspend());
 		this.store.confirmPaused(this.loadedTrack);
 	};
 
 	private onError = () => {
-		if (this.disposed || !this.loadedTrack) {
+		if (!this.isCurrent() || !this.loadedTrack) {
 			return;
 		}
+		this.save(this.playback.suspend());
 		this.store.reportError(
 			this.loadedTrack,
 			"Mixcloud playback failed. Try the widget controls.",
 		);
 	};
+
+	private isCurrent(): boolean {
+		const state = this.store.getSnapshot();
+		return (
+			!this.disposed &&
+			state.status !== "idle" &&
+			state.track === this.loadedTrack
+		);
+	}
+
+	private onProgress = (position: number, _duration: number) => {
+		if (
+			!this.isCurrent() ||
+			!this.historyReady ||
+			this.seeking ||
+			!this.loadedTrack ||
+			this.store.getSnapshot().status !== "playing" ||
+			!Number.isFinite(position) ||
+			position < 0
+		) {
+			return;
+		}
+		const previous = this.previousPosition;
+		this.previousPosition = position;
+		if (previous === undefined) {
+			return;
+		}
+		if (!this.sessionStarted) {
+			if (position === previous) {
+				return;
+			}
+			this.sessionStarted = true;
+			this.save(this.playback.progress(this.loadedTrack.show.id, previous));
+		}
+		this.save(this.playback.progress(this.loadedTrack.show.id, position));
+	};
+
+	private onBuffering = () => {
+		if (this.isCurrent()) {
+			this.save(this.playback.suspend());
+		}
+	};
+
+	private onEnded = () => {
+		if (!this.isCurrent() || !this.loadedTrack) {
+			return;
+		}
+		this.save(this.playback.end(true));
+		this.completed = true;
+		this.previousPosition = undefined;
+		this.sessionStarted = false;
+		this.store.confirmPaused(this.loadedTrack);
+	};
+
+	private save(result: Promise<void>): void {
+		void result.catch((error: unknown) => {
+			console.error("[PlaybackStore] save failed; will retry", error);
+		});
+	}
 
 	/**
 	 * Drains new requests through one load at a time, skipping intermediate selections.
@@ -183,8 +316,37 @@ export class MixcloudAdapter {
 					}
 					try {
 						this.loadedTrack = undefined;
+						this.previousPosition = undefined;
+						this.sessionStarted = false;
+						this.completed = false;
+						this.resumePosition = undefined;
+						this.seeking = false;
+						this.historyReady = false;
+						try {
+							await this.playback.initialize();
+							this.historyReady = true;
+						} catch (error) {
+							console.error("[PlaybackStore] resume unavailable", error);
+						}
+						if (this.disposed) {
+							return;
+						}
+						if (this.store.getRequestSnapshot()?.id !== request.id) {
+							continue;
+						}
 						// Do not autoplay a selection that could be superseded while loading.
 						await widget.load(request.track.source.cloudcastKey, false);
+						const current = this.store.getRequestSnapshot();
+						if (
+							!this.disposed &&
+							current?.action !== "clear" &&
+							current?.track === request.track
+						) {
+							const saved = this.playback.get(request.track.show.id);
+							if (saved?.inProgress && saved.positionInSeconds > 0) {
+								this.resumePosition = saved.positionInSeconds;
+							}
+						}
 						if (this.disposed) {
 							await this.pauseGently(widget);
 							return;
@@ -211,6 +373,15 @@ export class MixcloudAdapter {
 					switch (request.action) {
 						case "load":
 						case "play":
+							if (this.completed) {
+								await widget.seek(0);
+								if (
+									this.disposed ||
+									this.store.getRequestSnapshot()?.id !== request.id
+								) {
+									continue;
+								}
+							}
 							await widget.play();
 							break;
 						case "pause":
@@ -218,6 +389,7 @@ export class MixcloudAdapter {
 							break;
 					}
 				} catch {
+					this.save(this.playback.suspend());
 					if (
 						!this.disposed &&
 						this.store.getRequestSnapshot()?.id === request.id

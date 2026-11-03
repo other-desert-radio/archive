@@ -48,6 +48,9 @@ to avoid circular dependencies through the barrels.
 Store construction is side-effect free during server rendering. `useStores()`
 starts shared initialization in a React effect, which runs only in the browser.
 The composition root initializes `VersionsStore` first, then ShowStore and TagStore in sequence.
+Browser consumers separately initialize PlaybackStore so catalog refresh failures
+do not prevent reading local playback progress. The Mixcloud adapter also awaits
+that shared local initialization before loading a selection.
 VersionsStore fetches and validates the shared manifest and reads locally cached
 revisions from metadata. Both dataset stores consume its cached/published revision getters.
 After a dataset and revision commit atomically, `VersionsStore.refreshCached()`
@@ -141,7 +144,17 @@ and serialized retryable saves. It tracks sessions across pauses, excludes
 buffering when suspended by its caller, and checkpoints on progress at five-second
 intervals and playback boundaries. Session `updatedAt` timestamps close previously
 open sessions at their last checkpoint after reload. A listen is a session with
-more than ten accumulated playback seconds. Playback event integration is still pending.
+more than ten accumulated playback seconds. The Mixcloud adapter forwards progress,
+pause, buffering, error, and ended events, ignores stale selections, and closes
+sessions when selection changes or playback is cleared. Internal navigation keeps
+the session; page exit attempts a final save, with checkpoint recovery after reload.
+Resume seeks wait for the widget's play event: a seek immediately after load can
+report success but reset when audio starts. Tracking waits for the resume seek to
+settle and uses actual reported positions. Completed shows start over, preserving
+earlier sessions. Storage errors are logged without stopping playback; if the
+initial read fails, tracking is disabled for that selection to avoid overwriting
+unread history. A later selection retries initialization. Failed saves retain
+pending records and retry at subsequent checkpoints or playback boundaries.
 
 ## Archive image fields
 

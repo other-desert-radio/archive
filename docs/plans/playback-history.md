@@ -12,7 +12,7 @@ Mode: chunked. Stop at each structure, scaffolding, and implementation review bo
 - Pauses, errors, and archive navigation preserve sessions. Switching shows, finishing, clearing playback, and reloading end sessions.
 - Start sessions on advancing playback. Exclude pause and buffering time; seeking must not inflate playback duration.
 - Save every five seconds while active and at boundaries. On reload, close previously open sessions at their last persisted checkpoint; do not rely on unload saves.
-- Centralize resume in the adapter: initialize playback storage, load without autoplay, seek unfinished progress, then apply latest intent. Completed shows start at zero.
+- Centralize resume in the adapter: initialize playback storage, load without autoplay, apply latest intent, then seek unfinished progress on confirmed play. Live verification found that a seek before play reports success but resets when audio starts. Tracking waits for the seek to settle. Completed shows start at zero.
 - PlaybackStore owns records, subscriptions, and serialized saves. Storage failures must not stop playback; retry on subsequent saves.
 - Preserve stale-selection protection. Record actual starting positions, including when a seek is refused.
 - Defer visible History rows and statistics. Rows may overlap and eventually show each show once.
@@ -23,8 +23,8 @@ Mode: chunked. Stop at each structure, scaffolding, and implementation review bo
 1. Structure: empty types, store, and focused test files. Approved.
 2. Types and scaffolding: documented types, PlaybackStore signatures, and an extended widget contract. Approved.
 3. Storage: implemented additive v3 upgrade, independent initialization, isolated memory reads, subscriptions, set/flush, and serialized retryable writes. Five focused tests, TypeScript checks, and the IndexedDB browser suite passed. Approved.
-4. Tracking: implemented session boundaries, monotonic timing, progress-driven five-second checkpoints, and reload recovery using session updatedAt. Removed the redundant clone on IndexedDB load. Twelve focused tests pass; awaiting review. Event methods return save promises to expose failures. Real Mixcloud buffering verification moves to the adapter integration chunk so the tracked path can be exercised.
-5. Resume: store composition and independent initialization, widget contract consolidation/validation, event wiring, resume seek, lifecycle cleanup/page-exit saves, storage/seek failure handling, live buffering verification, and complete checks. Pending.
+4. Tracking: implemented session boundaries, monotonic timing, progress-driven five-second checkpoints, and reload recovery using session updatedAt. Removed the redundant clone on IndexedDB load. Twelve focused tests pass. Approved.
+5. Resume: implemented store composition and independent initialization, consolidated/validated widget contract, event wiring, seek on confirmed play, lifecycle cleanup/page-exit saves, and storage/seek failure handling. Live playback, saved history, reload recovery, resume, and initial buffering-to-play events verified in Chromium. Mid-show buffering is covered by focused tests; forcing an offline seek did not stall the cached audio. Final checks passed; awaiting review.
 
 ## Flow
 
@@ -46,6 +46,8 @@ Cover upgrade preservation, record round trips, repeat sessions, strict 10-secon
 
 Run focused checks per functional chunk. Finish with repository lint, check, test, and build commands, plus browser resume/navigation checks. Update the architecture reference after integration.
 
+Final results: 187 tests pass; lint, Astro check (zero diagnostics), production build, documentation checks, IndexedDB browser checks, player navigation browser regression, and transfer-size budgets pass (87.7 KiB JavaScript gzip against 100 KiB). Live reload created a new session starting at the previous session's saved 96-second position. Physical iOS and an actual mid-show network stall were not verified.
+
 ## Next action
 
-Review tracking. Approval authorizes chunk 5 (adapter/resume integration). UI rows and statistics remain deferred.
+Review chunk 5. No implementation chunks remain. UI rows and statistics remain deferred. On final approval, archive or remove this task plan under the workflow's plan lifecycle rules.

@@ -19,7 +19,15 @@ function playbackApi() {
 		load: async () => {},
 		play: async () => {},
 		pause: async () => {},
-		events: { play: event, pause: event, error: event },
+		seek: async () => true,
+		events: {
+			play: event,
+			pause: event,
+			error: event,
+			progress: event,
+			buffering: event,
+			ended: event,
+		},
 	};
 }
 
@@ -52,6 +60,15 @@ test("rejects missing readiness, failed readiness, and incomplete playback APIs"
 		waitForMixcloudWidget({ ready: Promise.resolve() }),
 		/playback API/,
 	);
+	for (const missing of ["seek", "progress", "buffering", "ended"] as const) {
+		const widget = { ready: Promise.resolve(), ...playbackApi() };
+		if (missing === "seek") {
+			Reflect.deleteProperty(widget, missing);
+		} else {
+			Reflect.deleteProperty(widget.events, missing);
+		}
+		await assert.rejects(waitForMixcloudWidget(widget), /playback API/);
+	}
 });
 
 test("embed URL preserves encoded show keys and uses the dark mini widget", () => {
