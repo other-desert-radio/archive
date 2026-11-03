@@ -88,7 +88,11 @@ ShowStore in the build-time catalog order. Pending initialization displays
 “Loading shows...” below the cards; failed initialization offers a retry.
 Only tags used by the first 20 cards are included in the island props;
 subsequent cards use the initialized TagStore. Pagination limits rendered cards,
-while revision refreshes still download the complete catalog. The initial metadata and detail links retain their
+while revision refreshes still download the complete catalog. Before leaving
+SHOWS, the island saves its loaded cards, offset, tags and scroll position in
+memory per ClientRouter history entry. On Back/Forward it restores the cards
+and then reapplies the saved scroll position after React commits them, avoiding
+scroll clamping against the initial 20-card document. Full reloads start fresh. The initial metadata and detail links retain their
 server-rendered HTML. Show URLs are converted to validated Mixcloud keys
 by `src/components/shows/show-playback.ts` before publishing playback requests.
 

@@ -17,6 +17,21 @@ async function browser(...args) {
 async function evaluate(code) {
 	return JSON.parse(await browser("eval", code));
 }
+async function verifyHistoryReturn(index) {
+	const saved = await evaluate(`(() => {
+		const link = document.querySelectorAll('main article a[href*="/shows/"]')[${index}];
+		link.scrollIntoView({ block: 'center' });
+		window.paginationDocument = true;
+		return { x: scrollX, y: scrollY, count: document.querySelectorAll('main article').length, path: link.pathname };
+	})()`);
+	await evaluate(`document.querySelectorAll('main article a[href*="/shows/"]')[${index}].click(); true`);
+	await browser("wait", "--fn", `location.pathname === ${JSON.stringify(saved.path)}`);
+	await evaluate("history.back(); true");
+	await browser("wait", "--fn", `location.pathname === '/archive/' && document.querySelectorAll('main article').length === ${saved.count} && Math.abs(scrollY - ${saved.y}) < 2`);
+	assert.equal(await evaluate("window.paginationDocument"), true);
+	assert.equal(await evaluate("scrollX"), saved.x);
+}
+
 const catalog = await file("public/resources/shows.json").json();
 const html = await file("dist/index.html").text();
 assert.equal((html.match(/<article /g) ?? []).length, Math.min(20, catalog.data.length));
@@ -30,7 +45,9 @@ const server = serve({
 			await new Promise((resolve) => setTimeout(resolve, 2000));
 			return new Response("Unavailable", { status: 503 });
 		}
-		const asset = file(`dist/${path || "index.html"}`);
+		const assetPath = path && !path.split("/").at(-1).includes(".")
+			? `${path.replace(/\/$/, "")}/index.html` : path || "index.html";
+		const asset = file(`dist/${assetPath}`);
 		return (await asset.exists()) ? new Response(asset) : new Response("Missing", { status: 404 });
 	},
 });
@@ -60,6 +77,7 @@ try {
 			const next = await evaluate("document.querySelectorAll('main article').length");
 			assert.equal(next, Math.min(count + 20, catalog.data.length));
 			count = next;
+			if (width === 390 && count === 60) await verifyHistoryReturn(45);
 		}
 		assert.equal(await evaluate("document.documentElement.scrollWidth <= innerWidth"), true);
 	}
@@ -70,6 +88,11 @@ try {
 	assert.equal(await evaluate("document.querySelector('main [class*=sentinel]') === null"), true);
 	await browser("click", "main article:last-child button[aria-label^='Play ']");
 	await browser("wait", "main article:last-child button[aria-label^='Pause ']");
+	for (const width of [390, 1440]) {
+		await browser("set", "viewport", String(width), "844");
+		await verifyHistoryReturn(65);
+	}
+	console.log("History Back restores loaded batches and scroll on phone and desktop.");
 	console.log("Static first batch, loading style, retry, ordered infinite scroll, final batch, responsive layout and appended playback pass.");
 } finally {
 	await browser("close");

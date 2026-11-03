@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react";
 import { useStores } from "../../stores";
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
@@ -13,6 +19,18 @@ type Props = {
 	base: string;
 };
 
+// ClientRouter history entries outlive the listing island that rendered them.
+const visits = new Map<
+	number,
+	{
+		shows: Show[];
+		tags: TagMap;
+		offset: number;
+		scrollX: number;
+		scrollY: number;
+	}
+>();
+
 export default function ShowsPane({ base, shows, showIds, tags }: Props) {
 	const detailBase = getBasePath(base);
 	const stores = useStores();
@@ -26,6 +44,47 @@ export default function ShowsPane({ base, shows, showIds, tags }: Props) {
 	const cancelLoading = useRef<(() => void) | undefined>(undefined);
 	const sentinel = useRef<HTMLDivElement>(null);
 	const hasMore = offset < showIds.length;
+	const restoredScroll = useRef<
+		{ x: number; y: number; shows: Show[] } | undefined
+	>(undefined);
+
+	useLayoutEffect(() => {
+		const visit = visits.get(history.state?.index);
+		if (!visit) return;
+		setVisible(visit.shows);
+		setVisibleTags(visit.tags);
+		setOffset(visit.offset);
+		restoredScroll.current = {
+			x: visit.scrollX,
+			y: visit.scrollY,
+			shows: visit.shows,
+		};
+	}, []);
+
+	useLayoutEffect(() => {
+		const position = restoredScroll.current;
+		if (!position || position.shows !== visible) return;
+		// The restored cards must be committed before scrollTo can reach the saved position.
+		window.scrollTo({ left: position.x, top: position.y, behavior: "instant" });
+		restoredScroll.current = undefined;
+	}, [visible]);
+
+	useEffect(() => {
+		const entry = history.state?.index;
+		if (typeof entry !== "number") return;
+		const saveVisit = () => {
+			visits.set(entry, {
+				shows: visible,
+				tags: visibleTags,
+				offset,
+				scrollX: window.scrollX,
+				scrollY: window.scrollY,
+			});
+		};
+		// Capture before the router swaps documents and changes the current scroll position.
+		document.addEventListener("astro:before-swap", saveVisit);
+		return () => document.removeEventListener("astro:before-swap", saveVisit);
+	}, [visible, visibleTags, offset]);
 
 	// Initial loading and Retry share the same initialization and error handling.
 	const retryLoading = useCallback(() => {
