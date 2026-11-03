@@ -37,7 +37,9 @@ The `Tests` workflow runs `bun run test` on pull requests, pushes to `main`,
 and merge groups. To enforce passing tests before merging, configure a branch
 protection rule or ruleset for `main`, enable **Require status checks to pass
 before merging**, and select the `Tests` check after its first workflow run.
-The workflow also builds the site and validates the built resource exports.
+The workflow also exposes a separate `Validate resources` job that builds the
+site and validates the built resource exports. Require that check as well to
+block merging when resource validation fails.
 The workflow alone does not enforce merge restrictions.
 
 ## Dependency-cache regression
