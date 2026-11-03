@@ -2,7 +2,12 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import Miniplayer from "../../src/components/miniplayer";
-import { AudioStore, type AudioTrack, StoresProvider } from "../../src/stores";
+import {
+	AudioStore,
+	type AudioTrack,
+	StoresProvider,
+	stores,
+} from "../../src/stores";
 import fixtureShows from "../res/shows.json";
 
 const fixtureShow = fixtureShows.data[0];
@@ -20,7 +25,7 @@ function selectedMarkup(track: AudioTrack) {
 	const audioStore = new SelectedSnapshotStore();
 	audioStore.select(track);
 	return renderToStaticMarkup(
-		<StoresProvider stores={{ audioStore }}>
+		<StoresProvider stores={{ ...stores, audioStore }}>
 			<Miniplayer base="/archive" />
 		</StoresProvider>,
 	);
@@ -76,7 +81,7 @@ test("clearing a selected track removes the player content", () => {
 	audioStore.clear();
 	assert.equal(
 		renderToStaticMarkup(
-			<StoresProvider stores={{ audioStore }}>
+			<StoresProvider stores={{ ...stores, audioStore }}>
 				<Miniplayer base="/archive" />
 			</StoresProvider>,
 		),

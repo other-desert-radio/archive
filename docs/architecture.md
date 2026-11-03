@@ -45,6 +45,25 @@ to avoid circular dependencies through the barrels.
 
 ## Request and rendering flow
 
+Store construction is side-effect free during server rendering. `useStores()`
+starts shared initialization in a React effect, which runs only in the browser.
+The composition root initializes `VersionsStore` first, then ShowStore.
+VersionsStore fetches and validates the shared manifest and reads locally cached
+revisions from metadata. ShowStore consumes its cached/published revision getters.
+After a dataset and revision commit atomically, `VersionsStore.refreshCached()`
+reloads the committed revisions; fetching a manifest never advances them. Concurrent consumers share one initialization promise;
+a failed attempt rejects and permits a later retry. Individual stores do not
+need browser guards in their constructors.
+
+ShowStore first loads cached shows into memory, then checks the published revision.
+Changed exports replace shows and revision metadata in one transaction; memory is
+replaced only after a successful save. Failed refreshes retain cached shows while
+rejecting initialization. `get()` and `getAll()` read memory synchronously; callers
+must await shared initialization when they require fresh data. Browser show fetches
+trust the first-party record structure, while checking HTTP status and export revision;
+the publish-time validation gate is planned in
+[archive publish validation](plans/future/archive-publish-validation.md).
+
 `BaseLayout.astro` includes Astro's `ClientRouter` on every page, with root
 and body transition animations disabled and an immediate swap fallback.
 Internal archive links use client routing to preserve playback.

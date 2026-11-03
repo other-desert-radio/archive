@@ -27,6 +27,14 @@ Use browser checks where hydration or layout cannot be established headlessly.
 - Broad implementation changes: lint, check and build.
 - Documentation only: `bun run docs:check`; no dev server or UI claims needed.
 
+## Required GitHub test check
+
+The `Tests` workflow runs `bun run test` on pull requests, pushes to `main`,
+and merge groups. To enforce passing tests before merging, configure a branch
+protection rule or ruleset for `main`, enable **Require status checks to pass
+before merging**, and select the `Tests` check after its first workflow run.
+The workflow alone does not enforce merge restrictions.
+
 ## Dependency-cache regression
 
 Vite dependency caches are separated by command and mode (for example,

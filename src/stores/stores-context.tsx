@@ -1,4 +1,4 @@
-import { createContext, type ReactNode, useContext } from "react";
+import { createContext, type ReactNode, useContext, useEffect } from "react";
 import { type Stores, stores } from "./stores";
 
 const StoresContext = createContext<Stores>(stores);
@@ -16,5 +16,11 @@ export function StoresProvider({ stores, children }: Props) {
 }
 
 export function useStores(): Stores {
-	return useContext(StoresContext);
+	const stores = useContext(StoresContext);
+	useEffect(() => {
+		void stores.initialize().catch((error: unknown) => {
+			console.error("[Stores] initialization failed", error);
+		});
+	}, [stores]);
+	return stores;
 }

@@ -1,6 +1,6 @@
 {
-	"version": 5,
-	"updatedAt": "2026-11-02T19:09:00.560Z",
+	"version": 6,
+	"updatedAt": "2026-11-02T22:52:41.793Z",
 	"data": [
 		{
 			"id": 42,
@@ -186,11 +186,6 @@
 			"title": "Milk Thistle",
 			"image_small": "assets/djs/31_small.webp",
 			"image_large": "assets/djs/31_large.webp",
-			"tagIds": []
-		},
-		{
-			"id": 39,
-			"title": "Modular Monday",
 			"tagIds": []
 		},
 		{

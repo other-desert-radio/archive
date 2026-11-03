@@ -8,7 +8,7 @@ import {
 	toggleShowPlayback,
 } from "../../../src/components/shows";
 import PlayableShowArtwork from "../../../src/components/shows/PlayableShowArtwork";
-import { AudioStore, StoresProvider } from "../../../src/stores";
+import { AudioStore, StoresProvider, stores } from "../../../src/stores";
 
 const show = {
 	id: 1,
@@ -73,7 +73,7 @@ test("card renders accessible play/pause controls and retains the selected overl
 	const audioStore = new SelectedSnapshotStore();
 	const render = () =>
 		renderToStaticMarkup(
-			<StoresProvider stores={{ audioStore }}>
+			<StoresProvider stores={{ ...stores, audioStore }}>
 				<ShowCard show={show} base="/archive" tags={new Map()} />
 			</StoresProvider>,
 		);
@@ -95,7 +95,7 @@ test("detail artwork shares player state and loads its image eagerly", () => {
 	const audioStore = new SelectedSnapshotStore();
 	const render = () =>
 		renderToStaticMarkup(
-			<StoresProvider stores={{ audioStore }}>
+			<StoresProvider stores={{ ...stores, audioStore }}>
 				<PlayableShowArtwork
 					show={show}
 					base="/archive/"

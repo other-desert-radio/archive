@@ -86,6 +86,11 @@ Page size is undecided; **30–50** was an example, not an agreed requirement. N
 
 ## Static file generation
 
+User decision: skip full show-record validation in the browser and gate publishing
+with [archive resource validation](archive-publish-validation.md). Keep HTTP/JSON
+error handling and export/manifest revision checks. Existing build-time validators
+remain; references to validation below mean the publishing gate for show structure.
+
 Two alternatives remain available:
 
 | Approach | When it fits |
@@ -193,7 +198,7 @@ Playlist entries reference stable `showId` values. A title edit updates the disp
 These steps are future work, not permission to start implementation. Recheck current source and existing ShowStore work before choosing files or contracts.
 
 - [ ] Confirm remaining product choices below and select the task's development mode.
-- [ ] Establish shared ShowStore initialization, validated catalog delivery, and failure/retry behavior without duplicating the full hydrated payload.
+- [ ] Establish shared ShowStore initialization, publish-validated catalog delivery, and failure/retry behavior without duplicating the full hydrated payload.
 - [ ] Add full-catalog Shows search and pagination, then scoped DJ/Explore search.
 - [ ] Establish personal-data object stores and migrations separately from optional catalog caching.
 - [ ] Add playlist editing, playback sessions/resume, and committed search history with defined retention and failure behavior.
