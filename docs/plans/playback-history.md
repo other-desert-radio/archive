@@ -81,8 +81,8 @@ Storage failures continue to leave playback working. If initialization cannot re
 ## Chunks and status
 
 1. Contracts: simplified types, API, and call flow approved.
-2. Implementation: updated the documented types, store, adapter, and page-exit caller. Removed elapsed accounting and automatic session closure. Added idempotent completion and suppression of trailing events. Replaced timing tests with completion, reload continuity, switch/clear continuity, and session-log coverage. All 47 focused store/Mixcloud tests pass. Approved.
-3. Verification: in progress. Browser persistence/navigation and initial live reload/resume/completion checks passed. Live replay exposed a widget quirk: seeking from the end can restart audio without another play event. Replay now uses the existing load path in the same iframe, and the regression test verifies that path. All 188 tests, lint, Astro checks, and build pass; final live recheck pending.
+2. Implementation: updated the documented types, store, adapter, and page-exit caller. Removed elapsed accounting and automatic session closure. Added idempotent completion and suppression of trailing events. Replaced timing tests with completion, reload continuity, switch/clear continuity, and session-log coverage. Approved.
+3. Verification: complete; awaiting final review. Live replay exposed a widget quirk: seeking from the end can restart audio without another play event or settling the seek promise. Replay sends seek and play in order without awaiting seek; progress confirms only the explicit current replay request. Regression tests cover the stalled promise, trailing pause/progress, and a superseding pause request. All 48 focused tests and 189 total tests pass, along with lint, Astro check (zero diagnostics), production build, IndexedDB browser checks, player navigation browser checks, and size budgets (87.7 KiB JavaScript gzip against 100 KiB). Architecture documentation is updated.
 
 ## Verification
 
@@ -94,6 +94,8 @@ Storage failures continue to leave playback working. If initialization cannot re
 - Retain coverage for invalid progress, five-second checkpoints, write ordering/retries, storage initialization failure, seek refusal/failure, rapid selections, and widget listener cleanup.
 - Run focused store/adapter tests, then lint, Astro check, full tests, build, and browser persistence/navigation checks. Confirm new-session and resume logs reflect the new rules.
 
+Live Chromium verification passed: an unfinished listen survived reload and resumed with its original session/start fields and no new-session log; seeking near the end and finishing produced one completion; replay created a second unfinished session and logged it once; subsequent pause/resume continued that second session. The checks used isolated browser storage on a separate preview port. Physical iOS and Firefox were not verified.
+
 ## Next action
 
-Review implementation chunk 2. After approval, run chunk 3: browser persistence/resume checks, final verification commands, and architecture documentation updates. The user must clear existing playback data before testing the new format. Abrupt termination can lose progress since the last checkpoint; completion depends on the widget ended event.
+Review the final verification chunk. No implementation work remains. On approval, archive or remove this task plan under the workflow's lifecycle rules. The user must clear existing playback data before testing the new format. Abrupt termination can lose progress since the last checkpoint; completion depends on the widget ended event.
