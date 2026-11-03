@@ -93,7 +93,11 @@ SHOWS, the island saves its loaded cards, offset and tags in memory per
 ClientRouter history entry. On Back/Forward a wrapper around the router swap
 mounts those cards synchronously before Astro applies the history scroll
 position. Astro skips hydration for that already mounted root; its unmount
-event releases the React root when navigating away. Full reloads start fresh. The initial metadata and detail links retain their
+event releases the React root when navigating away. The `visits` map is keyed
+by Astro’s `history.state.index` and lives only in module memory; scroll
+coordinates remain owned by Astro. Refreshing clears these listing snapshots
+and starts with 20 cards, independently of the catalog cached in IndexedDB.
+The initial metadata and detail links retain their
 server-rendered HTML. Show URLs are converted to validated Mixcloud keys
 by `src/components/shows/show-playback.ts` before publishing playback requests.
 

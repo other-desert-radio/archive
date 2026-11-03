@@ -17,17 +17,28 @@ type Props = {
 	initialLoading?: boolean;
 };
 
-// ClientRouter history entries outlive the listing island that rendered them.
+/**
+ * Listing snapshots keyed by Astro's history.state.index, so Back/Forward can
+ * restore each visit's loaded cards, tags, pagination offset and loading state.
+ * Module memory survives ClientRouter swaps even though the island unmounts.
+ * A full refresh clears this map; IndexedDB caches catalog data separately.
+ * Astro owns the saved scroll coordinates, which are not stored here.
+ */
 const visits = new Map<number, Props>();
 
 if (typeof document !== "undefined") {
 	document.addEventListener("astro:before-swap", (event) => {
-		if (event.navigationType !== "traverse") return;
+		if (event.navigationType !== "traverse") {
+			return;
+		}
+		// During history traversal, history.state already identifies the destination entry.
 		const visit = visits.get(history.state?.index);
 		const island = event.newDocument.querySelector(
 			'astro-island[component-export="ShowsPane"]',
 		);
-		if (!visit || !island) return;
+		if (!visit || !island) {
+			return;
+		}
 
 		// This root is mounted synchronously below, so Astro must not hydrate it again.
 		island.removeAttribute("ssr");
@@ -65,6 +76,7 @@ export default function ShowsPane({
 	const sentinel = useRef<HTMLDivElement>(null);
 	const hasMore = offset < showIds.length;
 	useEffect(() => {
+		// Capture this mount's entry: Back changes history.state before before-swap fires.
 		const entry = history.state?.index;
 		if (typeof entry !== "number") return;
 		const saveVisit = () => {
