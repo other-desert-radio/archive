@@ -82,8 +82,23 @@ full reloads and navigation outside the archive end playback. See
 layout and iframe-preserving navigation.
 
 `ShowsPane` is hydrated with `client:load`; each show card subscribes to playback
-state and renders an artwork overlay control. Metadata and detail links retain
-their server-rendered HTML. Show URLs are converted to validated Mixcloud keys
+state and renders an artwork overlay control. The SHOWS listing renders its first 20 cards in static HTML. After shared
+store initialization, an intersection observer appends batches of 20 from
+ShowStore in the build-time catalog order. Pending initialization displays
+“Loading shows...” below the cards; failed initialization offers a retry.
+Only tags used by the first 20 cards are included in the island props;
+subsequent cards use the initialized TagStore. Pagination limits rendered cards,
+while revision refreshes still download the complete catalog. Before leaving
+SHOWS, the island saves its loaded cards, offset and tags in memory per
+ClientRouter history entry. On Back/Forward a wrapper around the router swap
+mounts those cards synchronously before Astro applies the history scroll
+position. Astro skips hydration for that already mounted root; its unmount
+event releases the React root when navigating away. The `visits` map is keyed
+by Astro’s `history.state.index` and lives only in module memory; scroll
+coordinates remain owned by Astro. Refreshing clears these listing snapshots
+and starts with 20 cards, independently of the catalog cached in IndexedDB.
+The initial metadata and detail links retain their
+server-rendered HTML. Show URLs are converted to validated Mixcloud keys
 by `src/components/shows/show-playback.ts` before publishing playback requests.
 
 The archive listings use `src/pages/index.astro` for SHOWS and

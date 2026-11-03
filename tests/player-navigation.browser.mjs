@@ -2,6 +2,7 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import console from "node:console";
+import { readFileSync } from "node:fs";
 import process from "node:process";
 import { URL } from "node:url";
 
@@ -60,6 +61,12 @@ function verifyPlayerLayout(width) {
 browser("open", `${base}/`);
 browser("wait", "button[aria-label^='Play ']");
 const basePath = new URL(base).pathname;
+const catalog = JSON.parse(readFileSync("public/resources/shows.json", "utf8"));
+const showWithDetails = catalog.data.slice(0, 20).find((show) => show.tagIds.length > 0 && show.djs.length > 0);
+assert.ok(showWithDetails, "Fullscreen fixture needs a visible show with tags and DJs");
+function playShowWithDetails() {
+	evaluate(`document.querySelector('main article a[href="${basePath}/shows/${showWithDetails.id}"]').closest('article').querySelector('[data-show-playback]').click(); true`);
+}
 
 function rememberIdlePage() {
 	evaluate(`(() => {
@@ -230,7 +237,7 @@ console.log("Idle navigation uses the default swap; active player document survi
 // fullscreen identity checks do not depend on Mixcloud network/playback readiness.
 browser("open", `${base}/`);
 browser("wait", "button[aria-label^='Play ']");
-evaluate("document.querySelector('button[aria-label^=\"Play \"]').click(); true");
+playShowWithDetails();
 browser("wait", "[data-miniplayer] iframe");
 evaluate(`(() => {
 	window.fullscreenFrame = document.querySelector('[data-miniplayer] iframe');
@@ -401,7 +408,7 @@ for (const width of [390, 1440]) {
 	]) {
 		browser("open", `${base}/`);
 		browser("wait", "button[aria-label^='Play ']");
-		evaluate("document.querySelector('button[aria-label^=\"Play \"]').click(); true");
+		playShowWithDetails();
 		browser("wait", "[data-miniplayer] iframe");
 		const expand = width <= 600
 			? '[data-miniplayer] > button[aria-label="Expand player"]'

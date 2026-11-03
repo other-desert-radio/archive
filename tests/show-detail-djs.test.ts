@@ -1,13 +1,20 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
+import process from "node:process";
 import test from "node:test";
 import { pathToFileURL } from "node:url";
 import { fetchDJ } from "../src/utils/fetch-dj";
 import { fetchShows } from "../src/utils/fetch-shows";
 
-test("show details include each associated DJ's profile and biography", async () => {
-	execFileSync("bun", ["run", "build"], { stdio: "pipe", timeout: 30_000 });
+test("show details include each associated DJ's profile and biography", {
+	timeout: 30_000,
+}, async () => {
+	execFileSync("bun", ["run", "build"], {
+		stdio: "pipe",
+		timeout: 30_000,
+		env: { ...process.env, NODE_ENV: "production" },
+	});
 	const shows = await fetchShows(pathToFileURL("public/resources/shows.json"));
 	for (const show of shows) {
 		const html = await readFile(`dist/shows/${show.id}/index.html`, "utf8");

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
+import process from "node:process";
 import test from "node:test";
 import { pathToFileURL } from "node:url";
 import { fetchDJ } from "../src/utils/fetch-dj";
@@ -8,8 +9,14 @@ import { fetchDJs } from "../src/utils/fetch-djs";
 import { fetchShows } from "../src/utils/fetch-shows";
 import { fetchTags } from "../src/utils/fetch-tags";
 
-test("tag pages render only matching DJ cards with profiles and detail links", async () => {
-	execFileSync("bun", ["run", "build"], { stdio: "pipe", timeout: 30_000 });
+test("tag pages render only matching DJ cards with profiles and detail links", {
+	timeout: 30_000,
+}, async () => {
+	execFileSync("bun", ["run", "build"], {
+		stdio: "pipe",
+		timeout: 30_000,
+		env: { ...process.env, NODE_ENV: "production" },
+	});
 	const summaries = await fetchDJs(
 		pathToFileURL("public/resources/djs_brief.json"),
 	);
