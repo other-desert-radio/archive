@@ -1,17 +1,26 @@
 import { isMatching, P } from "ts-pattern";
 
-type WidgetEvent = {
-	on: (listener: () => void) => void;
-	off: (listener: () => void) => void;
+type WidgetEvent<Args extends unknown[] = []> = {
+	on: (listener: (...args: Args) => void) => void;
+	off: (listener: (...args: Args) => void) => void;
 };
 
-// Only the methods/events needed by the first playback adapter.
+// Methods/events used by playback control, history, and resume.
 // Mixcloud adds these after widget.ready resolves.
 export type MixcloudWidget = {
 	load: (cloudcastKey: string, startPlaying: boolean) => PromiseLike<unknown>;
 	play: () => PromiseLike<unknown>;
 	pause: () => PromiseLike<unknown>;
-	events: { play: WidgetEvent; pause: WidgetEvent; error: WidgetEvent };
+	/** False means Mixcloud refused the requested resume position. */
+	seek: (seconds: number) => PromiseLike<boolean>;
+	events: {
+		play: WidgetEvent;
+		pause: WidgetEvent;
+		error: WidgetEvent;
+		progress: WidgetEvent<[position: number, duration: number]>;
+		buffering: WidgetEvent;
+		ended: WidgetEvent;
+	};
 };
 
 export type MixcloudApi = {
@@ -36,7 +45,15 @@ function isWidget(value: unknown): value is MixcloudWidget {
 			load: callable,
 			play: callable,
 			pause: callable,
-			events: { play: eventPattern, pause: eventPattern, error: eventPattern },
+			seek: callable,
+			events: {
+				play: eventPattern,
+				pause: eventPattern,
+				error: eventPattern,
+				progress: eventPattern,
+				buffering: eventPattern,
+				ended: eventPattern,
+			},
 		},
 		value,
 	);

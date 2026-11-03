@@ -1,3 +1,4 @@
+import type { PlaybackRecord } from "../stores/playback/types";
 import type { Show } from "../utils/fetch-shows";
 
 import type { Tag } from "../utils/fetch-tags";
@@ -5,6 +6,7 @@ import type { Tag } from "../utils/fetch-tags";
 export type StoreSchema = {
 	shows: { value: Show; key: number };
 	tags: { value: Tag; key: number };
+	playback: { value: PlaybackRecord; key: number };
 	// local cache of data_versions.json
 	metadata: { value: { key: string; revision: number }; key: string };
 };

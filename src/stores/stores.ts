@@ -1,12 +1,14 @@
 import { createIndexedDB } from "../database/indexed-db";
 import type { Database } from "../database/types";
 import { AudioStore } from "./audio/audio-store";
+import { PlaybackStore } from "./playback/playback-store";
 import { ShowStore } from "./shows/show-store";
 import { TagStore } from "./tags/tag-store";
 import { VersionsStore } from "./versions/versions-store";
 
 export type Stores = {
 	audioStore: AudioStore;
+	playbackStore: PlaybackStore;
 	showStore: ShowStore;
 	tagStore: TagStore;
 	versionsStore: VersionsStore;
@@ -20,6 +22,7 @@ export function createStores(database: Database = createIndexedDB()): Stores {
 	let initialization: Promise<void> | undefined;
 	return {
 		audioStore: new AudioStore(),
+		playbackStore: new PlaybackStore(database),
 		showStore,
 		tagStore,
 		versionsStore,

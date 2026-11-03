@@ -48,6 +48,9 @@ to avoid circular dependencies through the barrels.
 Store construction is side-effect free during server rendering. `useStores()`
 starts shared initialization in a React effect, which runs only in the browser.
 The composition root initializes `VersionsStore` first, then ShowStore and TagStore in sequence.
+Browser consumers separately initialize PlaybackStore so catalog refresh failures
+do not prevent reading local playback progress. The Mixcloud adapter also awaits
+that shared local initialization before loading a selection.
 VersionsStore fetches and validates the shared manifest and reads locally cached
 revisions from metadata. Both dataset stores consume its cached/published revision getters.
 After a dataset and revision commit atomically, `VersionsStore.refreshCached()`
@@ -134,8 +137,30 @@ validate and unwrap `data`, preserving array payloads for shows, DJ summaries
 and tags, and an object payload for each full DJ profile. The tag reader
 returns its existing ID lookup map. Direct JSON imports also read `.data`.
 Browser stores use envelope versions and `data_versions.json` to refresh shows
-and tags. IndexedDB schema v2 adds tags while preserving existing shows and
-committed revision metadata during upgrades.
+and tags. IndexedDB schema v3 adds a local `playback` store keyed by `showId`,
+preserving existing shows, tags, and committed revision metadata during upgrades.
+PlaybackStore provides independent local initialization, memory subscriptions,
+and serialized retryable saves. A listen counts when the Mixcloud widget emits
+`ended`, regardless of the starting position. Its history entry receives
+`completedAt`; duplicate completion events count once. Pause, buffering, errors,
+selection changes, clear, and reload preserve the unfinished session, including
+its original start time and position. Playback after completion creates a new
+session. There is no elapsed listening-time accounting or minimum duration.
+Progress checkpoints save at five-second intervals; interruption events flush
+pending records, and page exit attempts a final save. Initialization loads saved
+sessions without closing them. The adapter ignores stale selection events and
+trailing progress after completion until playback starts again.
+Resume seeks wait for the widget's play event: a seek immediately after load can
+report success but reset when audio starts. Tracking waits for the resume seek to
+settle and uses actual reported positions. Completed shows start over, preserving
+earlier sessions. Mixcloud can omit the play event after seeking from the end;
+progress can confirm an explicit replay request, while trailing progress without
+that request stays ignored. Replay sends seek and play in order without waiting
+for the seek promise, which can remain unsettled after ended. Storage errors are
+logged without stopping playback; if the initial read fails, tracking is disabled
+for that selection to avoid overwriting
+unread history. A later selection retries initialization. Failed saves retain
+pending records and retry at subsequent checkpoints or playback boundaries.
 
 ## Archive image fields
 

@@ -22,7 +22,7 @@ export default function MixcloudWidget({
 	initialCloudcastKey,
 	iframeParams,
 }: Props) {
-	const { audioStore } = useStores();
+	const { audioStore, playbackStore } = useStores();
 	// Later selections must use widget.load(), preserving the original iframe src.
 	const [src] = useState(() =>
 		mixcloudEmbedUrl(initialCloudcastKey, iframeParams),
@@ -45,7 +45,17 @@ export default function MixcloudWidget({
 			}
 			return waitForMixcloudWidget(api.PlayerWidget(iframe));
 		});
-		const adapter = new MixcloudAdapter(audioStore, widgetPromise.current);
+		const adapter = new MixcloudAdapter(
+			audioStore,
+			widgetPromise.current,
+			playbackStore,
+		);
+		const onPageHide = () => {
+			void playbackStore.flush().catch((error: unknown) => {
+				console.error("[PlaybackStore] page exit save failed", error);
+			});
+		};
+		window.addEventListener("pagehide", onPageHide);
 		widgetPromise.current.then(
 			() => {
 				if (!disposed) {
@@ -63,10 +73,11 @@ export default function MixcloudWidget({
 			},
 		);
 		return () => {
+			window.removeEventListener("pagehide", onPageHide);
 			disposed = true;
 			adapter.dispose();
 		};
-	}, [audioStore]);
+	}, [audioStore, playbackStore]);
 
 	return (
 		<div data-mixcloud-widget={readiness.status}>

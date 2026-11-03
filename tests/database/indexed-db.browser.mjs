@@ -74,7 +74,7 @@ export async function runIndexedDBChecks() {
 				request.onerror = () => reject(request.error);
 			});
 			const inspect = () => new Promise((resolve, reject) => {
-				const request = indexedDB.open('odr-archive', 2);
+				const request = indexedDB.open('odr-archive', 3);
 				request.onsuccess = () => resolve(request.result);
 				request.onerror = () => reject(request.error);
 			});
@@ -96,11 +96,15 @@ export async function runIndexedDBChecks() {
 			const initial = await Promise.all([shows.getAll(), shows.get(42)]);
 			check(initial[0].length === 0 && initial[1] === undefined, 'Empty reads');
 			const db = await inspect();
-			const schema = db.transaction(['shows', 'metadata', 'tags'], 'readonly');
+			const schema = db.transaction(['shows', 'metadata', 'tags', 'playback'], 'readonly');
+			check(schema.objectStore('playback').keyPath === 'showId', 'Playback primary key');
 			check(schema.objectStore('tags').keyPath === 'id', 'Tag primary key');
 			check(schema.objectStore('shows').keyPath === 'id', 'Show primary key');
 			check(schema.objectStore('metadata').keyPath === 'key', 'Metadata primary key');
 			db.close();
+			const playback = database.getObjectStore('playback');
+			await playback.set({ showId: 42, inProgress: true, positionInSeconds: 23, history: [] });
+			check((await playback.get(42)).positionInSeconds === 23, 'Playback round trip');
 			const fixture = (await (await fetch('/fixture.json')).json()).data[0];
 			const original = { ...fixture, id: 42, title: 'Original' };
 			await shows.set(original);
@@ -189,6 +193,7 @@ export async function runIndexedDBChecks() {
 			const database = createIndexedDB();
 			const store = database.getObjectStore('shows');
 			if ((await database.getObjectStore('tags').get(7)).title !== 'Tag') throw new Error('Tag persistence');
+			if ((await database.getObjectStore('playback').get(42)).positionInSeconds !== 23) throw new Error('Playback persistence');
 			const title = (await store.get(42)).title;
 			// Deleting the DB exercises closing cached connections on versionchange.
 			await new Promise((resolve, reject) => {
@@ -206,8 +211,9 @@ export async function runIndexedDBChecks() {
 				request.onerror = () => reject(request.error);
 			});
 			await new Promise((resolve, reject) => {
-				const request = indexedDB.open('odr-archive', 1);
+				const request = indexedDB.open('odr-archive', 2);
 				request.onupgradeneeded = () => {
+					request.result.createObjectStore('tags', { keyPath: 'id' }).put({ id: 7, title: 'Preserved tag' });
 					request.result.createObjectStore('shows', { keyPath: 'id' }).put({ id: 42, title: 'Preserved' });
 					request.result.createObjectStore('metadata', { keyPath: 'key' }).put({ key: 'shows', revision: 12 });
 				};
@@ -220,9 +226,10 @@ export async function runIndexedDBChecks() {
 				title: (await database.getObjectStore('shows').get(42)).title,
 				revision: (await database.getObjectStore('metadata').get('shows')).revision,
 				tags: await database.getObjectStore('tags').getAll(),
+				playback: await database.getObjectStore('playback').getAll(),
 			};
 		})()`));
-		assert.deepEqual(upgraded, { title: "Preserved", revision: 12, tags: [] });
+		assert.deepEqual(upgraded, { title: "Preserved", revision: 12, tags: [{ id: 7, title: "Preserved tag" }], playback: [] });
 		const initialized = JSON.parse(await browser("eval", `(async () => {
 			const { createStores } = await import(new URL('/stores.js', location.href).href);
 			const first = createStores();
