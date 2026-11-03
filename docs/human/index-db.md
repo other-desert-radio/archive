@@ -81,6 +81,4 @@ to prevent fetching all of the shows for this comparsion, maybe we should consid
 User plays a show at 10 seconds, listens until 3 minutes.
 Another day, they come back, start over. listen for 4 minutes.
 
-these are 2 sessions.
-
-even if they resume on the return, we're counting it as 2 sessions.
+it doesn't count as a session until they make it to the end of the show

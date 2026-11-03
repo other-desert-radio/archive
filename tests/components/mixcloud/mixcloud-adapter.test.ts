@@ -536,14 +536,12 @@ test("progress preserves an unfinished listen across buffering and pauses until 
 	assert.deepEqual(f.playback.get(show.id), completed);
 	f.store.play();
 	await setImmediate();
-	assert.equal(f.calls[1]?.key, "/dj/tracked/");
-	assert.equal(f.calls[1]?.autoplay, false);
-	assert.deepEqual(f.seeks, []);
-	f.calls[1]?.result.resolve();
-	await setImmediate();
-	f.events.play.emit();
+	assert.equal(f.calls.length, 1);
+	assert.deepEqual(f.seeks, [0]);
+	// Mixcloud can resume progress after ended without another play event.
 	f.events.progress.emit(0);
 	f.events.progress.emit(1);
+	assert.equal(f.store.getSnapshot().status, "playing");
 	assert.equal(f.playback.get(show.id)?.history.length, 2);
 	adapter.dispose();
 });

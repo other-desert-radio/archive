@@ -33,6 +33,7 @@ export class MixcloudAdapter {
 	private unsubscribe: () => void;
 	private historyReady = false;
 	private completed = false;
+	private replayRequestId: number | undefined;
 	private resumePosition: number | undefined;
 	private seeking = false;
 
@@ -161,6 +162,7 @@ export class MixcloudAdapter {
 			this.completed = false;
 		}
 		this.store.confirmPlaying(this.loadedTrack);
+		this.replayRequestId = undefined;
 		if (this.resumePosition !== undefined && this.widget) {
 			const position = this.resumePosition;
 			const track = this.loadedTrack;
@@ -208,6 +210,7 @@ export class MixcloudAdapter {
 		if (!this.isCurrent() || !this.loadedTrack) {
 			return;
 		}
+		this.replayRequestId = undefined;
 		this.save(this.playback.flush());
 		this.store.confirmPaused(this.loadedTrack);
 	};
@@ -216,6 +219,7 @@ export class MixcloudAdapter {
 		if (!this.isCurrent() || !this.loadedTrack) {
 			return;
 		}
+		this.replayRequestId = undefined;
 		this.save(this.playback.flush());
 		this.store.reportError(
 			this.loadedTrack,
@@ -236,13 +240,24 @@ export class MixcloudAdapter {
 		if (
 			!this.isCurrent() ||
 			!this.historyReady ||
-			this.completed ||
 			this.seeking ||
 			!this.loadedTrack ||
-			this.store.getSnapshot().status !== "playing" ||
 			!Number.isFinite(position) ||
 			position < 0
 		) {
+			return;
+		}
+		if (this.completed) {
+			const request = this.store.getRequestSnapshot();
+			if (request?.action !== "play" || request.id !== this.replayRequestId) {
+				return;
+			}
+			// A replay can advance without Mixcloud emitting another play event.
+			this.completed = false;
+			this.replayRequestId = undefined;
+			this.store.confirmPlaying(this.loadedTrack);
+		}
+		if (this.store.getSnapshot().status !== "playing") {
 			return;
 		}
 
@@ -300,10 +315,6 @@ export class MixcloudAdapter {
 					this.loadedTrack = undefined;
 					continue;
 				}
-				// Seeking after ended can restart audio without another play event.
-				if (this.completed && request.action === "play") {
-					this.loadedTrack = undefined;
-				}
 				if (request.track !== this.loadedTrack) {
 					if (this.loadedTrack) {
 						await this.pauseGently(widget);
@@ -317,6 +328,7 @@ export class MixcloudAdapter {
 					try {
 						this.loadedTrack = undefined;
 						this.completed = false;
+						this.replayRequestId = undefined;
 						this.resumePosition = undefined;
 						this.seeking = false;
 						this.historyReady = false;
@@ -379,6 +391,16 @@ export class MixcloudAdapter {
 					switch (request.action) {
 						case "load":
 						case "play":
+							if (this.completed) {
+								await widget.seek(0);
+								if (
+									this.disposed ||
+									this.store.getRequestSnapshot()?.id !== request.id
+								) {
+									continue;
+								}
+								this.replayRequestId = request.id;
+							}
 							await widget.play();
 							break;
 						case "pause":
@@ -386,6 +408,7 @@ export class MixcloudAdapter {
 							break;
 					}
 				} catch {
+					this.replayRequestId = undefined;
 					this.save(this.playback.flush());
 					if (
 						!this.disposed &&
