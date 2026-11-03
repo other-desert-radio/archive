@@ -158,8 +158,8 @@ progress can confirm an explicit replay request, while trailing progress without
 that request stays ignored. Replay sends seek and play in order without waiting
 for the seek promise, which can remain unsettled after ended. Storage errors are
 logged without stopping playback; if the initial read fails, tracking is disabled
-for that selection to avoid overwriting
-unread history. A later selection retries initialization. Failed saves retain
+for that selection to avoid overwriting unread history. A later selection retries
+initialization. Failed saves retain
 pending records and retry at subsequent checkpoints or playback boundaries.
 
 ## Archive image fields
