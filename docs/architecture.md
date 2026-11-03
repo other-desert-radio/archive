@@ -134,8 +134,10 @@ validate and unwrap `data`, preserving array payloads for shows, DJ summaries
 and tags, and an object payload for each full DJ profile. The tag reader
 returns its existing ID lookup map. Direct JSON imports also read `.data`.
 Browser stores use envelope versions and `data_versions.json` to refresh shows
-and tags. IndexedDB schema v2 adds tags while preserving existing shows and
-committed revision metadata during upgrades.
+and tags. IndexedDB schema v3 adds a local `playback` store keyed by `showId`,
+preserving existing shows, tags, and committed revision metadata during upgrades.
+PlaybackStore provides independent local initialization, memory subscriptions,
+and serialized retryable saves; playback event integration is still pending.
 
 ## Archive image fields
 

@@ -21,8 +21,8 @@ Mode: chunked. Stop at each structure, scaffolding, and implementation review bo
 ## Chunks
 
 1. Structure: empty types, store, and focused test files. Approved.
-2. Types and scaffolding: documented types, PlaybackStore signatures, and an extended widget contract. Disconnected from working playback; awaiting review.
-3. Storage: additive upgrade, independent initialization, reads, subscriptions, serialized writes, and focused tests. Pending.
+2. Types and scaffolding: documented types, PlaybackStore signatures, and an extended widget contract. Approved.
+3. Storage: implemented additive v3 upgrade, independent initialization, isolated memory reads, subscriptions, set/flush, and serialized retryable writes. Five focused tests, TypeScript checks, and the IndexedDB browser suite pass. Awaiting review.
 4. Tracking: session boundaries, timing, checkpoints, reload recovery, and real Mixcloud buffering/recovery verification. Pending.
 5. Resume: central adapter integration, failure handling, and complete verification. Pending.
 
@@ -48,4 +48,4 @@ Run focused checks per functional chunk. Finish with repository lint, check, tes
 
 ## Next action
 
-Review scaffolding. Approval authorizes chunk 3 (storage), not later integration chunks.
+Review storage. Approval authorizes chunk 4 (tracking), not resume integration. Tracking must establish the persisted checkpoint timestamp needed to close open sessions accurately on reload; the current session shape does not retain that wall-clock value.
