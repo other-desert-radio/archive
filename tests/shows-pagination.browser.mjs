@@ -22,13 +22,21 @@ async function verifyHistoryReturn(index) {
 		const link = document.querySelectorAll('main article a[href*="/shows/"]')[${index}];
 		link.scrollIntoView({ block: 'center' });
 		window.paginationDocument = true;
+		window.paginationIframe = document.querySelector('[data-miniplayer] iframe');
 		return { x: scrollX, y: scrollY, count: document.querySelectorAll('main article').length, path: link.pathname };
 	})()`);
 	await evaluate(`document.querySelectorAll('main article a[href*="/shows/"]')[${index}].click(); true`);
 	await browser("wait", "--fn", `location.pathname === ${JSON.stringify(saved.path)}`);
-	await evaluate("history.back(); true");
+	await evaluate(`document.addEventListener('astro:after-swap', () => {
+		window.paginationFirstSwap = {
+			count: document.querySelectorAll('main article').length,
+			y: scrollY,
+		};
+	}, { once: true }); history.back(); true`);
 	await browser("wait", "--fn", `location.pathname === '/archive/' && document.querySelectorAll('main article').length === ${saved.count} && Math.abs(scrollY - ${saved.y}) < 2`);
+	assert.deepEqual(await evaluate("window.paginationFirstSwap"), { count: saved.count, y: saved.y });
 	assert.equal(await evaluate("window.paginationDocument"), true);
+	assert.equal(await evaluate("!window.paginationIframe || document.querySelector('[data-miniplayer] iframe') === window.paginationIframe"), true);
 	assert.equal(await evaluate("scrollX"), saved.x);
 }
 
@@ -88,6 +96,9 @@ try {
 	assert.equal(await evaluate("document.querySelector('main [class*=sentinel]') === null"), true);
 	await browser("click", "main article:last-child button[aria-label^='Play ']");
 	await browser("wait", "main article:last-child button[aria-label^='Pause ']");
+	await browser("wait", "[data-miniplayer] iframe");
+	// Exercise the Safari compatibility swap while an iframe is active.
+	await evaluate("Object.defineProperty(Element.prototype, 'moveBefore', { value: undefined, configurable: true }); true");
 	for (const width of [390, 1440]) {
 		await browser("set", "viewport", String(width), "844");
 		await verifyHistoryReturn(65);

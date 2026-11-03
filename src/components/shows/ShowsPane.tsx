@@ -1,10 +1,6 @@
-import {
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { useStores } from "../../stores";
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
@@ -17,74 +13,74 @@ type Props = {
 	showIds: number[];
 	tags: TagMap;
 	base: string;
+	initialOffset?: number;
+	initialLoading?: boolean;
 };
 
 // ClientRouter history entries outlive the listing island that rendered them.
-const visits = new Map<
-	number,
-	{
-		shows: Show[];
-		tags: TagMap;
-		offset: number;
-		scrollX: number;
-		scrollY: number;
-	}
->();
+const visits = new Map<number, Props>();
 
-export default function ShowsPane({ base, shows, showIds, tags }: Props) {
+if (typeof document !== "undefined") {
+	document.addEventListener("astro:before-swap", (event) => {
+		if (event.navigationType !== "traverse") return;
+		const visit = visits.get(history.state?.index);
+		const island = event.newDocument.querySelector(
+			'astro-island[component-export="ShowsPane"]',
+		);
+		if (!visit || !island) return;
+
+		// This root is mounted synchronously below, so Astro must not hydrate it again.
+		island.removeAttribute("ssr");
+		const swap = event.swap;
+		event.swap = () => {
+			swap();
+			const root = createRoot(island);
+			island.addEventListener("astro:unmount", () => root.unmount(), {
+				once: true,
+			});
+			// Astro restores history scroll immediately after swap returns; cards must exist first.
+			flushSync(() => root.render(<ShowsPane {...visit} />));
+		};
+	});
+}
+
+export default function ShowsPane({
+	base,
+	shows,
+	showIds,
+	tags,
+	initialOffset = shows.length,
+	initialLoading = showIds.length > shows.length,
+}: Props) {
 	const detailBase = getBasePath(base);
 	const stores = useStores();
 
 	const [visible, setVisible] = useState(shows);
 	const [visibleTags, setVisibleTags] = useState(tags);
-	const [offset, setOffset] = useState(shows.length);
-	const [loading, setLoading] = useState(showIds.length > shows.length);
+	const [offset, setOffset] = useState(initialOffset);
+	const [loading, setLoading] = useState(initialLoading);
 	const [failed, setFailed] = useState(false);
 
 	const cancelLoading = useRef<(() => void) | undefined>(undefined);
 	const sentinel = useRef<HTMLDivElement>(null);
 	const hasMore = offset < showIds.length;
-	const restoredScroll = useRef<
-		{ x: number; y: number; shows: Show[] } | undefined
-	>(undefined);
-
-	useLayoutEffect(() => {
-		const visit = visits.get(history.state?.index);
-		if (!visit) return;
-		setVisible(visit.shows);
-		setVisibleTags(visit.tags);
-		setOffset(visit.offset);
-		restoredScroll.current = {
-			x: visit.scrollX,
-			y: visit.scrollY,
-			shows: visit.shows,
-		};
-	}, []);
-
-	useLayoutEffect(() => {
-		const position = restoredScroll.current;
-		if (!position || position.shows !== visible) return;
-		// The restored cards must be committed before scrollTo can reach the saved position.
-		window.scrollTo({ left: position.x, top: position.y, behavior: "instant" });
-		restoredScroll.current = undefined;
-	}, [visible]);
-
 	useEffect(() => {
 		const entry = history.state?.index;
 		if (typeof entry !== "number") return;
 		const saveVisit = () => {
 			visits.set(entry, {
+				base,
+				showIds,
 				shows: visible,
 				tags: visibleTags,
-				offset,
-				scrollX: window.scrollX,
-				scrollY: window.scrollY,
+				initialOffset: offset,
+				initialLoading: loading,
 			});
 		};
-		// Capture before the router swaps documents and changes the current scroll position.
+		// Save the outgoing history entry before the router unmounts this listing.
 		document.addEventListener("astro:before-swap", saveVisit);
 		return () => document.removeEventListener("astro:before-swap", saveVisit);
-	}, [visible, visibleTags, offset]);
+	}, [base, showIds, visible, visibleTags, offset, loading]);
 
 	// Initial loading and Retry share the same initialization and error handling.
 	const retryLoading = useCallback(() => {
