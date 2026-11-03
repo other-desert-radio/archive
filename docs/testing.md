@@ -25,6 +25,10 @@ Use browser checks where hydration or layout cannot be established headlessly.
   builds the site and checks large artwork and matching alt text.
 - Routing, deployment or production behavior: `bun run build`.
 - Broad implementation changes: lint, check and build.
+- Exported archive resources: run `bun run build`, then
+  `bun run validate:resources` against `dist/resources/`. An optional directory
+  argument validates other exports, for example
+  `bun run validate:resources public/resources`.
 - Documentation only: `bun run docs:check`; no dev server or UI claims needed.
 
 ## Required GitHub test check
@@ -33,6 +37,9 @@ The `Tests` workflow runs `bun run test` on pull requests, pushes to `main`,
 and merge groups. To enforce passing tests before merging, configure a branch
 protection rule or ruleset for `main`, enable **Require status checks to pass
 before merging**, and select the `Tests` check after its first workflow run.
+The workflow also exposes a separate `Validate resources` job that builds the
+site and validates the built resource exports. Require that check as well to
+block merging when resource validation fails.
 The workflow alone does not enforce merge restrictions.
 
 ## Dependency-cache regression

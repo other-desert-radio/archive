@@ -57,7 +57,7 @@ export class ShowStore {
 		if (!response.ok) {
 			throw new Error(`Cannot fetch shows: ${response.status}`);
 		}
-		// Trust the first-party export; publish-time structure validation is planned.
+		// CI validates export structure before publishing, so browser loads skip record validation.
 		return (await response.json()) as ShowsExport;
 	}
 

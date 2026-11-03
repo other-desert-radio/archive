@@ -1,13 +1,7 @@
-import { isMatching, P } from "ts-pattern";
+import { isMatching, type P } from "ts-pattern";
 import type { Database } from "../../database/types";
-import { IsoDatePattern } from "../../utils/patterns";
+import { VersionsPattern } from "../../utils/patterns";
 
-const VersionPattern = { id: P.number, updatedAt: IsoDatePattern };
-const VersionsPattern = {
-	shows: VersionPattern,
-	djs: VersionPattern,
-	tags: VersionPattern,
-};
 type DataVersions = P.infer<typeof VersionsPattern>;
 export type DatasetName = keyof DataVersions;
 

@@ -34,6 +34,9 @@ jobs:
       - name: Build site
         run: bun run build
 
+      - name: Validate published resources
+        run: bun run validate:resources
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -6,7 +6,7 @@ import {
 	IsoDatePattern,
 } from "./patterns";
 
-const ShowPattern = {
+export const ShowPattern = {
 	id: P.number,
 	title: P.string,
 	date: IsoDatePattern,
