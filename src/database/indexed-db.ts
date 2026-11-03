@@ -15,7 +15,7 @@ export function createIndexedDB(): Database {
 			return connection;
 		}
 		connection = new Promise<IDBDatabase>((resolve, reject) => {
-			const request = indexedDB.open("odr-archive", 1);
+			const request = indexedDB.open("odr-archive", 2);
 			let abandoned = false;
 			const timeout = setTimeout(() => {
 				fail(new Error("Opening archive storage timed out"));
@@ -31,8 +31,18 @@ export function createIndexedDB(): Database {
 					return;
 				}
 				const db = request.result;
-				db.createObjectStore("shows", { keyPath: "id" });
-				db.createObjectStore("metadata", { keyPath: "key" });
+				if (!db.objectStoreNames.contains("shows")) {
+					console.log("[IndexedDB] Creating shows object store");
+					db.createObjectStore("shows", { keyPath: "id" });
+				}
+				if (!db.objectStoreNames.contains("metadata")) {
+					console.log("[IndexedDB] Creating metadata object store");
+					db.createObjectStore("metadata", { keyPath: "key" });
+				}
+				if (!db.objectStoreNames.contains("tags")) {
+					console.log("[IndexedDB] Creating tags object store");
+					db.createObjectStore("tags", { keyPath: "id" });
+				}
 			};
 			request.onerror = () => {
 				fail(request.error ?? new Error("Cannot open archive storage"));

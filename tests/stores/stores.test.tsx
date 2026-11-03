@@ -10,6 +10,7 @@ import {
 } from "../../src/stores";
 import { useAudioState } from "../../src/stores/audio";
 import fixtureShows from "../res/shows.json";
+import fixtureTags from "../res/tags.json";
 
 const fixtureShow = fixtureShows.data[0];
 if (!fixtureShow) {
@@ -107,7 +108,7 @@ test("server rendering never initializes browser storage", () => {
 	assert.equal(initialize.mock.callCount(), 0);
 });
 
-test("initialization loads shared versions before initializing ShowStore", async () => {
+test("initialization loads shared versions before initializing ShowStore and TagStore", async () => {
 	const injected = createStores(createIndexedDB());
 	const order: string[] = [];
 	const versions = mock.method(
@@ -120,13 +121,17 @@ test("initialization loads shared versions before initializing ShowStore", async
 	const shows = mock.method(injected.showStore, "initialize", () => {
 		order.push("shows");
 	});
+	const tags = mock.method(injected.tagStore, "initialize", async () => {
+		order.push("tags");
+	});
 	const first = injected.initialize();
 	assert.equal(first, injected.initialize());
 	await first;
 	await injected.initialize();
-	assert.deepEqual(order, ["versions", "shows"]);
+	assert.deepEqual(order, ["versions", "shows", "tags"]);
 	assert.equal(versions.mock.callCount(), 1);
 	assert.equal(shows.mock.callCount(), 1);
+	assert.equal(tags.mock.callCount(), 1);
 });
 
 test("failed initialization rejects and permits retry", async () => {
@@ -138,6 +143,7 @@ test("failed initialization rejects and permits retry", async () => {
 		}
 	});
 	mock.method(injected.showStore, "initialize", () => {});
+	mock.method(injected.tagStore, "initialize", async () => {});
 	await assert.rejects(injected.initialize(), /Storage unavailable/);
 	await injected.initialize();
 	assert.equal(attempts, 2);
@@ -162,6 +168,10 @@ test("retry refreshes the manifest after a deployment revision mismatch", async 
 	mock.method(injected.showStore, "initialize", () =>
 		initializeShows("/archive/"),
 	);
+	const initializeTags = injected.tagStore.initialize.bind(injected.tagStore);
+	mock.method(injected.tagStore, "initialize", () =>
+		initializeTags("/archive/"),
+	);
 	let revision = 4;
 	let manifestFetches = 0;
 	const originalFetch = globalThis.fetch;
@@ -171,7 +181,10 @@ test("retry refreshes the manifest after a deployment revision mismatch", async 
 			const version = { id: revision, updatedAt: fixtureShows.updatedAt };
 			return Response.json({ shows: version, djs: version, tags: version });
 		}
-		return Response.json({ ...fixtureShows, version: 5 });
+		return Response.json({
+			...(String(url).endsWith("tags.json") ? fixtureTags : fixtureShows),
+			version: 5,
+		});
 	}) as typeof fetch;
 	try {
 		await assert.rejects(injected.initialize(), /expected 4, received 5/);
@@ -183,7 +196,8 @@ test("retry refreshes the manifest after a deployment revision mismatch", async 
 		assert.equal(manifestFetches, 2);
 		assert.equal(injected.versionsStore.getPublished("shows"), 5);
 		assert.deepEqual(injected.showStore.getAll(), fixtureShows.data);
-		assert.equal(write.mock.callCount(), 1);
+		assert.equal(write.mock.callCount(), 2);
+		assert.deepEqual(injected.tagStore.getAll(), fixtureTags.data);
 	} finally {
 		globalThis.fetch = originalFetch;
 	}
@@ -209,4 +223,34 @@ test("shared initialization awaits ShowStore completion and propagates its error
 	assert.equal(settled, false);
 	loading.reject(new Error("Show refresh failed"));
 	await assert.rejects(initialize, /Show refresh failed/);
+});
+
+test("shared initialization awaits tag completion and permits retry after tag failure", async () => {
+	const injected = createStores();
+	mock.method(injected.versionsStore, "initialize", async () => {});
+	mock.method(injected.showStore, "initialize", async () => {});
+	const loading = Promise.withResolvers<void>();
+	const tags = mock.method(
+		injected.tagStore,
+		"initialize",
+		() => loading.promise,
+	);
+	let settled = false;
+	const initialization = injected.initialize();
+	void initialization.then(
+		() => {
+			settled = true;
+		},
+		() => {
+			settled = true;
+		},
+	);
+	await new Promise((resolve) => setImmediate(resolve));
+	assert.equal(tags.mock.callCount(), 1);
+	assert.equal(settled, false);
+	loading.reject(new Error("Tag refresh failed"));
+	await assert.rejects(initialization, /Tag refresh failed/);
+	tags.mock.mockImplementation(async () => {});
+	await injected.initialize();
+	assert.equal(tags.mock.callCount(), 2);
 });

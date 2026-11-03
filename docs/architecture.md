@@ -47,19 +47,20 @@ to avoid circular dependencies through the barrels.
 
 Store construction is side-effect free during server rendering. `useStores()`
 starts shared initialization in a React effect, which runs only in the browser.
-The composition root initializes `VersionsStore` first, then ShowStore.
+The composition root initializes `VersionsStore` first, then ShowStore and TagStore in sequence.
 VersionsStore fetches and validates the shared manifest and reads locally cached
-revisions from metadata. ShowStore consumes its cached/published revision getters.
+revisions from metadata. Both dataset stores consume its cached/published revision getters.
 After a dataset and revision commit atomically, `VersionsStore.refreshCached()`
 reloads the committed revisions; fetching a manifest never advances them. Concurrent consumers share one initialization promise;
 a failed attempt rejects and permits a later retry. Individual stores do not
 need browser guards in their constructors.
 
-ShowStore first loads cached shows into memory, then checks the published revision.
-Changed exports replace shows and revision metadata in one transaction; memory is
-replaced only after a successful save. Failed refreshes retain cached shows while
+ShowStore and TagStore first load their cached records into memory, then check
+the published revision.
+Changed exports replace the dataset and its revision metadata in one transaction; memory is
+replaced only after a successful save. Failed refreshes retain cached records while
 rejecting initialization. `get()` and `getAll()` read memory synchronously; callers
-must await shared initialization when they require fresh data. Browser show fetches
+must await shared initialization when they require fresh data. Browser show and tag fetches
 trust the first-party record structure, while checking HTTP status and export revision;
 the publish-time validation gate is planned in
 [archive publish validation](plans/future/archive-publish-validation.md).
@@ -117,7 +118,9 @@ Archive payload files use `{ version, updatedAt, data }` envelopes. Readers
 validate and unwrap `data`, preserving array payloads for shows, DJ summaries
 and tags, and an object payload for each full DJ profile. The tag reader
 returns its existing ID lookup map. Direct JSON imports also read `.data`.
-Envelope metadata is currently unused; `data_versions.json` is not consumed.
+Browser stores use envelope versions and `data_versions.json` to refresh shows
+and tags. IndexedDB schema v2 adds tags while preserving existing shows and
+committed revision metadata during upgrades.
 
 ## Archive image fields
 

@@ -21,6 +21,7 @@ export async function runIndexedDBChecks() {
 	});
 	assert.ok(storesBundle.success, "Stores module must bundle");
 	let showDownloads = 0;
+	let tagDownloads = 0;
 	const server = serve({
 		port: 0,
 		fetch(request) {
@@ -42,6 +43,9 @@ export async function runIndexedDBChecks() {
 				case "/resources/shows.json":
 					showDownloads++;
 					return new Response(file("tests/res/shows.json"));
+				case "/resources/tags.json":
+					tagDownloads++;
+					return new Response(file("tests/res/tags.json"));
 				case "/fixture.json":
 					return new Response(file("tests/res/shows.json"));
 				default:
@@ -70,7 +74,7 @@ export async function runIndexedDBChecks() {
 				request.onerror = () => reject(request.error);
 			});
 			const inspect = () => new Promise((resolve, reject) => {
-				const request = indexedDB.open('odr-archive', 1);
+				const request = indexedDB.open('odr-archive', 2);
 				request.onsuccess = () => resolve(request.result);
 				request.onerror = () => reject(request.error);
 			});
@@ -92,7 +96,8 @@ export async function runIndexedDBChecks() {
 			const initial = await Promise.all([shows.getAll(), shows.get(42)]);
 			check(initial[0].length === 0 && initial[1] === undefined, 'Empty reads');
 			const db = await inspect();
-			const schema = db.transaction(['shows', 'metadata'], 'readonly');
+			const schema = db.transaction(['shows', 'metadata', 'tags'], 'readonly');
+			check(schema.objectStore('tags').keyPath === 'id', 'Tag primary key');
 			check(schema.objectStore('shows').keyPath === 'id', 'Show primary key');
 			check(schema.objectStore('metadata').keyPath === 'key', 'Metadata primary key');
 			db.close();
@@ -160,13 +165,30 @@ export async function runIndexedDBChecks() {
 			finally { IDBObjectStore.prototype.put = put; }
 			check(rejected, 'Abort after request success must reject');
 			check((await shows.get(42)).title === 'Committed' && await revision() === 12, 'Abort rolls back all stores');
+			const tag = { id: 7, title: 'Tag', color: '#123456' };
+			await database.transaction([
+				{ store: 'tags', action: 'set', value: tag },
+				{ store: 'metadata', action: 'set', value: { key: 'tags', revision: 1 } },
+			]);
+			rejected = false;
+			try {
+				await database.transaction([
+					{ store: 'tags', action: 'clear' },
+					{ store: 'metadata', action: 'set', value: { key: 'tags', revision: 2 } },
+					{ store: 'tags', action: 'set', value: { ...tag, uncloneable: () => {} } },
+				]);
+			} catch { rejected = true; }
+			check(rejected && (await database.getObjectStore('tags').get(7)).title === 'Tag', 'Tag rollback');
+			check((await metadata.get('tags')).revision === 1, 'Tag revision rollback');
 			return { passed: true };
 		})()`));
 		assert.deepEqual(result, { passed: true });
 		await browser("reload");
 		const persisted = JSON.parse(await browser("eval", `(async () => {
 			const { createIndexedDB } = await import(new URL('/database.js', location.href).href);
-			const store = createIndexedDB().getObjectStore('shows');
+			const database = createIndexedDB();
+			const store = database.getObjectStore('shows');
+			if ((await database.getObjectStore('tags').get(7)).title !== 'Tag') throw new Error('Tag persistence');
 			const title = (await store.get(42)).title;
 			// Deleting the DB exercises closing cached connections on versionchange.
 			await new Promise((resolve, reject) => {
@@ -177,6 +199,30 @@ export async function runIndexedDBChecks() {
 			return { title, reopened: await store.getAll() };
 		})()`));
 		assert.deepEqual(persisted, { title: "Committed", reopened: [] });
+		const upgraded = JSON.parse(await browser("eval", `(async () => {
+			await new Promise((resolve, reject) => {
+				const request = indexedDB.deleteDatabase('odr-archive');
+				request.onsuccess = resolve;
+				request.onerror = () => reject(request.error);
+			});
+			await new Promise((resolve, reject) => {
+				const request = indexedDB.open('odr-archive', 1);
+				request.onupgradeneeded = () => {
+					request.result.createObjectStore('shows', { keyPath: 'id' }).put({ id: 42, title: 'Preserved' });
+					request.result.createObjectStore('metadata', { keyPath: 'key' }).put({ key: 'shows', revision: 12 });
+				};
+				request.onsuccess = () => { request.result.close(); resolve(); };
+				request.onerror = () => reject(request.error);
+			});
+			const { createIndexedDB } = await import(new URL('/database.js', location.href).href);
+			const database = createIndexedDB();
+			return {
+				title: (await database.getObjectStore('shows').get(42)).title,
+				revision: (await database.getObjectStore('metadata').get('shows')).revision,
+				tags: await database.getObjectStore('tags').getAll(),
+			};
+		})()`));
+		assert.deepEqual(upgraded, { title: "Preserved", revision: 12, tags: [] });
 		const initialized = JSON.parse(await browser("eval", `(async () => {
 			const { createStores } = await import(new URL('/stores.js', location.href).href);
 			const first = createStores();
@@ -192,11 +238,18 @@ export async function runIndexedDBChecks() {
 				first: firstShows.length,
 				second: second.showStore.getAll().length,
 				cached: second.versionsStore.getCached('shows'),
+				firstTags: first.tagStore.getAll().length,
+				secondTags: second.tagStore.getAll().length,
+				cachedTags: second.versionsStore.getCached('tags'),
 			};
 		})()`));
 		assert.ok(initialized.first > 0);
 		assert.equal(initialized.second, initialized.first);
 		assert.equal(initialized.cached, 1);
+		assert.ok(initialized.firstTags > 0);
+		assert.equal(initialized.secondTags, initialized.firstTags);
+		assert.equal(initialized.cachedTags, 1);
+		assert.equal(tagDownloads, 1, "A matching local revision must not download tags again");
 		assert.equal(showDownloads, 1, "A matching local revision must not download shows again");
 	} finally {
 		try {
