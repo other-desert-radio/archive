@@ -210,7 +210,6 @@ export class MixcloudAdapter {
 		if (!this.isCurrent() || !this.loadedTrack) {
 			return;
 		}
-		this.replayRequestId = undefined;
 		this.save(this.playback.flush());
 		this.store.confirmPaused(this.loadedTrack);
 	};
@@ -392,14 +391,11 @@ export class MixcloudAdapter {
 						case "load":
 						case "play":
 							if (this.completed) {
-								await widget.seek(0);
-								if (
-									this.disposed ||
-									this.store.getRequestSnapshot()?.id !== request.id
-								) {
-									continue;
-								}
 								this.replayRequestId = request.id;
+								// At ended, seeking can advance audio without settling its promise.
+								void Promise.resolve(widget.seek(0)).catch((error: unknown) => {
+									console.error("[PlaybackStore] replay seek failed", error);
+								});
 							}
 							await widget.play();
 							break;

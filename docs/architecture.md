@@ -152,11 +152,13 @@ sessions without closing them. The adapter ignores stale selection events and
 trailing progress after completion until playback starts again.
 Resume seeks wait for the widget's play event: a seek immediately after load can
 report success but reset when audio starts. Tracking waits for the resume seek to
-settle and uses actual reported positions. Replaying a completed show uses
-`widget.load()` to start over in the same iframe, preserving earlier sessions;
-seeking from the end can restart audio without another play event. Storage errors
-are logged without stopping playback; if the
-initial read fails, tracking is disabled for that selection to avoid overwriting
+settle and uses actual reported positions. Completed shows start over, preserving
+earlier sessions. Mixcloud can omit the play event after seeking from the end;
+progress can confirm an explicit replay request, while trailing progress without
+that request stays ignored. Replay sends seek and play in order without waiting
+for the seek promise, which can remain unsettled after ended. Storage errors are
+logged without stopping playback; if the initial read fails, tracking is disabled
+for that selection to avoid overwriting
 unread history. A later selection retries initialization. Failed saves retain
 pending records and retry at subsequent checkpoints or playback boundaries.
 

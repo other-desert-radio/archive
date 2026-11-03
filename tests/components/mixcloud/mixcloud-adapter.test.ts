@@ -534,15 +534,43 @@ test("progress preserves an unfinished listen across buffering and pauses until 
 	f.events.ended.emit();
 	f.events.progress.emit(27);
 	assert.deepEqual(f.playback.get(show.id), completed);
+	f.widget.seek = (position) => {
+		f.seeks.push(position);
+		return new Promise<boolean>(() => {});
+	};
 	f.store.play();
 	await setImmediate();
 	assert.equal(f.calls.length, 1);
 	assert.deepEqual(f.seeks, [0]);
+	assert.equal(f.commands().filter((command) => command === "play").length, 2);
+	f.events.pause.emit();
 	// Mixcloud can resume progress after ended without another play event.
 	f.events.progress.emit(0);
 	f.events.progress.emit(1);
 	assert.equal(f.store.getSnapshot().status, "playing");
 	assert.equal(f.playback.get(show.id)?.history.length, 2);
+	adapter.dispose();
+});
+
+test("pausing a requested replay prevents trailing progress from creating a listen", async () => {
+	const f = fixture();
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
+	f.select("first");
+	f.ready.resolve(f.widget);
+	await setImmediate();
+	f.calls[0]?.result.resolve();
+	await setImmediate();
+	f.events.play.emit();
+	f.events.progress.emit(3599);
+	f.events.ended.emit();
+	const completed = f.playback.get(show.id);
+	f.store.play();
+	await setImmediate();
+	f.store.pause();
+	f.events.pause.emit();
+	f.events.progress.emit(0);
+	assert.deepEqual(f.playback.get(show.id), completed);
+	assert.equal(f.store.getSnapshot().status, "paused");
 	adapter.dispose();
 });
 
