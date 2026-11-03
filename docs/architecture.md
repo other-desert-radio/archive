@@ -82,8 +82,14 @@ full reloads and navigation outside the archive end playback. See
 layout and iframe-preserving navigation.
 
 `ShowsPane` is hydrated with `client:load`; each show card subscribes to playback
-state and renders an artwork overlay control. Metadata and detail links retain
-their server-rendered HTML. Show URLs are converted to validated Mixcloud keys
+state and renders an artwork overlay control. The SHOWS listing renders its first 20 cards in static HTML. After shared
+store initialization, an intersection observer appends batches of 20 from
+ShowStore in the build-time catalog order. Pending initialization displays
+“Loading shows...” below the cards; failed initialization offers a retry.
+Only tags used by the first 20 cards are included in the island props;
+subsequent cards use the initialized TagStore. Pagination limits rendered cards,
+while revision refreshes still download the complete catalog. The initial metadata and detail links retain their
+server-rendered HTML. Show URLs are converted to validated Mixcloud keys
 by `src/components/shows/show-playback.ts` before publishing playback requests.
 
 The archive listings use `src/pages/index.astro` for SHOWS and

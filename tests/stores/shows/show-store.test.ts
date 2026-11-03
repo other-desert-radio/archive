@@ -191,18 +191,17 @@ test("a failed catalog transaction rejects without refreshing cached revisions",
 	assert.equal(refresh.mock.callCount(), 0);
 });
 
-function setupInitialization(cachedRevision: number | undefined) {
+function setupInitialization(
+	cachedRevision: number | undefined,
+	data = fixtureShows.data,
+) {
 	const database = createIndexedDB();
 	const versions = new VersionsStore(database);
 	mock.method(versions, "getPublished", () => 4);
 	mock.method(versions, "getCached", () => cachedRevision);
 	mock.method(versions, "refreshCached", async () => {});
 	const objectStore = database.getObjectStore("shows");
-	const read = mock.method(
-		objectStore,
-		"getAll",
-		async () => fixtureShows.data,
-	);
+	const read = mock.method(objectStore, "getAll", async () => data);
 	mock.method(database, "getObjectStore", () => objectStore);
 	const write = mock.method(database, "transaction", async () => {});
 	return { store: new ShowStore(database, versions), read, write };
@@ -270,4 +269,20 @@ test("failed downloads and writes retain cached shows in memory and allow retry"
 	write.mock.mockImplementation(async () => {});
 	await store.initialize("/archive/");
 	assert.deepEqual(store.getAll(), []);
+});
+
+test("pages follow requested order, skip missing records, and stop at the end", async () => {
+	const fixture = fixtureShows.data[0];
+	assert.ok(fixture);
+	const data = Array.from({ length: 45 }, (_, id) => ({ ...fixture, id }));
+	const { store } = setupInitialization(4, data);
+	await store.initialize("/archive/");
+	const ids = data.map((show) => show.id).reverse();
+	const expected = [...data].reverse();
+	assert.deepEqual(store.getPage(ids, 0, 20), expected.slice(0, 20));
+	assert.deepEqual(store.getPage(ids, 20, 20), expected.slice(20, 40));
+	assert.deepEqual(store.getPage(ids, 40, 20), expected.slice(40));
+	assert.deepEqual(store.getPage(ids, ids.length, 20), []);
+	assert.deepEqual(store.getPage([], 0, 20), []);
+	assert.deepEqual(store.getPage([-1, ...ids], 0, 2), expected.slice(0, 1));
 });

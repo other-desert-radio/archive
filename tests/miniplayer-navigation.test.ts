@@ -1,10 +1,15 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { readdir, readFile } from "node:fs/promises";
+import process from "node:process";
 import test from "node:test";
 
 test("every built page hosts one hydrated, persisted miniplayer below its navigation", async () => {
-	execFileSync("bun", ["run", "build"], { stdio: "pipe", timeout: 30_000 });
+	execFileSync("bun", ["run", "build"], {
+		stdio: "pipe",
+		timeout: 30_000,
+		env: { ...process.env, NODE_ENV: "production" },
+	});
 	const files = await readdir("dist", { recursive: true });
 	const pages = files.filter((file) => file.endsWith(".html"));
 	assert.ok(pages.length > 0);

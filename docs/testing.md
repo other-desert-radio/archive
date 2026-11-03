@@ -81,8 +81,9 @@ on pull requests and pushes to main.
   takes 2000ms; DJ/show content must be visible before it finishes. Prefetching
   is disabled and HTML is not cached for these cases.
 - All emitted JS combined has a 100 KiB gzip budget; all CSS combined has a
-  5 KiB budget. Root HTML allows 12 KiB, other categories 7 KiB, and each detail
-  page 8 KiB. Failures print measurements; investigate growth before raising a
+  5 KiB budget. Root HTML allows 20 KiB for 20 initial cards and their hydration data;
+  Explore allows 11 KiB for the current tag catalog, and other categories 7 KiB.
+  Show details allow 8 KiB, DJ details 9 KiB, and tag details 11 KiB. Failures print measurements; investigate growth before raising a
   limit. These are transfer-size guards, not device-speed guarantees.
 
 The suite does not emulate WebKit or replace physical iPhone checks. It measures
@@ -90,7 +91,9 @@ render opportunities, not pixel presentation or a Core Web Vitals score. Run it
 after build-based unit tests finish; rebuilding removes files while its fixture
 server is serving them. For an existing build, run
 `bun tests/performance-budget.mjs` and `bun tests/mobile-navigation.browser.mjs`
-individually.
+individually. Build-based tests explicitly set `NODE_ENV=production` for
+their child builds so Bun’s test environment does not emit development React
+into the production output.
 
 ## Responsive browser checks
 

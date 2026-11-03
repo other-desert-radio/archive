@@ -49,6 +49,13 @@ export class ShowStore {
 		return [...this.shows.values()];
 	}
 
+	getPage(ids: readonly number[], offset: number, limit: number): Show[] {
+		return ids.slice(offset, offset + limit).flatMap((id) => {
+			const show = this.get(id);
+			return show ? [show] : [];
+		});
+	}
+
 	async fetchShows(base = import.meta.env.BASE_URL): Promise<ShowsExport> {
 		const response = await fetch(
 			`${base.replace(/\/?$/, "/")}resources/shows.json`,

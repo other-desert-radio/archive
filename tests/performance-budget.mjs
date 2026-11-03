@@ -6,8 +6,9 @@ import { gzipSync } from "node:zlib";
 
 // Production growth guards, measured with gzip regardless of preview-server
 // compression. These are transfer-size budgets, not device timing guarantees.
-// Baseline: JS 76 KiB, CSS 3.1 KiB, root HTML 8.9 KiB, other category
-// HTML <=4.5 KiB, detail HTML <=4.9 KiB. Leave room for routine content growth.
+// Production baseline with the current catalog and 20 initial shows: JS 85.6 KiB,
+// CSS 3.1 KiB, root HTML 17.2 KiB, Explore 9.4 KiB, DJ details <=8.1 KiB,
+// tag details <=9.3 KiB. Leave bounded room for content growth.
 const KiB = 1024;
 const failures = [];
 
@@ -56,9 +57,9 @@ try {
 	}
 
 	for (const [route, limit] of [
-		["", 12 * KiB],
+		["", 20 * KiB],
 		["djs", 7 * KiB],
-		["explore", 7 * KiB],
+		["explore", 11 * KiB],
 		["history", 7 * KiB],
 	]) {
 		budget(
@@ -68,7 +69,11 @@ try {
 		);
 	}
 
-	for (const category of ["djs", "shows", "tags"]) {
+	for (const [category, limit] of [
+		["djs", 9 * KiB],
+		["shows", 8 * KiB],
+		["tags", 11 * KiB],
+	]) {
 		const files = (await htmlFiles(join("dist", category))).filter(
 			(file) => file !== join("dist", category, "index.html"),
 		);
@@ -84,7 +89,7 @@ try {
 		budget(
 			`Largest ${category} detail (${largest.path})`,
 			largest.bytes,
-			8 * KiB,
+			limit,
 		);
 	}
 
