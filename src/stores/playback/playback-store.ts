@@ -129,6 +129,10 @@ export class PlaybackStore {
 			record.positionInSeconds = positionInSeconds;
 			record.history.push(session);
 			this.active = { record, session, tick, checkpoint: tick };
+			console.log("[PlaybackStore] New session started", {
+				showId,
+				session: { ...session },
+			});
 			this.checkpoint();
 			return this.flush();
 		}

@@ -177,11 +177,21 @@ export class MixcloudAdapter {
 			void Promise.resolve()
 				.then(() => {
 					if (this.isCurrent() && this.loadedTrack === track) {
+						console.log("[PlaybackStore] Resuming from saved position", {
+							showId: track.show.id,
+							positionInSeconds: position,
+						});
 						return widget.seek(position);
 					}
 					return undefined;
 				})
 				.then((allowed) => {
+					if (allowed === true) {
+						console.log("[PlaybackStore] Resume seek accepted", {
+							showId: track.show.id,
+							positionInSeconds: position,
+						});
+					}
 					if (allowed === false) {
 						console.error("[PlaybackStore] Mixcloud refused resume position");
 					}
@@ -344,6 +354,14 @@ export class MixcloudAdapter {
 						) {
 							const saved = this.playback.get(request.track.show.id);
 							if (saved?.inProgress && saved.positionInSeconds > 0) {
+								console.log(
+									"[PlaybackStore] Found saved playback record for resume",
+									{
+										objectStore: "playback",
+										key: request.track.show.id,
+										record: saved,
+									},
+								);
 								this.resumePosition = saved.positionInSeconds;
 							}
 						}
