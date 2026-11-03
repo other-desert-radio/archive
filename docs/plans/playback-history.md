@@ -7,7 +7,7 @@ Mode: chunked. Stop at each structure, scaffolding, and implementation review bo
 - One IndexedDB `playback` object store keyed by `showId`; upgrade schema to v3 without changing existing records.
 - Each record is an object with `showId`, `inProgress`, `positionInSeconds`, and a `history` array.
 - Document `PlaybackRecord` and `PlaybackSession` in `src/stores/playback/types.ts`.
-- Sessions contain Unix-millisecond `startedAt` and optional `endedAt`, second-based `startPosition`, `endPosition`, and accumulated `playedSeconds`.
+- Sessions contain Unix-millisecond `startedAt`, checkpoint `updatedAt`, and optional `endedAt`, second-based `startPosition`, `endPosition`, and accumulated `playedSeconds`.
 - A listen is a session with more than 10 seconds of playback; retain shorter sessions without counting them.
 - Pauses, errors, and archive navigation preserve sessions. Switching shows, finishing, clearing playback, and reloading end sessions.
 - Start sessions on advancing playback. Exclude pause and buffering time; seeking must not inflate playback duration.
@@ -22,9 +22,9 @@ Mode: chunked. Stop at each structure, scaffolding, and implementation review bo
 
 1. Structure: empty types, store, and focused test files. Approved.
 2. Types and scaffolding: documented types, PlaybackStore signatures, and an extended widget contract. Approved.
-3. Storage: implemented additive v3 upgrade, independent initialization, isolated memory reads, subscriptions, set/flush, and serialized retryable writes. Five focused tests, TypeScript checks, and the IndexedDB browser suite pass. Awaiting review.
-4. Tracking: session boundaries, timing, checkpoints, reload recovery, and real Mixcloud buffering/recovery verification. Pending.
-5. Resume: central adapter integration, failure handling, and complete verification. Pending.
+3. Storage: implemented additive v3 upgrade, independent initialization, isolated memory reads, subscriptions, set/flush, and serialized retryable writes. Five focused tests, TypeScript checks, and the IndexedDB browser suite passed. Approved.
+4. Tracking: implemented session boundaries, monotonic timing, progress-driven five-second checkpoints, and reload recovery using session updatedAt. Removed the redundant clone on IndexedDB load. Twelve focused tests pass; awaiting review. Event methods return save promises to expose failures. Real Mixcloud buffering verification moves to the adapter integration chunk so the tracked path can be exercised.
+5. Resume: store composition and independent initialization, widget contract consolidation/validation, event wiring, resume seek, lifecycle cleanup/page-exit saves, storage/seek failure handling, live buffering verification, and complete checks. Pending.
 
 ## Flow
 
@@ -48,4 +48,4 @@ Run focused checks per functional chunk. Finish with repository lint, check, tes
 
 ## Next action
 
-Review storage. Approval authorizes chunk 4 (tracking), not resume integration. Tracking must establish the persisted checkpoint timestamp needed to close open sessions accurately on reload; the current session shape does not retain that wall-clock value.
+Review tracking. Approval authorizes chunk 5 (adapter/resume integration). UI rows and statistics remain deferred.

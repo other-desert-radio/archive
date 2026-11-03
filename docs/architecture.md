@@ -137,7 +137,11 @@ Browser stores use envelope versions and `data_versions.json` to refresh shows
 and tags. IndexedDB schema v3 adds a local `playback` store keyed by `showId`,
 preserving existing shows, tags, and committed revision metadata during upgrades.
 PlaybackStore provides independent local initialization, memory subscriptions,
-and serialized retryable saves; playback event integration is still pending.
+and serialized retryable saves. It tracks sessions across pauses, excludes
+buffering when suspended by its caller, and checkpoints on progress at five-second
+intervals and playback boundaries. Session `updatedAt` timestamps close previously
+open sessions at their last checkpoint after reload. A listen is a session with
+more than ten accumulated playback seconds. Playback event integration is still pending.
 
 ## Archive image fields
 

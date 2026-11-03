@@ -14,6 +14,8 @@ export type PlaybackRecord = {
 export type PlaybackSession = {
 	/** Time playback first advances, as Unix milliseconds. */
 	startedAt: number;
+	/** Latest checkpoint time as Unix milliseconds; closes sessions after reload. */
+	updatedAt: number;
 	/** Session end time as Unix milliseconds; absent while open. */
 	endedAt?: number;
 	/** Actual position where the session began, in seconds. */
