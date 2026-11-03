@@ -61,27 +61,26 @@ to prevent fetching all of the shows for this comparsion, maybe we should consid
 }]
 ```
 
-3. Currently Playing
+3. Play history
 
 ```json
 [{
     showId: number,
-    positionsInSeconds: number,
-    startedAt: timestamp
+    inProgress: boolean,
+    positionInSeconds: number;
+    history: [{
+        startedAt: timestamp,
+        endedAt?: number;
+        startPosition: number, // if they're resuming, this would be the seconds they start at
+        endPosition: number, // ending timestamp
+        completed: boolean;
+    }]
 }]
 ```
 
-4. playback history
+User plays a show at 10 seconds, listens until 3 minutes.
+Another day, they come back, start over. listen for 4 minutes.
 
-```json
-[{
-    showId: number,
-    startedAt: timestamp
-    compleltedAt: timestamp
-}]
-```
+these are 2 sessions.
 
-Open: for playback in progress vs. playback conclcued, should that just be encoded via duration in Currently Playing?
-
-if duration == show length, it's played.
-if duration < show length, it's in progress.
+even if they resume on the return, we're counting it as 2 sessions.
