@@ -10,7 +10,7 @@ export const TagPattern = {
 export type Tag = P.infer<typeof TagPattern>;
 export type ID = number;
 
-export type TagMap = Map<ID, Tag>;
+export type TagMap = ReadonlyMap<ID, Tag>;
 
 export async function fetchTags(url: URL): Promise<TagMap> {
 	const source = await readFile(url, "utf8");

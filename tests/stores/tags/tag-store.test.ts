@@ -20,6 +20,8 @@ test("lookups use memory without opening storage before initialization", () => {
 	const store = new TagStore(database, new VersionsStore(database));
 	assert.equal(store.get(42), undefined);
 	assert.deepEqual(store.getAll(), []);
+	assert.equal(store.getMap().size, 0);
+	assert.equal(store.getMap(), store.getMap());
 });
 
 test("fetches the tags export and its revision under the configured base", async () => {
@@ -210,10 +212,16 @@ test("matching revisions load cached tags once and serve synchronous memory look
 	});
 	globalThis.fetch = fetchMock as unknown as typeof fetch;
 	const { store, read, write } = setupInitialization(4);
+	const emptyMap = store.getMap();
 	await store.initialize("/archive/");
 	assert.deepEqual(store.getAll(), fixtureTags.data);
+	const tags = store.getMap();
+	assert.notEqual(tags, emptyMap);
+	assert.equal(store.getMap(), tags);
+	assert.deepEqual([...tags.values()], fixtureTags.data);
 	for (const tag of fixtureTags.data) {
 		assert.deepEqual(store.get(tag.id), tag);
+		assert.equal(tags.get(tag.id), store.get(tag.id));
 	}
 	store.getAll().pop();
 	assert.equal(store.getAll().length, fixtureTags.data.length);

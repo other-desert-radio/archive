@@ -4,7 +4,6 @@ import { createRoot } from "react-dom/client";
 import { useStores } from "../../stores";
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
-import { getBasePath } from "../../utils/get-base-path";
 import ShowCard from "./ShowCard";
 import styles from "./ShowsPane.module.css";
 
@@ -12,7 +11,6 @@ type Props = {
 	shows: Show[];
 	showIds: number[];
 	tags: TagMap;
-	base: string;
 	initialOffset?: number;
 	initialLoading?: boolean;
 };
@@ -56,14 +54,12 @@ if (typeof document !== "undefined") {
 }
 
 export default function ShowsPane({
-	base,
 	shows,
 	showIds,
 	tags,
 	initialOffset = shows.length,
 	initialLoading = showIds.length > shows.length,
 }: Props) {
-	const detailBase = getBasePath(base);
 	const stores = useStores();
 
 	const [visible, setVisible] = useState(shows);
@@ -81,7 +77,6 @@ export default function ShowsPane({
 		if (typeof entry !== "number") return;
 		const saveVisit = () => {
 			visits.set(entry, {
-				base,
 				showIds,
 				shows: visible,
 				tags: visibleTags,
@@ -92,7 +87,7 @@ export default function ShowsPane({
 		// Save the outgoing history entry before the router unmounts this listing.
 		document.addEventListener("astro:before-swap", saveVisit);
 		return () => document.removeEventListener("astro:before-swap", saveVisit);
-	}, [base, showIds, visible, visibleTags, offset, loading]);
+	}, [showIds, visible, visibleTags, offset, loading]);
 
 	// Initial loading and Retry share the same initialization and error handling.
 	const retryLoading = useCallback(() => {
@@ -110,9 +105,7 @@ export default function ShowsPane({
 		void stores.initialize().then(
 			() => {
 				if (active) {
-					setVisibleTags(
-						new Map(stores.tagStore.getAll().map((tag) => [tag.id, tag])),
-					);
+					setVisibleTags(stores.tagStore.getMap());
 					setLoading(false);
 				}
 			},
@@ -166,12 +159,7 @@ export default function ShowsPane({
 		<>
 			<div className={styles["show-container-grid"]}>
 				{visible.map((show) => (
-					<ShowCard
-						key={show.id}
-						show={show}
-						base={detailBase}
-						tags={visibleTags}
-					/>
+					<ShowCard key={show.id} show={show} tags={visibleTags} />
 				))}
 			</div>
 			{loading && (
