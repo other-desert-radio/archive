@@ -1,11 +1,52 @@
 {
-	"version": 6,
-	"updatedAt": "2026-11-02T22:52:41.793Z",
+	"version": 7,
+	"updatedAt": "2026-11-04T21:17:09.785Z",
 	"data": {
 		"id": 44,
 		"title": "Brad Ash",
 		"bio": null,
-		"shows": [],
-		"tagIds": []
+		"shows": [
+			{
+				"id": 253,
+				"title": "Other Desert Radio Hour 5",
+				"date": "2022-06-13T00:00:00.000Z",
+				"duration": 7179,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/e/5/3/569a-7808-4e5a-a053-82c389fc875e",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/e/5/3/569a-7808-4e5a-a053-82c389fc875e",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/brad-ash-other-desert-radio-hour-v-june-13-2022/"
+			},
+			{
+				"id": 254,
+				"title": "Other Desert Radio Hour 4",
+				"date": "2022-04-11T00:00:00.000Z",
+				"duration": 4235,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/4/3/1/a9d3-edd9-4f93-8088-11ee58349b70",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/4/3/1/a9d3-edd9-4f93-8088-11ee58349b70",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/brad-ash-other-desert-radio-hour-4-april-11-2022/"
+			},
+			{
+				"id": 255,
+				"title": "Other Desert Radio Hour 2",
+				"date": "2022-02-07T00:00:00.000Z",
+				"duration": 3756,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/f/2/a/0a03-576d-4a6a-a862-96dd2e03ce37",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/f/2/a/0a03-576d-4a6a-a862-96dd2e03ce37",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/brad-ash-other-desert-radio-hour-ii-february-7-2022/"
+			},
+			{
+				"id": 256,
+				"title": "Brad Ash's Other Desert Radio Hour",
+				"date": "2022-01-10T00:00:00.000Z",
+				"duration": 3267,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/d/9/7/2565-a079-4c33-99d3-39030c951b36",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/d/9/7/2565-a079-4c33-99d3-39030c951b36",
+				"tagIds": [33, 35, 48],
+				"url": "https://www.mixcloud.com/otherdesertradio/brad-ash-brad-ashs-other-desert-radio-hour-january-10-2022/"
+			}
+		],
+		"tagIds": [33, 35, 48]
 	}
 }

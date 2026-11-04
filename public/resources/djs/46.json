@@ -1,0 +1,22 @@
+{
+	"version": 7,
+	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"data": {
+		"id": 46,
+		"title": "Babyleg",
+		"bio": null,
+		"shows": [
+			{
+				"id": 291,
+				"title": "Spicy Ice Cream Playlist",
+				"date": "2023-01-09T00:00:00.000Z",
+				"duration": 3006,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/2/1/5/83b0-3359-41e7-90e7-e90e528322d9",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/2/1/5/83b0-3359-41e7-90e7-e90e528322d9",
+				"tagIds": [36, 37, 47, 132, 174],
+				"url": "https://www.mixcloud.com/otherdesertradio/babyleg-spicy-ice-cream-playlist-january-9-2023/"
+			}
+		],
+		"tagIds": [36, 37, 47, 132, 174]
+	}
+}

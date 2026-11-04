@@ -1,0 +1,32 @@
+{
+	"version": 7,
+	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"data": {
+		"id": 54,
+		"title": "Sunny",
+		"bio": null,
+		"shows": [
+			{
+				"id": 298,
+				"title": "It's Only Love::Get Free, Ascent to the Sea",
+				"date": "2021-05-03T00:00:00.000Z",
+				"duration": 2529,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/8/6/6/b63e-8d87-406b-9660-303fe846b83d",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/8/6/6/b63e-8d87-406b-9660-303fe846b83d",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/sunny-its-only-loveget-free-ascent-to-the-sea-may-3-2021/"
+			},
+			{
+				"id": 299,
+				"title": "It's only Love::Get Free",
+				"date": "2021-05-03T00:00:00.000Z",
+				"duration": 2557,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/0/7/4/6/e304-b87b-4c89-939c-d8c87b789d89",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/0/7/4/6/e304-b87b-4c89-939c-d8c87b789d89",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/sunny-its-only-loveget-free-may-3-2021/"
+			}
+		],
+		"tagIds": []
+	}
+}

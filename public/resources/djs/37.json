@@ -1,9 +1,9 @@
 {
-	"version": 6,
-	"updatedAt": "2026-11-02T22:52:41.793Z",
+	"version": 7,
+	"updatedAt": "2026-11-04T21:17:09.785Z",
 	"data": {
 		"id": 37,
-		"title": "Caroline",
+		"title": "Caroline Partamian",
 		"bio": null,
 		"shows": [
 			{
@@ -255,6 +255,16 @@
 				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
 				"tagIds": [284, 285],
 				"url": "https://www.mixcloud.com/otherdesertradio/caroline-anne-waldman-thoughts-april-27-2020/"
+			},
+			{
+				"id": 283,
+				"title": "24 Hour Drone Live Set 2020",
+				"date": "2020-04-25T00:00:00.000Z",
+				"duration": 1382,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/ethan-and-caroline-24-hour-drone-live-set-2020-broadcast-on-april-27-2020/"
 			},
 			{
 				"id": 208,

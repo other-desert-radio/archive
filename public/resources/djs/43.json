@@ -1,11 +1,62 @@
 {
-	"version": 6,
-	"updatedAt": "2026-11-02T22:52:41.793Z",
+	"version": 7,
+	"updatedAt": "2026-11-04T21:17:09.785Z",
 	"data": {
 		"id": 43,
 		"title": "Escucha",
 		"bio": null,
-		"shows": [],
-		"tagIds": []
+		"shows": [
+			{
+				"id": 270,
+				"title": "Episode 5",
+				"date": "2020-05-18T00:00:00.000Z",
+				"duration": 1185,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/3/d/6/8264-2bb3-4eb4-8730-3d1bf9381acb",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/3/d/6/8264-2bb3-4eb4-8730-3d1bf9381acb",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/escucha-5/"
+			},
+			{
+				"id": 272,
+				"title": "Episode 4",
+				"date": "2020-05-11T00:00:00.000Z",
+				"duration": 1374,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/e/6/9/e7b4-0c9f-4d7c-af20-3d1e1d452927",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/e/6/9/e7b4-0c9f-4d7c-af20-3d1e1d452927",
+				"tagIds": [343, 344, 345, 346, 347],
+				"url": "https://www.mixcloud.com/otherdesertradio/escucha-episode-4-may-11-2020/"
+			},
+			{
+				"id": 274,
+				"title": "Episode 3",
+				"date": "2020-04-27T00:00:00.000Z",
+				"duration": 1442,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/4/9/1/e7f8-2fd6-4875-8f19-d9f64c4067e9",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/4/9/1/e7f8-2fd6-4875-8f19-d9f64c4067e9",
+				"tagIds": [345],
+				"url": "https://www.mixcloud.com/otherdesertradio/nathan-escucha-episode-3-april-27-2020/"
+			},
+			{
+				"id": 276,
+				"title": "Episode 2",
+				"date": "2020-04-20T00:00:00.000Z",
+				"duration": 1232,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/0/c/5/cca0-c8ba-445c-aa8c-2bc26b664cf9",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/0/c/5/cca0-c8ba-445c-aa8c-2bc26b664cf9",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/nathan-e-2/"
+			},
+			{
+				"id": 277,
+				"title": "Episode 1",
+				"date": "2020-04-13T00:00:00.000Z",
+				"duration": 1560,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [348, 349],
+				"url": "https://www.mixcloud.com/otherdesertradio/escucha/"
+			}
+		],
+		"tagIds": [343, 344, 345, 346, 347, 348, 349]
 	}
 }

@@ -1,0 +1,112 @@
+{
+	"version": 7,
+	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"data": {
+		"id": 45,
+		"title": "Ethan Primason",
+		"bio": null,
+		"shows": [
+			{
+				"id": 280,
+				"title": "Corner Booth Episode III",
+				"date": "2021-07-05T00:00:00.000Z",
+				"duration": 4560,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/8/9/a/7f52-c677-4e05-9cdc-26499cfd78a2",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/8/9/a/7f52-c677-4e05-9cdc-26499cfd78a2",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/ethan-corner-booth-episode-iii-july-5-2021/"
+			},
+			{
+				"id": 281,
+				"title": "Some Sort of Special",
+				"date": "2020-08-31T00:00:00.000Z",
+				"duration": 3755,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/b/e/6/75c9-a0a0-4836-bdd6-0289659b04a7",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/b/e/6/75c9-a0a0-4836-bdd6-0289659b04a7",
+				"tagIds": [114, 351, 352, 353],
+				"url": "https://www.mixcloud.com/otherdesertradio/ethan-some-sort-of-special-august-31-2020/"
+			},
+			{
+				"id": 266,
+				"title": "Yugoslav Special",
+				"date": "2020-08-10T00:00:00.000Z",
+				"duration": 5355,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/2/8/e/9218-6e3d-4696-a331-ba593cb78e5a",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/2/8/e/9218-6e3d-4696-a331-ba593cb78e5a",
+				"tagIds": [40, 104, 338, 339, 340],
+				"url": "https://www.mixcloud.com/otherdesertradio/ethan-yugoslav-special-august-10-2020/"
+			},
+			{
+				"id": 268,
+				"title": "15 Minute Miracle Vol. 4",
+				"date": "2020-06-01T00:00:00.000Z",
+				"duration": 899,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/f/1/9/b163-9f92-423e-8c6e-25de08a8fb95",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/f/1/9/b163-9f92-423e-8c6e-25de08a8fb95",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/ethan-primasons-15-minute-miracle-vol-4/"
+			},
+			{
+				"id": 269,
+				"title": "15 Minute Miracle Vol. 3",
+				"date": "2020-05-25T00:00:00.000Z",
+				"duration": 899,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/3/8/b/c972-494e-49d2-8334-f1338b6d1dad",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/3/8/b/c972-494e-49d2-8334-f1338b6d1dad",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/ethan-primasons-15-minute-miracle-vol-3/"
+			},
+			{
+				"id": 271,
+				"title": "15 Minute Miracle Vol. 2",
+				"date": "2020-05-18T00:00:00.000Z",
+				"duration": 899,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/1/5/5/ac74-9d11-4ab8-bb1b-2c8ec8e168b0",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/1/5/5/ac74-9d11-4ab8-bb1b-2c8ec8e168b0",
+				"tagIds": [61, 341, 342],
+				"url": "https://www.mixcloud.com/otherdesertradio/ethan-primasons-15-minute-miracle-vol-2/"
+			},
+			{
+				"id": 273,
+				"title": "15 Minute Miracle Vol. 1",
+				"date": "2020-05-11T00:00:00.000Z",
+				"duration": 899,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/b/4/b/a993-c679-43c5-8102-17e6ed53c45f",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/b/4/b/a993-c679-43c5-8102-17e6ed53c45f",
+				"tagIds": [61, 341, 342],
+				"url": "https://www.mixcloud.com/otherdesertradio/ethan-primasons-15-minute-miracle/"
+			},
+			{
+				"id": 283,
+				"title": "24 Hour Drone Live Set 2020",
+				"date": "2020-04-25T00:00:00.000Z",
+				"duration": 1382,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/ethan-and-caroline-24-hour-drone-live-set-2020-broadcast-on-april-27-2020/"
+			},
+			{
+				"id": 284,
+				"title": "Side B",
+				"date": "2020-04-06T00:00:00.000Z",
+				"duration": 9367,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/ethan-side-b-april-6-2020/"
+			},
+			{
+				"id": 285,
+				"title": "Side A",
+				"date": "2020-04-06T00:00:00.000Z",
+				"duration": 7125,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/ethan-side-april-6-2020/"
+			}
+		],
+		"tagIds": [40, 61, 104, 114, 338, 339, 340, 341, 342, 351, 352, 353]
+	}
+}

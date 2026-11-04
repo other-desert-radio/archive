@@ -1,0 +1,22 @@
+{
+	"version": 7,
+	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"data": {
+		"id": 48,
+		"title": "Galecstasy",
+		"bio": null,
+		"shows": [
+			{
+				"id": 297,
+				"title": "Live from Yucca Valley Material Lab",
+				"date": "2021-11-21T00:00:00.000Z",
+				"duration": 2368,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [33, 61, 364, 365],
+				"url": "https://www.mixcloud.com/otherdesertradio/galecstasy-live-from-yucca-valley-material-lab-november-21-2021/"
+			}
+		],
+		"tagIds": [33, 61, 364, 365]
+	}
+}

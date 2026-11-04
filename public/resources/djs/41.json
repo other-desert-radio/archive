@@ -1,6 +1,6 @@
 {
-	"version": 6,
-	"updatedAt": "2026-11-02T22:52:41.793Z",
+	"version": 7,
+	"updatedAt": "2026-11-04T21:17:09.785Z",
 	"data": {
 		"id": 41,
 		"title": "Paul Quattrone",
@@ -17,6 +17,16 @@
 				"url": "https://www.mixcloud.com/otherdesertradio/pq-episode-viii-october-18-2021/"
 			},
 			{
+				"id": 257,
+				"title": "Episode VII, Acid Burnout",
+				"date": "2021-02-15T00:00:00.000Z",
+				"duration": 6182,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/d/0/5/29cf-9c2d-4f7e-97f2-6a7cdb2366b0",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/d/0/5/29cf-9c2d-4f7e-97f2-6a7cdb2366b0",
+				"tagIds": [320, 321, 322, 323],
+				"url": "https://www.mixcloud.com/otherdesertradio/paul-quattrone-episode-vii-acid-burnout-february-15-2021/"
+			},
+			{
 				"id": 216,
 				"title": "Episode V",
 				"date": "2020-11-30T00:00:00.000Z",
@@ -25,6 +35,26 @@
 				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/f/d/8/2735-43a5-4664-9149-68c58fde1df5",
 				"tagIds": [],
 				"url": "https://www.mixcloud.com/otherdesertradio/paul-quattrone-episode-v-november-30-2020/"
+			},
+			{
+				"id": 263,
+				"title": "Episode IV, Part 2",
+				"date": "2020-10-12T00:00:00.000Z",
+				"duration": 3880,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/b/f/a/60fd-b5b1-47a8-9cf1-4c66cef1d0fe",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/b/f/a/60fd-b5b1-47a8-9cf1-4c66cef1d0fe",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/paul-quattrone-episode-iv-part-2-october-12-2020/"
+			},
+			{
+				"id": 264,
+				"title": "Episode IV, Part 1",
+				"date": "2020-10-12T00:00:00.000Z",
+				"duration": 4114,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/7/1/a/268b-812b-4fa7-a65c-ddf46573d021",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/7/1/a/268b-812b-4fa7-a65c-ddf46573d021",
+				"tagIds": [334],
+				"url": "https://www.mixcloud.com/otherdesertradio/paul-quattrone-episode-iv-part-1-october-12-2020/"
 			},
 			{
 				"id": 222,
@@ -37,6 +67,16 @@
 				"url": "https://www.mixcloud.com/otherdesertradio/paul-quattrone-episode-4-week-of-september-8-2020/"
 			},
 			{
+				"id": 267,
+				"title": "Episode II",
+				"date": "2020-08-04T00:00:00.000Z",
+				"duration": 5336,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/pq-episode-iii-august-4-2020/"
+			},
+			{
 				"id": 229,
 				"title": "Episode I, Part 2",
 				"date": "2020-04-27T00:00:00.000Z",
@@ -45,8 +85,18 @@
 				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
 				"tagIds": [],
 				"url": "https://www.mixcloud.com/otherdesertradio/paul-part-ii-april-27-2020/"
+			},
+			{
+				"id": 275,
+				"title": "Episode I, Part 1",
+				"date": "2020-04-20T00:00:00.000Z",
+				"duration": 5492,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/paul-quattrone-part-1/"
 			}
 		],
-		"tagIds": [296, 297]
+		"tagIds": [296, 297, 320, 321, 322, 323, 334]
 	}
 }

@@ -1,6 +1,6 @@
 {
-	"version": 6,
-	"updatedAt": "2026-11-02T22:52:41.793Z",
+	"version": 7,
+	"updatedAt": "2026-11-04T21:17:09.785Z",
 	"data": {
 		"id": 28,
 		"title": "No Translation",
@@ -12,6 +12,16 @@
 		"showDescription": "A collection of music from cassette tapes found at the Sky Village Swap Meet Most - some with original inserts and info, others with a few hand-written titles or blank with no info.",
 		"shows": [
 			{
+				"id": 279,
+				"title": "Odds and Ends Vol. 1 - Tapes",
+				"date": "2022-01-10T00:00:00.000Z",
+				"duration": 2712,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/7/f/a/406b-71cf-4fff-bda8-25dd042a9c98",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/7/f/a/406b-71cf-4fff-bda8-25dd042a9c98",
+				"tagIds": [35, 61, 350],
+				"url": "https://www.mixcloud.com/otherdesertradio/emma-palm-odds-and-ends-vol-1-tapes-january-10-2022/"
+			},
+			{
 				"id": 244,
 				"title": "Live at Furstwurld, Joshua Tree",
 				"date": "2021-12-11T00:00:00.000Z",
@@ -22,6 +32,6 @@
 				"url": "https://www.mixcloud.com/otherdesertradio/no-translation-live-at-furstwurld-joshua-tree-121121/"
 			}
 		],
-		"tagIds": []
+		"tagIds": [35, 61, 350]
 	}
 }

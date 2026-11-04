@@ -1,0 +1,42 @@
+{
+	"version": 7,
+	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"data": {
+		"id": 51,
+		"title": "Mellow and Normal",
+		"bio": null,
+		"shows": [
+			{
+				"id": 292,
+				"title": "Ep. 3",
+				"date": "2022-08-08T00:00:00.000Z",
+				"duration": 3605,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/c/9/6/04aa-0f36-45ba-a47d-1a99d3ba53f3",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/c/9/6/04aa-0f36-45ba-a47d-1a99d3ba53f3",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/mellow-and-normal-ep-3-august-8-2022/"
+			},
+			{
+				"id": 293,
+				"title": "Ep. 2 Independence Day Special",
+				"date": "2022-07-04T00:00:00.000Z",
+				"duration": 3840,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/8/e/3/66bf-ac69-49ef-97ee-1ae5ea86c482",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/8/e/3/66bf-ac69-49ef-97ee-1ae5ea86c482",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/mellow-and-normal-ep-2-independence-day-special-july-4-2022/"
+			},
+			{
+				"id": 294,
+				"title": "Ep. 1",
+				"date": "2022-06-06T00:00:00.000Z",
+				"duration": 3648,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/7/f/1/6/bb3d-074a-43d6-88b2-cd404e0178be",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/7/f/1/6/bb3d-074a-43d6-88b2-cd404e0178be",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/asher-price-mellow-and-normal-june-6-2022/"
+			}
+		],
+		"tagIds": []
+	}
+}

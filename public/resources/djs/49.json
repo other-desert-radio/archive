@@ -1,0 +1,42 @@
+{
+	"version": 7,
+	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"data": {
+		"id": 49,
+		"title": "Genevieve D",
+		"bio": null,
+		"shows": [
+			{
+				"id": 288,
+				"title": "Fall Disco Blast",
+				"date": "2024-08-26T00:00:00.000Z",
+				"duration": 3071,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/2/2/6/5327-3b9c-4799-93b9-a70ab5219ba4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/2/2/6/5327-3b9c-4799-93b9-a70ab5219ba4",
+				"tagIds": [4, 6],
+				"url": "https://www.mixcloud.com/otherdesertradio/genevieve-d-fall-disco-blast-august-26-2024/"
+			},
+			{
+				"id": 289,
+				"title": "Depths III",
+				"date": "2023-09-18T00:00:00.000Z",
+				"duration": 2999,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/7/e/9/80e7-8d23-4346-8bc8-676c5a0940b8",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/7/e/9/80e7-8d23-4346-8bc8-676c5a0940b8",
+				"tagIds": [4, 33, 61],
+				"url": "https://www.mixcloud.com/otherdesertradio/genevieve-d-depths-iii-september-18-2023/"
+			},
+			{
+				"id": 290,
+				"title": "Textures",
+				"date": "2023-03-13T00:00:00.000Z",
+				"duration": 3619,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/9/8/f/b366-d0a4-42e2-b2bb-029896a47a3e",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/9/8/f/b366-d0a4-42e2-b2bb-029896a47a3e",
+				"tagIds": [4, 64, 224],
+				"url": "https://www.mixcloud.com/otherdesertradio/genevieve-d-textures-march-13-2023/"
+			}
+		],
+		"tagIds": [4, 6, 33, 61, 64, 224]
+	}
+}

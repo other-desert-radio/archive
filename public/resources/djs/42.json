@@ -1,11 +1,42 @@
 {
-	"version": 6,
-	"updatedAt": "2026-11-02T22:52:41.793Z",
+	"version": 7,
+	"updatedAt": "2026-11-04T21:17:09.785Z",
 	"data": {
 		"id": 42,
 		"title": "Andrew Storrs",
 		"bio": null,
-		"shows": [],
-		"tagIds": []
+		"shows": [
+			{
+				"id": 260,
+				"title": "Saturn ~ Jupiter Conjunction Gospel Music Special",
+				"date": "2020-12-22T00:00:00.000Z",
+				"duration": 5518,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/a/0/e/ed04-3a7d-4096-bcdc-f787acd4c4bf",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/a/0/e/ed04-3a7d-4096-bcdc-f787acd4c4bf",
+				"tagIds": [326, 327, 328, 329],
+				"url": "https://www.mixcloud.com/otherdesertradio/andrew-storrs-saturn-jupiter-conjunction-gospel-music-special-december-22-2020/"
+			},
+			{
+				"id": 262,
+				"title": "From the Vault 5 - Terry Allen LIVE @ Zebulon LA",
+				"date": "2020-02-01T00:00:00.000Z",
+				"duration": 4530,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/e/f/8/eed6-53c5-4c37-9bcf-2c6bd3c16c2f",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/e/f/8/eed6-53c5-4c37-9bcf-2c6bd3c16c2f",
+				"tagIds": [38, 330, 331, 332, 333],
+				"url": "https://www.mixcloud.com/otherdesertradio/andrew-storrs-from-the-vault-terry-allen-live-zebulon-la-february-2020/"
+			},
+			{
+				"id": 265,
+				"title": "From the Vault 1 - Daniel Higgs, Live",
+				"date": "2013-01-01T00:00:00.000Z",
+				"duration": 1922,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/6/7/3/5f4e-e123-47cd-8349-41757f4fdf0c",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/6/7/3/5f4e-e123-47cd-8349-41757f4fdf0c",
+				"tagIds": [330, 335, 336, 337],
+				"url": "https://www.mixcloud.com/otherdesertradio/andrew-storrs-from-the-vault-daniel-higgs-live-january-2013/"
+			}
+		],
+		"tagIds": [38, 326, 327, 328, 329, 330, 331, 332, 333, 335, 336, 337]
 	}
 }

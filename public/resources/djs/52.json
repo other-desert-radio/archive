@@ -1,0 +1,32 @@
+{
+	"version": 7,
+	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"data": {
+		"id": 52,
+		"title": "Milk Thistle Dispatches",
+		"bio": null,
+		"shows": [
+			{
+				"id": 286,
+				"title": "Corinna + Anita HWY62 Tours Weekend 2 Report Back",
+				"date": "2025-10-13T00:00:00.000Z",
+				"duration": 1626,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/4/0/2/21f5-7edb-4d98-8435-effa5ff6b5ee",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/4/0/2/21f5-7edb-4d98-8435-effa5ff6b5ee",
+				"tagIds": [193, 355, 356, 357],
+				"url": "https://www.mixcloud.com/otherdesertradio/milk-thistle-dispatches-corinna-anita-hwy62-tours-weekend-2-report-back-october-13-2025/"
+			},
+			{
+				"id": 287,
+				"title": "Corinna + Anita HWY62 Tours Weekend 1 Report Back",
+				"date": "2025-10-06T00:00:00.000Z",
+				"duration": 1798,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/7/e/1/4bd4-b73f-4fa2-86c7-13b7bedf5e2a",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/7/e/1/4bd4-b73f-4fa2-86c7-13b7bedf5e2a",
+				"tagIds": [193, 355, 356, 357],
+				"url": "https://www.mixcloud.com/otherdesertradio/milk-thistle-dispatches-corinna-anita-hwy62-tours-week-1-report-back-october-6-2025/"
+			}
+		],
+		"tagIds": [193, 355, 356, 357]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"version": 7,
+	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"data": {
+		"id": 53,
+		"title": "Syd Abady",
+		"bio": null,
+		"shows": [
+			{
+				"id": 295,
+				"title": "ABAYAHUDY NO. 1",
+				"date": "2022-05-02T00:00:00.000Z",
+				"duration": 3339,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/1/6/8/7fed-6390-4a65-9f74-9e7f238aae0d",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/1/6/8/7fed-6390-4a65-9f74-9e7f238aae0d",
+				"tagIds": [87, 278, 358, 359, 360],
+				"url": "https://www.mixcloud.com/otherdesertradio/syd-abady-abayahudy-no-1-may-2-2022/"
+			},
+			{
+				"id": 296,
+				"title": "V-Day Special: Spilt Milk",
+				"date": "2022-02-14T00:00:00.000Z",
+				"duration": 9177,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/d/8/1/a986-732a-4c02-addf-c1aa25e10c24",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/d/8/1/a986-732a-4c02-addf-c1aa25e10c24",
+				"tagIds": [22, 221, 361, 362, 363],
+				"url": "https://www.mixcloud.com/otherdesertradio/syd-abady-v-day-special-spilt-milk-february-14-2022/"
+			}
+		],
+		"tagIds": [22, 87, 221, 278, 358, 359, 360, 361, 362, 363]
+	}
+}
