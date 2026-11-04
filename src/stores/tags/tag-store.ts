@@ -3,7 +3,7 @@ import type {
 	DBStore,
 	TransactionOperation,
 } from "../../database/types";
-import type { Tag } from "../../utils/fetch-tags";
+import type { Tag, TagMap } from "../../utils/fetch-tags";
 import type { VersionsStore } from "../versions/versions-store";
 
 type TagsExport = {
@@ -47,6 +47,10 @@ export class TagStore {
 
 	getAll(): Tag[] {
 		return [...this.tags.values()];
+	}
+
+	getMap(): TagMap {
+		return this.tags;
 	}
 
 	async fetchTags(base = import.meta.env.BASE_URL): Promise<TagsExport> {

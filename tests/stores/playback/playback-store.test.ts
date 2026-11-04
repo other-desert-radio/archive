@@ -33,6 +33,25 @@ test("construction is SSR safe and reads are empty before initialization", () =>
 	assert.deepEqual(store.getAll(), []);
 });
 
+test("React snapshots stay stable between updates and publish before notification", async () => {
+	const { store } = setup();
+	const empty = store.getSnapshot();
+	assert.deepEqual(empty, []);
+	assert.equal(store.getSnapshot(), empty);
+	await store.initialize();
+	const loaded = store.getSnapshot();
+	assert.notEqual(loaded, empty);
+	assert.deepEqual(loaded, [record()]);
+	assert.equal(store.getSnapshot(), loaded);
+	store.subscribe(() => {
+		assert.deepEqual(store.getSnapshot(), [record(20)]);
+	});
+	store.set(record(20));
+	assert.notEqual(store.getSnapshot(), loaded);
+	assert.equal(store.getSnapshot(), store.getSnapshot());
+	assert.deepEqual(loaded, [record()]);
+});
+
 test("initialization shares reads, notifies subscribers, and isolates returned records", async () => {
 	const { store, read, write } = setup();
 	const notify = mock.fn();

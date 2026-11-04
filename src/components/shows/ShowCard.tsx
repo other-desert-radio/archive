@@ -8,7 +8,6 @@ import styles from "./ShowCard.module.css";
 
 type Props = {
 	show: Show;
-	base: string;
 	tags: TagMap;
 };
 
@@ -41,13 +40,13 @@ const renderDJs = (djs: Show["djs"], base: string) =>
 /**
  * Renders one archive show with its date, tags, and associated DJs.
  */
-export default function ShowCard({ show, base, tags }: Props) {
-	const detailBase = getBasePath(base);
+export default function ShowCard({ show, tags }: Props) {
+	const detailBase = getBasePath();
 
 	return (
 		<article className={styles["show-card"]}>
 			<div className={styles["artwork"]}>
-				<PlayableShowArtwork show={show} base={base} />
+				<PlayableShowArtwork show={show} base={detailBase} />
 			</div>
 			<div className={styles["trailing-content"]}>
 				<a

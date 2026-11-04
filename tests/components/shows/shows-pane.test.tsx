@@ -8,7 +8,6 @@ import tags from "../../res/tags.json";
 test("empty listings show an empty message without a loading status", () => {
 	const html = renderToStaticMarkup(
 		<ShowsPane
-			base="/archive"
 			shows={[]}
 			showIds={[]}
 			tags={new Map(tags.data.map((tag) => [tag.id, tag]))}
@@ -21,7 +20,6 @@ test("empty listings show an empty message without a loading status", () => {
 test("short listings render all cards without a loading status or sentinel", () => {
 	const html = renderToStaticMarkup(
 		<ShowsPane
-			base="/archive"
 			shows={fixture.data}
 			showIds={fixture.data.map((show) => show.id)}
 			tags={new Map(tags.data.map((tag) => [tag.id, tag]))}

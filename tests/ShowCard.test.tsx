@@ -8,10 +8,9 @@ test("formats a show date in UTC", () => {
 	assert.equal(formatDate("2026-05-25T00:00:00.000Z"), "May 25, 2026");
 });
 
-test("renders normalized detail links, large show artwork, and small DJ artwork", () => {
+test("renders default-base detail links, large show artwork, and small DJ artwork", () => {
 	const markup = renderToStaticMarkup(
 		<ShowCard
-			base="/archive/"
 			show={{
 				id: 1,
 				title: "Test Show",
@@ -34,16 +33,13 @@ test("renders normalized detail links, large show artwork, and small DJ artwork"
 		/>,
 	);
 
-	assert.match(markup, /href="\/archive\/shows\/1"/);
-	assert.match(markup, /href="\/archive\/djs\/2"/);
+	assert.match(markup, /href="\/shows\/1"/);
+	assert.match(markup, /href="\/djs\/2"/);
 	assert.match(
 		markup,
 		/<img[^>]+src="images\/shows\/1_large.jpg"[^>]+alt="Test Show"/,
 	);
-	assert.match(
-		markup,
-		/<img[^>]+src="\/archive\/images\/djs\/2.jpg"[^>]+alt="Test DJ"/,
-	);
+	assert.match(markup, /<img[^>]+src="\/images\/djs\/2.jpg"[^>]+alt="Test DJ"/);
 	const artwork = (markup.match(/<img\b[^>]*>/g) ?? []).filter(
 		(image) => !image.includes('alt=""'),
 	);
@@ -53,5 +49,5 @@ test("renders normalized detail links, large show artwork, and small DJ artwork"
 		assert.match(image, /decoding="async"/);
 	}
 	assert.doesNotMatch(markup, /show-small\.jpg|2_large\.jpg/);
-	assert.doesNotMatch(markup, /\/archive\/\//);
+	assert.doesNotMatch(markup, /(?:href|src)="\/\//);
 });

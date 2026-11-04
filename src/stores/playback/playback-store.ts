@@ -4,6 +4,7 @@ import type { PlaybackRecord } from "./types";
 /** Owns local history; the adapter supplies confirmed playback events. */
 export class PlaybackStore {
 	private records = new Map<number, PlaybackRecord>();
+	private snapshot: readonly PlaybackRecord[] = [];
 	private pending = new Map<number, PlaybackRecord>();
 	private listeners = new Set<() => void>();
 	private objectStore: DBStore<PlaybackRecord, number>;
@@ -51,6 +52,9 @@ export class PlaybackStore {
 		return structuredClone([...this.records.values()]);
 	}
 
+	/** React snapshots retain their identity until records change. */
+	getSnapshot = (): readonly PlaybackRecord[] => this.snapshot;
+
 	/** Notify consumers when in-memory records change; return cleanup. */
 	subscribe(notify: () => void): () => void {
 		this.listeners.add(notify);
@@ -68,6 +72,7 @@ export class PlaybackStore {
 	}
 
 	private notify(): void {
+		this.snapshot = this.getAll();
 		for (const listener of this.listeners) {
 			listener();
 		}
