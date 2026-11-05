@@ -48,8 +48,8 @@ to avoid circular dependencies through the barrels.
 Store construction is side-effect free during server rendering. `useStores()`
 starts shared initialization in a React effect, which runs only in the browser.
 The composition root initializes `VersionsStore` first, then ShowStore and TagStore in sequence.
-Browser consumers separately initialize PlaybackStore so catalog refresh failures
-do not prevent reading local playback progress. The Mixcloud adapter also awaits
+Browser consumers separately initialize PlaybackStore and PlaylistStore so catalog refresh failures
+do not prevent reading local playback progress or playlists. The Mixcloud adapter also awaits
 that shared local initialization before loading a selection.
 VersionsStore fetches and validates the shared manifest and reads locally cached
 revisions from metadata. Both dataset stores consume its cached/published revision getters.
@@ -57,6 +57,18 @@ After a dataset and revision commit atomically, `VersionsStore.refreshCached()`
 reloads the committed revisions; fetching a manifest never advances them. Concurrent consumers share one initialization promise;
 a failed attempt rejects and permits a later retry. Individual stores do not
 need browser guards in their constructors.
+
+PlaylistStore owns local user playlists in the `playlists` IndexedDB object store,
+keyed by UUID strings. It does not participate in catalog revision tracking.
+Its methods accept named parameter objects using `playlistId` and `showId`.
+Mutations await local initialization and run serially, persisting before publishing
+new state; failed writes reject without changing memory and allow later retries.
+Playlist and entry types are deeply readonly. Reads share frozen records and a
+cached snapshot without copying or sorting; callers choose presentation order.
+Entries retain insertion order, UTC ISO timestamps and optional notes. Duplicate
+shows reject, and missing catalog references remain stored for callers to resolve
+through ShowStore. Storage is local to the browser; remote sync, cross-tab edit
+coordination and playlist UI are not implemented.
 
 ShowStore and TagStore first load their cached records into memory, then check
 the published revision.
@@ -139,6 +151,7 @@ returns its existing ID lookup map. Direct JSON imports also read `.data`.
 Browser stores use envelope versions and `data_versions.json` to refresh shows
 and tags. IndexedDB schema v3 adds a local `playback` store keyed by `showId`,
 preserving existing shows, tags, and committed revision metadata during upgrades.
+Schema v4 adds `playlists` keyed by `id`, preserving all existing records.
 PlaybackStore provides independent local initialization, memory subscriptions,
 and serialized retryable saves. A listen counts when the Mixcloud widget emits
 `ended`, regardless of the starting position. Its history entry receives
