@@ -3,6 +3,7 @@ import { getBasePath } from "../../utils/get-base-path";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TagView from "../../components/TagView.astro";
 import PlayableShowArtwork from "../../components/shows/PlayableShowArtwork";
+import SaveToPlaylist from "../../components/favorites/SaveToPlaylist";
 import { fetchShows, type Show } from "../../utils/fetch-shows";
 import { fetchDJ, type HydratedDJ } from "../../utils/fetch-dj";
 import { fetchTags } from "../../utils/fetch-tags";
@@ -105,6 +106,7 @@ const hydratedTags = hydrateTags(show, tags);
           </a>
         ))
       }
+      <SaveToPlaylist client:load />
     </div>
   </section>
 </BaseLayout>
