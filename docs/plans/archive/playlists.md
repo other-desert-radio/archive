@@ -1,8 +1,10 @@
 # Local playlists
 
+Completed 2026-11-05. Historical implementation plan; current behavior is documented in [Architecture](../../architecture.md).
+
 ## Decisions
 
-- Chunked implementation; stop for approval at every stage or implementation unit.
+- Implemented in chunks; the user authorized finishing all remaining work at integration.
 - Data layer only: create, read, rename, delete, add/remove shows, edit notes.
 - No reordering, UI, import/export, remote sync, or cross-tab coordination.
 - Playlist IDs are UUID strings; timestamps are UTC ISO strings.
@@ -25,16 +27,18 @@
 - [x] Persistence: approved; playlists object store keyed by id; fresh creation, CRUD, reload persistence, and version-3 migration coverage.
 - [x] Retrieval: approved; SSR-safe construction, shared/retryable initialization, readonly shared reads, subscriptions and frozen stable snapshots.
 - [x] Lifecycle: approved; create, rename, delete; validation, timestamps, serialization and save-failure coverage.
-- [x] Entries: add/remove shows and edit notes; duplicate/missing errors and concurrent-edit coverage. Awaiting review.
-- [ ] Integration: store composition/context, independent initialization, fixtures and architecture documentation.
+- [x] Entries: approved; add/remove shows and edit notes; duplicate/missing errors and concurrent-edit coverage.
+- [x] Integration: store composition/context, independent initialization, fixtures and architecture documentation.
 
 ## Verification
 
 Run focused tests per functional unit. Extend the existing IndexedDB browser harness for migration, preservation and reload persistence. At integration run unit tests, lint, Astro checks, build, database browser checks and documentation checks.
 
-## Next action
+## Completion
 
-Obtain entry-operation approval before integration. All playlist operations are implemented; app composition remains unchanged. Next expose the store through composition/context, initialize independently of catalog downloads, update architecture docs, and run integration verification.
+All planned data-layer operations are implemented and exposed through store composition/context. Playlist initialization is independent of catalog downloads. No UI, remote sync or cross-tab coordination was added.
+
+Final verification passed: all 207 tests, the 26 focused store tests after test typing fixes, lint, Astro check (zero errors/warnings/hints), production build (674 pages), documentation checks and git diff whitespace checks. The IndexedDB browser harness passed migration, reload persistence, independent store instances, deletion persistence and edits during catalog initialization failure. No visual UI or cross-tab behavior was tested.
 
 Scaffolding checks: `bun run lint` and `bun run docs:check` passed. No behavior tests added for throwing stubs.
 

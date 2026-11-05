@@ -283,6 +283,44 @@ export async function runIndexedDBChecks() {
 			title: "Preserved", revision: 12, tags: [{ id: 7, title: "Preserved tag" }],
 			playback: [{ showId: 42, inProgress: true, positionInSeconds: 23, history: [] }], playlists: [],
 		});
+		const savedPlaylist = JSON.parse(await browser("eval", `(async () => {
+			const { createStores } = await import(new URL('/stores.js', location.href).href);
+			const first = createStores();
+			first.versionsStore.initialize = async () => { throw new Error('Catalog offline'); };
+			const catalog = first.initialize().catch((error) => error.message);
+			await first.playlistStore.initialize();
+			if (await catalog !== 'Catalog offline') throw new Error('Expected catalog failure');
+			const playlist = await first.playlistStore.create({ title: 'Original playlist' });
+			const playlistId = playlist.id;
+			await first.playlistStore.rename({ playlistId, title: 'Saved offline' });
+			await first.playlistStore.addShow({ playlistId, showId: 42 });
+			await first.playlistStore.addShow({ playlistId, showId: 99 });
+			await first.playlistStore.setNote({ playlistId, showId: 42, note: 'Favorite' });
+			await first.playlistStore.removeShow({ playlistId, showId: 99 });
+			const second = createStores();
+			await second.playlistStore.initialize();
+			const saved = first.playlistStore.get({ playlistId });
+			if (JSON.stringify(second.playlistStore.get({ playlistId })) !== JSON.stringify(saved)) throw new Error('Playlist store-instance persistence');
+			return saved;
+		})()`));
+		await browser("reload");
+		const reloadedPlaylist = JSON.parse(await browser("eval", `(async () => {
+			const { createStores } = await import(new URL('/stores.js', location.href).href);
+			const first = createStores();
+			await first.playlistStore.initialize();
+			const saved = first.playlistStore.getAll()[0];
+			if (!saved) throw new Error('Playlist reload persistence');
+			await first.playlistStore.delete({ playlistId: saved.id });
+			const second = createStores();
+			await second.playlistStore.initialize();
+			if (second.playlistStore.getAll().length) throw new Error('Playlist deletion persistence');
+			return saved;
+		})()`));
+		assert.deepEqual(reloadedPlaylist, savedPlaylist);
+		assert.equal(savedPlaylist.title, "Saved offline");
+		assert.equal(savedPlaylist.shows.length, 1);
+		assert.equal(savedPlaylist.shows[0].showId, 42);
+		assert.equal(savedPlaylist.shows[0].note, "Favorite");
 		const initialized = JSON.parse(await browser("eval", `(async () => {
 			const { createStores } = await import(new URL('/stores.js', location.href).href);
 			const first = createStores();

@@ -18,6 +18,9 @@ export function StoresProvider({ stores, children }: Props) {
 export function useStores(): Stores {
 	const stores = useContext(StoresContext);
 	useEffect(() => {
+		void stores.playlistStore.initialize().catch((error: unknown) => {
+			console.error("[PlaylistStore] initialization failed", error);
+		});
 		void stores.playbackStore.initialize().catch((error: unknown) => {
 			console.error("[PlaybackStore] initialization failed", error);
 		});

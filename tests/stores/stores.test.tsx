@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { mock, test } from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { createIndexedDB } from "../../src/database/indexed-db";
+import type { StoreName } from "../../src/database/types";
 import {
 	createStores,
 	StoresProvider,
@@ -34,6 +35,8 @@ test("fresh store sets have independent playback and subscriptions", () => {
 	const second = createStores();
 	assert.notEqual(first.audioStore, second.audioStore);
 	assert.notEqual(first.audioStore, stores.audioStore);
+	assert.notEqual(first.playlistStore, second.playlistStore);
+	assert.notEqual(first.playlistStore, stores.playlistStore);
 	let secondNotifications = 0;
 	const unsubscribe = second.audioStore.subscribe(() => secondNotifications++);
 	first.audioStore.select({
@@ -100,12 +103,20 @@ test("server rendering never initializes browser storage", () => {
 	const initialize = mock.method(injected, "initialize", async () => {
 		throw new Error("Must not initialize during SSR");
 	});
+	const playlists = mock.method(
+		injected.playlistStore,
+		"initialize",
+		async () => {
+			throw new Error("Must not initialize playlists during SSR");
+		},
+	);
 	renderToStaticMarkup(
 		<StoresProvider stores={injected}>
 			<ServerSnapshotProbe />
 		</StoresProvider>,
 	);
 	assert.equal(initialize.mock.callCount(), 0);
+	assert.equal(playlists.mock.callCount(), 0);
 });
 
 test("initialization loads shared versions before initializing ShowStore and TagStore", async () => {
@@ -253,4 +264,38 @@ test("shared initialization awaits tag completion and permits retry after tag fa
 	tags.mock.mockImplementation(async () => {});
 	await injected.initialize();
 	assert.equal(tags.mock.callCount(), 2);
+});
+
+test("playlist initialization remains independent of a failed catalog refresh and is exposed by context", async () => {
+	const database = createIndexedDB();
+	const objectStore = database.getObjectStore("playlists");
+	mock.method(objectStore, "getAll", async () => []);
+	mock.method(objectStore, "set", async () => {});
+	const getObjectStore = database.getObjectStore.bind(database);
+	mock.method(database, "getObjectStore", (name: StoreName) =>
+		name === "playlists" ? objectStore : getObjectStore(name),
+	);
+	const injected = createStores(database);
+	mock.method(injected.versionsStore, "initialize", async () => {
+		throw new Error("Catalog offline");
+	});
+	const catalog = injected.initialize();
+	await injected.playlistStore.initialize();
+	await assert.rejects(catalog, /Catalog offline/);
+	const playlist = await injected.playlistStore.create({
+		title: "Offline playlist",
+	});
+	function PlaylistProbe() {
+		const { playlistStore } = useStores();
+		assert.equal(playlistStore, injected.playlistStore);
+		return <span>{playlistStore.get({ playlistId: playlist.id })?.title}</span>;
+	}
+	assert.equal(
+		renderToStaticMarkup(
+			<StoresProvider stores={injected}>
+				<PlaylistProbe />
+			</StoresProvider>,
+		),
+		"<span>Offline playlist</span>",
+	);
 });

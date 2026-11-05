@@ -94,7 +94,7 @@ test("retrieval shares frozen records and isolates storage results", async () =>
 	assert.equal(all, store.getSnapshot());
 	assert.equal(all[0], loaded);
 	assert.equal(store.get({ playlistId: "playlist-a" }), loaded);
-	assert.throws(() => Array.prototype.pop.call(all[0].shows), TypeError);
+	assert.throws(() => Array.prototype.pop.call(loaded.shows), TypeError);
 	assert.ok(records[0]);
 	records[0] = { ...records[0], shows: [] };
 	assert.deepEqual(store.get({ playlistId: "playlist-a" }), playlist());
