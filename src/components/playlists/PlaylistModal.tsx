@@ -1,12 +1,27 @@
-import type { Ref } from "react";
+import { type Ref, useCallback, useSyncExternalStore } from "react";
+import { type Playlist, useStores } from "../../stores";
 import { getBasePath } from "../../utils/get-base-path";
 import styles from "./PlaylistModal.module.css";
+
+const emptyPlaylists: readonly Playlist[] = [];
 
 export default function PlaylistModal({
 	ref,
 }: {
 	ref: Ref<HTMLDialogElement>;
 }) {
+	const { playlistStore } = useStores();
+
+	const subscribe = useCallback(
+		(listener: () => void) => playlistStore.subscribe({ listener }),
+		[playlistStore],
+	);
+	const playlists = useSyncExternalStore(
+		subscribe,
+		playlistStore.getSnapshot,
+		() => emptyPlaylists,
+	);
+
 	return (
 		<dialog ref={ref} className={styles["modal"]} aria-label="Playlist">
 			<form method="dialog">
@@ -30,25 +45,17 @@ export default function PlaylistModal({
 				</div>
 
 				<fieldset aria-label="Playlists">
-					<label>
-						<input
-							type="checkbox"
-							name="playlists"
-							value="liked-showed"
-							defaultChecked
-							aria-label="Liked Showed"
-						/>
-						Liked Showed
-					</label>
-					<label>
-						<input
-							type="checkbox"
-							name="playlists"
-							value="for-later"
-							aria-label="For Later"
-						/>
-						For Later
-					</label>
+					{playlists.map((playlist) => (
+						<label key={playlist.id}>
+							<input
+								type="checkbox"
+								name="playlists"
+								value={playlist.id}
+								aria-label={playlist.title}
+							/>
+							{playlist.title}
+						</label>
+					))}
 				</fieldset>
 
 				<button
