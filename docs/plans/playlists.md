@@ -14,7 +14,7 @@
 - Mutations await initialization, serialize, persist, then publish memory changes. Failed operations reject without changing memory and do not poison the queue.
 - Missing playlists/entries reject. Unchanged titles/notes are no-ops.
 - Preserve creation/addition timestamps; edits advance `updatedAt`.
-- Retrieval returns defensive copies; readonly snapshots stay stable until changes. Lists sort oldest first, then ID.
+- Playlist and entry types are deeply readonly. Retrieval shares frozen records and a cached array without per-read cloning or sorting; callers choose presentation order. Clone database results once on initialization to establish store ownership.
 - No playlist revisions or VersionsStore integration. IndexedDB schema advances from 3 to 4.
 - Preserve existing user edits; do not modify docs/human/playlists.md.
 
@@ -22,8 +22,8 @@
 
 - [x] Structure: approved; store and test files created.
 - [x] Scaffolding: approved; exported Playlist/PlaylistEntry types, named-argument store signatures, typed schema entry; explicit stubs disconnected from working initialization.
-- [x] Persistence: playlists object store keyed by id; fresh creation, CRUD, reload persistence, and version-3 migration coverage. Awaiting review.
-- [ ] Retrieval: SSR-safe construction, shared/retryable initialization, defensive reads, subscriptions and snapshots.
+- [x] Persistence: approved; playlists object store keyed by id; fresh creation, CRUD, reload persistence, and version-3 migration coverage.
+- [x] Retrieval: SSR-safe construction, shared/retryable initialization, readonly shared reads, subscriptions and frozen stable snapshots. Awaiting review.
 - [ ] Lifecycle: create, rename, delete; validation, timestamps, serialization and save-failure coverage.
 - [ ] Entries: add/remove shows and edit notes; duplicate/missing errors and concurrent-edit coverage.
 - [ ] Integration: store composition/context, independent initialization, fixtures and architecture documentation.
@@ -34,8 +34,10 @@ Run focused tests per functional unit. Extend the existing IndexedDB browser har
 
 ## Next action
 
-Obtain persistence approval before implementing retrieval. Store construction and methods still explicitly throw until their implementation units; app composition remains unchanged. IndexedDB now creates playlists at schema version 4 without revision metadata.
+Obtain retrieval approval before implementing playlist lifecycle operations. Construction and reads now work; mutations remain throwing stubs and app composition remains unchanged.
 
 Scaffolding checks: `bun run lint` and `bun run docs:check` passed. No behavior tests added for throwing stubs.
 
 Persistence checks: `bun tests/database/indexed-db.browser.mjs` and `bun run lint` passed. Browser checks cover fresh schema, nested entry cloning, CRUD, batch write, reload persistence, and preservation of shows/tags/metadata/playback on version-3 upgrade. Existing version-2 upgrade coverage also passes.
+
+Readonly revision checks: all five focused playlist tests, `bun run lint`, and `bun run docs:check` passed. Tests cover shared identities, runtime mutation prevention, storage order, storage-result isolation, SSR-safe construction, initialization retry, notification timing and unsubscribe.
