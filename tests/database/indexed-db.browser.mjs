@@ -296,21 +296,21 @@ export async function runIndexedDBChecks() {
 			// A key conflict must reject rather than overwrite a user playlist.
 			await playlists.set({ ...candidate, type: 'user', title: 'User playlist' });
 			let rejected = false;
-			try { await first.ensureLikedPlaylist(candidate); } catch { rejected = true; }
+			try { await first.ensureLikedPlaylist({ fallback: candidate }); } catch { rejected = true; }
 			check(rejected, 'Liked creation transaction failure rejects');
 			check((await playlists.get(candidate.id)).type === 'user', 'Failed creation preserves user data');
 			await playlists.delete(candidate.id);
 			await Promise.all([
-				first.ensureLikedPlaylist(candidate),
-				second.ensureLikedPlaylist({ ...candidate, id: crypto.randomUUID() }),
+				first.ensureLikedPlaylist({ fallback: candidate }),
+				second.ensureLikedPlaylist({ fallback: { ...candidate, id: crypto.randomUUID() } }),
 			]);
 			let saved = await playlists.getAll();
 			check(saved.length === 1 && saved[0].type === 'liked', 'Concurrent connections create exactly one liked playlist');
 			check(saved[0].title === 'Liked Shows' && saved[0].shows.length === 0, 'Default contents');
 			const liked = { ...saved[0], shows: [{ showId: 42, addedAt: candidate.createdAt, note: 'Keep this note' }] };
 			await playlists.set(liked);
-			await first.ensureLikedPlaylist({ ...candidate, id: crypto.randomUUID() });
-			await second.ensureLikedPlaylist({ ...candidate, id: crypto.randomUUID() });
+			await first.ensureLikedPlaylist({ fallback: { ...candidate, id: crypto.randomUUID() } });
+			await second.ensureLikedPlaylist({ fallback: { ...candidate, id: crypto.randomUUID() } });
 			saved = await playlists.getAll();
 			check(saved.length === 1 && JSON.stringify(saved[0]) === JSON.stringify(liked), 'Repeated creation preserves UUID, timestamps and contents');
 			await playlists.delete(liked.id);

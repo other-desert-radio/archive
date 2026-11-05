@@ -37,9 +37,9 @@ function setup() {
 	const ensure = mock.method(
 		database,
 		"ensureLikedPlaylist",
-		async (candidate: Playlist & { type: "liked" }) => {
+		async ({ fallback }: { fallback: Playlist & { type: "liked" } }) => {
 			if (!records.some((item) => item.type === "liked")) {
-				records.push(candidate);
+				records.push(fallback);
 			}
 		},
 	);
@@ -485,10 +485,10 @@ test("initialization creates a UUID default before reading and publishes only af
 	records.length = 0;
 	const commit = Promise.withResolvers<void>();
 	const started = Promise.withResolvers<void>();
-	ensure.mock.mockImplementationOnce(async (candidate) => {
+	ensure.mock.mockImplementationOnce(async ({ fallback }) => {
 		started.resolve();
 		await commit.promise;
-		records.push(candidate);
+		records.push(fallback);
 	});
 	const listener = mock.fn();
 	store.subscribe({ listener });

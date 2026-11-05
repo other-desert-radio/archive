@@ -21,12 +21,14 @@ export class PlaylistStore {
 		const now = new Date().toISOString();
 		this.initialization ??= this.database
 			.ensureLikedPlaylist({
-				id: crypto.randomUUID(),
-				type: "liked",
-				title: "Liked Shows",
-				createdAt: now,
-				updatedAt: now,
-				shows: [],
+				fallback: {
+					id: crypto.randomUUID(),
+					type: "liked",
+					title: "Liked Shows",
+					createdAt: now,
+					updatedAt: now,
+					shows: [],
+				},
 			})
 			.then(() => this.objectStore.getAll())
 			.then((playlists) => {
