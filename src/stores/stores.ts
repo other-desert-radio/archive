@@ -2,6 +2,7 @@ import { createIndexedDB } from "../database/indexed-db";
 import type { Database } from "../database/types";
 import { AudioStore } from "./audio/audio-store";
 import { PlaybackStore } from "./playback/playback-store";
+import { PlaylistStore } from "./playlists/playlist-store";
 import { ShowStore } from "./shows/show-store";
 import { TagStore } from "./tags/tag-store";
 import { VersionsStore } from "./versions/versions-store";
@@ -9,6 +10,7 @@ import { VersionsStore } from "./versions/versions-store";
 export type Stores = {
 	audioStore: AudioStore;
 	playbackStore: PlaybackStore;
+	playlistStore: PlaylistStore;
 	showStore: ShowStore;
 	tagStore: TagStore;
 	versionsStore: VersionsStore;
@@ -23,6 +25,7 @@ export function createStores(database: Database = createIndexedDB()): Stores {
 	return {
 		audioStore: new AudioStore(),
 		playbackStore: new PlaybackStore(database),
+		playlistStore: new PlaylistStore({ database }),
 		showStore,
 		tagStore,
 		versionsStore,
