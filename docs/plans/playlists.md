@@ -21,8 +21,8 @@
 ## Chunks
 
 - [x] Structure: approved; store and test files created.
-- [x] Scaffolding: exported Playlist/PlaylistEntry types, named-argument store signatures, typed schema entry; explicit stubs disconnected from working initialization. Awaiting review.
-- [ ] Persistence: playlists object store keyed by id; fresh creation and version-3 migration coverage.
+- [x] Scaffolding: approved; exported Playlist/PlaylistEntry types, named-argument store signatures, typed schema entry; explicit stubs disconnected from working initialization.
+- [x] Persistence: playlists object store keyed by id; fresh creation, CRUD, reload persistence, and version-3 migration coverage. Awaiting review.
 - [ ] Retrieval: SSR-safe construction, shared/retryable initialization, defensive reads, subscriptions and snapshots.
 - [ ] Lifecycle: create, rename, delete; validation, timestamps, serialization and save-failure coverage.
 - [ ] Entries: add/remove shows and edit notes; duplicate/missing errors and concurrent-edit coverage.
@@ -34,6 +34,8 @@ Run focused tests per functional unit. Extend the existing IndexedDB browser har
 
 ## Next action
 
-Obtain scaffolding approval before implementing persistence. Store construction and methods explicitly throw until their implementation units; app composition remains unchanged. The typed database schema declares playlists, but IndexedDB does not create it until the persistence chunk.
+Obtain persistence approval before implementing retrieval. Store construction and methods still explicitly throw until their implementation units; app composition remains unchanged. IndexedDB now creates playlists at schema version 4 without revision metadata.
 
 Scaffolding checks: `bun run lint` and `bun run docs:check` passed. No behavior tests added for throwing stubs.
+
+Persistence checks: `bun tests/database/indexed-db.browser.mjs` and `bun run lint` passed. Browser checks cover fresh schema, nested entry cloning, CRUD, batch write, reload persistence, and preservation of shows/tags/metadata/playback on version-3 upgrade. Existing version-2 upgrade coverage also passes.
