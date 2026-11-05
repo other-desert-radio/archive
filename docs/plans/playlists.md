@@ -20,8 +20,8 @@
 
 ## Chunks
 
-- [x] Structure: empty store and test files created; existing files unchanged. Awaiting review.
-- [ ] Scaffolding: exported Playlist/PlaylistEntry types, named-argument store signatures, typed schema entry; explicit stubs disconnected from working initialization.
+- [x] Structure: approved; store and test files created.
+- [x] Scaffolding: exported Playlist/PlaylistEntry types, named-argument store signatures, typed schema entry; explicit stubs disconnected from working initialization. Awaiting review.
 - [ ] Persistence: playlists object store keyed by id; fresh creation and version-3 migration coverage.
 - [ ] Retrieval: SSR-safe construction, shared/retryable initialization, defensive reads, subscriptions and snapshots.
 - [ ] Lifecycle: create, rename, delete; validation, timestamps, serialization and save-failure coverage.
@@ -34,4 +34,6 @@ Run focused tests per functional unit. Extend the existing IndexedDB browser har
 
 ## Next action
 
-Obtain structure approval and an explicit scaffolding request before adding contracts or behavior. No tests run for empty files. The existing draft types still contain unresolved uuid/timestamp identifiers; resolve during scaffolding.
+Obtain scaffolding approval before implementing persistence. Store construction and methods explicitly throw until their implementation units; app composition remains unchanged. The typed database schema declares playlists, but IndexedDB does not create it until the persistence chunk.
+
+Scaffolding checks: `bun run lint` and `bun run docs:check` passed. No behavior tests added for throwing stubs.

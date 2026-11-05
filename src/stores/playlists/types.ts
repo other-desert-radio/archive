@@ -1,11 +1,16 @@
-type Playlist = {
-	id: uuid; // UUID so if we upload these to a server, the ID are unique
+export type PlaylistEntry = {
+	showId: number;
+	/** UTC ISO timestamp. */
+	addedAt: string;
+	note?: string;
+};
+
+export type Playlist = {
+	id: string;
 	title: string;
-	createdAt: timestamp;
-	lastUpdated: timestamp;
-	shows: Array<{
-		id: number; // show ID
-		addedAt: timestamp;
-		note: string | undefined; // short note users can add
-	}>;
+	/** UTC ISO timestamp. */
+	createdAt: string;
+	/** UTC ISO timestamp. */
+	updatedAt: string;
+	shows: PlaylistEntry[];
 };

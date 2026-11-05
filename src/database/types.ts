@@ -1,9 +1,13 @@
 import type { PlaybackRecord } from "../stores/playback/types";
+import type { Playlist } from "../stores/playlists/types";
 import type { Show } from "../utils/fetch-shows";
 
 import type { Tag } from "../utils/fetch-tags";
 
 export type StoreSchema = {
+	// local user playlists; independent of published catalog revisions
+	playlists: { value: Playlist; key: string };
+
 	// playback history
 	playback: { value: PlaybackRecord; key: number };
 
