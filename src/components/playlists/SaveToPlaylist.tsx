@@ -3,7 +3,7 @@ import { getBasePath } from "../../utils/get-base-path";
 import PlaylistModal from "./PlaylistModal";
 import styles from "./SaveToPlaylist.module.css";
 
-export default function SaveToPlaylist() {
+export default function SaveToPlaylist({ showId }: { showId: number }) {
 	const modal = useRef<HTMLDialogElement>(null);
 	return (
 		<>
@@ -18,7 +18,7 @@ export default function SaveToPlaylist() {
 				</svg>
 				Save to Playlist
 			</button>
-			<PlaylistModal ref={modal} />
+			<PlaylistModal key={showId} ref={modal} showId={showId} />
 		</>
 	);
 }

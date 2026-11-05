@@ -146,7 +146,11 @@ function ActiveMiniplayer({
 							/>
 						</div>
 					</div>
-					<PlaylistModal ref={playlistModal} />
+					<PlaylistModal
+						key={track.show.id}
+						ref={playlistModal}
+						showId={track.show.id}
+					/>
 				</div>
 			);
 		case "samcast": {
