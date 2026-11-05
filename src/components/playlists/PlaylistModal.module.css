@@ -8,6 +8,16 @@
 	color: black;
 }
 
+.header {
+	display: flex;
+	justify-content: space-between;
+}
+
+h1 {
+	padding: 0;
+	margin: 0;
+}
+
 .modal button {
 	display: flex;
 	align-items: center;

@@ -9,18 +9,32 @@ export default function PlaylistModal({
 }) {
 	return (
 		<dialog ref={ref} className={styles["modal"]} aria-label="Playlist">
-			<p>Playlist</p>
 			<form method="dialog">
-				<button type="submit" aria-label="Close playlist">
-					<svg
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						strokeWidth="1.5"
-						aria-hidden="true"
+				<div className={styles["header"]}>
+					<h1>Save Show</h1>
+					<button
+						type="button"
+						aria-label="Close playlist"
+						onClick={(event) => event.currentTarget.closest("dialog")?.close()}
 					>
-						<use href={`${getBasePath()}/assets/icons/close.svg#close`} />
-					</svg>
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="1.5"
+							aria-hidden="true"
+						>
+							<use href={`${getBasePath()}/assets/icons/close.svg#close`} />
+						</svg>
+					</button>
+				</div>
+
+				<button
+					className={styles["save"]}
+					type="submit"
+					aria-label="Save playlist"
+				>
+					Save
 				</button>
 			</form>
 		</dialog>
