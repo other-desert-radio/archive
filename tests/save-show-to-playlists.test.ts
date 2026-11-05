@@ -10,6 +10,7 @@ function setup() {
 	const objectStore = database.getObjectStore("playlists");
 	const records: Playlist[] = ["a", "b", "c"].map((id) => ({
 		id,
+		type: "user",
 		title: id,
 		createdAt: "2026-11-05T00:00:00.000Z",
 		updatedAt: "2026-11-05T00:00:00.000Z",
@@ -20,10 +21,12 @@ function setup() {
 						{
 							showId: 42,
 							addedAt: "2026-11-05T00:00:00.000Z",
+							updatedAt: "2026-11-05T00:00:00.000Z",
 							note: `note ${id}`,
 						},
 					],
 	}));
+	mock.method(database, "ensureLikedPlaylist", async () => {});
 	mock.method(objectStore, "getAll", async () => records);
 	const write = mock.method(
 		objectStore,

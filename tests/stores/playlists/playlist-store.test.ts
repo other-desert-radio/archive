@@ -17,7 +17,14 @@ function playlist({
 		title: "Favorites",
 		createdAt,
 		updatedAt: createdAt,
-		shows: [{ showId: 42, addedAt: createdAt, note: "Listen again" }],
+		shows: [
+			{
+				showId: 42,
+				addedAt: createdAt,
+				updatedAt: createdAt,
+				note: "Listen again",
+			},
+		],
 	};
 }
 
@@ -335,6 +342,7 @@ test("entry edits retain insertion order and timestamps without needing a catalo
 	const newEntry = added.shows[1];
 	assert.ok(newEntry);
 	assert.equal(new Date(newEntry.addedAt).toISOString(), newEntry.addedAt);
+	assert.equal(newEntry.updatedAt, newEntry.addedAt);
 	assert.equal(added.createdAt, playlist().createdAt);
 	assert.deepEqual(added.shows[0], playlist().shows[0]);
 	await store.setNote({
@@ -579,4 +587,45 @@ test("mutations preserve playlist order for callers to choose presentation", asy
 		store.getAll().map((item) => item.id),
 		["liked-id", "user-b", created.id],
 	);
+});
+
+test("note changes timestamp the entry, including clearing, while unchanged notes do not write", async () => {
+	const { store, write } = setup();
+	let now = "2026-11-06T12:00:00.000Z";
+	const clock = mock.method(Date.prototype, "toISOString", () => now);
+	try {
+		await store.setNote({
+			playlistId: "playlist-a",
+			showId: 42,
+			note: "Changed",
+		});
+		const changed = store.get({ playlistId: "playlist-a" })?.shows[0];
+		assert.equal(changed?.updatedAt, now);
+		assert.equal(changed?.addedAt, playlist().shows[0]?.addedAt);
+		assert.equal(write.mock.calls[0]?.arguments[0]?.shows[0]?.updatedAt, now);
+		now = "2026-11-07T12:00:00.000Z";
+		await store.setNote({
+			playlistId: "playlist-a",
+			showId: 42,
+			note: "Changed",
+		});
+		assert.equal(store.get({ playlistId: "playlist-a" })?.shows[0], changed);
+		assert.equal(write.mock.callCount(), 1);
+		await store.setNote({
+			playlistId: "playlist-a",
+			showId: 42,
+			note: undefined,
+		});
+		assert.equal(
+			store.get({ playlistId: "playlist-a" })?.shows[0]?.updatedAt,
+			now,
+		);
+		assert.equal(
+			store.get({ playlistId: "playlist-a" })?.shows[0]?.note,
+			undefined,
+		);
+		assert.equal(changed?.updatedAt, "2026-11-06T12:00:00.000Z");
+	} finally {
+		clock.mock.restore();
+	}
 });

@@ -2,6 +2,8 @@ export type PlaylistEntry = Readonly<{
 	showId: number;
 	/** UTC ISO timestamp. */
 	addedAt: string;
+	/** UTC ISO timestamp of the last entry change. */
+	updatedAt: string;
 	note?: string;
 }>;
 
