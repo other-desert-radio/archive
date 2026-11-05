@@ -317,44 +317,64 @@ export async function runIndexedDBChecks() {
 			return { passed: true };
 		})()`));
 		assert.deepEqual(likedCreation, { passed: true });
-		const savedPlaylist = JSON.parse(await browser("eval", `(async () => {
+		const savedPlaylists = JSON.parse(await browser("eval", `(async () => {
 			const { createStores } = await import(new URL('/stores.js', location.href).href);
 			const first = createStores();
+			const second = createStores();
 			first.versionsStore.initialize = async () => { throw new Error('Catalog offline'); };
 			const catalog = first.initialize().catch((error) => error.message);
-			await first.playlistStore.initialize();
+			await Promise.all([first.playlistStore.initialize(), second.playlistStore.initialize()]);
 			if (await catalog !== 'Catalog offline') throw new Error('Expected catalog failure');
+			const defaults = first.playlistStore.getAll().filter((playlist) => playlist.type === 'liked');
+			if (defaults.length !== 1 || defaults[0].title !== 'Liked Shows') throw new Error('Expected one default playlist');
+			const likedId = defaults[0].id;
+			if (second.playlistStore.getAll().filter((playlist) => playlist.type === 'liked').length !== 1 || !second.playlistStore.get({ playlistId: likedId })) throw new Error('Concurrent initialization must share default UUID');
+			await first.playlistStore.addShow({ playlistId: likedId, showId: 99 });
+			await first.playlistStore.setNote({ playlistId: likedId, showId: 99, note: 'Keep my favorite' });
 			const playlist = await first.playlistStore.create({ title: 'Original playlist' });
 			const playlistId = playlist.id;
+			if (playlist.type !== 'user') throw new Error('Created playlists must be user playlists');
 			await first.playlistStore.rename({ playlistId, title: 'Saved offline' });
 			await first.playlistStore.addShow({ playlistId, showId: 42 });
 			await first.playlistStore.addShow({ playlistId, showId: 99 });
 			await first.playlistStore.setNote({ playlistId, showId: 42, note: 'Favorite' });
 			await first.playlistStore.removeShow({ playlistId, showId: 99 });
-			const second = createStores();
-			await second.playlistStore.initialize();
+			const third = createStores();
+			await third.playlistStore.initialize();
 			const saved = first.playlistStore.get({ playlistId });
-			if (JSON.stringify(second.playlistStore.get({ playlistId })) !== JSON.stringify(saved)) throw new Error('Playlist store-instance persistence');
-			return saved;
+			if (JSON.stringify(third.playlistStore.get({ playlistId })) !== JSON.stringify(saved)) throw new Error('Playlist store-instance persistence');
+			return { user: saved, liked: first.playlistStore.get({ playlistId: likedId }) };
 		})()`));
 		await browser("reload");
-		const reloadedPlaylist = JSON.parse(await browser("eval", `(async () => {
+		const reloadedPlaylists = JSON.parse(await browser("eval", `(async () => {
 			const { createStores } = await import(new URL('/stores.js', location.href).href);
 			const first = createStores();
 			await first.playlistStore.initialize();
-			const saved = first.playlistStore.getAll()[0];
-			if (!saved) throw new Error('Playlist reload persistence');
+			const saved = first.playlistStore.get({ playlistId: ${JSON.stringify(savedPlaylists.user.id)} });
+			const liked = first.playlistStore.get({ playlistId: ${JSON.stringify(savedPlaylists.liked.id)} });
+			if (!saved || !liked || first.playlistStore.getAll().length !== 2) throw new Error('Playlist reload persistence');
+			for (const operation of [
+				() => first.playlistStore.rename({ playlistId: liked.id, title: 'Renamed' }),
+				() => first.playlistStore.delete({ playlistId: liked.id }),
+			]) {
+				let rejected = false;
+				try { await operation(); } catch { rejected = true; }
+				if (!rejected) throw new Error('Liked playlist must be protected');
+			}
 			await first.playlistStore.delete({ playlistId: saved.id });
 			const second = createStores();
 			await second.playlistStore.initialize();
-			if (second.playlistStore.getAll().length) throw new Error('Playlist deletion persistence');
-			return saved;
+			const remaining = second.playlistStore.getAll();
+			if (remaining.length !== 1 || JSON.stringify(remaining[0]) !== JSON.stringify(liked)) throw new Error('Only unchanged liked playlist should remain');
+			return { user: saved, liked };
 		})()`));
-		assert.deepEqual(reloadedPlaylist, savedPlaylist);
-		assert.equal(savedPlaylist.title, "Saved offline");
-		assert.equal(savedPlaylist.shows.length, 1);
-		assert.equal(savedPlaylist.shows[0].showId, 42);
-		assert.equal(savedPlaylist.shows[0].note, "Favorite");
+		assert.deepEqual(reloadedPlaylists, savedPlaylists);
+		assert.equal(savedPlaylists.user.title, "Saved offline");
+		assert.equal(savedPlaylists.user.shows.length, 1);
+		assert.equal(savedPlaylists.user.shows[0].showId, 42);
+		assert.equal(savedPlaylists.user.shows[0].note, "Favorite");
+		assert.equal(savedPlaylists.liked.shows[0].showId, 99);
+		assert.equal(savedPlaylists.liked.shows[0].note, "Keep my favorite");
 		const initialized = JSON.parse(await browser("eval", `(async () => {
 			const { createStores } = await import(new URL('/stores.js', location.href).href);
 			const first = createStores();
