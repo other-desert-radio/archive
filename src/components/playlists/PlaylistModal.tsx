@@ -51,6 +51,15 @@ export default function PlaylistModal({
 					</label>
 				</fieldset>
 
+				<button type="button" aria-label="New playlist" disabled>
+					+ New Playlist
+				</button>
+
+				<label>
+					Add a note
+					<textarea name="note" rows={6} aria-label="Add a note" />
+				</label>
+
 				<button
 					className={styles["save"]}
 					type="submit"
