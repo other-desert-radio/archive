@@ -181,7 +181,14 @@ export default function PlaylistModal({
 							rows={6}
 							aria-label="Add a note"
 							disabled={saving}
-							value={note ?? ""}
+							value={
+								note ??
+								playlists
+									.flatMap((playlist) => playlist.shows)
+									.find((entry) => entry.showId === showId && entry.note)
+									?.note ??
+								""
+							}
 							onChange={(event) => setNote(event.currentTarget.value)}
 						/>
 					</label>

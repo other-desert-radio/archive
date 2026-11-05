@@ -1,6 +1,6 @@
 .modal {
 	box-sizing: border-box;
-	width: min(24rem, calc(100% - 2rem));
+	width: min(30rem, calc(100% - 2rem));
 	max-height: calc(100dvh - 2rem);
 	overflow-y: auto;
 	margin: auto;
@@ -8,6 +8,10 @@
 	border: var(--border-secondary) solid black;
 	background: white;
 	color: black;
+}
+
+.modal::backdrop {
+	background: rgb(0 0 0 / 50%);
 }
 
 .modal fieldset {
