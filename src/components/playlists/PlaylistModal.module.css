@@ -10,12 +10,19 @@
 
 .header {
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
+	gap: var(--space-sm);
+	margin-bottom: var(--space-md);
+	padding-bottom: var(--space-xs);
+	border-bottom: 1px solid currentColor;
 }
 
-h1 {
+.header h1 {
 	padding: 0;
 	margin: 0;
+	font-size: var(--font-small-title);
+	font-weight: 400;
 }
 
 .modal button {
