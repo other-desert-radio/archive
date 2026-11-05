@@ -107,7 +107,7 @@ export async function runIndexedDBChecks() {
 			const playlists = database.getObjectStore('playlists');
 			check((await playlists.getAll()).length === 0, 'Empty playlists');
 			const playlist = {
-				id: crypto.randomUUID(), title: 'Saved playlist',
+				id: crypto.randomUUID(), type: 'user', title: 'Saved playlist',
 				createdAt: '2026-11-05T12:00:00.000Z', updatedAt: '2026-11-05T12:00:00.000Z',
 				shows: [{ showId: 42, addedAt: '2026-11-05T12:00:00.000Z', note: 'Favorite' }],
 			};
@@ -283,6 +283,40 @@ export async function runIndexedDBChecks() {
 			title: "Preserved", revision: 12, tags: [{ id: 7, title: "Preserved tag" }],
 			playback: [{ showId: 42, inProgress: true, positionInSeconds: 23, history: [] }], playlists: [],
 		});
+		const likedCreation = JSON.parse(await browser("eval", `(async () => {
+			const check = (ok, message) => { if (!ok) throw new Error(message); };
+			const { createIndexedDB } = await import(new URL('/database.js', location.href).href);
+			const first = createIndexedDB();
+			const second = createIndexedDB();
+			const playlists = first.getObjectStore('playlists');
+			const candidate = {
+				id: crypto.randomUUID(), type: 'liked', title: 'Liked Shows',
+				createdAt: '2026-11-05T12:00:00.000Z', updatedAt: '2026-11-05T12:00:00.000Z', shows: [],
+			};
+			// A key conflict must reject rather than overwrite a user playlist.
+			await playlists.set({ ...candidate, type: 'user', title: 'User playlist' });
+			let rejected = false;
+			try { await first.ensureLikedPlaylist(candidate); } catch { rejected = true; }
+			check(rejected, 'Liked creation transaction failure rejects');
+			check((await playlists.get(candidate.id)).type === 'user', 'Failed creation preserves user data');
+			await playlists.delete(candidate.id);
+			await Promise.all([
+				first.ensureLikedPlaylist(candidate),
+				second.ensureLikedPlaylist({ ...candidate, id: crypto.randomUUID() }),
+			]);
+			let saved = await playlists.getAll();
+			check(saved.length === 1 && saved[0].type === 'liked', 'Concurrent connections create exactly one liked playlist');
+			check(saved[0].title === 'Liked Shows' && saved[0].shows.length === 0, 'Default contents');
+			const liked = { ...saved[0], shows: [{ showId: 42, addedAt: candidate.createdAt, note: 'Keep this note' }] };
+			await playlists.set(liked);
+			await first.ensureLikedPlaylist({ ...candidate, id: crypto.randomUUID() });
+			await second.ensureLikedPlaylist({ ...candidate, id: crypto.randomUUID() });
+			saved = await playlists.getAll();
+			check(saved.length === 1 && JSON.stringify(saved[0]) === JSON.stringify(liked), 'Repeated creation preserves UUID, timestamps and contents');
+			await playlists.delete(liked.id);
+			return { passed: true };
+		})()`));
+		assert.deepEqual(likedCreation, { passed: true });
 		const savedPlaylist = JSON.parse(await browser("eval", `(async () => {
 			const { createStores } = await import(new URL('/stores.js', location.href).href);
 			const first = createStores();

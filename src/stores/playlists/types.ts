@@ -8,6 +8,8 @@ export type PlaylistEntry = Readonly<{
 /** Edit through PlaylistStore so changes are persisted and subscribers notified. */
 export type Playlist = Readonly<{
 	id: string;
+	/** Distinguishes the protected, first-listed Liked Shows playlist from user playlists. */
+	type: "user" | "liked";
 	title: string;
 	/** UTC ISO timestamp. */
 	createdAt: string;

@@ -1,3 +1,4 @@
+import type { Playlist } from "../stores/playlists/types";
 import type {
 	Database,
 	DBStore,
@@ -110,6 +111,20 @@ export function createIndexedDB(): Database {
 	}
 
 	return {
+		ensureLikedPlaylist(
+			candidate: Playlist & { type: "liked" },
+		): Promise<void> {
+			return execute(["playlists"], "readwrite", (tx) => {
+				const store = tx.objectStore("playlists");
+				const request: IDBRequest<Playlist[]> = store.getAll();
+				request.onsuccess = () => {
+					if (!request.result.some((playlist) => playlist.type === "liked")) {
+						store.add(candidate);
+					}
+				};
+				return () => undefined;
+			});
+		},
 		getObjectStore<N extends StoreName>(
 			name: N,
 		): DBStore<StoreSchema[N]["value"], StoreSchema[N]["key"]> {

@@ -76,6 +76,7 @@ export class PlaylistStore {
 				const now = new Date().toISOString();
 				const playlist: Playlist = {
 					id: crypto.randomUUID(),
+					type: "user",
 					title: normalizedTitle,
 					createdAt: now,
 					updatedAt: now,

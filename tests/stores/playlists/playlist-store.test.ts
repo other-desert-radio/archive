@@ -13,6 +13,7 @@ function playlist({
 } = {}): Playlist {
 	return {
 		id: playlistId,
+		type: "user",
 		title: "Favorites",
 		createdAt,
 		updatedAt: createdAt,
