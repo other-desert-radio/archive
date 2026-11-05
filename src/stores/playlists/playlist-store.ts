@@ -8,6 +8,7 @@ export class PlaylistStore {
 	private listeners = new Set<() => void>();
 	private objectStore: DBStore<Playlist, string>;
 	private initialization: Promise<void> | undefined;
+	private saving: Promise<void> = Promise.resolve();
 
 	constructor({ database }: { database: Database }) {
 		this.objectStore = database.getObjectStore("playlists");
@@ -65,16 +66,97 @@ export class PlaylistStore {
 	}
 
 	/** Creates a UUID and timestamps; returns the committed playlist. */
-	create(_options: { title: string }): Promise<Playlist> {
-		throw new Error("Not implemented");
+	create({ title }: { title: string }): Promise<Playlist> {
+		return this.enqueue({
+			operation: async () => {
+				const normalizedTitle = title.trim();
+				if (!normalizedTitle) {
+					throw new Error("Playlist title cannot be blank");
+				}
+				const now = new Date().toISOString();
+				const playlist: Playlist = {
+					id: crypto.randomUUID(),
+					title: normalizedTitle,
+					createdAt: now,
+					updatedAt: now,
+					shows: [],
+				};
+				await this.objectStore.set(playlist);
+				this.playlists.set(playlist.id, playlist);
+				this.notify();
+				return playlist;
+			},
+		});
 	}
 
-	rename(_options: { playlistId: string; title: string }): Promise<void> {
-		throw new Error("Not implemented");
+	rename({
+		playlistId,
+		title,
+	}: {
+		playlistId: string;
+		title: string;
+	}): Promise<void> {
+		return this.enqueue({
+			operation: async () => {
+				const playlist = this.requirePlaylist({ playlistId });
+				const normalizedTitle = title.trim();
+				if (!normalizedTitle) {
+					throw new Error("Playlist title cannot be blank");
+				}
+				if (playlist.title === normalizedTitle) {
+					return;
+				}
+				const updated: Playlist = {
+					...playlist,
+					title: normalizedTitle,
+					updatedAt: new Date().toISOString(),
+				};
+				await this.objectStore.set(updated);
+				this.playlists.set(playlistId, updated);
+				this.notify();
+			},
+		});
 	}
 
-	delete(_options: { playlistId: string }): Promise<void> {
-		throw new Error("Not implemented");
+	delete({ playlistId }: { playlistId: string }): Promise<void> {
+		return this.enqueue({
+			operation: async () => {
+				this.requirePlaylist({ playlistId });
+				await this.objectStore.delete(playlistId);
+				this.playlists.delete(playlistId);
+				this.notify();
+			},
+		});
+	}
+
+	private requirePlaylist({ playlistId }: { playlistId: string }): Playlist {
+		const playlist = this.playlists.get(playlistId);
+		if (!playlist) {
+			throw new Error(`Playlist not found: ${playlistId}`);
+		}
+		return playlist;
+	}
+
+	/**
+	 * Run mutations in call order after initialization so each reads the latest
+	 * committed state. Each operation must persist before publishing its changes.
+	 * Return its result or rejection to the caller; failures do not block later work.
+	 */
+	private enqueue<T>({
+		operation,
+	}: {
+		operation: () => Promise<T>;
+	}): Promise<T> {
+		const save = this.saving.then(async () => {
+			await this.initialize();
+			return operation();
+		});
+		// Recover the queue after failure while preserving rejection for the caller.
+		this.saving = save.then(
+			() => {},
+			() => {},
+		);
+		return save;
 	}
 
 	/** Appends a show reference; duplicate additions reject. */
