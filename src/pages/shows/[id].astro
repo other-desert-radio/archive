@@ -177,18 +177,13 @@ const hydratedTags = hydrateTags(show, tags);
 
   .show-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    width: min(100%, calc(var(--density-unit) * 48));
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    width: 100%;
     margin-inline: auto;
     align-items: start;
     gap: var(--grid-column-gap);
     row-gap: var(--space-sm);
     margin-top: var(--grid-column-gap);
-  }
-
-  .show-grid.has-description {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    width: 100%;
   }
 
   .show-description {
@@ -218,8 +213,11 @@ const hydratedTags = hydrateTags(show, tags);
     display: flex;
     flex-direction: column;
     gap: var(--grid-column-gap);
-    grid-column: 1;
     min-width: 0;
+  }
+
+  .has-description .show-djs {
+    grid-column: 1;
   }
 
   .show-artwork {
