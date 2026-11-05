@@ -68,6 +68,7 @@ const hydratedTags = hydrateTags(show, tags);
         border="secondary"
         client:load
       />
+      <SaveToPlaylist client:load />
     </div>
     {
       show.description !== undefined ? (
@@ -106,7 +107,6 @@ const hydratedTags = hydrateTags(show, tags);
           </a>
         ))
       }
-      <SaveToPlaylist client:load />
     </div>
   </section>
 </BaseLayout>

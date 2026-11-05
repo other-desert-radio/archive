@@ -5,6 +5,7 @@
 	gap: var(--space-sm);
 	min-height: 2.75rem;
 	max-width: 100%;
+	margin-top: var(--space-sm);
 	padding: var(--space-sm);
 	border: var(--border-primary) solid currentColor;
 	background: transparent;

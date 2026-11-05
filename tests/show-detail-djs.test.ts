@@ -22,8 +22,8 @@ test("show details include each associated DJ's profile and biography", {
 		assert.ok(html.includes("/archive/assets/icons/heart.svg#heart"));
 		assert.ok(html.includes('aria-label="Playlist"'));
 		assert.ok(
-			html.indexOf('aria-label="Save to Playlist"') >
-				html.lastIndexOf('class="dj-name"'),
+			html.indexOf('aria-label="Save to Playlist"') <
+				html.indexOf('class="dj-name"'),
 		);
 		assert.equal(
 			(html.match(/class="show-dj"/g) ?? []).length,
