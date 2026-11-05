@@ -2,8 +2,8 @@ import { useRef } from "react";
 import tagCatalog from "../../../public/resources/tags.json";
 import type { AudioTrack } from "../../stores/audio";
 import { useAudioState } from "../../stores/audio";
-import PlaylistModal from "../favorites/PlaylistModal";
 import MixcloudWidget from "../mixcloud";
+import PlaylistModal from "../playlists/PlaylistModal";
 import { DesktopActions, MobileExpand } from "./CompactActions";
 import {
 	FullscreenDJs,
