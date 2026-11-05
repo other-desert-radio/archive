@@ -2,7 +2,7 @@ import { useRef } from "react";
 import tagCatalog from "../../../public/resources/tags.json";
 import type { AudioTrack } from "../../stores/audio";
 import { useAudioState } from "../../stores/audio";
-import FavoriteModal from "../favorites/FavoriteModal";
+import PlaylistModal from "../favorites/PlaylistModal";
 import MixcloudWidget from "../mixcloud";
 import { DesktopActions, MobileExpand } from "./CompactActions";
 import {
@@ -39,8 +39,8 @@ function ActiveMiniplayer({
 	track: AudioTrack;
 	base: string;
 }) {
-	const favoriteModal = useRef<HTMLDialogElement>(null);
-	const openFavorites = () => favoriteModal.current?.showModal();
+	const playlistModal = useRef<HTMLDialogElement>(null);
+	const openFavorites = () => playlistModal.current?.showModal();
 	const { presentation, compactHeight, playerRef, expand, close } =
 		usePlayerPresentation();
 
@@ -146,7 +146,7 @@ function ActiveMiniplayer({
 							/>
 						</div>
 					</div>
-					<FavoriteModal ref={favoriteModal} />
+					<PlaylistModal ref={playlistModal} />
 				</div>
 			);
 		case "samcast": {
