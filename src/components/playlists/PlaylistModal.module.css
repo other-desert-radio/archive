@@ -1,11 +1,69 @@
 .modal {
 	box-sizing: border-box;
 	width: min(24rem, calc(100% - 2rem));
+	max-height: calc(100dvh - 2rem);
+	overflow-y: auto;
 	margin: auto;
 	padding: var(--space-md);
 	border: var(--border-secondary) solid black;
 	background: white;
 	color: black;
+}
+
+.modal fieldset {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-sm);
+	min-width: 0;
+	margin: 0;
+	padding: 0 var(--space-sm);
+	border: 0;
+}
+
+.modal fieldset label {
+	display: flex;
+	align-items: center;
+	gap: var(--space-sm);
+	min-height: 2.75rem;
+	font-size: var(--font-small-title);
+	overflow-wrap: anywhere;
+	cursor: pointer;
+}
+
+.modal input[type="checkbox"] {
+	appearance: none;
+	flex-shrink: 0;
+	width: var(--space-lg);
+	height: var(--space-lg);
+	margin: 0;
+	border: var(--border-secondary) solid currentColor;
+	background: white;
+	cursor: pointer;
+}
+
+.modal input[type="checkbox"]:checked {
+	background: black;
+	box-shadow: inset 0 0 0 2px white;
+}
+
+.modal form > label {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-xs);
+	margin: var(--space-md) var(--space-sm);
+}
+
+.modal textarea {
+	box-sizing: border-box;
+	width: 100%;
+	min-height: calc(var(--density-unit) * 10);
+	padding: var(--space-xs);
+	border: 1px solid currentColor;
+	border-radius: 0;
+	background: white;
+	color: inherit;
+	font: inherit;
+	resize: vertical;
 }
 
 .header {
@@ -35,8 +93,22 @@
 	border: 0;
 	background: transparent;
 	color: inherit;
+	font: inherit;
 	touch-action: manipulation;
 	cursor: pointer;
+}
+
+.modal .new-playlist {
+	margin: var(--space-xs) var(--space-sm) 0;
+	color: #888;
+	cursor: default;
+}
+
+.modal .save {
+	min-height: 2rem;
+	margin-inline: auto;
+	padding: var(--space-xs) var(--space-md);
+	border: 1px solid currentColor;
 }
 
 .modal button svg {

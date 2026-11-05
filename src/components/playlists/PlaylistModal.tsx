@@ -51,7 +51,12 @@ export default function PlaylistModal({
 					</label>
 				</fieldset>
 
-				<button type="button" aria-label="New playlist" disabled>
+				<button
+					className={styles["new-playlist"]}
+					type="button"
+					aria-label="New playlist"
+					disabled
+				>
 					+ New Playlist
 				</button>
 
