@@ -29,6 +29,28 @@ export default function PlaylistModal({
 					</button>
 				</div>
 
+				<fieldset aria-label="Playlists">
+					<label>
+						<input
+							type="checkbox"
+							name="playlists"
+							value="liked-showed"
+							defaultChecked
+							aria-label="Liked Showed"
+						/>
+						Liked Showed
+					</label>
+					<label>
+						<input
+							type="checkbox"
+							name="playlists"
+							value="for-later"
+							aria-label="For Later"
+						/>
+						For Later
+					</label>
+				</fieldset>
+
 				<button
 					className={styles["save"]}
 					type="submit"
