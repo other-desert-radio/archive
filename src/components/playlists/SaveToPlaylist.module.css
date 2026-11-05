@@ -1,0 +1,29 @@
+.save-button {
+	display: inline-flex;
+	align-self: flex-start;
+	align-items: center;
+	gap: var(--space-sm);
+	min-height: 2.75rem;
+	max-width: 100%;
+	margin-top: var(--space-sm);
+	padding: var(--space-sm);
+	border: var(--border-primary) solid currentColor;
+	background: transparent;
+	color: black;
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
+	touch-action: manipulation;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.save-button:hover {
+		background: white;
+	}
+}
+
+.save-button svg {
+	flex-shrink: 0;
+	width: var(--space-lg);
+	height: var(--space-lg);
+}

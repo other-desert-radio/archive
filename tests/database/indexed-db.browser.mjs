@@ -109,7 +109,7 @@ export async function runIndexedDBChecks() {
 			const playlist = {
 				id: crypto.randomUUID(), type: 'user', title: 'Saved playlist',
 				createdAt: '2026-11-05T12:00:00.000Z', updatedAt: '2026-11-05T12:00:00.000Z',
-				shows: [{ showId: 42, addedAt: '2026-11-05T12:00:00.000Z', note: 'Favorite' }],
+				shows: [{ showId: 42, addedAt: '2026-11-05T12:00:00.000Z', updatedAt: '2026-11-05T12:00:00.000Z', note: 'Favorite' }],
 			};
 			await playlists.set(playlist);
 			playlist.shows[0].note = 'External mutation';
@@ -307,7 +307,7 @@ export async function runIndexedDBChecks() {
 			let saved = await playlists.getAll();
 			check(saved.length === 1 && saved[0].type === 'liked', 'Concurrent connections create exactly one liked playlist');
 			check(saved[0].title === 'Liked Shows' && saved[0].shows.length === 0, 'Default contents');
-			const liked = { ...saved[0], shows: [{ showId: 42, addedAt: candidate.createdAt, note: 'Keep this note' }] };
+			const liked = { ...saved[0], shows: [{ showId: 42, addedAt: candidate.createdAt, updatedAt: candidate.createdAt, note: 'Keep this note' }] };
 			await playlists.set(liked);
 			await first.ensureLikedPlaylist({ fallback: { ...candidate, id: crypto.randomUUID() } });
 			await second.ensureLikedPlaylist({ fallback: { ...candidate, id: crypto.randomUUID() } });

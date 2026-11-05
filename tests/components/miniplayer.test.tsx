@@ -46,8 +46,12 @@ test("Mixcloud renders one widget and one title without hover expansion", () => 
 		html.includes("mini=1&amp;hide_cover=1&amp;hide_artwork=1&amp;light=0"),
 	);
 	assert.equal(html.includes("data-miniplayer-expansion"), false);
+	assert.ok(html.includes("<dialog"));
+	assert.ok(html.includes('method="dialog"'));
+	assert.ok(html.includes('aria-label="Close playlist"'));
 
-	assert.equal((html.match(/<button/g) ?? []).length, 3);
+	assert.ok(html.includes('aria-label="New playlist"'));
+	assert.ok(html.includes('aria-label="Save playlist"'));
 	assert.ok(html.includes('expand <span aria-hidden="true">↑</span>'));
 	assert.ok(html.includes('type="button" aria-label="Favorite show"'));
 	assert.ok(html.includes('type="button" aria-label="Expand player"'));
@@ -57,7 +61,7 @@ test("Mixcloud renders one widget and one title without hover expansion", () => 
 		html.indexOf("</iframe>") < html.indexOf('aria-label="Favorite show"'),
 	);
 	assert.equal((html.match(/Selected show/g) ?? []).length, 2);
-	assert.equal(html.includes("<dialog"), false);
+	assert.equal(html.includes("<dialog"), true);
 });
 
 test("SAMCast keeps its title and progress without fullscreen controls or a widget", () => {

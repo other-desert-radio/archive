@@ -3,6 +3,7 @@ import { getBasePath } from "../../utils/get-base-path";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import TagView from "../../components/TagView.astro";
 import PlayableShowArtwork from "../../components/shows/PlayableShowArtwork";
+import SaveToPlaylist from "../../components/playlists/SaveToPlaylist";
 import { fetchShows, type Show } from "../../utils/fetch-shows";
 import { fetchDJ, type HydratedDJ } from "../../utils/fetch-dj";
 import { fetchTags } from "../../utils/fetch-tags";
@@ -67,6 +68,7 @@ const hydratedTags = hydrateTags(show, tags);
         border="secondary"
         client:load
       />
+      <SaveToPlaylist showId={show.id} client:load />
     </div>
     {
       show.description !== undefined ? (

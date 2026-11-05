@@ -196,12 +196,10 @@ export class PlaylistStore {
 				if (playlist.shows.some((entry) => entry.showId === showId)) {
 					throw new Error(`Show already in playlist: ${showId}`);
 				}
+				const now = new Date().toISOString();
 				await this.saveEntries({
 					playlist,
-					shows: [
-						...playlist.shows,
-						{ showId, addedAt: new Date().toISOString() },
-					],
+					shows: [...playlist.shows, { showId, addedAt: now, updatedAt: now }],
 				});
 			},
 		});
@@ -248,7 +246,7 @@ export class PlaylistStore {
 				if (entry.note === note) {
 					return;
 				}
-				const updated = { ...entry };
+				const updated = { ...entry, updatedAt: new Date().toISOString() };
 				if (note === undefined) {
 					delete updated.note;
 				} else {

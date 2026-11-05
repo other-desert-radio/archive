@@ -65,12 +65,18 @@ export function FullscreenDJs({
 	);
 }
 
-// Presentational only: favorites behavior is outside this task's scope.
-export function FullscreenHeart({ base }: { base: string }): ReactElement {
+export function FullscreenHeart({
+	base,
+	onFavorite,
+}: {
+	base: string;
+	onFavorite: () => void;
+}): ReactElement {
 	return (
 		<button
 			type="button"
 			aria-label="Favorite show"
+			onClick={onFavorite}
 			className={styles["fullscreen-heart-button"]}
 		>
 			<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
