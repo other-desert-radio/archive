@@ -9,15 +9,26 @@ export class PlaylistStore {
 	private objectStore: DBStore<Playlist, string>;
 	private initialization: Promise<void> | undefined;
 	private saving: Promise<void> = Promise.resolve();
+	private database: Database;
 
 	constructor({ database }: { database: Database }) {
+		this.database = database;
 		this.objectStore = database.getObjectStore("playlists");
 	}
 
-	/** Loads local data independently of catalog initialization. */
+	/** Ensures the default exists before loading local data, independently of the catalog. */
 	initialize(): Promise<void> {
-		this.initialization ??= this.objectStore
-			.getAll()
+		const now = new Date().toISOString();
+		this.initialization ??= this.database
+			.ensureLikedPlaylist({
+				id: crypto.randomUUID(),
+				type: "liked",
+				title: "Liked Shows",
+				createdAt: now,
+				updatedAt: now,
+				shows: [],
+			})
+			.then(() => this.objectStore.getAll())
 			.then((playlists) => {
 				this.playlists = new Map(
 					playlists.map((playlist) => [playlist.id, structuredClone(playlist)]),
@@ -100,6 +111,9 @@ export class PlaylistStore {
 		return this.enqueue({
 			operation: async () => {
 				const playlist = this.requirePlaylist({ playlistId });
+				if (playlist.type === "liked") {
+					throw new Error("Liked Shows cannot be renamed");
+				}
 				const normalizedTitle = title.trim();
 				if (!normalizedTitle) {
 					throw new Error("Playlist title cannot be blank");
@@ -122,7 +136,10 @@ export class PlaylistStore {
 	delete({ playlistId }: { playlistId: string }): Promise<void> {
 		return this.enqueue({
 			operation: async () => {
-				this.requirePlaylist({ playlistId });
+				const playlist = this.requirePlaylist({ playlistId });
+				if (playlist.type === "liked") {
+					throw new Error("Liked Shows cannot be deleted");
+				}
 				await this.objectStore.delete(playlistId);
 				this.playlists.delete(playlistId);
 				this.notify();

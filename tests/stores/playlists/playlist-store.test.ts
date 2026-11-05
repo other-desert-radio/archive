@@ -21,10 +21,28 @@ function playlist({
 	};
 }
 
+function likedPlaylist(): Playlist {
+	return {
+		...playlist({ playlistId: "liked-id" }),
+		type: "liked",
+		title: "Liked Shows",
+		shows: [],
+	};
+}
+
 function setup() {
 	const database = createIndexedDB();
 	const objectStore = database.getObjectStore("playlists");
-	const records = [playlist()];
+	const records = [playlist(), likedPlaylist()];
+	const ensure = mock.method(
+		database,
+		"ensureLikedPlaylist",
+		async (candidate: Playlist & { type: "liked" }) => {
+			if (!records.some((item) => item.type === "liked")) {
+				records.push(candidate);
+			}
+		},
+	);
 	const read = mock.method(objectStore, "getAll", async () => records);
 	const write = mock.method(
 		objectStore,
@@ -44,6 +62,7 @@ function setup() {
 	return {
 		store: new PlaylistStore({ database }),
 		read,
+		ensure,
 		records,
 		getObjectStore,
 		write,
@@ -64,7 +83,7 @@ test("initialization shares one read and publishes a stable snapshot before noti
 	assert.deepEqual(getObjectStore.mock.calls[0]?.arguments, ["playlists"]);
 	const empty = store.getSnapshot();
 	const listener = mock.fn(() => {
-		assert.deepEqual(store.getSnapshot(), [playlist()]);
+		assert.deepEqual(store.getSnapshot(), [playlist(), likedPlaylist()]);
 	});
 	store.subscribe({ listener });
 	const loading = store.initialize();
@@ -99,7 +118,7 @@ test("retrieval shares frozen records and isolates storage results", async () =>
 	assert.ok(records[0]);
 	records[0] = { ...records[0], shows: [] };
 	assert.deepEqual(store.get({ playlistId: "playlist-a" }), playlist());
-	assert.deepEqual(store.getAll(), [playlist()]);
+	assert.deepEqual(store.getAll(), [playlist(), likedPlaylist()]);
 	assert.equal(store.get({ playlistId: "missing" }), undefined);
 	const snapshot = store.getSnapshot();
 	assert.ok(Object.isFrozen(snapshot));
@@ -114,13 +133,14 @@ test("retrieval preserves storage order and unavailable show references", async 
 		0,
 		records.length,
 		playlist({ playlistId: "c", createdAt: "2026-11-06T12:00:00.000Z" }),
+		likedPlaylist(),
 		playlist({ playlistId: "b" }),
 		playlist({ playlistId: "a" }),
 	);
 	await store.initialize();
 	assert.deepEqual(
 		store.getAll().map((item) => item.id),
-		["c", "b", "a"],
+		["c", "liked-id", "b", "a"],
 	);
 	assert.equal(store.getSnapshot(), store.getAll());
 	assert.equal(store.get({ playlistId: "a" })?.shows[0]?.showId, 42);
@@ -142,7 +162,7 @@ test("failed initialization can retry and unsubscribed listeners are not notifie
 	await store.initialize();
 	assert.equal(read.mock.callCount(), 2);
 	assert.equal(listener.mock.callCount(), 0);
-	assert.deepEqual(store.getAll(), [playlist()]);
+	assert.deepEqual(store.getAll(), [playlist(), likedPlaylist()]);
 });
 
 test("create initializes storage, trims titles, and returns the frozen committed playlist", async () => {
@@ -154,6 +174,7 @@ test("create initializes storage, trims titles, and returns the frozen committed
 		/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
 	);
 	assert.equal(created.title, "Favorites");
+	assert.equal(created.type, "user");
 	assert.equal(new Date(created.createdAt).toISOString(), created.createdAt);
 	assert.equal(created.createdAt, created.updatedAt);
 	assert.deepEqual(created.shows, []);
@@ -161,7 +182,7 @@ test("create initializes storage, trims titles, and returns the frozen committed
 	assert.equal(store.get({ playlistId: created.id }), created);
 	assert.ok(Object.isFrozen(created));
 	assert.ok(Object.isFrozen(created.shows));
-	assert.equal(store.getAll().length, 2);
+	assert.equal(store.getAll().length, 3);
 });
 
 test("lifecycle edits publish only after storage commits and preserve old snapshots", async () => {
@@ -191,7 +212,7 @@ test("lifecycle edits publish only after storage commits and preserve old snapsh
 	assert.equal(updated.createdAt, playlist().createdAt);
 	assert.deepEqual(updated.shows, playlist().shows);
 	assert.equal(new Date(updated.updatedAt).toISOString(), updated.updatedAt);
-	assert.deepEqual(before, [playlist()]);
+	assert.deepEqual(before, [playlist(), likedPlaylist()]);
 	assert.equal(listener.mock.callCount(), 1);
 	const deletion = Promise.withResolvers<void>();
 	const deleting = Promise.withResolvers<void>();
@@ -205,7 +226,7 @@ test("lifecycle edits publish only after storage commits and preserve old snapsh
 	deletion.resolve();
 	await pending;
 	assert.equal(store.get({ playlistId: "playlist-a" }), undefined);
-	assert.deepEqual(store.getAll(), []);
+	assert.deepEqual(store.getAll(), [likedPlaylist()]);
 	assert.equal(listener.mock.callCount(), 2);
 });
 
@@ -276,7 +297,7 @@ test("queued edits await initialization and execute against the latest committed
 		started.resolve();
 		await commit.promise;
 	});
-	loading.resolve([playlist()]);
+	loading.resolve([playlist(), likedPlaylist()]);
 	await started.promise;
 	assert.equal(write.mock.callCount(), 1);
 	assert.equal(remove.mock.callCount(), 0);
@@ -299,7 +320,7 @@ test("mutation initialization failure rejects and a later mutation retries loadi
 	assert.equal(write.mock.callCount(), 0);
 	await store.create({ title: "New" });
 	assert.equal(read.mock.callCount(), 2);
-	assert.equal(store.getAll().length, 2);
+	assert.equal(store.getAll().length, 3);
 });
 
 test("entry edits retain insertion order and timestamps without needing a catalog", async () => {
@@ -421,7 +442,7 @@ test("concurrent entry edits publish after commit and retain earlier edits", asy
 	assert.equal(final?.shows.length, 1);
 	assert.equal(final?.shows[0]?.showId, 99);
 	assert.equal(final?.shows[0]?.note, "New note");
-	assert.deepEqual(snapshot, [playlist()]);
+	assert.deepEqual(snapshot, [playlist(), likedPlaylist()]);
 	assert.equal(listener.mock.callCount(), 3);
 	assert.ok(Object.isFrozen(final?.shows[0]));
 });
@@ -457,4 +478,105 @@ test("failed entry saves preserve snapshots and the queue recovers", async () =>
 	assert.equal(listener.mock.callCount(), 0);
 	await store.addShow({ playlistId: "playlist-a", showId: 0 });
 	assert.equal(store.get({ playlistId: "playlist-a" })?.shows[1]?.showId, 0);
+});
+
+test("initialization creates a UUID default before reading and publishes only after commit", async () => {
+	const { store, records, ensure, read } = setup();
+	records.length = 0;
+	const commit = Promise.withResolvers<void>();
+	const started = Promise.withResolvers<void>();
+	ensure.mock.mockImplementationOnce(async (candidate) => {
+		started.resolve();
+		await commit.promise;
+		records.push(candidate);
+	});
+	const listener = mock.fn();
+	store.subscribe({ listener });
+	const loading = store.initialize();
+	assert.equal(store.initialize(), loading);
+	await started.promise;
+	assert.equal(read.mock.callCount(), 0);
+	assert.equal(listener.mock.callCount(), 0);
+	assert.deepEqual(store.getAll(), []);
+	commit.resolve();
+	await loading;
+	assert.equal(ensure.mock.callCount(), 1);
+	assert.equal(listener.mock.callCount(), 1);
+	const liked = store.getAll()[0];
+	assert.ok(liked);
+	assert.match(
+		liked.id,
+		/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+	);
+	assert.equal(liked.type, "liked");
+	assert.equal(liked.title, "Liked Shows");
+	assert.deepEqual(liked.shows, []);
+	assert.equal(new Date(liked.createdAt).toISOString(), liked.createdAt);
+	assert.equal(liked.updatedAt, liked.createdAt);
+	await store.initialize();
+	assert.equal(ensure.mock.callCount(), 1);
+});
+
+test("failed default creation leaves initialization unpublished and can retry", async () => {
+	const { store, records, ensure, read } = setup();
+	records.length = 0;
+	ensure.mock.mockImplementationOnce(async () => {
+		throw new Error("Storage full");
+	});
+	const listener = mock.fn();
+	store.subscribe({ listener });
+	const snapshot = store.getSnapshot();
+	await assert.rejects(store.initialize(), /Storage full/);
+	assert.equal(store.getSnapshot(), snapshot);
+	assert.equal(read.mock.callCount(), 0);
+	assert.equal(listener.mock.callCount(), 0);
+	await store.initialize();
+	assert.equal(ensure.mock.callCount(), 2);
+	assert.equal(store.getAll().length, 1);
+	assert.equal(store.getAll()[0]?.type, "liked");
+});
+
+test("liked playlists cannot be renamed or deleted and rejection does not block later edits", async () => {
+	const { store, write, remove } = setup();
+	await store.initialize();
+	const snapshot = store.getSnapshot();
+	await assert.rejects(
+		store.rename({ playlistId: "liked-id", title: "New name" }),
+		/cannot be renamed/,
+	);
+	await assert.rejects(
+		store.delete({ playlistId: "liked-id" }),
+		/cannot be deleted/,
+	);
+	assert.equal(store.getSnapshot(), snapshot);
+	assert.equal(write.mock.callCount(), 0);
+	assert.equal(remove.mock.callCount(), 0);
+	await store.addShow({ playlistId: "liked-id", showId: 99 });
+	await store.setNote({ playlistId: "liked-id", showId: 99, note: "Favorite" });
+	assert.equal(
+		store.get({ playlistId: "liked-id" })?.shows[0]?.note,
+		"Favorite",
+	);
+	await store.removeShow({ playlistId: "liked-id", showId: 99 });
+	assert.deepEqual(store.get({ playlistId: "liked-id" })?.shows, []);
+});
+
+test("mutations preserve playlist order for callers to choose presentation", async () => {
+	const { store, records } = setup();
+	records.push(playlist({ playlistId: "user-b" }));
+	await store.initialize();
+	assert.deepEqual(store.get({ playlistId: "liked-id" }), likedPlaylist());
+	const created = await store.create({ title: "Liked Shows" });
+	assert.equal(created.type, "user");
+	await store.rename({ playlistId: "playlist-a", title: "Renamed" });
+	await store.addShow({ playlistId: "liked-id", showId: 99 });
+	assert.deepEqual(
+		store.getAll().map((item) => item.id),
+		["playlist-a", "liked-id", "user-b", created.id],
+	);
+	await store.delete({ playlistId: "playlist-a" });
+	assert.deepEqual(
+		store.getAll().map((item) => item.id),
+		["liked-id", "user-b", created.id],
+	);
 });
