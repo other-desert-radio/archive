@@ -24,8 +24,8 @@
 - [x] Scaffolding: approved; exported Playlist/PlaylistEntry types, named-argument store signatures, typed schema entry; explicit stubs disconnected from working initialization.
 - [x] Persistence: approved; playlists object store keyed by id; fresh creation, CRUD, reload persistence, and version-3 migration coverage.
 - [x] Retrieval: approved; SSR-safe construction, shared/retryable initialization, readonly shared reads, subscriptions and frozen stable snapshots.
-- [x] Lifecycle: create, rename, delete; validation, timestamps, serialization and save-failure coverage. Awaiting review.
-- [ ] Entries: add/remove shows and edit notes; duplicate/missing errors and concurrent-edit coverage.
+- [x] Lifecycle: approved; create, rename, delete; validation, timestamps, serialization and save-failure coverage.
+- [x] Entries: add/remove shows and edit notes; duplicate/missing errors and concurrent-edit coverage. Awaiting review.
 - [ ] Integration: store composition/context, independent initialization, fixtures and architecture documentation.
 
 ## Verification
@@ -34,7 +34,7 @@ Run focused tests per functional unit. Extend the existing IndexedDB browser har
 
 ## Next action
 
-Obtain lifecycle approval before implementing show entries. Create, rename and delete now commit before publishing through a shared mutation queue; entry methods remain throwing stubs and app composition remains unchanged.
+Obtain entry-operation approval before integration. All playlist operations are implemented; app composition remains unchanged. Next expose the store through composition/context, initialize independently of catalog downloads, update architecture docs, and run integration verification.
 
 Scaffolding checks: `bun run lint` and `bun run docs:check` passed. No behavior tests added for throwing stubs.
 
@@ -43,3 +43,5 @@ Persistence checks: `bun tests/database/indexed-db.browser.mjs` and `bun run lin
 Readonly revision checks: all five focused playlist tests, `bun run lint`, and `bun run docs:check` passed. Tests cover shared identities, runtime mutation prevention, storage order, storage-result isolation, SSR-safe construction, initialization retry, notification timing and unsubscribe.
 
 Lifecycle tests: all 11 focused tests passed, including UUID/ISO creation, duplicate titles, trimming/blank rejection, missing IDs, no-op renames, deferred commit publication, snapshot preservation, failed saves/deletes, queued edits and initialization retry.
+
+Entry checks: all 15 focused tests and `bun run lint` passed. Coverage includes insertion order, retained timestamps, note text/clearing, duplicate/invalid/missing errors, no-op notes, queued dependent edits, publication after commit, failed saves and recovery.

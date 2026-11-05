@@ -160,19 +160,105 @@ export class PlaylistStore {
 	}
 
 	/** Appends a show reference; duplicate additions reject. */
-	addShow(_options: { playlistId: string; showId: number }): Promise<void> {
-		throw new Error("Not implemented");
+	addShow({
+		playlistId,
+		showId,
+	}: {
+		playlistId: string;
+		showId: number;
+	}): Promise<void> {
+		return this.enqueue({
+			operation: async () => {
+				const playlist = this.requirePlaylist({ playlistId });
+				if (!Number.isSafeInteger(showId) || showId < 0) {
+					throw new Error("Invalid show ID");
+				}
+				if (playlist.shows.some((entry) => entry.showId === showId)) {
+					throw new Error(`Show already in playlist: ${showId}`);
+				}
+				await this.saveEntries({
+					playlist,
+					shows: [
+						...playlist.shows,
+						{ showId, addedAt: new Date().toISOString() },
+					],
+				});
+			},
+		});
 	}
 
-	removeShow(_options: { playlistId: string; showId: number }): Promise<void> {
-		throw new Error("Not implemented");
+	removeShow({
+		playlistId,
+		showId,
+	}: {
+		playlistId: string;
+		showId: number;
+	}): Promise<void> {
+		return this.enqueue({
+			operation: async () => {
+				const playlist = this.requirePlaylist({ playlistId });
+				if (!playlist.shows.some((entry) => entry.showId === showId)) {
+					throw new Error(`Show not in playlist: ${showId}`);
+				}
+				await this.saveEntries({
+					playlist,
+					shows: playlist.shows.filter((entry) => entry.showId !== showId),
+				});
+			},
+		});
 	}
 
-	setNote(_options: {
+	/** Preserve note text; undefined removes the note property. */
+	setNote({
+		playlistId,
+		showId,
+		note,
+	}: {
 		playlistId: string;
 		showId: number;
 		note: string | undefined;
 	}): Promise<void> {
-		throw new Error("Not implemented");
+		return this.enqueue({
+			operation: async () => {
+				const playlist = this.requirePlaylist({ playlistId });
+				const entry = playlist.shows.find((entry) => entry.showId === showId);
+				if (!entry) {
+					throw new Error(`Show not in playlist: ${showId}`);
+				}
+				if (entry.note === note) {
+					return;
+				}
+				const updated = { ...entry };
+				if (note === undefined) {
+					delete updated.note;
+				} else {
+					updated.note = note;
+				}
+				await this.saveEntries({
+					playlist,
+					shows: playlist.shows.map((entry) =>
+						entry.showId === showId ? updated : entry,
+					),
+				});
+			},
+		});
+	}
+
+	/** Called inside the mutation queue; never change a published playlist in place. */
+	private async saveEntries({
+		playlist,
+		shows,
+	}: {
+		playlist: Playlist;
+		shows: Playlist["shows"];
+	}): Promise<void> {
+		const updated: Playlist = {
+			...playlist,
+			shows,
+			updatedAt: new Date().toISOString(),
+		};
+		await this.objectStore.set(updated);
+		this.playlists.set(playlist.id, updated);
+		this.notify();
 	}
 }

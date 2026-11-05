@@ -300,3 +300,160 @@ test("mutation initialization failure rejects and a later mutation retries loadi
 	assert.equal(read.mock.callCount(), 2);
 	assert.equal(store.getAll().length, 2);
 });
+
+test("entry edits retain insertion order and timestamps without needing a catalog", async () => {
+	const { store, write } = setup();
+	await store.addShow({ playlistId: "playlist-a", showId: 99 });
+	const added = store.get({ playlistId: "playlist-a" });
+	assert.ok(added);
+	assert.deepEqual(
+		added.shows.map((entry) => entry.showId),
+		[42, 99],
+	);
+	const newEntry = added.shows[1];
+	assert.ok(newEntry);
+	assert.equal(new Date(newEntry.addedAt).toISOString(), newEntry.addedAt);
+	assert.equal(added.createdAt, playlist().createdAt);
+	assert.deepEqual(added.shows[0], playlist().shows[0]);
+	await store.setNote({
+		playlistId: "playlist-a",
+		showId: 99,
+		note: "  Keep whitespace\n ",
+	});
+	const noted = store.get({ playlistId: "playlist-a" });
+	assert.ok(noted);
+	assert.equal(noted.shows[1]?.note, "  Keep whitespace\n ");
+	assert.equal(noted.shows[1]?.addedAt, newEntry.addedAt);
+	assert.equal(new Date(noted.updatedAt).toISOString(), noted.updatedAt);
+	assert.equal(added.shows[1]?.note, undefined);
+	await store.setNote({
+		playlistId: "playlist-a",
+		showId: 99,
+		note: undefined,
+	});
+	const cleared = store.get({ playlistId: "playlist-a" });
+	assert.ok(cleared?.shows[1]);
+	assert.equal(Object.hasOwn(cleared.shows[1], "note"), false);
+	await store.removeShow({ playlistId: "playlist-a", showId: 42 });
+	const remaining = store.get({ playlistId: "playlist-a" });
+	assert.deepEqual(
+		remaining?.shows.map((entry) => entry.showId),
+		[99],
+	);
+	assert.equal(remaining?.shows[0]?.addedAt, newEntry.addedAt);
+	assert.equal(write.mock.callCount(), 4);
+	assert.equal(write.mock.calls[3]?.arguments[0], remaining);
+});
+
+test("duplicate, invalid and missing entries reject without saving or notifying", async () => {
+	const { store, write } = setup();
+	await store.initialize();
+	const snapshot = store.getSnapshot();
+	const listener = mock.fn();
+	store.subscribe({ listener });
+	await assert.rejects(
+		store.addShow({ playlistId: "playlist-a", showId: 42 }),
+		/already in playlist/,
+	);
+	for (const showId of [-1, 1.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) {
+		await assert.rejects(
+			store.addShow({ playlistId: "playlist-a", showId }),
+			/Invalid show ID/,
+		);
+	}
+	await assert.rejects(
+		store.addShow({ playlistId: "missing", showId: 99 }),
+		/Playlist not found/,
+	);
+	await assert.rejects(
+		store.removeShow({ playlistId: "missing", showId: 99 }),
+		/Playlist not found/,
+	);
+	await assert.rejects(
+		store.setNote({ playlistId: "missing", showId: 99, note: "x" }),
+		/Playlist not found/,
+	);
+	await assert.rejects(
+		store.removeShow({ playlistId: "playlist-a", showId: 99 }),
+		/Show not in playlist/,
+	);
+	await assert.rejects(
+		store.setNote({ playlistId: "playlist-a", showId: 99, note: "x" }),
+		/Show not in playlist/,
+	);
+	await store.setNote({
+		playlistId: "playlist-a",
+		showId: 42,
+		note: "Listen again",
+	});
+	assert.equal(store.getSnapshot(), snapshot);
+	assert.equal(write.mock.callCount(), 0);
+	assert.equal(listener.mock.callCount(), 0);
+});
+
+test("concurrent entry edits publish after commit and retain earlier edits", async () => {
+	const { store, write } = setup();
+	await store.initialize();
+	const snapshot = store.getSnapshot();
+	const listener = mock.fn();
+	store.subscribe({ listener });
+	const commit = Promise.withResolvers<void>();
+	const started = Promise.withResolvers<void>();
+	write.mock.mockImplementationOnce(async () => {
+		started.resolve();
+		await commit.promise;
+	});
+	const adding = store.addShow({ playlistId: "playlist-a", showId: 99 });
+	const noting = store.setNote({
+		playlistId: "playlist-a",
+		showId: 99,
+		note: "New note",
+	});
+	const removing = store.removeShow({ playlistId: "playlist-a", showId: 42 });
+	await started.promise;
+	assert.equal(write.mock.callCount(), 1);
+	assert.equal(store.getSnapshot(), snapshot);
+	assert.equal(listener.mock.callCount(), 0);
+	commit.resolve();
+	await Promise.all([adding, noting, removing]);
+	const final = store.get({ playlistId: "playlist-a" });
+	assert.equal(final?.shows.length, 1);
+	assert.equal(final?.shows[0]?.showId, 99);
+	assert.equal(final?.shows[0]?.note, "New note");
+	assert.deepEqual(snapshot, [playlist()]);
+	assert.equal(listener.mock.callCount(), 3);
+	assert.ok(Object.isFrozen(final?.shows[0]));
+});
+
+test("failed entry saves preserve snapshots and the queue recovers", async () => {
+	const { store, write } = setup();
+	await store.initialize();
+	const snapshot = store.getSnapshot();
+	const listener = mock.fn();
+	store.subscribe({ listener });
+	write.mock.mockImplementationOnce(async () => {
+		throw new Error("Save failed");
+	});
+	await assert.rejects(
+		store.addShow({ playlistId: "playlist-a", showId: 99 }),
+		/Save failed/,
+	);
+	write.mock.mockImplementationOnce(async () => {
+		throw new Error("Save failed");
+	});
+	await assert.rejects(
+		store.removeShow({ playlistId: "playlist-a", showId: 42 }),
+		/Save failed/,
+	);
+	write.mock.mockImplementationOnce(async () => {
+		throw new Error("Save failed");
+	});
+	await assert.rejects(
+		store.setNote({ playlistId: "playlist-a", showId: 42, note: undefined }),
+		/Save failed/,
+	);
+	assert.equal(store.getSnapshot(), snapshot);
+	assert.equal(listener.mock.callCount(), 0);
+	await store.addShow({ playlistId: "playlist-a", showId: 0 });
+	assert.equal(store.get({ playlistId: "playlist-a" })?.shows[1]?.showId, 0);
+});
