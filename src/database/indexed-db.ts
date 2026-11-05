@@ -111,15 +111,13 @@ export function createIndexedDB(): Database {
 	}
 
 	return {
-		ensureLikedPlaylist(
-			candidate: Playlist & { type: "liked" },
-		): Promise<void> {
+		ensureLikedPlaylist(fallback: Playlist & { type: "liked" }): Promise<void> {
 			return execute(["playlists"], "readwrite", (tx) => {
 				const store = tx.objectStore("playlists");
 				const request: IDBRequest<Playlist[]> = store.getAll();
 				request.onsuccess = () => {
 					if (!request.result.some((playlist) => playlist.type === "liked")) {
-						store.add(candidate);
+						store.add(fallback);
 					}
 				};
 				return () => undefined;
