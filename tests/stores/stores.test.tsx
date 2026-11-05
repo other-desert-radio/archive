@@ -268,6 +268,7 @@ test("shared initialization awaits tag completion and permits retry after tag fa
 
 test("playlist initialization remains independent of a failed catalog refresh and is exposed by context", async () => {
 	const database = createIndexedDB();
+	mock.method(database, "ensureLikedPlaylist", async () => {});
 	const objectStore = database.getObjectStore("playlists");
 	mock.method(objectStore, "getAll", async () => []);
 	mock.method(objectStore, "set", async () => {});

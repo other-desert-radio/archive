@@ -60,6 +60,13 @@ need browser guards in their constructors.
 
 PlaylistStore owns local user playlists in the `playlists` IndexedDB object store,
 keyed by UUID strings. It does not participate in catalog revision tracking.
+Each playlist has a required `type` of `user` or `liked`. Initialization atomically
+ensures one empty "Liked Shows" playlist exists before loading records, preserving
+an existing default's UUID and contents. The check and insertion share one IndexedDB
+read/write transaction so concurrent initializations cannot create duplicate defaults.
+Ordinary creation always uses `user`; the `liked` playlist cannot be renamed or
+deleted, but its shows and notes remain editable. No legacy-record conversion is
+performed.
 Its methods accept named parameter objects using `playlistId` and `showId`.
 Mutations await local initialization and run serially, persisting before publishing
 new state; failed writes reject without changing memory and allow later retries.

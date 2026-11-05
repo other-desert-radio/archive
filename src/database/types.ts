@@ -29,6 +29,12 @@ export type TransactionOperation = {
 }[StoreName];
 
 export type Database = {
+	// Check and insert within one transaction, preserving any existing liked playlist.
+	ensureLikedPlaylist({
+		fallback,
+	}: {
+		fallback: Playlist & { type: "liked" };
+	}): Promise<void>;
 	getObjectStore<N extends StoreName>(
 		name: N,
 	): DBStore<StoreSchema[N]["value"], StoreSchema[N]["key"]>;
