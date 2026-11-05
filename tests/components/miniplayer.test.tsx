@@ -48,9 +48,10 @@ test("Mixcloud renders one widget and one title without hover expansion", () => 
 	assert.equal(html.includes("data-miniplayer-expansion"), false);
 	assert.ok(html.includes("<dialog"));
 	assert.ok(html.includes('method="dialog"'));
-	assert.ok(html.includes('aria-label="Close favorites"'));
+	assert.ok(html.includes('aria-label="Close playlist"'));
 
-	assert.equal((html.match(/<button/g) ?? []).length, 4);
+	assert.ok(html.includes('aria-label="New playlist"'));
+	assert.ok(html.includes('aria-label="Save playlist"'));
 	assert.ok(html.includes('expand <span aria-hidden="true">↑</span>'));
 	assert.ok(html.includes('type="button" aria-label="Favorite show"'));
 	assert.ok(html.includes('type="button" aria-label="Expand player"'));
