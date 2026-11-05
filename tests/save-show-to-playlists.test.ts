@@ -89,3 +89,35 @@ test("a partial failure rejects and retry finishes without duplicating entries",
 	assert.equal(store.get({ playlistId: "a" })?.shows[0]?.note, "new note");
 	assert.deepEqual(store.get({ playlistId: "c" })?.shows, []);
 });
+
+test("saving an edited note timestamps the existing show in the persisted playlist", async () => {
+	const { store, write } = setup();
+	await store.initialize();
+	const before = store.get({ playlistId: "a" })?.shows[0];
+	assert.ok(before);
+	const now = "2026-11-06T12:00:00.000Z";
+	const clock = mock.method(Date.prototype, "toISOString", () => now);
+	try {
+		await saveShowToPlaylists({
+			playlistStore: store,
+			showId: 42,
+			playlistIds: ["a", "c"],
+			note: "Edited after saving",
+		});
+		for (const playlistId of ["a", "c"]) {
+			const persisted = write.mock.calls
+				.map((call) => call.arguments[0])
+				.find((playlist) => playlist?.id === playlistId);
+			const entry = persisted?.shows.find((entry) => entry.showId === 42);
+			assert.equal(entry?.note, "Edited after saving");
+			assert.equal(entry?.updatedAt, now);
+			assert.notEqual(entry?.updatedAt, before.updatedAt);
+			assert.equal(entry?.addedAt, before.addedAt);
+			assert.equal(persisted?.updatedAt, now);
+			assert.deepEqual(store.get({ playlistId }), persisted);
+		}
+		assert.equal(before.note, "note a");
+	} finally {
+		clock.mock.restore();
+	}
+});
