@@ -1,6 +1,8 @@
+import { useRef } from "react";
 import tagCatalog from "../../../public/resources/tags.json";
 import type { AudioTrack } from "../../stores/audio";
 import { useAudioState } from "../../stores/audio";
+import FavoriteModal from "../favorites/FavoriteModal";
 import MixcloudWidget from "../mixcloud";
 import { DesktopActions, MobileExpand } from "./CompactActions";
 import {
@@ -37,6 +39,8 @@ function ActiveMiniplayer({
 	track: AudioTrack;
 	base: string;
 }) {
+	const favoriteModal = useRef<HTMLDialogElement>(null);
+	const openFavorites = () => favoriteModal.current?.showModal();
 	const { presentation, compactHeight, playerRef, expand, close } =
 		usePlayerPresentation();
 
@@ -117,7 +121,7 @@ function ActiveMiniplayer({
 										hidden={presentation !== "fullscreen"}
 									>
 										{presentation === "fullscreen" && (
-											<FullscreenHeart base={base} />
+											<FullscreenHeart base={base} onFavorite={openFavorites} />
 										)}
 									</div>
 									<div
@@ -135,12 +139,14 @@ function ActiveMiniplayer({
 								</div>
 							</div>
 							<DesktopActions
+								onFavorite={openFavorites}
 								base={base}
 								hidden={presentation === "fullscreen"}
 								onExpand={expand}
 							/>
 						</div>
 					</div>
+					<FavoriteModal ref={favoriteModal} />
 				</div>
 			);
 		case "samcast": {

@@ -1,0 +1,13 @@
+.modal {
+	box-sizing: border-box;
+	width: min(24rem, calc(100% - 2rem));
+	margin: auto;
+	padding: var(--space-md);
+	border: var(--border-primary) solid black;
+	background: white;
+	color: black;
+}
+
+.modal button {
+	touch-action: manipulation;
+}

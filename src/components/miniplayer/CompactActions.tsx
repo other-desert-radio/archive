@@ -23,12 +23,13 @@ export function MobileExpand({ hidden, onExpand }: Props): ReactElement {
 
 export function DesktopActions({
 	base,
+	onFavorite,
 	hidden,
 	onExpand,
-}: Props & { base: string }): ReactElement {
+}: Props & { base: string; onFavorite: () => void }): ReactElement {
 	return (
 		<div className={styles["desktop-actions"]} hidden={hidden}>
-			<button type="button" aria-label="Favorite show">
+			<button type="button" aria-label="Favorite show" onClick={onFavorite}>
 				<svg
 					className={styles["heart-icon"]}
 					viewBox="0 0 64 64"
