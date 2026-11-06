@@ -33,7 +33,6 @@
 	align-self: flex-start;
 	max-width: 100%;
 	border: 1px solid black;
-	background: white;
 	color: black;
 	font-size: inherit;
 	text-decoration: none;
@@ -48,6 +47,10 @@
 .playlist-save-heading,
 .playlist-note {
 	padding: var(--space-xs);
+}
+
+.playlist-save-heading {
+	background: white;
 }
 
 .playlist-note {
