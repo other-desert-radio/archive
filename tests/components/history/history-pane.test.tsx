@@ -24,24 +24,26 @@ test("history waits for catalog initialization before looking up shows", () => {
 	assert.equal(initialize.mock.callCount(), 0);
 });
 
-test("recently played includes completed shows, newest first, with at most five", () => {
-	const records: PlaybackRecord[] = [2, 7, 1, 4, 6, 3, 5].map((showId) => ({
-		showId,
-		inProgress: showId !== 7,
-		positionInSeconds: 10,
-		history: [
-			{
-				startedAt: 1,
-				updatedAt: showId * 100,
-				startPosition: 0,
-				endPosition: 10,
-			},
-		],
-	}));
+test("recently played includes completed shows, newest first, with at most ten", () => {
+	const records: PlaybackRecord[] = [2, 7, 1, 12, 4, 6, 11, 3, 9, 5, 10, 8].map(
+		(showId) => ({
+			showId,
+			inProgress: showId !== 7,
+			positionInSeconds: 10,
+			history: [
+				{
+					startedAt: 1,
+					updatedAt: showId * 100,
+					startPosition: 0,
+					endPosition: 10,
+				},
+			],
+		}),
+	);
 	const originalOrder = records.map((record) => record.showId);
 	assert.deepEqual(
 		recentlyPlayed(records).map((record) => record.showId),
-		[7, 6, 5, 4, 3],
+		[12, 11, 10, 9, 8, 7, 6, 5, 4, 3],
 	);
 	assert.deepEqual(
 		records.map((record) => record.showId),

@@ -1,14 +1,3 @@
-.wip {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	font-size: 2rem;
-	font-style: italic;
-	height: 100%;
-	width: 100%;
-}
-
 .show-container {
 	display: flex;
 	gap: var(--grid-column-gap);
@@ -17,7 +6,17 @@
 }
 
 .show-container > * {
-	flex: 0 0 min(100%, 36rem);
+	flex: 0 0 min(80%, 18rem);
+}
+
+@media (max-width: 600px) {
+	.show-container {
+		gap: var(--space-sm);
+	}
+
+	.show-container > * {
+		flex-basis: min(60%, 12rem);
+	}
 }
 
 .playlists {
