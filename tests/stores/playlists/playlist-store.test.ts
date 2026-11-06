@@ -629,3 +629,33 @@ test("note changes timestamp the entry, including clearing, while unchanged note
 		clock.mock.restore();
 	}
 });
+
+test("HTTP browsers without randomUUID can initialize and create playlists", async () => {
+	const descriptor = Object.getOwnPropertyDescriptor(crypto, "randomUUID");
+	Object.defineProperty(crypto, "randomUUID", {
+		configurable: true,
+		value: undefined,
+	});
+	try {
+		const { store, records, ensure } = setup();
+		records.splice(0);
+		await store.initialize();
+		const fallback = ensure.mock.calls[0]?.arguments[0].fallback;
+		const created = await store.create({ title: "Phone playlist" });
+		const uuid =
+			/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+		assert.match(fallback?.id ?? "", uuid);
+		assert.match(created.id, uuid);
+		assert.notEqual(created.id, fallback?.id);
+		assert.equal(
+			store.get({ playlistId: created.id })?.title,
+			"Phone playlist",
+		);
+	} finally {
+		if (descriptor) {
+			Object.defineProperty(crypto, "randomUUID", descriptor);
+		} else {
+			Reflect.deleteProperty(crypto, "randomUUID");
+		}
+	}
+});

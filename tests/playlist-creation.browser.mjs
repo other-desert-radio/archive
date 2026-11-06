@@ -49,6 +49,7 @@ try {
 	await browser("open", server.url.href);
 	await browser("click", button("Save to Playlist"));
 	await wait(`!document.querySelector('${saveDialog} ${button("New playlist")}').disabled`);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} ${button("Save playlist")}').disabled`), true);
 	// Clean backdrop dismisses; changed selections and notes require confirmation.
 	await browser("mouse", "move", "1", "1");
 	await browser("mouse", "down");
@@ -56,6 +57,7 @@ try {
 	await wait(`!document.querySelector('${saveDialog}')`);
 	await browser("click", button("Save to Playlist"));
 	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} ${button("Save playlist")}').disabled`), false);
 	await browser("mouse", "move", "1", "1");
 	await browser("mouse", "down");
 	await browser("mouse", "up");

@@ -32,6 +32,7 @@ export default function PlaylistModal({
 		)
 		.map((playlist) => playlist.id);
 	const selectedIds = selected ?? savedIds;
+	const canSave = selectedIds.length > 0 || savedIds.length > 0;
 	const savedNote =
 		playlists
 			.flatMap((playlist) => playlist.shows)
@@ -54,7 +55,7 @@ export default function PlaylistModal({
 
 	async function save(event: SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
-		if (saving || status !== "ready") {
+		if (saving || status !== "ready" || !canSave) {
 			return;
 		}
 		const dialog = event.currentTarget.closest("dialog");
@@ -198,7 +199,7 @@ export default function PlaylistModal({
 						className={styles["save"]}
 						type="submit"
 						aria-label="Save playlist"
-						disabled={saving || status !== "ready"}
+						disabled={saving || status !== "ready" || !canSave}
 					>
 						{saving ? "Saving..." : "Save"}
 					</button>
