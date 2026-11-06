@@ -7,9 +7,16 @@ import TagContainer from "../TagContainer";
 import PlayableShowArtwork from "./PlayableShowArtwork";
 import styles from "./ShowCard.module.css";
 
+export type PlaylistSave = {
+	playlistId: string;
+	title: string;
+	note: string | undefined;
+};
+
 type Props = {
 	show: Show;
 	tags: TagMap;
+	playlistSaves: readonly PlaylistSave[];
 	record?: Pick<PlaybackRecord, "positionInSeconds" | "inProgress"> | undefined;
 };
 

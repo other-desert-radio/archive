@@ -30,6 +30,7 @@ test("renders default-base detail links, large show artwork, and small DJ artwor
 				url: "https://www.mixcloud.com/example/test-show/",
 			}}
 			tags={new Map()}
+			playlistSaves={[]}
 		/>,
 	);
 

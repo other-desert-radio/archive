@@ -153,7 +153,7 @@ test("card renders accessible play/pause controls and retains the selected overl
 	const render = () =>
 		renderToStaticMarkup(
 			<StoresProvider stores={{ ...stores, audioStore }}>
-				<ShowCard show={show} tags={new Map()} />
+				<ShowCard show={show} tags={new Map()} playlistSaves={[]} />
 			</StoresProvider>,
 		);
 	assert.ok(render().includes('aria-label="Play Show"'));

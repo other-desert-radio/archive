@@ -1,9 +1,54 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import ShowsPane from "../../../src/components/shows/ShowsPane";
+import ShowsPane, {
+	getPlaylistSavesByShowId,
+} from "../../../src/components/shows/ShowsPane";
 import fixture from "../../res/shows.json";
 import tags from "../../res/tags.json";
+
+test("playlist lookup groups compact saves by show, preserving playlist order and notes", () => {
+	const timestamps = {
+		createdAt: "2026-01-01T00:00:00Z",
+		updatedAt: "2026-01-01T00:00:00Z",
+	};
+	const entry = {
+		addedAt: timestamps.createdAt,
+		updatedAt: timestamps.updatedAt,
+	};
+	const saves = getPlaylistSavesByShowId([
+		{
+			...timestamps,
+			id: "liked",
+			title: "Liked Shows",
+			type: "liked",
+			shows: [{ ...entry, showId: 1 }],
+		},
+		{
+			...timestamps,
+			id: "custom",
+			title: "Favorites",
+			type: "user",
+			shows: [
+				{ ...entry, showId: 1, note: "First line\nSecond line" },
+				{ ...entry, showId: 2, note: "Another show" },
+			],
+		},
+	]);
+	assert.deepEqual(saves.get(1), [
+		{ playlistId: "liked", title: "Liked Shows", note: undefined },
+		{
+			playlistId: "custom",
+			title: "Favorites",
+			note: "First line\nSecond line",
+		},
+	]);
+	assert.deepEqual(saves.get(2), [
+		{ playlistId: "custom", title: "Favorites", note: "Another show" },
+	]);
+	assert.equal(saves.has(3), false);
+	assert.equal(getPlaylistSavesByShowId([]).size, 0);
+});
 
 test("empty listings show an empty message without a loading status", () => {
 	const html = renderToStaticMarkup(
