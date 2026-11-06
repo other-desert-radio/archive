@@ -84,5 +84,6 @@ const renderRecord = ({ record, showStore }: Params) => {
 		return <div key={record.showId}>missing show id {record.showId}</div>;
 	}
 
+	// TODO: pass in record
 	return <HistoryShowCard key={record.showId} show={show} />;
 };

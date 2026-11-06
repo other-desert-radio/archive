@@ -1,4 +1,5 @@
 import { useAudioState, useStores } from "../../stores";
+import type { PlaybackRecord } from "../../stores/playback/types";
 import type { Show } from "../../utils/fetch-shows";
 import { getBasePath } from "../../utils/get-base-path";
 import styles from "./PlayableShowArtwork.module.css";
@@ -10,6 +11,7 @@ import {
 
 type Props = {
 	show: Show;
+	record?: Pick<PlaybackRecord, "positionInSeconds" | "inProgress"> | undefined;
 	base: string;
 	loading?: "lazy" | "eager";
 	border?: "primary" | "secondary";
@@ -17,6 +19,7 @@ type Props = {
 
 export default function PlayableShowArtwork({
 	show,
+	record,
 	base,
 	loading = "lazy",
 	border = "primary",

@@ -1,3 +1,4 @@
+import type { PlaybackRecord } from "../../stores/playback/types";
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
 import { formatDate } from "../../utils/format-date";
@@ -9,6 +10,7 @@ import styles from "./ShowCard.module.css";
 type Props = {
 	show: Show;
 	tags: TagMap;
+	record?: Pick<PlaybackRecord, "positionInSeconds" | "inProgress"> | undefined;
 };
 
 /**
@@ -40,13 +42,13 @@ const renderDJs = (djs: Show["djs"], base: string) =>
 /**
  * Renders one archive show with its date, tags, and associated DJs.
  */
-export default function ShowCard({ show, tags }: Props) {
+export default function ShowCard({ show, tags, record }: Props) {
 	const detailBase = getBasePath();
 
 	return (
 		<article className={styles["show-card"]}>
 			<div className={styles["artwork"]}>
-				<PlayableShowArtwork show={show} base={detailBase} />
+				<PlayableShowArtwork show={show} record={record} base={detailBase} />
 			</div>
 			<div className={styles["trailing-content"]}>
 				<a
