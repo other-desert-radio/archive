@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export type InitializationStatus = "loading" | "ready" | "error";
 
@@ -8,30 +8,28 @@ export function useInitialization(
 	initialStatus: InitializationStatus = "loading",
 ) {
 	const [status, setStatus] = useState<InitializationStatus>(initialStatus);
-	const [attempt, setAttempt] = useState(0);
+	const attempt = useRef(0);
 	const retry = useCallback(() => {
-		setStatus("loading");
-		setAttempt((current) => current + 1);
-	}, []);
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Each retry must rerun initialization, even for the same store.
-	useEffect(() => {
-		let active = true;
+		const currentAttempt = ++attempt.current;
 		setStatus("loading");
 		void store.initialize().then(
 			() => {
-				if (active) {
+				if (currentAttempt === attempt.current) {
 					setStatus("ready");
 				}
 			},
 			() => {
-				if (active) {
+				if (currentAttempt === attempt.current) {
 					setStatus("error");
 				}
 			},
 		);
+	}, [store]);
+	useEffect(() => {
+		retry();
 		return () => {
-			active = false;
+			attempt.current++;
 		};
-	}, [store, attempt]);
+	}, [retry]);
 	return { status, retry };
 }
