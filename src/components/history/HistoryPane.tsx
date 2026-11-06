@@ -1,8 +1,12 @@
-import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
+import { useCallback, useSyncExternalStore } from "react";
+import { useInitialization } from "../../hooks/useInitialization";
 import { useStores } from "../../stores";
 import type { PlaybackRecord } from "../../stores/playback/types";
 import type { ShowStore } from "../../stores/shows/show-store";
 import type { TagStore } from "../../stores/tags/tag-store";
+import LoadingState from "../LoadingState";
+import PlaylistView from "../playlists/PlaylistView";
+import { usePlaylists } from "../playlists/usePlaylists";
 import { ShowCard } from "../shows";
 import styles from "./HistoryPane.module.css";
 
@@ -10,30 +14,9 @@ const emptyRecords: readonly PlaybackRecord[] = [];
 
 export default function HistoryPane() {
 	const stores = useStores();
+	const { playlists, status: playlistStatus } = usePlaylists();
 	const { playbackStore, showStore, tagStore } = stores;
-	const [status, setStatus] = useState<"loading" | "ready" | "error">(
-		"loading",
-	);
-
-	useEffect(() => {
-		let active = true;
-		setStatus("loading");
-		void stores.initialize().then(
-			() => {
-				if (active) {
-					setStatus("ready");
-				}
-			},
-			() => {
-				if (active) {
-					setStatus("error");
-				}
-			},
-		);
-		return () => {
-			active = false;
-		};
-	}, [stores]);
+	const { status } = useInitialization(stores);
 
 	const subscribe = useCallback(
 		(notify: () => void) => playbackStore.subscribe(notify),
@@ -46,23 +29,39 @@ export default function HistoryPane() {
 		() => emptyRecords,
 	);
 
-	const inProgress = records.filter((r) => r.inProgress);
+	const inProgress =
+		status === "ready" ? records.filter((r) => r.inProgress) : [];
 
 	return (
 		<div>
-			{status === "loading" && <p role="status">Loading shows...</p>}
-			{status === "error" && <p role="alert">Could not load shows.</p>}
-			{status === "ready" && (
-				<>
-					<div className={styles["wip"]}>Under Construction</div>
-					<h2>Recently Played</h2>
-					<div className={styles["show-container"]}>
-						{inProgress.map((record) =>
-							renderRecord({ record, showStore, tagStore }),
-						)}
+			<div className={styles["wip"]}>Under Construction</div>
+			<LoadingState
+				status={status}
+				loading="Loading shows..."
+				error="Could not load shows."
+			>
+				<h2>Recently Played</h2>
+				<div className={styles["show-container"]}>
+					{inProgress.map((record) =>
+						renderRecord({ record, showStore, tagStore }),
+					)}
+				</div>
+			</LoadingState>
+			<section aria-label="Playlists">
+				<h2>Playlists</h2>
+				<p>Playlists are stored in this browser.</p>
+				<LoadingState
+					status={playlistStatus}
+					loading="Loading playlists..."
+					error="Could not load playlists. Reload the page to retry."
+				>
+					<div className={styles["playlists"]}>
+						{playlists.map((playlist) => (
+							<PlaylistView key={playlist.id} playlist={playlist} />
+						))}
 					</div>
-				</>
-			)}
+				</LoadingState>
+			</section>
 		</div>
 	);
 }

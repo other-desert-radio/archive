@@ -1,9 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
+import { useInitialization } from "../../hooks/useInitialization";
 import { useStores } from "../../stores";
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
+import LoadingState from "../LoadingState";
 import ShowCard from "./ShowCard";
 import styles from "./ShowsPane.module.css";
 
@@ -65,10 +67,13 @@ export default function ShowsPane({
 	const [visible, setVisible] = useState(shows);
 	const [visibleTags, setVisibleTags] = useState(tags);
 	const [offset, setOffset] = useState(initialOffset);
-	const [loading, setLoading] = useState(initialLoading);
-	const [failed, setFailed] = useState(false);
-
-	const cancelLoading = useRef<(() => void) | undefined>(undefined);
+	const { status, retry: retryLoading } = useInitialization(
+		stores,
+		initialLoading ? "loading" : "ready",
+	);
+	const needsCatalog = showIds.length > shows.length;
+	const loading = needsCatalog && status === "loading";
+	const failed = needsCatalog && status === "error";
 	const sentinel = useRef<HTMLDivElement>(null);
 	const hasMore = offset < showIds.length;
 	useEffect(() => {
@@ -89,41 +94,11 @@ export default function ShowsPane({
 		return () => document.removeEventListener("astro:before-swap", saveVisit);
 	}, [showIds, visible, visibleTags, offset, loading]);
 
-	// Initial loading and Retry share the same initialization and error handling.
-	const retryLoading = useCallback(() => {
-		// Ignore results from an older attempt without cancelling shared store initialization.
-		cancelLoading.current?.();
-		let active = true;
-		cancelLoading.current = () => {
-			active = false;
-		};
-
-		setLoading(true);
-		setFailed(false);
-
-		// Concurrent calls share one initialization promise; failures clear it so Retry can try again.
-		void stores.initialize().then(
-			() => {
-				if (active) {
-					setVisibleTags(stores.tagStore.getMap());
-					setLoading(false);
-				}
-			},
-			() => {
-				if (active) {
-					setLoading(false);
-					setFailed(true);
-				}
-			},
-		);
-	}, [stores]);
-
 	useEffect(() => {
-		if (showIds.length <= shows.length) return;
-		retryLoading();
-		// Read the current cleanup so unmount also ignores results from a later Retry.
-		return () => cancelLoading.current?.();
-	}, [retryLoading, showIds.length, shows.length]);
+		if (needsCatalog && status === "ready") {
+			setVisibleTags(stores.tagStore.getMap());
+		}
+	}, [stores, needsCatalog, status]);
 
 	useEffect(() => {
 		if (loading || failed || !hasMore || !sentinel.current) {
@@ -162,22 +137,26 @@ export default function ShowsPane({
 					<ShowCard key={show.id} show={show} tags={visibleTags} />
 				))}
 			</div>
-			{loading && (
-				<p role="status" className={styles["loading"]}>
-					Loading shows...
-				</p>
-			)}
-			{failed && (
-				<p role="alert" className={styles["status"]}>
-					Could not load more shows.{" "}
-					<button
-						type="button"
-						aria-label="Retry loading shows"
-						onClick={retryLoading}
-					>
-						Retry
-					</button>
-				</p>
+			{needsCatalog && (
+				<LoadingState
+					status={status}
+					loading="Loading shows..."
+					className={
+						status === "loading" ? styles["loading"] : styles["status"]
+					}
+					error={
+						<>
+							Could not load more shows.{" "}
+							<button
+								type="button"
+								aria-label="Retry loading shows"
+								onClick={retryLoading}
+							>
+								Retry
+							</button>
+						</>
+					}
+				/>
 			)}
 			{hasMore && (
 				<div ref={sentinel} className={styles["sentinel"]} aria-hidden="true" />

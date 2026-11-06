@@ -1,0 +1,178 @@
+// Run after bun run build: bun tests/playlist-browsing.browser.mjs (requires agent-browser).
+import assert from "node:assert/strict";
+import { execFile } from "node:child_process";
+import console from "node:console";
+import { URL } from "node:url";
+import { promisify } from "node:util";
+import { build, file, serve } from "bun";
+
+const { Response } = globalThis;
+
+const exec = promisify(execFile);
+const session = "archive-playlist-browsing";
+const bundle = await build({
+  entrypoints: ["tests/res/playlist-browsing.tsx"],
+  target: "browser",
+  define: { "import.meta.env.BASE_URL": JSON.stringify("/") },
+});
+assert.ok(bundle.success, bundle.logs.join("\n"));
+const server = serve({
+  port: 0,
+  async fetch(request) {
+    const path = new URL(request.url).pathname;
+    if (path.startsWith("/archive/")) {
+      if (path === "/archive/history") {
+        await new Promise((resolve) => globalThis.setTimeout(resolve, 300));
+      }
+      const relative = path.slice("/archive/".length);
+      const asset = file(`dist/${relative}`);
+      return new Response(
+        (await asset.exists())
+          ? asset
+          : file(`dist/${relative.replace(/\/$/, "")}/index.html`),
+      );
+    }
+    const output = bundle.outputs.find(
+      (item) => path === `/${item.path.split("/").pop()}`,
+    );
+    if (output) return new Response(output);
+    if (path.startsWith("/assets/")) return new Response(file(`public${path}`));
+    return new Response(
+      '<!doctype html><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/playlist-browsing.css"><div id="root"></div><script type="module" src="/playlist-browsing.js"></script>',
+      { headers: { "Content-Type": "text/html" } },
+    );
+  },
+});
+async function browser(...args) {
+  const { stdout } = await exec(
+    "agent-browser",
+    ["--session", session, ...args],
+    { timeout: 30_000 },
+  );
+  return stdout.trim();
+}
+async function evaluate(code) {
+  return JSON.parse(await browser("eval", code));
+}
+try {
+  await browser("open", server.url.href);
+  await browser("wait", 'a[aria-label="View playlist Liked Shows"]');
+  const id = await evaluate(`(async () => {
+   const store = playlistFixture.stores.playlistStore;
+   const p = await store.create({ title: "Road trip <script> " + "long-name".repeat(30) });
+   await store.addShow({ playlistId: p.id, showId: 42 });
+   await store.setNote({ playlistId: p.id, showId: 42, note: "Keep <b>raw</b>" });
+   return p.id;
+ })()`);
+  await browser("wait", `a[href="/playlists/#${id}"]`);
+  assert.ok(
+    await evaluate(
+      'document.body.textContent.includes("Could not load shows.")',
+    ),
+  );
+  await browser("click", `a[href="/playlists/#${id}"]`);
+  await browser("wait", "pre");
+  assert.equal(
+    await evaluate(
+      'JSON.parse(document.querySelector("pre").textContent).shows[0].note',
+    ),
+    "Keep <b>raw</b>",
+  );
+  assert.equal(await evaluate('document.querySelector("pre b")'), null);
+  await browser("reload");
+  await browser("wait", "pre");
+  assert.equal(
+    await evaluate('JSON.parse(document.querySelector("pre").textContent).id'),
+    id,
+  );
+  await evaluate('location.hash = "unknown"; true');
+  await browser(
+    "wait",
+    "--fn",
+    'document.body.textContent.includes("Playlist not found in this browser.")',
+  );
+  await browser("back");
+  await browser("wait", "pre");
+  await evaluate('location.hash = ""; true');
+  await browser(
+    "wait",
+    "--fn",
+    'document.body.textContent.includes("Choose a playlist from History.")',
+  );
+  await browser("open", `${server.url}playlists/?fail#${id}`);
+  await browser("wait", '[role="alert"]');
+  assert.equal(await evaluate('document.querySelector("pre")'), null);
+  await browser("open", `${server.url}?fail`);
+  await browser("wait", 'section[aria-label="Playlists"] [role="alert"]');
+  // Check the actual static Astro shell and its client router using the same storage.
+  await browser("open", `${server.url}archive/history`);
+  await browser("wait", `a[href="/archive/playlists/#${id}"]`);
+  for (const width of [320, 1440]) {
+    await browser("set", "viewport", String(width), "900");
+    assert.equal(
+      await evaluate("document.documentElement.scrollWidth <= innerWidth"),
+      true,
+    );
+  }
+  await evaluate(
+    `window.navigationMarker = {}; window.playerMarker = document.querySelector('[data-miniplayer]'); true`,
+  );
+  await evaluate(
+    `document.querySelector('a[href="/archive/playlists/#${id}"]').focus(); true`,
+  );
+  await browser("press", "Enter");
+  await browser("wait", "pre");
+  assert.equal(
+    await evaluate('JSON.parse(document.querySelector("pre").textContent).id'),
+    id,
+  );
+  assert.equal(
+    await evaluate(
+      '!!window.navigationMarker && window.playerMarker === document.querySelector("[data-miniplayer]")',
+    ),
+    true,
+  );
+  for (const width of [320, 332, 750, 1440, 1920]) {
+    await browser("set", "viewport", String(width), "900");
+    assert.equal(
+      await evaluate("document.documentElement.scrollWidth <= innerWidth"),
+      true,
+    );
+  }
+  // Back updates location before Astro finishes loading the destination.
+  await evaluate(`(() => {
+    const main = document.querySelector('main');
+    window.playlistDisappeared = false;
+    const observer = new MutationObserver(() => {
+      if (main.isConnected && !main.querySelector('pre')) window.playlistDisappeared = true;
+    });
+    observer.observe(main, { childList: true, subtree: true });
+    document.addEventListener('astro:before-swap', () => observer.disconnect(), { once: true });
+    return true;
+  })()`);
+  await browser("back");
+  await browser("wait", `a[href="/archive/playlists/#${id}"]`);
+  assert.equal(
+    await evaluate("window.playlistDisappeared"),
+    false,
+    "outgoing playlist stays visible until the page swap",
+  );
+  await browser("forward");
+  await browser("wait", "pre");
+  await browser("click", 'a[aria-label="Return to history"]');
+  await browser("wait", `a[href="/archive/playlists/#${id}"]`);
+  await browser("back");
+  await browser("wait", "pre");
+  await browser("reload");
+  await browser("wait", "pre");
+  assert.equal(
+    await evaluate('JSON.parse(document.querySelector("pre").textContent).id'),
+    id,
+  );
+  console.log(
+    "Playlist browsing passed: local lookup, reload, hash history, escaped JSON and independent errors.",
+  );
+} finally {
+  await browser("close").catch(() => {});
+  server.stop(true);
+}
