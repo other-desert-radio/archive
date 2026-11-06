@@ -12,6 +12,16 @@ import styles from "./HistoryPane.module.css";
 
 const emptyRecords: readonly PlaybackRecord[] = [];
 
+export function recentlyPlayed(records: readonly PlaybackRecord[]) {
+	return records
+		.filter((record) => record.history.length > 0)
+		.sort(
+			(a, b) =>
+				(b.history.at(-1)?.updatedAt ?? 0) - (a.history.at(-1)?.updatedAt ?? 0),
+		)
+		.slice(0, 5);
+}
+
 export default function HistoryPane() {
 	const stores = useStores();
 	const { playlists, status: playlistStatus } = usePlaylists();
@@ -29,8 +39,7 @@ export default function HistoryPane() {
 		() => emptyRecords,
 	);
 
-	const inProgress =
-		status === "ready" ? records.filter((r) => r.inProgress) : [];
+	const recentRecords = status === "ready" ? recentlyPlayed(records) : [];
 
 	return (
 		<div>
@@ -41,11 +50,16 @@ export default function HistoryPane() {
 				error="Could not load shows."
 			>
 				<h2>Recently Played</h2>
-				<div className={styles["show-container"]}>
-					{inProgress.map((record) =>
+				<section
+					className={styles["show-container"]}
+					aria-label="Recently played shows"
+					// biome-ignore lint/a11y/noNoninteractiveTabindex: Keyboard users need to scroll the row.
+					tabIndex={0}
+				>
+					{recentRecords.map((record) =>
 						renderRecord({ record, showStore, tagStore }),
 					)}
-				</div>
+				</section>
 			</LoadingState>
 			<section aria-label="Playlists">
 				<h2>Playlists</h2>

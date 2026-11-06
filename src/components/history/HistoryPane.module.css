@@ -11,6 +11,13 @@
 
 .show-container {
 	display: flex;
+	gap: var(--grid-column-gap);
+	overflow-x: auto;
+	padding-bottom: var(--space-sm);
+}
+
+.show-container > * {
+	flex: 0 0 min(100%, 36rem);
 }
 
 .playlists {
