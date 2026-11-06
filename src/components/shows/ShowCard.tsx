@@ -49,7 +49,7 @@ const renderDJs = (djs: Show["djs"], base: string) =>
 /**
  * Renders one archive show with its date, tags, and associated DJs.
  */
-export default function ShowCard({ show, tags, record }: Props) {
+export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
 	const detailBase = getBasePath();
 
 	return (
@@ -70,6 +70,19 @@ export default function ShowCard({ show, tags, record }: Props) {
 				</time>
 				<TagContainer tagIds={show.tagIds} tags={tags} size="large" />
 				{renderDJs(show.djs, detailBase)}
+				{playlistSaves.map(({ playlistId, title, note }) => (
+					<a
+						key={playlistId}
+						href={`${detailBase}/playlists/#${playlistId}`}
+						className={styles["playlist-save"]}
+						aria-label={`View playlist ${title}`}
+					>
+						<span className={styles["playlist-save-heading"]}>
+							saved in <b>{title}</b>
+						</span>
+						{note && <span className={styles["playlist-note"]}>{note}</span>}
+					</a>
+				))}
 			</div>
 		</article>
 	);

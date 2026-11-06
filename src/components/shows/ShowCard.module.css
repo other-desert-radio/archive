@@ -27,6 +27,34 @@
 	font-weight: normal;
 }
 
+.playlist-save {
+	display: flex;
+	flex-direction: column;
+	align-self: flex-start;
+	max-width: 100%;
+	border: 1px solid black;
+	background: white;
+	color: black;
+	font-size: inherit;
+	text-decoration: none;
+	touch-action: manipulation;
+}
+
+.playlist-save:focus-visible {
+	outline: 2px solid black;
+	outline-offset: 2px;
+}
+
+.playlist-save-heading,
+.playlist-note {
+	padding: var(--space-xs);
+}
+
+.playlist-note {
+	border-top: 1px solid black;
+	white-space: pre-wrap;
+}
+
 .artwork {
 	position: relative;
 	align-self: flex-start;
