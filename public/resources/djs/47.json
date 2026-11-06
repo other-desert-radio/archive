@@ -1,11 +1,22 @@
 {
-	"version": 7,
-	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"version": 8,
+	"updatedAt": "2026-11-06T23:56:06.238Z",
 	"data": {
 		"id": 47,
 		"title": "Bryzon Bizant",
 		"bio": null,
-		"shows": [],
+		"shows": [
+			{
+				"id": 314,
+				"title": "Tape 2, Side B",
+				"date": "2020-06-01T00:00:00.000Z",
+				"duration": 1112,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/bryzon-bizant-tape-2-side-b/"
+			}
+		],
 		"tagIds": []
 	}
 }

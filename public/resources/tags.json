@@ -1,6 +1,6 @@
 {
-	"version": 4,
-	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"version": 5,
+	"updatedAt": "2026-11-06T23:56:06.238Z",
 	"data": [
 		{
 			"id": 4,
@@ -2362,6 +2362,160 @@
 			"color": "#9a7bfb",
 			"mixcloud_key": "/genres/yuccavalleymateriallab/",
 			"mixcloud_url": "https://www.mixcloud.com/genres/yuccavalleymateriallab/"
+		},
+		{
+			"id": 366,
+			"title": "Physics",
+			"color": "#fb77d8",
+			"mixcloud_key": "/genres/physics/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/physics/"
+		},
+		{
+			"id": 367,
+			"title": "Science",
+			"color": "#f7cd7d",
+			"mixcloud_key": "/genres/science/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/science/"
+		},
+		{
+			"id": 368,
+			"title": "Sun ra",
+			"color": "#62b4f4",
+			"mixcloud_key": "/genres/sun-ra/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/sun-ra/"
+		},
+		{
+			"id": 369,
+			"title": "Itasca",
+			"color": "#f76bbf",
+			"mixcloud_key": "/genres/itasca/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/itasca/"
+		},
+		{
+			"id": 370,
+			"title": "Kayla cohen",
+			"color": "#a385f5",
+			"mixcloud_key": "/genres/kayla-cohen/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/kayla-cohen/"
+		},
+		{
+			"id": 371,
+			"title": "Japaense pop",
+			"color": "#69fb6e",
+			"mixcloud_key": "/genres/japaense-pop/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/japaense-pop/"
+		},
+		{
+			"id": 372,
+			"title": "Japanese Pop",
+			"color": "#f972bd",
+			"mixcloud_key": "/genres/japanese-pop/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/japanese-pop/"
+		},
+		{
+			"id": 373,
+			"title": "Archives",
+			"color": "#6bf58d",
+			"mixcloud_key": "/genres/archives/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/archives/"
+		},
+		{
+			"id": 374,
+			"title": "San francisco",
+			"color": "#c1f857",
+			"mixcloud_key": "/genres/san-francisco/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/san-francisco/"
+		},
+		{
+			"id": 375,
+			"title": "LiveRecordings",
+			"color": "#ad82f9",
+			"mixcloud_key": "/genres/liverecordings/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/liverecordings/"
+		},
+		{
+			"id": 376,
+			"title": "The savage young tater bug",
+			"color": "#e1f257",
+			"mixcloud_key": "/genres/the-savage-young-tater-bug/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/the-savage-young-tater-bug/"
+		},
+		{
+			"id": 377,
+			"title": "Compound",
+			"color": "#7df97d",
+			"mixcloud_key": "/genres/compound/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/compound/"
+		},
+		{
+			"id": 378,
+			"title": "Iranian",
+			"color": "#fa89d4",
+			"mixcloud_key": "/genres/iranian/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/iranian/"
+		},
+		{
+			"id": 379,
+			"title": "Nazmi",
+			"color": "#4ef956",
+			"mixcloud_key": "/genres/nazmi/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/nazmi/"
+		},
+		{
+			"id": 380,
+			"title": "Funkadelic",
+			"color": "#7882f4",
+			"mixcloud_key": "/genres/funkadelic/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/funkadelic/"
+		},
+		{
+			"id": 381,
+			"title": "Herbie Hancock",
+			"color": "#7f54f6",
+			"mixcloud_key": "/genres/herbie-hancock/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/herbie-hancock/"
+		},
+		{
+			"id": 382,
+			"title": "Curtis Mayfield",
+			"color": "#fb51cf",
+			"mixcloud_key": "/genres/curtis-mayfield/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/curtis-mayfield/"
+		},
+		{
+			"id": 383,
+			"title": "James Brown",
+			"color": "#f77d9f",
+			"mixcloud_key": "/genres/james-brown/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/james-brown/"
+		},
+		{
+			"id": 384,
+			"title": "Mahalia",
+			"color": "#54b4f6",
+			"mixcloud_key": "/genres/mahalia/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/mahalia/"
+		},
+		{
+			"id": 385,
+			"title": "Nancy Dupree",
+			"color": "#f85a95",
+			"mixcloud_key": "/genres/nancy-dupree/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/nancy-dupree/"
+		},
+		{
+			"id": 386,
+			"title": "Odetta",
+			"color": "#fb83b5",
+			"mixcloud_key": "/genres/odetta/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/odetta/"
+		},
+		{
+			"id": 387,
+			"title": "Narrative",
+			"color": "#54f672",
+			"mixcloud_key": "/genres/narrative/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/narrative/"
 		}
 	]
 }

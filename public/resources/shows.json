@@ -1,6 +1,6 @@
 {
-	"version": 5,
-	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"version": 6,
+	"updatedAt": "2026-11-06T23:56:06.238Z",
 	"data": [
 		{
 			"id": 99,
@@ -585,6 +585,24 @@
 			],
 			"tagIds": [12, 33, 41, 44],
 			"url": "https://www.mixcloud.com/otherdesertradio/justin-paszul-from-the-mixed-up-files-of-axaxaxas-ml%C3%B6-20-april-20-2026/"
+		},
+		{
+			"id": 315,
+			"title": "Episode 1 Beat Play Spring Mix",
+			"date": "2026-04-13T00:00:00.000Z",
+			"duration": 3085,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/a/b/4/a2d5-9cef-428d-aa1e-7af452040929",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/a/b/4/a2d5-9cef-428d-aa1e-7af452040929",
+			"djs": [
+				{
+					"id": 29,
+					"title": "LUVWAVE",
+					"image_small": "assets/djs/29_small.webp",
+					"image_large": "assets/djs/29_large.webp"
+				}
+			],
+			"tagIds": [214, 387],
+			"url": "https://www.mixcloud.com/otherdesertradio/wartime-product-episode-1-beat-play-spring-mix-april-13-2026/"
 		},
 		{
 			"id": 27,
@@ -3382,6 +3400,24 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/pq-episode-viii-october-18-2021/"
 		},
 		{
+			"id": 300,
+			"title": "Beyond Karaoke Episode 11 - A Brief History of Quanta",
+			"date": "2021-10-05T00:00:00.000Z",
+			"duration": 7524,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/1/7/9/d96a-911a-40e4-8018-20c1766a65d7",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/1/7/9/d96a-911a-40e4-8018-20c1766a65d7",
+			"djs": [
+				{
+					"id": 19,
+					"title": "K Sera Sarah",
+					"image_small": "assets/djs/19_small.webp",
+					"image_large": "assets/djs/19_large.webp"
+				}
+			],
+			"tagIds": [366, 367, 368],
+			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarahs-beyond-karaoke-episode-11-a-brief-history-of-quanta/"
+		},
+		{
 			"id": 185,
 			"title": "Shoals of Summer",
 			"date": "2021-09-21T00:00:00.000Z",
@@ -3658,6 +3694,24 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/sunny-its-only-loveget-free-may-3-2021/"
 		},
 		{
+			"id": 301,
+			"title": "Kayla's Mix, April 26, 2021",
+			"date": "2021-04-26T00:00:00.000Z",
+			"duration": 4968,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/e/2/4/3e12-cce7-4d4a-b72f-01c1640b5419",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/e/2/4/3e12-cce7-4d4a-b72f-01c1640b5419",
+			"djs": [
+				{
+					"id": 25,
+					"title": "Kayla",
+					"image_small": "assets/djs/25_small.webp",
+					"image_large": "assets/djs/25_large.webp"
+				}
+			],
+			"tagIds": [369, 370],
+			"url": "https://www.mixcloud.com/otherdesertradio/kaylas-mix-april-26-2021/"
+		},
+		{
 			"id": 190,
 			"title": "Armenian Reader's Digest III, Water Finds its Crack",
 			"date": "2021-04-19T00:00:00.000Z",
@@ -3905,6 +3959,46 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-episode-six-minimalism-january-26-2020/"
 		},
 		{
+			"id": 302,
+			"title": "Japanese Night Cruise Pt.2",
+			"date": "2021-01-15T00:00:00.000Z",
+			"duration": 5005,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/1/8/3/93c3-39cf-4b3f-a194-98e50f0b0753",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/1/8/3/93c3-39cf-4b3f-a194-98e50f0b0753",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline Partamian"
+				},
+				{
+					"id": 45,
+					"title": "Ethan Primason"
+				}
+			],
+			"tagIds": [22, 35, 41, 84, 371],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-ethan-japanese-night-cruise-pt2/"
+		},
+		{
+			"id": 303,
+			"title": "Japanese Night Cruise Pt. 1",
+			"date": "2021-01-14T00:00:00.000Z",
+			"duration": 5628,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/e/e/f/ac57-c3d6-4bb4-bddc-dcb8a78add80",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/e/e/f/ac57-c3d6-4bb4-bddc-dcb8a78add80",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline Partamian"
+				},
+				{
+					"id": 45,
+					"title": "Ethan Primason"
+				}
+			],
+			"tagIds": [22, 35, 41, 84, 372],
+			"url": "https://www.mixcloud.com/otherdesertradio/japanese-night-cruise-pt1/"
+		},
+		{
 			"id": 81,
 			"title": "Beyond Karaoke Episode VII - The Zodiac + Other Myths",
 			"description": "<p>Happy New Year! Are you on the edge of your seat wondering what 2021 has in store? Host and KJ K Sera Sarah takes a celestial journey through the zodiac in this episode of mythical proportions! Introducing very special guest and cosmic consultant Aurora Dawn who beams in horoscopes for every sign along the way! Tune in for astrological anthems from The Prodigy, Danzig, Janelle Monae, Throbbing Gristle, and MORE!</p>",
@@ -3942,6 +4036,22 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil-fumbling-bush-forecast-5-january-4-2021/"
 		},
 		{
+			"id": 304,
+			"title": "Episode VI, Pandemic NYE Dance Party",
+			"date": "2020-12-30T00:00:00.000Z",
+			"duration": 5337,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/6/4/8/e106-cba0-4c51-9461-642e4117e2b9",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/6/4/8/e106-cba0-4c51-9461-642e4117e2b9",
+			"djs": [
+				{
+					"id": 41,
+					"title": "Paul Quattrone"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/paul-quattrone-episode-vi-pandemic-nye-dance-party/"
+		},
+		{
 			"id": 259,
 			"title": "Orbits played by the Orrery Harp",
 			"date": "2020-12-28T00:00:00.000Z",
@@ -3974,6 +4084,22 @@
 			],
 			"tagIds": [326, 327, 328, 329],
 			"url": "https://www.mixcloud.com/otherdesertradio/andrew-storrs-saturn-jupiter-conjunction-gospel-music-special-december-22-2020/"
+		},
+		{
+			"id": 305,
+			"title": "Chri$ Kringles Christmas Jingles",
+			"date": "2020-12-22T00:00:00.000Z",
+			"duration": 5666,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/c/a/d/9052-83bd-4e1a-b161-596dd8503ee3",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/c/a/d/9052-83bd-4e1a-b161-596dd8503ee3",
+			"djs": [
+				{
+					"id": 40,
+					"title": "Dana"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-chri-kringles-christmas-jingles/"
 		},
 		{
 			"id": 194,
@@ -4201,6 +4327,42 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/caroline-get-down-goblin-special-october-2020/"
 		},
 		{
+			"id": 306,
+			"title": "From the Vault 4 - Sounds from 6th and Market, 2012",
+			"date": "2020-10-28T00:00:00.000Z",
+			"duration": 1690,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/5/5/7/f342-d8e4-40df-8a5f-964e0ba365e7",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/5/5/7/f342-d8e4-40df-8a5f-964e0ba365e7",
+			"djs": [
+				{
+					"id": 30,
+					"title": "DJ PUBLIC ROAD",
+					"image_small": "assets/djs/30_small.webp",
+					"image_large": "assets/djs/30_large.webp"
+				}
+			],
+			"tagIds": [330, 337, 373, 374],
+			"url": "https://www.mixcloud.com/otherdesertradio/andrew-storrs-from-the-vault-4-sounds-from-6th-and-market-2012/"
+		},
+		{
+			"id": 307,
+			"title": "From the Vault 3 - Brody's JT Demo, 2017",
+			"date": "2020-10-20T00:00:00.000Z",
+			"duration": 1983,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/d/f/6/718b-0c10-4904-8680-d91fd5be9bf7",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/d/f/6/718b-0c10-4904-8680-d91fd5be9bf7",
+			"djs": [
+				{
+					"id": 30,
+					"title": "DJ PUBLIC ROAD",
+					"image_small": "assets/djs/30_small.webp",
+					"image_large": "assets/djs/30_large.webp"
+				}
+			],
+			"tagIds": [373, 375],
+			"url": "https://www.mixcloud.com/otherdesertradio/andrew-storrs-from-the-vault-3-brodys-jt-demo-2017/"
+		},
+		{
 			"id": 219,
 			"title": "Desert Dove Transmission 5",
 			"date": "2020-10-17T00:00:00.000Z",
@@ -4217,6 +4379,24 @@
 			],
 			"tagIds": [],
 			"url": "https://www.mixcloud.com/otherdesertradio/aidan-desert-dove-transmission-5-october-17-2020/"
+		},
+		{
+			"id": 308,
+			"title": "From the Vault 2 - The Savage Young Tater Bug, Live, 2012",
+			"date": "2020-10-13T00:00:00.000Z",
+			"duration": 1833,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/0/8/2/68fd-18d7-4431-a925-422d74450459",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/0/8/2/68fd-18d7-4431-a925-422d74450459",
+			"djs": [
+				{
+					"id": 30,
+					"title": "DJ PUBLIC ROAD",
+					"image_small": "assets/djs/30_small.webp",
+					"image_large": "assets/djs/30_large.webp"
+				}
+			],
+			"tagIds": [330, 335, 337, 376],
+			"url": "https://www.mixcloud.com/otherdesertradio/andrew-storrs-from-the-vault-the-savage-young-tater-bug-live-2012/"
 		},
 		{
 			"id": 263,
@@ -4577,6 +4757,22 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-freedom-overspill-episode-one-august-3-2020/"
 		},
 		{
+			"id": 309,
+			"title": "Matters of Suspension, Compound YV Exhibition",
+			"date": "2020-08-01T00:00:00.000Z",
+			"duration": 1638,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/9/0/5/e408-9943-48b8-9c7f-0e9ad1d9619c",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/9/0/5/e408-9943-48b8-9c7f-0e9ad1d9619c",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline Partamian"
+				}
+			],
+			"tagIds": [377, 378, 379],
+			"url": "https://www.mixcloud.com/otherdesertradio/nazmi-caroline-matters-of-suspension-august-1-2020/"
+		},
+		{
 			"id": 203,
 			"title": "Armenian Reader's Digest",
 			"date": "2020-07-21T00:00:00.000Z",
@@ -4609,6 +4805,26 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/caroline-be-water-my-friend-july-13-2020/"
 		},
 		{
+			"id": 310,
+			"title": "Ear to Ear: Collective Transmission",
+			"date": "2020-07-06T00:00:00.000Z",
+			"duration": 2279,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline Partamian"
+				},
+				{
+					"id": 45,
+					"title": "Ethan Primason"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-and-ethan-ear-to-ear-collective-transmission-week-of-july-6-2020/"
+		},
+		{
 			"id": 92,
 			"title": "Beyond Hope Episode I - War and Resistance",
 			"date": "2020-07-04T00:00:00.000Z",
@@ -4625,6 +4841,54 @@
 			],
 			"tagIds": [151, 152, 153, 154, 155],
 			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-war-and-resistance-july-4-2020/"
+		},
+		{
+			"id": 311,
+			"title": "Paint Black Angels",
+			"date": "2020-06-27T00:00:00.000Z",
+			"duration": 3722,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/a/1/b/8b7f-a548-478c-a078-dd98f10c27ec",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/a/1/b/8b7f-a548-478c-a078-dd98f10c27ec",
+			"djs": [
+				{
+					"id": 40,
+					"title": "Dana"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/dana-paint-black-angeles-week-of-june-22-2020/"
+		},
+		{
+			"id": 312,
+			"title": "Calling Planet Earth",
+			"date": "2020-06-25T00:00:00.000Z",
+			"duration": 12998,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/2/2/b/c5f1-e703-4aae-a2ef-fb3dc30724ed",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/2/2/b/c5f1-e703-4aae-a2ef-fb3dc30724ed",
+			"djs": [
+				{
+					"id": 45,
+					"title": "Ethan Primason"
+				}
+			],
+			"tagIds": [271, 293, 368, 380, 381],
+			"url": "https://www.mixcloud.com/otherdesertradio/ethan-calling-planet-earth-week-of-june-22-2020/"
+		},
+		{
+			"id": 313,
+			"title": "Positive Gestures",
+			"date": "2020-06-22T00:00:00.000Z",
+			"duration": 6971,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/1/9/a/b719-7dbd-462e-8b0e-371d41fac4b7",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/1/9/a/b719-7dbd-462e-8b0e-371d41fac4b7",
+			"djs": [
+				{
+					"id": 37,
+					"title": "Caroline Partamian"
+				}
+			],
+			"tagIds": [382, 383, 384, 385, 386],
+			"url": "https://www.mixcloud.com/otherdesertradio/caroline-week-of-june-22-2020/"
 		},
 		{
 			"id": 205,
@@ -4675,6 +4939,22 @@
 			],
 			"tagIds": [],
 			"url": "https://www.mixcloud.com/otherdesertradio/ethan-primasons-15-minute-miracle-vol-4/"
+		},
+		{
+			"id": 314,
+			"title": "Tape 2, Side B",
+			"date": "2020-06-01T00:00:00.000Z",
+			"duration": 1112,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 47,
+					"title": "Bryzon Bizant"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/bryzon-bizant-tape-2-side-b/"
 		},
 		{
 			"id": 269,
