@@ -3,19 +3,28 @@ import { useInitialization } from "../../hooks/useInitialization";
 import { useStores } from "../../stores";
 import type { PlaybackRecord } from "../../stores/playback/types";
 import type { ShowStore } from "../../stores/shows/show-store";
-import type { TagStore } from "../../stores/tags/tag-store";
 import LoadingState from "../LoadingState";
 import PlaylistView from "../playlists/PlaylistView";
 import { usePlaylists } from "../playlists/usePlaylists";
-import { ShowCard } from "../shows";
 import styles from "./HistoryPane.module.css";
+import HistoryShowCard from "./HistoryShowCard";
 
 const emptyRecords: readonly PlaybackRecord[] = [];
+
+export function recentlyPlayed(records: readonly PlaybackRecord[]) {
+	return records
+		.filter((record) => record.history.length > 0)
+		.sort(
+			(a, b) =>
+				(b.history.at(-1)?.updatedAt ?? 0) - (a.history.at(-1)?.updatedAt ?? 0),
+		)
+		.slice(0, 10);
+}
 
 export default function HistoryPane() {
 	const stores = useStores();
 	const { playlists, status: playlistStatus } = usePlaylists();
-	const { playbackStore, showStore, tagStore } = stores;
+	const { playbackStore, showStore } = stores;
 	const { status } = useInitialization(stores);
 
 	const subscribe = useCallback(
@@ -29,26 +38,25 @@ export default function HistoryPane() {
 		() => emptyRecords,
 	);
 
-	const inProgress =
-		status === "ready" ? records.filter((r) => r.inProgress) : [];
+	const recentRecords = status === "ready" ? recentlyPlayed(records) : [];
 
 	return (
 		<div>
-			<div className={styles["wip"]}>Under Construction</div>
 			<LoadingState
 				status={status}
 				loading="Loading shows..."
 				error="Could not load shows."
 			>
-				<h2>Recently Played</h2>
-				<div className={styles["show-container"]}>
-					{inProgress.map((record) =>
-						renderRecord({ record, showStore, tagStore }),
-					)}
-				</div>
+				<h1>Recently Played</h1>
+				<section
+					className={styles["show-container"]}
+					aria-label="Recently played shows"
+				>
+					{recentRecords.map((record) => renderRecord({ record, showStore }))}
+				</section>
 			</LoadingState>
 			<section aria-label="Playlists">
-				<h2>Playlists</h2>
+				<h1>Playlists</h1>
 				<p>Playlists are stored in this browser.</p>
 				<LoadingState
 					status={playlistStatus}
@@ -69,13 +77,12 @@ export default function HistoryPane() {
 type Params = {
 	record: PlaybackRecord;
 	showStore: ShowStore;
-	tagStore: TagStore;
 };
-const renderRecord = ({ record, showStore, tagStore }: Params) => {
+const renderRecord = ({ record, showStore }: Params) => {
 	const show = showStore.get(record.showId);
 	if (!show) {
 		return <div key={record.showId}>missing show id {record.showId}</div>;
 	}
 
-	return <ShowCard key={record.showId} show={show} tags={tagStore.getMap()} />;
+	return <HistoryShowCard key={record.showId} show={show} />;
 };
