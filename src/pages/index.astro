@@ -20,5 +20,12 @@ const initialTags = new Map([...tags].filter(([id]) => initialTagIds.has(id)));
   returning_page="home"
 >
   <CategoryTabs active="shows" />
-  <ShowsPane client:load shows={initialShows} showIds={shows.map((show) => show.id)} tags={initialTags} />
+  <div class="page-inset">
+    <ShowsPane
+      client:load
+      shows={initialShows}
+      showIds={shows.map((show) => show.id)}
+      tags={initialTags}
+    />
+  </div>
 </BaseLayout>

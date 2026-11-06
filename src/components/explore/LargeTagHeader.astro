@@ -10,18 +10,18 @@ const { tag } = Astro.props;
 
 <div
   class="large-tag-header"
-  style={{ backgroundColor: tag.color, "--tag-title-length": Math.max(1, Array.from(tag.title).length) }}
+  style={{
+    backgroundColor: tag.color,
+    "--tag-title-length": Math.max(1, Array.from(tag.title).length),
+  }}
 >
   <h1>{tag.title}</h1>
 </div>
 
 <style>
   .large-tag-header {
-    /* Reach the viewport edge from inside BaseLayout's centered main. */
-    --header-inset: calc(
-      max(var(--page-gutter), env(safe-area-inset-left)) +
-        max(0rem, (100vw - var(--page-max-width)) / 2)
-    );
+    /* Reach the viewport edge beyond the centered main on wide screens. */
+    --header-inset: calc(max(0rem, (100vw - var(--page-max-width)) / 2));
     width: fit-content;
     max-width: calc(100% + var(--header-inset));
     margin-left: calc(-1 * var(--header-inset));
@@ -45,10 +45,7 @@ const { tag } = Astro.props;
 
   @media (max-width: 600px) {
     .large-tag-header {
-      width: calc(
-        100% + var(--header-inset) +
-          max(var(--page-gutter), env(safe-area-inset-right))
-      );
+      width: 100%;
       max-width: none;
       padding-left: max(var(--page-gutter), env(safe-area-inset-left));
       padding-right: max(var(--page-gutter), env(safe-area-inset-right));

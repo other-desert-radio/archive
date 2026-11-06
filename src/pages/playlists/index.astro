@@ -8,5 +8,7 @@ import PlaylistPage from "./_PlaylistPage";
   page={{ name: "playlist_page" }}
   returning_page="history"
 >
-  <PlaylistPage client:load />
+  <div class="page-inset">
+    <PlaylistPage client:load />
+  </div>
 </BaseLayout>

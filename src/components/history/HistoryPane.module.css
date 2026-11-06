@@ -1,7 +1,6 @@
 .show-container {
 	display: flex;
 	gap: var(--grid-column-gap);
-	overflow-x: auto;
 	padding-bottom: var(--space-sm);
 }
 
