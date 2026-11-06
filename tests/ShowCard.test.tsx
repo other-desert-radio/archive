@@ -30,7 +30,13 @@ test("saved playlist links follow DJ links and display hearts with titles", () =
 	assert.equal((html.match(/aria-label="View playlist /g) ?? []).length, 3);
 	assert.match(html, /href="\/playlists\/#custom"/);
 	assert.match(html, /<b>Favorites<\/b>/);
-	assert.equal((html.match(/aria-hidden="true">♥/g) ?? []).length, 3);
+	assert.equal((html.match(/aria-hidden="true">♥/g) ?? []).length, 1);
+	assert.equal(
+		(html.match(/<button[^>]+aria-label="Save to Playlist"/g) ?? []).length,
+		1,
+	);
+	assert.match(html, /<\/a><\/span><span>, <a/g);
+	assert.doesNotMatch(html, /<a[^>]*>[^<]*<button/);
 	assert.doesNotMatch(html, /saved in|playlist-note/);
 	assert.ok(html.lastIndexOf("View Test DJ") < html.indexOf("View playlist"));
 });

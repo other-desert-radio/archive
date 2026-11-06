@@ -3,6 +3,7 @@ import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
 import { formatDate } from "../../utils/format-date";
 import { getBasePath } from "../../utils/get-base-path";
+import PlaylistModal from "../playlists/PlaylistModal";
 import TagContainer from "../TagContainer";
 import PlayableShowArtwork from "./PlayableShowArtwork";
 import styles from "./ShowCard.module.css";
@@ -50,6 +51,20 @@ const renderDJs = (djs: Show["djs"], base: string) =>
  */
 export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
 	const detailBase = getBasePath();
+	const modal = useRef<HTMLDialogElement>(null);
+	const [modalMounted, setModalMounted] = useState(false);
+	useEffect(() => {
+		if (modalMounted) {
+			modal.current?.showModal();
+		}
+	}, [modalMounted]);
+	function openPlaylistModal() {
+		if (modalMounted) {
+			modal.current?.showModal();
+		} else {
+			setModalMounted(true);
+		}
+	}
 
 	return (
 		<article className={styles["show-card"]}>
@@ -69,19 +84,38 @@ export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
 				</time>
 				<TagContainer tagIds={show.tagIds} tags={tags} size="large" />
 				{renderDJs(show.djs, detailBase)}
-				{playlistSaves.map(({ playlistId, title }) => (
-					<a
-						key={playlistId}
-						href={`${detailBase}/playlists/#${playlistId}`}
-						className={styles["playlist-save"]}
-						aria-label={`View playlist ${title}`}
-					>
-						<span>
-							<span aria-hidden="true">♥</span> <b>{title}</b>
+				{playlistSaves.length > 0 && (
+					<div className={styles["playlist-save"]}>
+						<button
+							type="button"
+							className={styles["playlist-heart"]}
+							aria-label="Save to Playlist"
+							onClick={openPlaylistModal}
+						>
+							<span aria-hidden="true">♥</span>
+						</button>
+						<span className={styles["playlist-titles"]}>
+							{playlistSaves.map(({ playlistId, title }, index) => (
+								<span key={playlistId}>
+									{index > 0 && ", "}
+									<a
+										href={`${detailBase}/playlists/#${playlistId}`}
+										className={styles["playlist-title"]}
+										aria-label={`View playlist ${title}`}
+									>
+										<b>{title}</b>
+									</a>
+								</span>
+							))}
 						</span>
-					</a>
-				))}
+					</div>
+				)}
+				{modalMounted && (
+					<PlaylistModal key={show.id} ref={modal} showId={show.id} />
+				)}
 			</div>
 		</article>
 	);
 }
+
+import { useEffect, useRef, useState } from "react";

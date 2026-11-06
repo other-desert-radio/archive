@@ -29,7 +29,9 @@
 
 .playlist-save {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	align-items: baseline;
+	gap: var(--space-xs);
 	align-self: flex-start;
 	max-width: 100%;
 	border: 1px solid black;
@@ -41,7 +43,35 @@
 	touch-action: manipulation;
 }
 
-.playlist-save:focus-visible {
+.playlist-heart {
+	flex-shrink: 0;
+	border: 0;
+	padding: 0;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+	touch-action: manipulation;
+}
+
+.playlist-titles {
+	min-width: 0;
+}
+
+.playlist-title {
+	color: inherit;
+	text-decoration: none;
+	touch-action: manipulation;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.playlist-title:hover {
+		text-decoration: underline;
+	}
+}
+
+.playlist-heart:focus-visible,
+.playlist-title:focus-visible {
 	outline: 2px solid black;
 	outline-offset: 2px;
 }
