@@ -7,6 +7,7 @@ import PlaylistPage from "../src/pages/playlists/_PlaylistPage";
 test("playlist card links the local ID and escapes its title", () => {
 	const html = renderToStaticMarkup(
 		<PlaylistCard
+			shows={[]}
 			playlist={{
 				id: "local-id",
 				type: "user",
@@ -20,6 +21,9 @@ test("playlist card links the local ID and escapes its title", () => {
 	assert.ok(html.includes('href="/playlists/#local-id"'));
 	assert.ok(html.includes('aria-label="View playlist &lt;Road trip&gt;"'));
 	assert.ok(html.includes("&lt;Road trip&gt;"));
+	assert.ok(html.startsWith("<a "));
+	assert.ok(html.endsWith("</a>"));
+	assert.equal((html.match(/<a /g) ?? []).length, 1);
 });
 
 test("playlist page renders safely before browser storage and location are available", () => {

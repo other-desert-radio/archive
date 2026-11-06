@@ -19,7 +19,11 @@ export default function PlaylistCard({ playlist, shows }: PlaylistCardProps) {
 		.slice(0, 4);
 
 	return (
-		<div className={styles["playlist-container"]}>
+		<a
+			className={styles["playlist-container"]}
+			href={`${base}/playlists/#${playlist.id}`}
+			aria-label={`View playlist ${playlist.title}`}
+		>
 			<div className={styles["playlist-shows-grid"]}>
 				{recentShows.map((show) => (
 					<img
@@ -39,13 +43,7 @@ export default function PlaylistCard({ playlist, shows }: PlaylistCardProps) {
 					/>
 				))}
 			</div>
-			<a
-				className={styles["playlist"]}
-				href={`${base}/playlists/#${playlist.id}`}
-				aria-label={`View playlist ${playlist.title}`}
-			>
-				{playlist.title}
-			</a>
-		</div>
+			<span className={styles["playlist"]}>{playlist.title}</span>
+		</a>
 	);
 }
