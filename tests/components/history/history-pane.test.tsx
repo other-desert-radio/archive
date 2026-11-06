@@ -15,6 +15,7 @@ test("history waits for catalog initialization before looking up shows", () => {
 	);
 	assert.ok(html.includes('role="status"'));
 	assert.ok(html.includes("Loading shows..."));
+	assert.ok(html.includes("Loading playlists..."));
 	assert.ok(!html.includes("missing show id"));
 	assert.equal(getShow.mock.callCount(), 0);
 	assert.equal(initialize.mock.callCount(), 0);

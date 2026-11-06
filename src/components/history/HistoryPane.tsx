@@ -3,6 +3,8 @@ import { useStores } from "../../stores";
 import type { PlaybackRecord } from "../../stores/playback/types";
 import type { ShowStore } from "../../stores/shows/show-store";
 import type { TagStore } from "../../stores/tags/tag-store";
+import PlaylistView from "../playlists/PlaylistView";
+import { usePlaylists } from "../playlists/usePlaylists";
 import { ShowCard } from "../shows";
 import styles from "./HistoryPane.module.css";
 
@@ -10,6 +12,7 @@ const emptyRecords: readonly PlaybackRecord[] = [];
 
 export default function HistoryPane() {
 	const stores = useStores();
+	const { playlists, status: playlistStatus } = usePlaylists();
 	const { playbackStore, showStore, tagStore } = stores;
 	const [status, setStatus] = useState<"loading" | "ready" | "error">(
 		"loading",
@@ -63,6 +66,25 @@ export default function HistoryPane() {
 					</div>
 				</>
 			)}
+			<section aria-label="Playlists">
+				<h2>Playlists</h2>
+				<p>Playlists are stored in this browser.</p>
+				{playlistStatus === "loading" && (
+					<p role="status">Loading playlists...</p>
+				)}
+				{playlistStatus === "error" && (
+					<p role="alert">
+						Could not load playlists. Reload the page to retry.
+					</p>
+				)}
+				{playlistStatus === "ready" && (
+					<div className={styles["playlists"]}>
+						{playlists.map((playlist) => (
+							<PlaylistView key={playlist.id} playlist={playlist} />
+						))}
+					</div>
+				)}
+			</section>
 		</div>
 	);
 }

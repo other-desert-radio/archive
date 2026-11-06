@@ -1,0 +1,12 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PlaylistPage from "./_PlaylistPage";
+---
+
+<BaseLayout
+  title="Playlist | Other Desert Radio"
+  page={{ name: "playlist_page" }}
+  returning_page="history"
+>
+  <PlaylistPage client:load />
+</BaseLayout>

@@ -5,7 +5,7 @@ import type { Page } from "../types/page";
 
 type Props = {
   page: Page;
-  returning_page: "shows" | "djs" | "home" | "explore";
+  returning_page: "shows" | "djs" | "home" | "explore" | "history";
 };
 
 const { page, returning_page } = Astro.props;
@@ -17,6 +17,8 @@ const returnHref = (() => {
     }
     case "djs":
       return `${base}/djs`;
+    case "history":
+      return `${base}/history`;
     case "explore":
       return `${base}/explore`;
     case "home":
@@ -34,7 +36,8 @@ const title = (() => {
     }
     case "dj_page":
     case "tag_page":
-    case "show_page": {
+    case "show_page":
+    case "playlist_page": {
       return page.name;
     }
   }
