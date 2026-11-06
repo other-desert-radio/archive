@@ -51,8 +51,6 @@ export default function HistoryPane() {
 				<section
 					className={styles["show-container"]}
 					aria-label="Recently played shows"
-					// biome-ignore lint/a11y/noNoninteractiveTabindex: Keyboard users need to scroll the row.
-					tabIndex={0}
 				>
 					{recentRecords.map((record) => renderRecord({ record, showStore }))}
 				</section>
