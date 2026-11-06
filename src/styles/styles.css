@@ -2,6 +2,7 @@
 :root {
 	--density-unit: 0.8rem;
 	--space-xs: calc(var(--density-unit) * 0.5);
+	--space-xsm: var(--space-xs);
 	--space-sm: var(--density-unit);
 	--space-md: calc(var(--density-unit) * 1.5);
 	--space-lg: calc(var(--density-unit) * 2);
@@ -27,6 +28,7 @@
 	--show-artwork-max: calc(var(--density-unit) * 20.625);
 	--detail-artwork-size: calc(var(--density-unit) * 38.75);
 	--artwork-placeholder: #bebebe;
+	--playlist-placeholder: #e6e6e6;
 }
 
 @media (min-width: 750px) {
@@ -94,6 +96,7 @@ textarea {
 	display: inline-block;
 	transition: transform 80ms linear;
 }
+
 .tag:hover {
 	transform: scale(1.15);
 }
@@ -127,6 +130,7 @@ textarea {
 .detail-header {
 	grid-column: 1 / -1;
 }
+
 .detail-photo {
 	width: 100%;
 	max-width: var(--detail-artwork-size);
@@ -135,6 +139,7 @@ textarea {
 	background-color: var(--artwork-placeholder);
 	border: var(--border-heavy) solid black;
 }
+
 .detail-column {
 	display: flex;
 	flex-direction: column;

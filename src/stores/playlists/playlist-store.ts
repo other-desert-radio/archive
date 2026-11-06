@@ -1,6 +1,21 @@
 import type { Database, DBStore } from "../../database/types";
 import type { Playlist } from "./types";
 
+function createPlaylistId(): string {
+	if (typeof crypto.randomUUID === "function") {
+		return crypto.randomUUID();
+	}
+	// randomUUID requires HTTPS; getRandomValues also supports local HTTP previews.
+	const bytes = crypto.getRandomValues(new Uint8Array(16));
+	const view = new DataView(bytes.buffer);
+	view.setUint8(6, (view.getUint8(6) & 0x0f) | 0x40);
+	view.setUint8(8, (view.getUint8(8) & 0x3f) | 0x80);
+	const hex = Array.from(bytes, (byte) =>
+		byte.toString(16).padStart(2, "0"),
+	).join("");
+	return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+}
+
 /** Owns local playlists; publish edits only after persistence commits. */
 export class PlaylistStore {
 	private playlists = new Map<string, Playlist>();
@@ -22,7 +37,7 @@ export class PlaylistStore {
 		this.initialization ??= this.database
 			.ensureLikedPlaylist({
 				fallback: {
-					id: crypto.randomUUID(),
+					id: createPlaylistId(),
 					type: "liked",
 					title: "Liked Shows",
 					createdAt: now,
@@ -88,7 +103,7 @@ export class PlaylistStore {
 				}
 				const now = new Date().toISOString();
 				const playlist: Playlist = {
-					id: crypto.randomUUID(),
+					id: createPlaylistId(),
 					type: "user",
 					title: normalizedTitle,
 					createdAt: now,

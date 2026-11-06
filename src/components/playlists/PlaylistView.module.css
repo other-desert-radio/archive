@@ -1,7 +1,0 @@
-.playlist {
-	display: block;
-	padding: var(--space-sm);
-	color: inherit;
-	overflow-wrap: anywhere;
-	min-width: 0;
-}
