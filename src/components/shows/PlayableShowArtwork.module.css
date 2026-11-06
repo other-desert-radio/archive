@@ -16,6 +16,12 @@
 	pointer-events: none;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+	.artwork .progress {
+		transition: height 150ms ease;
+	}
+}
+
 .elapsed {
 	height: 100%;
 	background: black;

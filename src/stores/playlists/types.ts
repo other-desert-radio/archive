@@ -1,3 +1,8 @@
+export type PlaylistSave = {
+	playlistId: string;
+	title: string;
+};
+
 export type PlaylistEntry = Readonly<{
 	showId: number;
 	/** UTC ISO timestamp. */

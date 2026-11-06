@@ -1,4 +1,5 @@
 import type { PlaybackRecord } from "../../stores/playback/types";
+import type { PlaylistSave } from "../../stores/playlists/types";
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
 import { formatDate } from "../../utils/format-date";
@@ -7,11 +8,6 @@ import PlaylistModal from "../playlists/PlaylistModal";
 import TagContainer from "../TagContainer";
 import PlayableShowArtwork from "./PlayableShowArtwork";
 import styles from "./ShowCard.module.css";
-
-export type PlaylistSave = {
-	playlistId: string;
-	title: string;
-};
 
 type Props = {
 	show: Show;
