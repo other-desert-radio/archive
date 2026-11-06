@@ -1,0 +1,23 @@
+.creation input {
+	box-sizing: border-box;
+	width: 100%;
+	min-width: 0;
+	min-height: 2.75rem;
+	padding: var(--space-xs);
+	border: 1px solid currentColor;
+	border-radius: 0;
+	background: white;
+	color: inherit;
+	font: inherit;
+}
+
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: var(--space-sm);
+}
+
+.creation .actions button {
+	margin: 0;
+}

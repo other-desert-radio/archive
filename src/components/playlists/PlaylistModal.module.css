@@ -104,6 +104,9 @@
 
 .modal .new-playlist {
 	margin: var(--space-xs) var(--space-sm) 0;
+}
+
+.modal button:disabled {
 	color: #888;
 	cursor: default;
 }
