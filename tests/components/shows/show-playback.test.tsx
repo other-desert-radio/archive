@@ -8,7 +8,13 @@ import {
 	toggleShowPlayback,
 } from "../../../src/components/shows";
 import PlayableShowArtwork from "../../../src/components/shows/PlayableShowArtwork";
-import { AudioStore, StoresProvider, stores } from "../../../src/stores";
+import ShowsPane from "../../../src/components/shows/ShowsPane";
+import {
+	AudioStore,
+	createStores,
+	StoresProvider,
+	stores,
+} from "../../../src/stores";
 
 const show = {
 	id: 1,
@@ -25,6 +31,24 @@ const show = {
 class SelectedSnapshotStore extends AudioStore {
 	override getServerSnapshot = () => this.getSnapshot();
 }
+
+test("show listing uses the empty server snapshot even with loaded playback records", () => {
+	const stores = createStores();
+	stores.playbackStore.set({
+		showId: show.id,
+		positionInSeconds: 15,
+		inProgress: true,
+		history: [],
+	});
+	assert.equal(stores.playbackStore.getSnapshot().length, 1);
+	const html = renderToStaticMarkup(
+		<StoresProvider stores={stores}>
+			<ShowsPane shows={[show]} showIds={[show.id]} tags={new Map()} />
+		</StoresProvider>,
+	);
+	assert.match(html, /aria-label="Play Show"/);
+	assert.doesNotMatch(html, /role="progressbar"/);
+});
 
 test("artwork progress reflects elapsed time and stays between zero and full", () => {
 	for (const [positionInSeconds, percentage] of [

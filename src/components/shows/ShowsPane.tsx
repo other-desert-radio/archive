@@ -1,6 +1,7 @@
 import {
 	useCallback,
 	useEffect,
+	useMemo,
 	useRef,
 	useState,
 	useSyncExternalStore,
@@ -76,10 +77,15 @@ export default function ShowsPane({
 		(notify: () => void) => playbackStore.subscribe(notify),
 		[playbackStore],
 	);
-	useSyncExternalStore(
+	const records = useSyncExternalStore(
 		subscribe,
 		playbackStore.getSnapshot,
 		() => emptyRecords,
+	);
+	// Index the snapshot for fast lookups; playbackStore.get() bypasses it and breaks hydration.
+	const recordsByShowId = useMemo(
+		() => new Map(records.map((record) => [record.showId, record])),
+		[records],
 	);
 
 	const [visible, setVisible] = useState(shows);
@@ -156,7 +162,7 @@ export default function ShowsPane({
 						key={show.id}
 						show={show}
 						tags={visibleTags}
-						record={playbackStore.get(show.id)}
+						record={recordsByShowId.get(show.id)}
 					/>
 				))}
 			</div>
