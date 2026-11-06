@@ -80,7 +80,11 @@ export default function NewPlaylistModal({
 				<label>
 					Playlist name
 					<input
-						autoFocus
+						ref={(input) => {
+							if (input) {
+								input.autofocus = true;
+							}
+						}}
 						name="title"
 						aria-label="Playlist name"
 						required
