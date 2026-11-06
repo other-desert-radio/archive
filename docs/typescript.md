@@ -4,6 +4,10 @@ These conventions adapt the backend TypeScript guidance to Astro components,
 React components, and static-site data. The checked-in Biome and TypeScript
 configuration are the source of truth when a rule is enforced automatically.
 
+Avoid lint suppressions; prefer fixing the underlying issue. If a suppression
+is necessary, explain why beside it and explicitly flag it to the user in the
+handoff, naming the rule and why it could not be resolved without suppression.
+
 ## Prefer type aliases
 
 Use `type` aliases for object shapes, component props, unions, and other new
