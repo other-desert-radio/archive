@@ -1,15 +1,14 @@
 import type { Playlist } from "../../stores";
 import type { Show } from "../../utils/fetch-shows";
 import { getBasePath } from "../../utils/get-base-path";
-import PlayableShowArtwork from "../shows/PlayableShowArtwork";
-import styles from "./PlaylistView.module.css";
+import styles from "./PlaylistCard.module.css";
 
-type PlaylistViewProps = {
+type PlaylistCardProps = {
 	playlist: Playlist;
 	shows: readonly Show[];
 };
 
-export default function PlaylistView({ playlist, shows }: PlaylistViewProps) {
+export default function PlaylistCard({ playlist, shows }: PlaylistCardProps) {
 	const base = getBasePath();
 	const recentShows = [...playlist.shows]
 		.sort((a, b) => Date.parse(b.addedAt) - Date.parse(a.addedAt))
@@ -23,7 +22,14 @@ export default function PlaylistView({ playlist, shows }: PlaylistViewProps) {
 		<div className={styles["playlist-container"]}>
 			<div className={styles["playlist-shows-grid"]}>
 				{recentShows.map((show) => (
-					<PlayableShowArtwork key={show.id} show={show} base={base} />
+					<img
+						key={show.id}
+						className={styles["show-image"]}
+						src={show.image_large}
+						alt={show.title}
+						loading="lazy"
+						decoding="async"
+					/>
 				))}
 				{[0, 1, 2, 3].slice(recentShows.length).map((slot) => (
 					<div

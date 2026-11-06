@@ -1,12 +1,12 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import PlaylistView from "../src/components/playlists/PlaylistView";
+import PlaylistCard from "../src/components/playlists/PlaylistCard";
 import PlaylistPage from "../src/pages/playlists/_PlaylistPage";
 
-test("playlist view links the local ID and escapes its title", () => {
+test("playlist card links the local ID and escapes its title", () => {
 	const html = renderToStaticMarkup(
-		<PlaylistView
+		<PlaylistCard
 			playlist={{
 				id: "local-id",
 				type: "user",

@@ -4,7 +4,7 @@ import { useStores } from "../../stores";
 import type { PlaybackRecord } from "../../stores/playback/types";
 import type { ShowStore } from "../../stores/shows/show-store";
 import LoadingState from "../LoadingState";
-import PlaylistView from "../playlists/PlaylistView";
+import PlaylistCard from "../playlists/PlaylistCard";
 import { usePlaylists } from "../playlists/usePlaylists";
 import styles from "./HistoryPane.module.css";
 import HistoryShowCard from "./HistoryShowCard";
@@ -57,7 +57,7 @@ export default function HistoryPane() {
 			</LoadingState>
 			<section aria-label="Playlists">
 				<h1>Playlists</h1>
-				<p>Playlists are stored in this browser.</p>
+				<p>Playlists are stored locally on your device.</p>
 				<LoadingState
 					status={playlistStatus}
 					loading="Loading playlists..."
@@ -65,7 +65,7 @@ export default function HistoryPane() {
 				>
 					<div className={styles["playlists"]}>
 						{playlists.map((playlist) => (
-							<PlaylistView
+							<PlaylistCard
 								key={playlist.id}
 								playlist={playlist}
 								shows={

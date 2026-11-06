@@ -24,13 +24,21 @@
 .playlist-shows-grid {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: var(--space-sm);
+	gap: var(--space-xsm);
 	padding: var(--space-sm);
 }
 
+.show-image {
+	display: block;
+	width: 100%;
+	min-width: 0;
+	object-fit: cover;
+}
+
+.show-image,
 .placeholder {
 	aspect-ratio: 1;
-	background: var(--artwork-placeholder);
+	background: var(--playlist-placeholder);
 }
 
 @media (hover: hover) and (pointer: fine) {

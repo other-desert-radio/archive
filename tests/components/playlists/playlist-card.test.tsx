@@ -1,12 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import PlaylistView from "../../../src/components/playlists/PlaylistView";
-import {
-	createStores,
-	type Playlist,
-	StoresProvider,
-} from "../../../src/stores";
+import PlaylistCard from "../../../src/components/playlists/PlaylistCard";
+import type { Playlist } from "../../../src/stores";
 import type { Show } from "../../../src/utils/fetch-shows";
 
 const shows: Show[] = [1, 2, 3, 4, 5].map((id) => ({
@@ -35,9 +31,7 @@ const playlist: Playlist = {
 
 function render(availableShows: readonly Show[]) {
 	return renderToStaticMarkup(
-		<StoresProvider stores={createStores()}>
-			<PlaylistView playlist={playlist} shows={availableShows} />
-		</StoresProvider>,
+		<PlaylistCard playlist={playlist} shows={availableShows} />,
 	);
 }
 
@@ -50,7 +44,8 @@ test("playlist artwork shows the four newest available entries without mutating 
 		),
 		[5, 4, 3, 2],
 	);
-	assert.equal((html.match(/aria-label="Play Show /g) ?? []).length, 4);
+	assert.equal((html.match(/alt="Show /g) ?? []).length, 4);
+	assert.ok(!html.includes("<button"));
 	assert.ok(html.includes("View playlist My playlist"));
 	assert.deepEqual(playlist.shows, original);
 });
@@ -64,7 +59,7 @@ test("empty or partially available artwork keeps the playlist link", () => {
 		3,
 	);
 	assert.equal(
-		(render(shows.slice(0, 1)).match(/aria-label="Play Show /g) ?? []).length,
+		(render(shows.slice(0, 1)).match(/alt="Show /g) ?? []).length,
 		1,
 	);
 });
