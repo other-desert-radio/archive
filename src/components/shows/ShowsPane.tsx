@@ -40,9 +40,9 @@ const emptyPlaylistSaves: readonly PlaylistSave[] = [];
 
 // Index once per playlist snapshot so cards receive only their saves without rescanning every playlist.
 // Playlists                         Saves by show ID
-// A: [show 1, show 2]  -->           1: [{ playlistId: A, title, note }]
-// B: [show 2]                       2: [{ playlistId: A, title, note },
-//                                       { playlistId: B, title, note }]
+// A: [show 1, show 2]  -->           1: [{ playlistId: A, title }]
+// B: [show 2]                       2: [{ playlistId: A, title },
+//                                       { playlistId: B, title }]
 export function getPlaylistSavesByShowId(playlists: readonly Playlist[]) {
 	const savesByShowId = new Map<number, PlaylistSave[]>();
 	for (const playlist of playlists) {
@@ -55,7 +55,6 @@ export function getPlaylistSavesByShowId(playlists: readonly Playlist[]) {
 			saves.push({
 				playlistId: playlist.id,
 				title: playlist.title,
-				note: entry.note,
 			});
 		}
 	}

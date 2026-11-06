@@ -7,7 +7,7 @@ import ShowsPane, {
 import fixture from "../../res/shows.json";
 import tags from "../../res/tags.json";
 
-test("playlist lookup groups compact saves by show, preserving playlist order and notes", () => {
+test("playlist lookup groups compact saves by show, preserving playlist order without passing notes", () => {
 	const timestamps = {
 		createdAt: "2026-01-01T00:00:00Z",
 		updatedAt: "2026-01-01T00:00:00Z",
@@ -36,15 +36,14 @@ test("playlist lookup groups compact saves by show, preserving playlist order an
 		},
 	]);
 	assert.deepEqual(saves.get(1), [
-		{ playlistId: "liked", title: "Liked Shows", note: undefined },
+		{ playlistId: "liked", title: "Liked Shows" },
 		{
 			playlistId: "custom",
 			title: "Favorites",
-			note: "First line\nSecond line",
 		},
 	]);
 	assert.deepEqual(saves.get(2), [
-		{ playlistId: "custom", title: "Favorites", note: "Another show" },
+		{ playlistId: "custom", title: "Favorites" },
 	]);
 	assert.equal(saves.has(3), false);
 	assert.equal(getPlaylistSavesByShowId([]).size, 0);

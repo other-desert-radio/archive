@@ -33,6 +33,8 @@
 	align-self: flex-start;
 	max-width: 100%;
 	border: 1px solid black;
+	padding: var(--space-xs);
+	background: white;
 	color: black;
 	font-size: inherit;
 	text-decoration: none;
@@ -42,20 +44,6 @@
 .playlist-save:focus-visible {
 	outline: 2px solid black;
 	outline-offset: 2px;
-}
-
-.playlist-save-heading,
-.playlist-note {
-	padding: var(--space-xs);
-}
-
-.playlist-save-heading {
-	background: white;
-}
-
-.playlist-note {
-	border-top: 1px solid black;
-	white-space: pre-wrap;
 }
 
 .artwork {

@@ -5,7 +5,7 @@ import { ShowCard } from "../src/components/shows";
 import { formatDate } from "../src/utils/format-date";
 import fixture from "./res/shows.json";
 
-test("saved playlist boxes follow DJ links and show only nonempty notes as text", () => {
+test("saved playlist links follow DJ links and display hearts with titles", () => {
 	const show = fixture.data[0];
 	assert.ok(show);
 	const render = (
@@ -20,20 +20,18 @@ test("saved playlist boxes follow DJ links and show only nonempty notes as text"
 		);
 	assert.doesNotMatch(render([]), /View playlist/);
 	const html = render([
-		{ playlistId: "liked", title: "Liked Shows", note: undefined },
-		{ playlistId: "empty", title: "Empty note", note: "" },
+		{ playlistId: "liked", title: "Liked Shows" },
+		{ playlistId: "empty", title: "Empty note" },
 		{
 			playlistId: "custom",
 			title: "Favorites",
-			note: "<b>hello</b>\nsecond line",
 		},
 	]);
 	assert.equal((html.match(/aria-label="View playlist /g) ?? []).length, 3);
 	assert.match(html, /href="\/playlists\/#custom"/);
-	assert.match(html, /saved in <b>Favorites<\/b>/);
-	assert.match(html, /&lt;b&gt;hello&lt;\/b&gt;\nsecond line/);
-	assert.match(html, /saved in <b>Liked Shows<\/b><\/span><\/a>/);
-	assert.match(html, /saved in <b>Empty note<\/b><\/span><\/a>/);
+	assert.match(html, /<b>Favorites<\/b>/);
+	assert.equal((html.match(/aria-hidden="true">♥/g) ?? []).length, 3);
+	assert.doesNotMatch(html, /saved in|playlist-note/);
 	assert.ok(html.lastIndexOf("View Test DJ") < html.indexOf("View playlist"));
 });
 

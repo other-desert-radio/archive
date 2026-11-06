@@ -10,7 +10,6 @@ import styles from "./ShowCard.module.css";
 export type PlaylistSave = {
 	playlistId: string;
 	title: string;
-	note: string | undefined;
 };
 
 type Props = {
@@ -70,17 +69,16 @@ export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
 				</time>
 				<TagContainer tagIds={show.tagIds} tags={tags} size="large" />
 				{renderDJs(show.djs, detailBase)}
-				{playlistSaves.map(({ playlistId, title, note }) => (
+				{playlistSaves.map(({ playlistId, title }) => (
 					<a
 						key={playlistId}
 						href={`${detailBase}/playlists/#${playlistId}`}
 						className={styles["playlist-save"]}
 						aria-label={`View playlist ${title}`}
 					>
-						<span className={styles["playlist-save-heading"]}>
-							saved in <b>{title}</b>
+						<span>
+							<span aria-hidden="true">♥</span> <b>{title}</b>
 						</span>
-						{note && <span className={styles["playlist-note"]}>{note}</span>}
 					</a>
 				))}
 			</div>
