@@ -1,4 +1,4 @@
-import { type Ref, type SubmitEvent, useRef, useState } from "react";
+import { type Ref, type SubmitEvent, useId, useRef, useState } from "react";
 import { useStores } from "../../stores";
 import { getBasePath } from "../../utils/get-base-path";
 import LoadingState from "../LoadingState";
@@ -16,6 +16,9 @@ export default function PlaylistModal({
 }) {
 	const { playlistStore } = useStores();
 	const newPlaylistModal = useRef<HTMLDialogElement>(null);
+	const discardModal = useRef<HTMLDialogElement>(null);
+	const discardDescriptionId = useId();
+	const dialogRef = useRef<HTMLDialogElement>(null);
 
 	const { playlists, status } = usePlaylists();
 	const [selected, setSelected] = useState<string[] | null>(null);
@@ -23,13 +26,31 @@ export default function PlaylistModal({
 	const [saving, setSaving] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
-	const selectedIds =
-		selected ??
+	const savedIds = playlists
+		.filter((playlist) =>
+			playlist.shows.some((entry) => entry.showId === showId),
+		)
+		.map((playlist) => playlist.id);
+	const selectedIds = selected ?? savedIds;
+	const savedNote =
 		playlists
-			.filter((playlist) =>
-				playlist.shows.some((entry) => entry.showId === showId),
-			)
-			.map((playlist) => playlist.id);
+			.flatMap((playlist) => playlist.shows)
+			.find((entry) => entry.showId === showId && entry.note)?.note ?? "";
+	const dirty =
+		selectedIds.length !== savedIds.length ||
+		selectedIds.some((id) => !savedIds.includes(id)) ||
+		(note ?? savedNote) !== savedNote;
+
+	function requestClose() {
+		if (saving) {
+			return;
+		}
+		if (dirty) {
+			discardModal.current?.showModal();
+		} else {
+			dialogRef.current?.close();
+		}
+	}
 
 	async function save(event: SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -57,13 +78,34 @@ export default function PlaylistModal({
 	return (
 		<>
 			<dialog
-				ref={ref}
+				ref={(dialog) => {
+					dialogRef.current = dialog;
+					if (typeof ref === "function") {
+						return ref(dialog);
+					}
+					if (ref) {
+						ref.current = dialog;
+					}
+				}}
 				className={styles["modal"]}
 				aria-label="Playlist"
-				onCancel={(event) => {
-					if (saving) {
-						event.preventDefault();
+				onPointerDown={(event) => {
+					if (event.target !== event.currentTarget) {
+						return;
 					}
+					const rect = event.currentTarget.getBoundingClientRect();
+					if (
+						event.clientX < rect.left ||
+						event.clientX > rect.right ||
+						event.clientY < rect.top ||
+						event.clientY > rect.bottom
+					) {
+						requestClose();
+					}
+				}}
+				onCancel={(event) => {
+					event.preventDefault();
+					requestClose();
 				}}
 				onClose={() => {
 					setSelected(null);
@@ -78,9 +120,7 @@ export default function PlaylistModal({
 							type="button"
 							aria-label="Close playlist"
 							disabled={saving}
-							onClick={(event) =>
-								event.currentTarget.closest("dialog")?.close()
-							}
+							onClick={requestClose}
 						>
 							<svg
 								viewBox="0 0 24 24"
@@ -146,14 +186,7 @@ export default function PlaylistModal({
 								rows={6}
 								aria-label="Add a note"
 								disabled={saving}
-								value={
-									note ??
-									playlists
-										.flatMap((playlist) => playlist.shows)
-										.find((entry) => entry.showId === showId && entry.note)
-										?.note ??
-									""
-								}
+								value={note ?? savedNote}
 								onChange={(event) => setNote(event.currentTarget.value)}
 							/>
 						</label>
@@ -170,6 +203,36 @@ export default function PlaylistModal({
 						{saving ? "Saving..." : "Save"}
 					</button>
 				</form>
+			</dialog>
+			<dialog
+				ref={discardModal}
+				className={`${styles["modal"]} ${styles["discard"]}`}
+				aria-label="Discard unsaved changes?"
+				aria-describedby={discardDescriptionId}
+			>
+				<h2>Discard unsaved changes?</h2>
+				<p id={discardDescriptionId}>
+					Your changes will be lost if you close this form.
+				</p>
+				<div className={styles["discard-actions"]}>
+					<button
+						type="button"
+						aria-label="Keep editing"
+						onClick={() => discardModal.current?.close()}
+					>
+						Keep editing
+					</button>
+					<button
+						type="button"
+						aria-label="Discard changes"
+						onClick={() => {
+							discardModal.current?.close();
+							dialogRef.current?.close();
+						}}
+					>
+						Discard changes
+					</button>
+				</div>
 			</dialog>
 			<NewPlaylistModal
 				ref={newPlaylistModal}

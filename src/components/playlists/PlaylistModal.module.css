@@ -122,3 +122,23 @@
 	width: var(--space-lg);
 	height: var(--space-lg);
 }
+
+.discard {
+	width: min(24rem, calc(100% - 2rem));
+	padding: var(--space-lg);
+}
+
+.discard h2 {
+	margin: 0 0 var(--space-md);
+	font-size: var(--font-small-title);
+}
+
+.discard-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-xs);
+}
+
+.discard-actions button {
+	border: 1px solid currentColor;
+}
