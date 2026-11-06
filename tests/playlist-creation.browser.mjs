@@ -34,6 +34,7 @@ async function evaluate(code) {
 	return JSON.parse(await browser("eval", code));
 }
 const saveDialog = 'dialog[aria-label="Playlist"][open]';
+const discardDialog = 'dialog[aria-label="Discard unsaved changes?"][open]';
 const newDialog = 'dialog[aria-label="New Playlist"][open]';
 const button = (label) => `button[aria-label="${label}"]`;
 const wait = (code) => browser("wait", "--fn", code);
@@ -48,6 +49,49 @@ try {
 	await browser("open", server.url.href);
 	await browser("click", button("Save to Playlist"));
 	await wait(`!document.querySelector('${saveDialog} ${button("New playlist")}').disabled`);
+	// Clean backdrop dismisses; changed selections and notes require confirmation.
+	await browser("mouse", "move", "1", "1");
+	await browser("mouse", "down");
+	await browser("mouse", "up");
+	await wait(`!document.querySelector('${saveDialog}')`);
+	await browser("click", button("Save to Playlist"));
+	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
+	await browser("mouse", "move", "1", "1");
+	await browser("mouse", "down");
+	await browser("mouse", "up");
+	await browser("wait", discardDialog);
+	await browser("click", `${discardDialog} ${button("Keep editing")}`);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), true);
+	await browser("press", "Escape");
+	await browser("wait", discardDialog);
+	await browser("press", "Escape");
+	assert.equal(await evaluate(`!!document.querySelector('${saveDialog}') && !document.querySelector('${discardDialog}')`), true);
+	await browser("click", `${saveDialog} ${button("Close playlist")}`);
+	await browser("click", `${discardDialog} ${button("Discard changes")}`);
+	await wait(`!document.querySelector('${saveDialog}')`);
+	await browser("click", button("Save to Playlist"));
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), false);
+	await browser("fill", `${saveDialog} textarea`, "Draft note");
+	await browser("press", "Escape");
+	await browser("wait", discardDialog);
+	for (const width of [320, 332, 750, 1440]) {
+		await browser("set", "viewport", String(width), "900");
+		assert.equal(await evaluate(`(() => {
+			const d = document.querySelector('${discardDialog}');
+			const r = d.getBoundingClientRect();
+			return r.left >= 0 && r.right <= innerWidth && d.scrollWidth <= d.clientWidth;
+		})()`), true, `Discard dialog fits at ${width}px`);
+	}
+	await browser("screenshot", "/tmp/playlist-discard-confirmation.png");
+	await browser("click", `${discardDialog} ${button("Discard changes")}`);
+	await browser("click", button("Save to Playlist"));
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} textarea').value`), "");
+	// Reverting edits leaves the form clean.
+	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
+	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
+	await browser("press", "Escape");
+	await wait(`!document.querySelector('${saveDialog}')`);
+	await browser("click", button("Save to Playlist"));
 	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
 	await browser("fill", `${saveDialog} textarea`, "Keep my note");
 	await openNew();
@@ -101,6 +145,8 @@ try {
 	await wait(`!document.querySelector('${newDialog}')`);
 	assert.equal((await names()).filter((name) => name === "Retry me").length, 1);
 	await browser("click", `${saveDialog} ${button("Close playlist")}`);
+	await browser("click", `${discardDialog} ${button("Discard changes")}`);
+	await wait(`!document.querySelector('${saveDialog}')`);
 	assert.equal(await evaluate('playlistFixture.stores.playlistStore.getAll().find(p => p.title === "Retry me").shows.length'), 0);
 
 	// Standalone creation has no callback; duplicate titles are allowed.
