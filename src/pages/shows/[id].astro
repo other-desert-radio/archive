@@ -45,7 +45,7 @@ const hydratedTags = hydrateTags(show, tags);
   title={`${show.title} | Other Desert Radio`}
 >
   <div class="show-info">
-    <header class="show-header">
+    <header class="show-header" style={{ "--show-title-length": Math.max(1, Array.from(show.title).length) }}>
       <h1 id="show-title" class="show-title">{show.title}</h1>
       <p class="show-date">{formatDate(show.date)}</p>
     </header>
@@ -232,24 +232,19 @@ const hydratedTags = hydrateTags(show, tags);
   }
 
   .show-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--space-sm) var(--space-lg);
+    container-type: inline-size;
     margin-top: var(--space-sm);
     margin-bottom: var(--space-sm);
   }
 
   .show-title {
     margin: 0;
-    font-size: clamp(var(--font-title), 4.5vw, calc(var(--font-title) * 2.5));
+    font-size: min(clamp(var(--font-title), 4.5vw, calc(var(--font-title) * 2.5)), calc(100cqw / var(--show-title-length) / 0.64));
     line-height: 1.4;
   }
 
   .show-date {
     margin: 0;
-    flex-shrink: 0;
   }
 
   @media (max-width: 750px) {
@@ -260,9 +255,8 @@ const hydratedTags = hydrateTags(show, tags);
   }
 
   @media (max-width: 600px) {
-    .show-header {
-      flex-direction: column;
-      align-items: flex-start;
+    .show-title {
+      font-size: var(--font-title);
     }
 
     .show-grid,
