@@ -30,8 +30,16 @@ export default function NewPlaylistModal({
 		setError(undefined);
 		let playlist: Playlist;
 		try {
+			console.log("[NewPlaylistModal] Creating playlist", {
+				title: title.trim(),
+			});
 			playlist = await playlistStore.create({ title });
-		} catch {
+			console.log("[NewPlaylistModal] Playlist created", {
+				id: playlist.id,
+				title: playlist.title,
+			});
+		} catch (error) {
+			console.error("[NewPlaylistModal] Playlist creation failed", error);
 			setError("Could not create playlist. Please try again.");
 			return;
 		} finally {
@@ -58,7 +66,7 @@ export default function NewPlaylistModal({
 			}}
 		>
 			<form method="dialog" onSubmit={create} aria-busy={saving}>
-				<div className={modalStyles["header"]}>
+				<div className={`${modalStyles["header"]} ${styles["header"]}`}>
 					<h1>New Playlist</h1>
 					<button
 						type="button"
@@ -78,7 +86,6 @@ export default function NewPlaylistModal({
 					</button>
 				</div>
 				<label>
-					Playlist name
 					<input
 						ref={(input) => {
 							if (input) {
@@ -86,7 +93,9 @@ export default function NewPlaylistModal({
 							}
 						}}
 						name="title"
+						autoComplete="off"
 						aria-label="Playlist name"
+						placeholder="name"
 						required
 						value={title}
 						disabled={saving}
