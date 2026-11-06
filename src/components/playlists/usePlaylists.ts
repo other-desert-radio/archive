@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
+import { useCallback, useSyncExternalStore } from "react";
+import { useInitialization } from "../../hooks/useInitialization";
 import { type Playlist, useStores } from "../../stores";
 
 const emptyPlaylists: readonly Playlist[] = [];
@@ -8,28 +9,7 @@ const emptyPlaylists: readonly Playlist[] = [];
  */
 export function usePlaylists() {
 	const { playlistStore } = useStores();
-	const [status, setStatus] = useState<"loading" | "ready" | "error">(
-		"loading",
-	);
-	useEffect(() => {
-		let active = true;
-		setStatus("loading");
-		void playlistStore.initialize().then(
-			() => {
-				if (active) {
-					setStatus("ready");
-				}
-			},
-			() => {
-				if (active) {
-					setStatus("error");
-				}
-			},
-		);
-		return () => {
-			active = false;
-		};
-	}, [playlistStore]);
+	const status = useInitialization(playlistStore);
 	const subscribe = useCallback(
 		(listener: () => void) => playlistStore.subscribe({ listener }),
 		[playlistStore],
