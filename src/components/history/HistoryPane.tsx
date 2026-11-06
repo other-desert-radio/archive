@@ -65,7 +65,19 @@ export default function HistoryPane() {
 				>
 					<div className={styles["playlists"]}>
 						{playlists.map((playlist) => (
-							<PlaylistView key={playlist.id} playlist={playlist} />
+							<PlaylistView
+								key={playlist.id}
+								playlist={playlist}
+								shows={
+									status === "ready"
+										? showStore.getPage(
+												playlist.shows.map((entry) => entry.showId),
+												0,
+												playlist.shows.length,
+											)
+										: []
+								}
+							/>
 						))}
 					</div>
 				</LoadingState>

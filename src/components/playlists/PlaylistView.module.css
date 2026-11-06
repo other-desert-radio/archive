@@ -1,7 +1,40 @@
 .playlist {
 	display: block;
 	padding: var(--space-sm);
-	color: inherit;
+	background: white;
+	color: black;
+	font-size: var(--font-small-title);
+	font-weight: bold;
+	line-height: 1.2;
+	text-decoration: none;
 	overflow-wrap: anywhere;
 	min-width: 0;
+}
+
+.playlist-container {
+	display: flex;
+	flex-direction: column;
+	flex: 0 1 18rem;
+	min-width: 0;
+	max-width: 100%;
+	box-sizing: border-box;
+	background: white;
+}
+
+.playlist-shows-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--space-sm);
+	padding: var(--space-sm);
+}
+
+.placeholder {
+	aspect-ratio: 1;
+	background: var(--artwork-placeholder);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.playlist:hover {
+		text-decoration: underline;
+	}
 }
