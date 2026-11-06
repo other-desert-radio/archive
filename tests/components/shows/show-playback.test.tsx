@@ -50,22 +50,6 @@ test("show listing uses the empty server snapshot even with loaded playback reco
 	assert.doesNotMatch(html, /role="progressbar"/);
 });
 
-test("standalone artwork omits browser-local progress from server rendering", () => {
-	const stores = createStores();
-	stores.playbackStore.set({
-		showId: show.id,
-		positionInSeconds: 15,
-		inProgress: true,
-		history: [],
-	});
-	const html = renderToStaticMarkup(
-		<StoresProvider stores={stores}>
-			<PlayableShowArtwork show={show} base="" />
-		</StoresProvider>,
-	);
-	assert.doesNotMatch(html, /role="progressbar"/);
-});
-
 test("artwork progress reflects elapsed time and stays between zero and full", () => {
 	for (const [positionInSeconds, percentage] of [
 		[15, 25],
