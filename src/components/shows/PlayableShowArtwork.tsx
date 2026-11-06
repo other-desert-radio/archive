@@ -1,3 +1,4 @@
+import { useCallback, useSyncExternalStore } from "react";
 import { useAudioState, useStores } from "../../stores";
 import type { PlaybackRecord } from "../../stores/playback/types";
 import type { Show } from "../../utils/fetch-shows";
@@ -27,7 +28,17 @@ export default function PlayableShowArtwork({
 	alwaysShowProgress = false,
 }: Props) {
 	const detailBase = getBasePath(base);
-	const { audioStore } = useStores();
+	const { audioStore, playbackStore } = useStores();
+	const subscribe = useCallback(
+		(notify: () => void) => playbackStore.subscribe(notify),
+		[playbackStore],
+	);
+	const savedRecord = useSyncExternalStore(
+		subscribe,
+		() => playbackStore.getSnapshot().find((entry) => entry.showId === show.id),
+		() => undefined,
+	);
+	record ??= savedRecord;
 	const audio = useAudioState();
 	const track = mixcloudShowTrack(show);
 	const selected = isSelectedShow(audio, track);

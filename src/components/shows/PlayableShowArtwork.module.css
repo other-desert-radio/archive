@@ -20,6 +20,10 @@
 	.artwork .progress {
 		transition: height 150ms ease;
 	}
+
+	.playback-button {
+		transition: opacity 150ms ease;
+	}
 }
 
 .elapsed {
