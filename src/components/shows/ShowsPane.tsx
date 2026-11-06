@@ -1,8 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+	useSyncExternalStore,
+} from "react";
 import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
 import { useInitialization } from "../../hooks/useInitialization";
 import { useStores } from "../../stores";
+import type { PlaybackRecord } from "../../stores/playback/types";
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
 import LoadingState from "../LoadingState";
@@ -25,6 +33,7 @@ type Props = {
  * Astro owns the saved scroll coordinates, which are not stored here.
  */
 const visits = new Map<number, Props>();
+const emptyRecords: readonly PlaybackRecord[] = [];
 
 if (typeof document !== "undefined") {
 	document.addEventListener("astro:before-swap", (event) => {
@@ -63,6 +72,21 @@ export default function ShowsPane({
 	initialLoading = showIds.length > shows.length,
 }: Props) {
 	const stores = useStores();
+	const { playbackStore } = stores;
+	const subscribe = useCallback(
+		(notify: () => void) => playbackStore.subscribe(notify),
+		[playbackStore],
+	);
+	const records = useSyncExternalStore(
+		subscribe,
+		playbackStore.getSnapshot,
+		() => emptyRecords,
+	);
+	// Index the snapshot for fast lookups; playbackStore.get() bypasses it and breaks hydration.
+	const recordsByShowId = useMemo(
+		() => new Map(records.map((record) => [record.showId, record])),
+		[records],
+	);
 
 	const [visible, setVisible] = useState(shows);
 	const [visibleTags, setVisibleTags] = useState(tags);
@@ -134,7 +158,12 @@ export default function ShowsPane({
 		<>
 			<div className={styles["show-container-grid"]}>
 				{visible.map((show) => (
-					<ShowCard key={show.id} show={show} tags={visibleTags} />
+					<ShowCard
+						key={show.id}
+						show={show}
+						tags={visibleTags}
+						record={recordsByShowId.get(show.id)}
+					/>
 				))}
 			</div>
 			{needsCatalog && (
