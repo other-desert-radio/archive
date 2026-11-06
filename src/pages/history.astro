@@ -12,3 +12,19 @@ import HistoryPane from "../components/history/HistoryPane";
   <CategoryTabs active="history" />
   <HistoryPane client:load />
 </BaseLayout>
+
+<style is:global>
+  html[data-page="history"],
+  html[data-page="history"] .site-background {
+    background: black;
+    color: white;
+  }
+
+  html[data-page="history"] main a {
+    color: inherit;
+  }
+
+  html[data-page="history"] [data-site-header] nav {
+    border-bottom: var(--border-primary) solid white;
+  }
+</style>
