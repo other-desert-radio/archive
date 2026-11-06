@@ -11,12 +11,12 @@ import { createRoot } from "react-dom/client";
 import { useInitialization } from "../../hooks/useInitialization";
 import { useStores } from "../../stores";
 import type { PlaybackRecord } from "../../stores/playback/types";
-import type { Playlist } from "../../stores/playlists/types";
+import type { Playlist, PlaylistSave } from "../../stores/playlists/types";
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
 import LoadingState from "../LoadingState";
 import { usePlaylists } from "../playlists/usePlaylists";
-import ShowCard, { type PlaylistSave } from "./ShowCard";
+import ShowCard from "./ShowCard";
 import styles from "./ShowsPane.module.css";
 
 type Props = {

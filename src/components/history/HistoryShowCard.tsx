@@ -13,7 +13,12 @@ export default function HistoryShowCard({ show, record }: Props) {
 	const base = getBasePath();
 	return (
 		<article className={styles["card"]}>
-			<PlayableShowArtwork show={show} record={record} base={base} />
+			<PlayableShowArtwork
+				show={show}
+				record={record}
+				base={base}
+				alwaysShowProgress
+			/>
 			<a
 				className={styles["title"]}
 				href={`${base}/shows/${show.id}`}

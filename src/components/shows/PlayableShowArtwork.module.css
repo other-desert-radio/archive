@@ -10,10 +10,20 @@
 	left: 0;
 	box-sizing: border-box;
 	width: 100%;
-	height: 10%;
+	height: 2%;
 	border-top: 0;
 	background: white;
 	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.artwork .progress {
+		transition: height 150ms ease;
+	}
+
+	.playback-button {
+		transition: opacity 150ms ease;
+	}
 }
 
 .elapsed {
@@ -30,6 +40,17 @@
 	padding-right: var(--space-xs);
 	color: gray;
 	font-size: calc(var(--density-unit) * 0.75);
+	visibility: hidden;
+}
+
+.artwork[data-always-show-progress="true"] .progress,
+.artwork:focus-within .progress {
+	height: 10%;
+}
+
+.artwork[data-always-show-progress="true"] .remaining,
+.artwork:focus-within .remaining {
+	visibility: visible;
 }
 
 .show-image {
@@ -83,6 +104,14 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+	.artwork:hover .progress {
+		height: 10%;
+	}
+
+	.artwork:hover .remaining {
+		visibility: visible;
+	}
+
 	.artwork:hover .playback-button {
 		opacity: 1;
 	}

@@ -15,6 +15,7 @@ type Props = {
 	base: string;
 	loading?: "lazy" | "eager";
 	border?: "primary" | "secondary";
+	alwaysShowProgress?: boolean;
 };
 
 export default function PlayableShowArtwork({
@@ -23,6 +24,7 @@ export default function PlayableShowArtwork({
 	base,
 	loading = "lazy",
 	border = "primary",
+	alwaysShowProgress = false,
 }: Props) {
 	const detailBase = getBasePath(base);
 	const { audioStore } = useStores();
@@ -46,7 +48,10 @@ export default function PlayableShowArtwork({
 	);
 
 	return (
-		<div className={styles["artwork"]}>
+		<div
+			className={styles["artwork"]}
+			data-always-show-progress={alwaysShowProgress}
+		>
 			<img
 				className={`${styles["show-image"]} image-border-${border}`}
 				src={show.image_large}
