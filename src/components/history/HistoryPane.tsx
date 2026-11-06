@@ -16,7 +16,7 @@ export default function HistoryPane() {
 	const stores = useStores();
 	const { playlists, status: playlistStatus } = usePlaylists();
 	const { playbackStore, showStore, tagStore } = stores;
-	const status = useInitialization(stores);
+	const { status } = useInitialization(stores);
 
 	const subscribe = useCallback(
 		(notify: () => void) => playbackStore.subscribe(notify),

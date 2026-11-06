@@ -3,9 +3,10 @@ import type { InitializationStatus } from "../hooks/useInitialization";
 
 type Props = {
 	status: InitializationStatus;
-	loading: string;
-	error: string;
-	children: ReactNode;
+	loading: ReactNode;
+	error: ReactNode;
+	className?: string | undefined;
+	children?: ReactNode;
 };
 
 export default function LoadingState({
@@ -13,12 +14,21 @@ export default function LoadingState({
 	loading,
 	error,
 	children,
+	className,
 }: Props) {
 	if (status === "loading") {
-		return <p role="status">{loading}</p>;
+		return loading == null ? null : (
+			<p role="status" className={className}>
+				{loading}
+			</p>
+		);
 	}
 	if (status === "error") {
-		return <p role="alert">{error}</p>;
+		return (
+			<p role="alert" className={className}>
+				{error}
+			</p>
+		);
 	}
 	return children;
 }

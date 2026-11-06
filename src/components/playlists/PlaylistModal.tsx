@@ -1,20 +1,11 @@
-import {
-	type Ref,
-	type SubmitEvent,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-	useSyncExternalStore,
-} from "react";
-import { type Playlist, useStores } from "../../stores";
+import { type Ref, type SubmitEvent, useRef, useState } from "react";
+import { useStores } from "../../stores";
 import { getBasePath } from "../../utils/get-base-path";
+import LoadingState from "../LoadingState";
 import NewPlaylistModal from "./NewPlaylistModal";
 import styles from "./PlaylistModal.module.css";
-
 import { saveShowToPlaylists } from "./save-show-to-playlists";
-
-const emptyPlaylists: readonly Playlist[] = [];
+import { usePlaylists } from "./usePlaylists";
 
 export default function PlaylistModal({
 	ref,
@@ -26,43 +17,11 @@ export default function PlaylistModal({
 	const { playlistStore } = useStores();
 	const newPlaylistModal = useRef<HTMLDialogElement>(null);
 
-	const [status, setStatus] = useState<"loading" | "ready" | "error">(
-		"loading",
-	);
+	const { playlists, status } = usePlaylists();
 	const [selected, setSelected] = useState<string[] | null>(null);
 	const [note, setNote] = useState<string | undefined>(undefined);
 	const [saving, setSaving] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-
-	useEffect(() => {
-		let active = true;
-		void playlistStore.initialize().then(
-			() => {
-				if (active) {
-					setStatus("ready");
-				}
-			},
-			() => {
-				if (active) {
-					setStatus("error");
-				}
-			},
-		);
-
-		return () => {
-			active = false;
-		};
-	}, [playlistStore]);
-
-	const subscribe = useCallback(
-		(listener: () => void) => playlistStore.subscribe({ listener }),
-		[playlistStore],
-	);
-	const playlists = useSyncExternalStore(
-		subscribe,
-		playlistStore.getSnapshot,
-		() => emptyPlaylists,
-	);
 
 	const selectedIds =
 		selected ??
@@ -135,12 +94,11 @@ export default function PlaylistModal({
 						</button>
 					</div>
 
-					{status === "loading" && <p role="status">Loading playlists...</p>}
-					{status === "error" && (
-						<p role="alert">
-							Could not load playlists. Reload the page to retry.
-						</p>
-					)}
+					<LoadingState
+						status={status}
+						loading="Loading playlists..."
+						error="Could not load playlists. Reload the page to retry."
+					/>
 					<fieldset
 						aria-label="Playlists"
 						disabled={saving || status !== "ready"}

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useStores } from "../../stores";
+import LoadingState from "../LoadingState";
 import styles from "./MixcloudWidget.module.css";
 import { MixcloudAdapter } from "./mixcloud-adapter";
 import {
@@ -89,7 +90,11 @@ export default function MixcloudWidget({
 				aria-label="Mixcloud show player"
 				allow="autoplay"
 			/>
-			{readiness.status === "error" && <p role="status">{readiness.message}</p>}
+			<LoadingState
+				status={readiness.status}
+				loading={null}
+				error={readiness.status === "error" ? readiness.message : null}
+			/>
 		</div>
 	);
 }

@@ -9,7 +9,7 @@ const emptyPlaylists: readonly Playlist[] = [];
  */
 export function usePlaylists() {
 	const { playlistStore } = useStores();
-	const status = useInitialization(playlistStore);
+	const { status } = useInitialization(playlistStore);
 	const subscribe = useCallback(
 		(listener: () => void) => playlistStore.subscribe({ listener }),
 		[playlistStore],
