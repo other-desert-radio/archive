@@ -4,6 +4,34 @@
 	min-width: 0;
 }
 
+.artwork .progress {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	box-sizing: border-box;
+	width: 100%;
+	height: 10%;
+	border-top: 0;
+	background: white;
+	pointer-events: none;
+}
+
+.elapsed {
+	height: 100%;
+	background: black;
+}
+
+.remaining {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding-right: var(--space-xs);
+	color: gray;
+	font-size: calc(var(--density-unit) * 0.75);
+}
+
 .show-image {
 	display: block;
 	box-sizing: border-box;

@@ -26,6 +26,61 @@ class SelectedSnapshotStore extends AudioStore {
 	override getServerSnapshot = () => this.getSnapshot();
 }
 
+test("artwork progress reflects elapsed time and stays between zero and full", () => {
+	for (const [positionInSeconds, percentage] of [
+		[15, 25],
+		[0, 0],
+		[-10, 0],
+		[90, 100],
+	]) {
+		const html = renderToStaticMarkup(
+			<PlayableShowArtwork
+				show={show}
+				base=""
+				record={{ positionInSeconds, inProgress: true }}
+			/>,
+		);
+		assert.ok(html.includes(`aria-valuenow="${percentage}"`));
+		assert.ok(html.includes(`width:${percentage}%`));
+		assert.match(html, /aria-label="Playback progress for Show"/);
+	}
+});
+
+test("artwork hides progress without a record or a valid duration", () => {
+	const withoutRecord = renderToStaticMarkup(
+		<PlayableShowArtwork show={show} base="" />,
+	);
+	assert.doesNotMatch(withoutRecord, /role="progressbar"/);
+	for (const duration of [0, -1, Number.NaN, Number.POSITIVE_INFINITY]) {
+		const html = renderToStaticMarkup(
+			<PlayableShowArtwork
+				show={{ ...show, duration }}
+				base=""
+				record={{ positionInSeconds: 15, inProgress: true }}
+			/>,
+		);
+		assert.doesNotMatch(html, /role="progressbar"/);
+	}
+});
+
+test("artwork shows remaining minutes and padded seconds, bounded at zero", () => {
+	for (const [positionInSeconds, expected] of [
+		[5, "2:00"],
+		[60, "1:05"],
+		[124.5, "0:01"],
+		[130, "0:00"],
+	] as const) {
+		const html = renderToStaticMarkup(
+			<PlayableShowArtwork
+				show={{ ...show, duration: 125 }}
+				base=""
+				record={{ positionInSeconds, inProgress: true }}
+			/>,
+		);
+		assert.ok(html.includes(`>${expected}</span>`));
+	}
+});
+
 test("show URLs become keys without tracking params and reject other sources", () => {
 	assert.deepEqual(mixcloudShowTrack(show), {
 		show,
