@@ -1,0 +1,37 @@
+dialog.creation {
+	width: min(60rem, calc(100% - 2rem));
+}
+
+.creation .header {
+	border-bottom: 0;
+}
+
+.creation input {
+	box-sizing: border-box;
+	width: 100%;
+	min-width: 0;
+	min-height: 5.5rem;
+	padding: var(--space-xs) var(--space-sm);
+	border: 1px solid currentColor;
+	border-radius: 0;
+	background: white;
+	color: inherit;
+	font: inherit;
+	font-size: 2em;
+}
+
+.creation input:focus {
+	outline: 2px solid black;
+	outline-offset: 0;
+}
+
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: var(--space-sm);
+}
+
+.creation .actions button {
+	margin: 0;
+}
