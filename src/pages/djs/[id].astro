@@ -185,12 +185,6 @@ const breakdown = tagBreakdown(hydratedTags, djShows);
       height: calc(var(--density-unit) * 3);
     }
 
-    .tag-label {
-      box-sizing: border-box;
-      max-width: 100%;
-      white-space: normal;
-    }
-
     .dj-grid {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -247,10 +241,8 @@ const breakdown = tagBreakdown(hydratedTags, djShows);
     for (const { target } of entries) {
       const label = target.querySelector<HTMLElement>(".tag-label");
       if (label) {
-        const fits = label.offsetWidth <= target.clientWidth
-          && label.scrollWidth <= label.clientWidth
-          && label.offsetHeight <= Math.ceil(Number.parseFloat(getComputedStyle(label).lineHeight) * 2);
-        label.style.visibility = fits ? "visible" : "hidden";
+        label.style.scale = String(Math.min(1, target.clientWidth / label.offsetWidth));
+        label.style.visibility = "visible";
       }
     }
   });
