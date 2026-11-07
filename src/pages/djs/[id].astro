@@ -168,6 +168,9 @@ const breakdown = tagBreakdown(hydratedTags, djShows);
     white-space: nowrap;
     padding-inline: var(--space-xs);
     font-size: var(--font-small);
+    font-weight: bold;
+    line-height: 1.2;
+    text-align: center;
     visibility: hidden;
   }
 
@@ -178,6 +181,16 @@ const breakdown = tagBreakdown(hydratedTags, djShows);
   }
 
   @media (max-width: 600px) {
+    .tag-bar {
+      height: calc(var(--density-unit) * 3);
+    }
+
+    .tag-label {
+      box-sizing: border-box;
+      max-width: 100%;
+      white-space: normal;
+    }
+
     .dj-grid {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -234,7 +247,10 @@ const breakdown = tagBreakdown(hydratedTags, djShows);
     for (const { target } of entries) {
       const label = target.querySelector<HTMLElement>(".tag-label");
       if (label) {
-        label.style.visibility = label.offsetWidth <= target.clientWidth ? "visible" : "hidden";
+        const fits = label.offsetWidth <= target.clientWidth
+          && label.scrollWidth <= label.clientWidth
+          && label.offsetHeight <= Math.ceil(Number.parseFloat(getComputedStyle(label).lineHeight) * 2);
+        label.style.visibility = fits ? "visible" : "hidden";
       }
     }
   });
