@@ -144,10 +144,10 @@ const breakdown = tagBreakdown(hydratedTags, djShows);
   .tag-bar {
     display: flex;
     height: calc(var(--density-unit) * 2.5);
-    overflow: hidden;
   }
 
   .tag-segment {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -172,6 +172,34 @@ const breakdown = tagBreakdown(hydratedTags, djShows);
     line-height: 1.2;
     text-align: center;
     visibility: hidden;
+  }
+
+  .tag-segment:focus-visible {
+    z-index: 1;
+    overflow: visible;
+  }
+
+  .tag-segment:focus-visible .tag-label {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background-color: inherit;
+    scale: 1 !important;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .tag-segment:hover {
+      z-index: 1;
+      overflow: visible;
+    }
+
+    .tag-segment:hover .tag-label {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      background-color: inherit;
+      scale: 1 !important;
+    }
   }
 
   @media (max-width: 750px) {
