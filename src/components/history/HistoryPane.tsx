@@ -47,7 +47,7 @@ export default function HistoryPane() {
 				loading="Loading shows..."
 				error="Could not load shows."
 			>
-				<h1 className="page-inset">Recently Played</h1>
+				<h1 className={`page-inset ${styles["content"]}`}>Recently Played</h1>
 				<section
 					className={`gutter-scroll ${styles["show-container"]}`}
 					aria-label="Recently played shows"
@@ -55,7 +55,10 @@ export default function HistoryPane() {
 					{recentRecords.map((record) => renderRecord({ record, showStore }))}
 				</section>
 			</LoadingState>
-			<section className="page-inset" aria-label="Playlists">
+			<section
+				className={`page-inset ${styles["content"]}`}
+				aria-label="Playlists"
+			>
 				<h1>Playlists</h1>
 				<p>Playlists are stored locally on your device.</p>
 				<LoadingState

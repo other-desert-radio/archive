@@ -16,7 +16,11 @@
   `.page-inset`. Horizontal card rows use `.gutter-scroll` for internal padding
   so cards can scroll through both gutters while preserving first/last alignment.
   Both reuse safe-area-aware `--page-inset-left` and `--page-inset-right` tokens.
-  Rows stay within the centered main container on screens wider than its cap.
+  Rows normally stay within the centered main container on screens wider than
+  its cap. History uses a full-width main: its tabs, headings and playlists keep
+  the content cap, while the recently played row reaches both device edges.
+  That row's internal padding includes the centered content offset so its end
+  cards still align with the headings.
 - Bottom page spacing belongs to `BaseLayout`'s main container, which adds
   `--container-grid-padding-bottom` and the bottom safe-area inset. Listing
   components must not duplicate that padding.

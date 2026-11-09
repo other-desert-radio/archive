@@ -16,7 +16,7 @@ function evaluate(code) {
 function near(a, b, message) {
 	assert.ok(Math.abs(a - b) < 1.5, `${message}: ${a} vs ${b}`);
 }
-function verifyRow(selector, heading, nested = false) {
+function verifyRow(selector, heading, nested = false, fullWidth = false) {
 	const layout = evaluate(`(() => {
 		const row = document.querySelector(${JSON.stringify(selector)});
 		const cards = ${nested ? "row.firstElementChild" : "row"}.children;
@@ -36,6 +36,10 @@ function verifyRow(selector, heading, nested = false) {
 	})()`);
 	near(layout.left, layout.mainLeft, "left scroll boundary");
 	near(layout.right, layout.mainRight, "right scroll boundary");
+    if (fullWidth) {
+        near(layout.left, 0, "device left edge");
+        near(layout.right, layout.viewport, "device right edge");
+    }
 	near(layout.first, layout.titleLeft, "first card alignment");
 	near(layout.last, layout.end, "last card alignment");
 	assert.ok(layout.scrolled > 0, "fixture must overflow");
@@ -79,9 +83,9 @@ try {
 	})()`);
 	browser("reload");
 	browser("wait", '[aria-label="Recently played shows"] article');
-	for (const width of [320, 332, 750, 1440, 2000]) {
+    for (const width of [320, 332, 750, 1440, 2000, 2560]) {
 		browser("set", "viewport", String(width), "1000");
-		verifyRow('[aria-label="Recently played shows"]', 'main h1');
+        verifyRow('[aria-label="Recently played shows"]', 'main h1', false, true);
 	}
 	browser("open", `${base}/tags/4`);
 	browser("wait", ".dj-explore-card");

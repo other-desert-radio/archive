@@ -37,7 +37,7 @@ import Navigation from "../components/Navigation.astro";
   <body transition:animate="none">
     <div class="site-background" aria-hidden="true"></div>
     <Navigation page={page} returning_page={returning_page} />
-    <main>
+    <main class:list={{ "history-page": page.name === "history" }}>
       <slot />
     </main>
   </body>
@@ -57,6 +57,10 @@ import Navigation from "../components/Navigation.astro";
     padding-bottom: calc(
       var(--container-grid-padding-bottom) + env(safe-area-inset-bottom)
     );
+  }
+
+  main.history-page {
+    max-width: none;
   }
 
   @media (max-width: 600px) {

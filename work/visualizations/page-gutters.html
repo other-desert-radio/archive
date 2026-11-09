@@ -1,0 +1,59 @@
+<div id="gutter-explainer">
+  <div class="viz-controls">
+    <label class="form-label" for="gutter-position">Scroll position <span id="gutter-value">0%</span>
+      <input class="form-range" id="gutter-position" type="range" min="0" max="100" value="0">
+    </label>
+  </div>
+  <section aria-label="Before layout">
+    <h3>Before · row clipped inside margins</h3>
+    <div class="diagram old">
+      <div class="guide left"></div><div class="guide right"></div>
+      <div class="heading">RECENTLY PLAYED</div>
+      <div class="window"><div class="strip"><div>Show A</div><div>Show B</div><div>Show C</div><div>Show D</div><div>Show E</div></div></div>
+      <div class="caption">Fixed blank margins on both sides</div>
+    </div>
+  </section>
+  <section aria-label="After layout">
+    <h3>After · cards travel through margins</h3>
+    <div class="diagram new">
+      <div class="guide left"></div><div class="guide right"></div>
+      <div class="heading">RECENTLY PLAYED</div>
+      <div class="window"><div class="strip"><div>Show A</div><div>Show B</div><div>Show C</div><div>Show D</div><div>Show E</div></div></div>
+      <div class="caption">Same alignment at rest; wider scrolling area</div>
+    </div>
+  </section>
+  <div class="text-small text-muted">Dashed lines = content margins · Outer edges = maximum page width</div>
+</div>
+<style>
+  #gutter-explainer section {margin: 20px 0;}
+  #gutter-explainer .diagram {position:relative; border-inline:1px solid var(--border); padding:16px 0 12px;}
+  #gutter-explainer .heading {margin:0 36px 16px; font-weight:500;}
+  #gutter-explainer .guide {position:absolute;top:0;bottom:0;border-left:1px dashed var(--border);pointer-events:none;}
+  #gutter-explainer .left {left:36px;}
+  #gutter-explainer .right {right:36px;}
+  #gutter-explainer .window {overflow:hidden;position:relative;}
+  #gutter-explainer .old .window {margin-inline:36px;}
+  #gutter-explainer .strip {display:flex;gap:12px;width:max-content;}
+  #gutter-explainer .new .strip {padding-inline:36px;}
+  #gutter-explainer .strip > div {width:120px;height:88px;display:grid;place-items:center;background:color-mix(in srgb,var(--viz-series-1) 22%,var(--background));color:var(--foreground);}
+  #gutter-explainer .caption {margin:14px 36px 0;}
+</style>
+<script>
+(() => {
+  const root = document.getElementById('gutter-explainer');
+  const slider = root.querySelector('input');
+  const output = root.querySelector('#gutter-value');
+  function update() {
+    const progress = Number(slider.value) / 100;
+    output.textContent = slider.value + '%';
+    root.querySelectorAll('.window').forEach(viewport => {
+      const strip = viewport.querySelector('.strip');
+      const distance = Math.max(0, strip.getBoundingClientRect().width - viewport.clientWidth);
+      strip.style.transform = `translateX(${-distance * progress}px)`;
+    });
+  }
+  slider.addEventListener('input', update);
+  new ResizeObserver(update).observe(root);
+  update();
+})();
+</script>
