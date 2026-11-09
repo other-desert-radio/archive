@@ -72,6 +72,9 @@ The background stays transparent until the scroll endpoint, then fades to
 black with white text and active underline over 180ms. Reduced motion shows static compact
 tabs immediately. The sticky header reserves the expanded tab height to keep
 document geometry stable and lets clicks through the transparent remainder.
+Compression also reduces title-row bottom padding to leave approximately `1.5rem`
+between the title text and compact tab text when the desktop player row is absent.
+Tune this with `--tabs-title-gap` in `Navigation.astro`.
 Navigation items wrap naturally when
 their combined widths exceed the available space. Keep the return link together, and
 allow the navigation title to wrap within its own line on tiny screens.

@@ -9,6 +9,7 @@ Mode: chunked. Current stage: scroll controller ready for review; visual integra
 - CSS interpolates font size, gaps, inset and vertical spacing from existing responsive styles to compact styling: `--font-small`, `--space-sm` gaps and title-navigation left alignment.
 - At the endpoint, fade to black with white text and active underline over 180ms. Reduced motion disables the color transition.
 - Before the endpoint, keep the strip transparent so the existing page background shows through.
+- Compact title-to-tab text spacing is approximately 1.5rem, controlled by `--tabs-title-gap` in `Navigation.astro`.
 - Tabs remain sticky below the desktop player and below the title on phones, with comfortable touch targets.
 - Reduced motion uses static compact tabs; no JavaScript leaves usable expanded sticky tabs.
 - One JavaScript scroll driver supplies progress to CSS across browsers. Include the agreed comment explaining why CSS scroll-driven animation is not used.
