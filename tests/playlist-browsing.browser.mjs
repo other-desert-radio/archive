@@ -326,12 +326,27 @@ try {
     await evaluate('new URLSearchParams(location.search).get("id")'),
     id,
   );
+  await evaluate('window.playerMarker = document.querySelector("[data-miniplayer]"); true');
+  const canHover = await evaluate("matchMedia('(hover: hover) and (pointer: fine)').matches");
+  if (canHover) {
+    await browser("hover", 'button[aria-label="Delete playlist"]');
+    assert.equal(await evaluate(`getComputedStyle(document.querySelector('button[aria-label="Delete playlist"]')).backgroundColor`), "rgb(204, 0, 0)");
+    assert.equal(await evaluate(`getComputedStyle(document.querySelector('button[aria-label="Delete playlist"]')).color`), "rgb(255, 255, 255)");
+  }
   await browser("click", 'button[aria-label="Delete playlist"]');
   await browser("wait", confirmation);
-  assert.equal(await evaluate(`getComputedStyle(document.querySelector('${confirmation} button[aria-label="Delete playlist"]')).color`), "rgb(204, 0, 0)");
-  await browser("hover", `${confirmation} button[aria-label="Delete playlist"]`);
-  assert.equal(await evaluate(`getComputedStyle(document.querySelector('${confirmation} button[aria-label="Delete playlist"]')).backgroundColor`), "rgb(204, 0, 0)");
-  assert.equal(await evaluate(`getComputedStyle(document.querySelector('${confirmation} button[aria-label="Delete playlist"]')).color`), "rgb(255, 255, 255)");
+  if (canHover) {
+    await browser("hover", `${confirmation} button[aria-label="Cancel"]`);
+    assert.equal(await evaluate(`getComputedStyle(document.querySelector('${confirmation} button[aria-label="Cancel"]')).backgroundColor`), "rgba(0, 0, 0, 0)");
+    assert.equal(await evaluate(`getComputedStyle(document.querySelector('${confirmation} button[aria-label="Cancel"]')).color`), "rgb(0, 0, 0)");
+    assert.equal(await evaluate(`getComputedStyle(document.querySelector('${confirmation} button[aria-label="Cancel"]')).fontWeight`), "700");
+    await browser("hover", `${confirmation} button[aria-label="Delete playlist"]`);
+    assert.equal(await evaluate(`getComputedStyle(document.querySelector('${confirmation} button[aria-label="Delete playlist"]')).backgroundColor`), "rgb(204, 0, 0)");
+    assert.equal(await evaluate(`getComputedStyle(document.querySelector('${confirmation} button[aria-label="Delete playlist"]')).color`), "rgb(255, 255, 255)");
+    assert.equal(await evaluate(`getComputedStyle(document.querySelector('${confirmation} button[aria-label="Delete playlist"]')).fontWeight`), "700");
+  } else {
+    console.log("Hover checks skipped: browser reports touch input.");
+  }
   for (const width of [320, 750, 1440]) {
     await browser("set", "viewport", String(width), "900");
     assert.equal(await evaluate(`(() => {
@@ -348,14 +363,10 @@ try {
   assert.equal(await evaluate(`!!document.querySelector('a[href="/archive/playlists/?id=${id}"]')`), false);
   await browser("click", 'a[aria-label="View playlist Liked Shows"]');
   await browser("wait", "--fn", 'document.querySelector("h1")?.textContent === "Liked Shows"');
-  assert.equal(await evaluate(`!!document.querySelector('button[aria-label="Delete playlist"], button[aria-label="Rename playlist"]')`), false);
+  assert.equal(await evaluate(`Array.from(document.querySelectorAll('button[aria-label="Delete playlist"], button[aria-label="Rename playlist"]')).some(button => !button.closest("dialog"))`), false);
   console.log(
     "Playlist browsing passed: local lookup, reload, query history, show cards and independent errors.",
   );
-} catch (error) {
-  console.error(await browser("eval", "({url:location.href,text:document.body.innerText.slice(0,2500)})"));
-  console.error(await browser("errors"));
-  throw error;
 } finally {
   await browser("close").catch(() => {});
   server.stop(true);

@@ -118,3 +118,11 @@
 .title-editor button[type="button"] svg {
 	stroke-width: 1.5;
 }
+
+@media (hover: hover) and (pointer: fine) {
+	.title-actions :global(.button-danger):hover:not(:disabled) {
+		background: #c00;
+		font-weight: bold;
+		color: white;
+	}
+}

@@ -39,6 +39,10 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+	.actions button:hover:not(:disabled) {
+		font-weight: bold;
+	}
+
 	.actions :global(.button-danger):hover:not(:disabled) {
 		background: #c00;
 		color: white;
