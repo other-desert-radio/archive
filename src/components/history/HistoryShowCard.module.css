@@ -18,3 +18,14 @@
 		text-decoration: underline;
 	}
 }
+
+.skeleton-artwork {
+	aspect-ratio: 1;
+	background: var(--artwork-placeholder);
+}
+
+.skeleton-title {
+	width: 75%;
+	min-height: 2lh;
+	background: var(--artwork-placeholder);
+}

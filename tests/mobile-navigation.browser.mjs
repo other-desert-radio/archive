@@ -177,6 +177,11 @@ async function scenario({ warm, fallback }) {
 			`http://127.0.0.1:${server.port}/archive/explore`,
 		);
 		await browser("wait", ".tabs");
+		assert.equal(
+			await evaluate('document.documentElement.hasAttribute("data-client-navigation")'),
+			false,
+			"a full page load allows initial loading skeletons",
+		);
 		touch = await touchClient();
 		assert.equal(await evaluate("matchMedia('(hover: hover)').matches"), false);
 		const timings = [];
@@ -201,6 +206,7 @@ async function scenario({ warm, fallback }) {
 				}, { once: true });
 				document.addEventListener('astro:after-swap', () => {
 					window.navigationTiming.swap = performance.now();
+					window.navigationTiming.visibleSkeletons = Array.from(document.querySelectorAll('.skeleton-fade')).filter(card => getComputedStyle(card).display !== 'none').length;
 				}, { once: true });
 				document.addEventListener('astro:before-swap', event => {
 					event.viewTransition.ready.then(() => {
@@ -223,6 +229,18 @@ async function scenario({ warm, fallback }) {
 				clickToSwap: window.navigationTiming.swap - window.navigationTiming.click,
 				clickToRendered: window.navigationTiming.rendered - window.navigationTiming.click
 			})`);
+			if (destination === "history") {
+				assert.equal(
+					await evaluate("window.navigationTiming.visibleSkeletons"),
+					0,
+					"History skeletons are hidden before the client navigation can paint",
+				);
+				assert.equal(
+					await evaluate('document.documentElement.hasAttribute("data-client-navigation")'),
+					true,
+					"client navigation skips History's skeleton fade delay",
+				);
+			}
 			assert.ok(timing.tapToClick < 150, "touch does not wait for double tap");
 			if (warm) {
 				assert.equal(

@@ -188,3 +188,34 @@ textarea {
 	min-width: 0;
 	gap: var(--space-sm);
 }
+
+@keyframes skeleton-enter {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+[data-client-navigation] .skeleton-fade {
+	display: none;
+}
+
+@keyframes skeleton-exit {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.skeleton-fade {
+		animation: skeleton-enter 120ms ease-out both;
+	}
+	.skeleton-fade.skeleton-exit {
+		animation: skeleton-exit 120ms ease-in both;
+	}
+}
