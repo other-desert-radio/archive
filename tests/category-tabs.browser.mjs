@@ -88,7 +88,8 @@ try {
 	await browser("wait", "--fn", "Math.abs(scrollY - 80) < 2 && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === String(scrollY / 160)");
 	await verifyProgress(80, 0.5);
 	await evaluate("window.outgoingTabs = document.querySelector('[data-category-tabs]'); true");
-	await browser("click", "[data-category-tabs] a[href='/archive/djs']");
+	// Preserve the saved scroll position even before tabs move into the sticky header.
+	await evaluate("document.querySelector('[data-category-tabs] a[href=\"/archive/djs\"]').click(); true");
 	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/djs' && document.querySelector('[data-category-tabs]') !== window.outgoingTabs && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === '0'");
 	await verifyProgress(160, 1);
 	assert.equal(await evaluate("window.outgoingTabs.style.getPropertyValue('--tabs-progress')"), "0.5");
