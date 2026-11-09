@@ -5,20 +5,16 @@
 }
 
 .chin {
-	background: transparent;
 	width: 100%;
 	color: black;
 	overflow-wrap: anywhere;
+	background: white;
+	border: 2px solid transparent;
+	border-top: 0;
 }
 
 .chin > :global(.tag-container) {
 	padding: var(--space-sm);
-}
-
-.chin[data-has-note="true"] {
-	background: white;
-	border: 2px solid transparent;
-	border-top: 0;
 }
 
 .note-header {
@@ -49,7 +45,7 @@
 		opacity: 1;
 	}
 
-	.card:hover .chin[data-has-note="true"] {
+	.card:hover .chin {
 		border-color: black;
 	}
 

@@ -10,9 +10,11 @@ import { usePlaylists } from "./usePlaylists";
 export default function PlaylistModal({
 	ref,
 	showId,
+	mode = "save",
 }: {
 	ref: Ref<HTMLDialogElement>;
 	showId: number;
+	mode?: "save" | "edit";
 }) {
 	const { playlistStore } = useStores();
 	const newPlaylistModal = useRef<HTMLDialogElement>(null);
@@ -116,7 +118,7 @@ export default function PlaylistModal({
 			>
 				<form method="dialog" onSubmit={save} aria-busy={saving}>
 					<div className={styles["header"]}>
-						<h1>Save Show</h1>
+						<h1>{mode === "edit" ? "Edit" : "Save Show"}</h1>
 						<button
 							type="button"
 							aria-label="Close playlist"

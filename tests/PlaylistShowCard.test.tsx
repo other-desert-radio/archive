@@ -8,13 +8,14 @@ test("playlist card hides tags and marks chins with notes while preserving playb
 	const show = fixture.data[0];
 	assert.ok(show);
 	const updatedAt = new Date(2026, 6, 10, 22, 1).toISOString();
+	const addedAt = new Date(2026, 6, 9, 10, 1).toISOString();
 	for (const note of [undefined, "", "Keep <b>raw</b>\nNext line"]) {
 		const html = renderToStaticMarkup(
 			<PlaylistShowCard
 				show={{ ...show, tagIds: [1] }}
 				entry={{
 					showId: show.id,
-					addedAt: updatedAt,
+					addedAt,
 					updatedAt,
 					...(note !== undefined ? { note } : {}),
 				}}
@@ -27,10 +28,13 @@ test("playlist card hides tags and marks chins with notes while preserving playb
 		assert.doesNotMatch(html, /Explore Ambient/);
 		assert.match(html, new RegExp(`data-has-note="${Boolean(note)}"`));
 		assert.doesNotMatch(html, /View Test DJ|Save to Playlist/);
-		assert.equal(html.includes("Edit note for"), Boolean(note));
-		assert.equal(html.includes("<time"), Boolean(note));
+		assert.match(html, /Edit note for/);
+		assert.match(html, /Added on Jul 9, 10:01am<\/time>/);
+		assert.ok(
+			html.toLowerCase().includes(`datetime="${addedAt.toLowerCase()}"`),
+		);
+		assert.doesNotMatch(html, /Jul 10/);
 		if (note) {
-			assert.match(html, /Jul 10, 10:01pm<\/time>/);
 			assert.match(html, /Keep &lt;b&gt;raw&lt;\/b&gt;\nNext line/);
 		}
 	}

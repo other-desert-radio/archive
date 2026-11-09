@@ -74,6 +74,20 @@ try {
   await browser("wait", 'section[aria-label="Playlist shows"]');
   assert.equal(await evaluate(`document.querySelector('section[aria-label="Playlist shows"]').children.length`), 1);
   assert.equal(await evaluate(`!!document.querySelector('section[aria-label="Playlist shows"] [data-show-playback]')`), true);
+  const editButton = 'section[aria-label="Playlist shows"] button.button-secondary';
+  const editDialog = 'dialog[aria-label="Playlist"][open]';
+  await browser("click", editButton);
+  await browser("wait", editDialog);
+  assert.equal(await evaluate(`document.querySelector('${editDialog} h1').textContent`), "Edit");
+  await browser("fill", `${editDialog} textarea`, "Edited from the playlist");
+  await browser("click", `${editDialog} button[aria-label="Save playlist"]`);
+  await browser("wait", "--fn", `!document.querySelector('${editDialog}')`);
+  assert.equal(await evaluate(`playlistFixture.stores.playlistStore.get({ playlistId: '${id}' }).shows[0].note`), "Edited from the playlist");
+  assert.equal(await evaluate(`document.querySelector('section[aria-label="Playlist shows"]').textContent.includes('Edited from the playlist')`), true);
+  await browser("click", editButton);
+  await browser("wait", editDialog);
+  assert.equal(await evaluate(`document.querySelector('${editDialog} textarea').value`), "Edited from the playlist");
+  await browser("click", `${editDialog} button[aria-label="Close playlist"]`);
   await browser("reload");
   await browser("wait", 'section[aria-label="Playlist shows"]');
   assert.equal(
