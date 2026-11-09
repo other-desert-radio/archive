@@ -29,7 +29,7 @@ export function resolvePlaylistShows({
 		}));
 }
 
-/** Prepared separately from rendering; the next chunk connects this to the page. */
+/** Loads catalog data and subscribes to playback progress for playlist entries. */
 export function usePlaylistShows(entries: readonly PlaylistEntry[]) {
 	const stores = useStores();
 	const { status, retry } = useInitialization(stores);

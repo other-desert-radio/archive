@@ -77,9 +77,11 @@ shows reject, and missing catalog references remain stored for callers to resolv
 through ShowStore. Storage is local to the browser; remote sync, cross-tab edit
 coordination and sharing are not implemented. History lists local playlists, including
 Liked Shows. Each links to `/playlists/?id=<id>` under the configured base path.
-The static Astro shell hosts a React component that reads the query ID on mount and resolves it through
-PlaylistStore and displays the stored record as JSON; missing IDs show a
-browser-local not-found message. Playlist loading is independent of the catalog.
+The static Astro shell hosts a React component that reads the query ID on mount
+and resolves it through PlaylistStore; missing IDs show a browser-local not-found
+message. Playlist loading is independent of the catalog. After catalog initialization,
+the page lists show titles and IDs, newest additions first, retaining unavailable
+references and offering retry when catalog loading fails.
 
 ShowStore and TagStore first load their cached records into memory, then check
 the published revision.

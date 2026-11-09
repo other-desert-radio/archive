@@ -20,8 +20,3 @@
 .title-actions button {
 	touch-action: manipulation;
 }
-
-.record {
-	white-space: pre-wrap;
-	overflow-wrap: anywhere;
-}
