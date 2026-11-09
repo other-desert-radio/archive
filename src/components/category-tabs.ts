@@ -1,4 +1,6 @@
 type CategoryTabsConfig = {
+	/** Whether the browser supports the complete native CSS scroll driver. */
+	useCssTimeline: boolean;
 	/** Scroll distance in CSS pixels to fully compress the tabs; must match CSS. */
 	compressionScrollPx: number;
 	/** Exponent of the ease-out curve; must match the CSS timeline's exponent. */
@@ -13,6 +15,7 @@ type CategoryTabsConfig = {
  * Uses native CSS timelines when supported, otherwise a JavaScript scroll driver.
  */
 export function setupCategoryTabsScrollBehavior({
+	useCssTimeline,
 	compressionScrollPx,
 	easeOutPower,
 	fastScrollPxPerMs,
@@ -137,12 +140,7 @@ export function setupCategoryTabsScrollBehavior({
 		);
 		if (tabs && header) {
 			tabs.style.removeProperty("--tabs-progress");
-			if (
-				typeof CSS.registerProperty === "function" &&
-				CSS.supports(
-					"(animation-timeline: scroll(root block)) and (animation-range: 0px 40px) and (width: calc(1px * pow(0.5, 3)))",
-				)
-			) {
+			if (useCssTimeline) {
 				header.dataset["tabsDriver"] = "css";
 				return;
 			}

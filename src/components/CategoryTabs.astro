@@ -50,8 +50,14 @@ const { active } = Astro.props;
 <script>
   import { setupCategoryTabsScrollBehavior } from "./category-tabs";
 
+  const useCssTimeline =
+    typeof CSS.registerProperty === "function" &&
+    CSS.supports(
+      "(animation-timeline: scroll(root block)) and (animation-range: 0px 40px) and (width: calc(1px * pow(0.5, 3)))",
+    );
   const styles = getComputedStyle(document.documentElement);
   setupCategoryTabsScrollBehavior({
+    useCssTimeline,
     compressionScrollPx: Number.parseFloat(styles.getPropertyValue("--tabs-compression-scroll-px")),
     easeOutPower: Number.parseFloat(styles.getPropertyValue("--tabs-ease-out-power")),
     fastScrollPxPerMs: 0.5,
