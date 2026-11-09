@@ -71,18 +71,13 @@ try {
     ),
   );
   await browser("click", `a[href="/playlists/?id=${id}"]`);
-  await browser("wait", "pre");
-  assert.equal(
-    await evaluate(
-      'JSON.parse(document.querySelector("pre").textContent).shows[0].note',
-    ),
-    "Keep <b>raw</b>",
-  );
-  assert.equal(await evaluate('document.querySelector("pre b")'), null);
+  await browser("wait", 'section[aria-label="Playlist shows"]');
+  assert.equal(await evaluate('document.querySelectorAll("article").length'), 1);
+  assert.equal(await evaluate('document.querySelector("article a").getAttribute("href")'), "/shows/42");
   await browser("reload");
-  await browser("wait", "pre");
+  await browser("wait", 'section[aria-label="Playlist shows"]');
   assert.equal(
-    await evaluate('JSON.parse(document.querySelector("pre").textContent).id'),
+    await evaluate('new URLSearchParams(location.search).get("id")'),
     id,
   );
   await evaluate('location.search = "?id=unknown"; true');
@@ -92,7 +87,7 @@ try {
     'document.body.textContent.includes("Playlist not found in this browser.")',
   );
   await browser("back");
-  await browser("wait", "pre");
+  await browser("wait", 'section[aria-label="Playlist shows"]');
   await evaluate('location.search = ""; true');
   await browser(
     "wait",
@@ -101,7 +96,7 @@ try {
   );
   await browser("open", `${server.url}playlists/?fail&id=${id}`);
   await browser("wait", '[role="alert"]');
-  assert.equal(await evaluate('document.querySelector("pre")'), null);
+  assert.equal(await evaluate(`document.querySelector('section[aria-label="Playlist shows"]')`), null);
   await browser("open", `${server.url}?fail`);
   await browser("wait", 'section[aria-label="Playlists"] [role="alert"]');
   // Check the actual static Astro shell and its client router using the same storage.
@@ -121,9 +116,9 @@ try {
     `document.querySelector('a[href="/archive/playlists/?id=${id}"]').focus(); true`,
   );
   await browser("press", "Enter");
-  await browser("wait", "pre");
+  await browser("wait", 'section[aria-label="Playlist shows"]');
   assert.equal(
-    await evaluate('JSON.parse(document.querySelector("pre").textContent).id'),
+    await evaluate('new URLSearchParams(location.search).get("id")'),
     id,
   );
   assert.equal(
@@ -144,8 +139,8 @@ try {
   await browser("click", "#other-playlist");
   await browser("wait", "--fn", 'document.body.textContent.includes("Playlist not found in this browser.")');
   await browser("back");
-  await browser("wait", "pre");
-  assert.equal(await evaluate('JSON.parse(document.querySelector("pre").textContent).id'), id);
+  await browser("wait", 'section[aria-label="Playlist shows"]');
+  assert.equal(await evaluate('new URLSearchParams(location.search).get("id")'), id);
   assert.equal(await evaluate('window.playerMarker === document.querySelector("[data-miniplayer]")'), true);
   for (const width of [320, 332, 750, 1440, 1920]) {
     await browser("set", "viewport", String(width), "900");
@@ -159,7 +154,7 @@ try {
     const main = document.querySelector('main');
     window.playlistDisappeared = false;
     const observer = new MutationObserver(() => {
-      if (main.isConnected && !main.querySelector('pre')) window.playlistDisappeared = true;
+      if (main.isConnected && !main.querySelector('section[aria-label="Playlist shows"]')) window.playlistDisappeared = true;
     });
     observer.observe(main, { childList: true, subtree: true });
     document.addEventListener('astro:before-swap', () => observer.disconnect(), { once: true });
@@ -173,19 +168,19 @@ try {
     "outgoing playlist stays visible until the page swap",
   );
   await browser("forward");
-  await browser("wait", "pre");
+  await browser("wait", 'section[aria-label="Playlist shows"]');
   await browser("click", 'a[aria-label="Return to history"]');
   await browser("wait", `a[href="/archive/playlists/?id=${id}"]`);
   await browser("back");
-  await browser("wait", "pre");
+  await browser("wait", 'section[aria-label="Playlist shows"]');
   await browser("reload");
-  await browser("wait", "pre");
+  await browser("wait", 'section[aria-label="Playlist shows"]');
   assert.equal(
-    await evaluate('JSON.parse(document.querySelector("pre").textContent).id'),
+    await evaluate('new URLSearchParams(location.search).get("id")'),
     id,
   );
   console.log(
-    "Playlist browsing passed: local lookup, reload, query history, escaped JSON and independent errors.",
+    "Playlist browsing passed: local lookup, reload, query history, show cards and independent errors.",
   );
 } finally {
   await browser("close").catch(() => {});

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import LoadingState from "../../components/LoadingState";
 import { usePlaylists } from "../../components/playlists/usePlaylists";
+import ShowCard from "../../components/shows/ShowCard";
+import showStyles from "../../components/shows/ShowsPane.module.css";
 import styles from "./PlaylistPage.module.css";
 import { usePlaylistShows } from "./usePlaylistShows";
 
@@ -13,6 +15,7 @@ export default function PlaylistPage() {
 	const playlist = playlists.find((item) => item.id === playlistId);
 	const {
 		shows,
+		tags,
 		status: showStatus,
 		retry,
 	} = usePlaylistShows(playlist?.shows ?? []);
@@ -47,11 +50,26 @@ export default function PlaylistPage() {
 						{shows.length === 0 ? (
 							<p>No shows in this playlist.</p>
 						) : (
-							shows.map(({ entry, show }) => (
-								<div key={entry.showId}>
-									{show?.title ?? "Show unavailable"} — Show ID: {entry.showId}
-								</div>
-							))
+							<section
+								className={showStyles["show-container-grid"]}
+								aria-label="Playlist shows"
+							>
+								{shows.map(({ entry, show, record }) =>
+									show ? (
+										<ShowCard
+											key={entry.showId}
+											show={show}
+											tags={tags}
+											record={record}
+											playlistSaves={[]}
+										/>
+									) : (
+										<div key={entry.showId}>
+											Show unavailable — Show ID: {entry.showId}
+										</div>
+									),
+								)}
+							</section>
 						)}
 					</LoadingState>
 				) : (
