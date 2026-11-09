@@ -36,6 +36,16 @@ const { active } = Astro.props;
   </div>
 </div>
 
+<script>
+  // Use one JS scroll driver across browsers to keep compression and the endpoint
+  // color switch consistent without a separate CSS scroll-timeline fallback.
+  // The page-load binding will attach this controller and dispose it before swaps.
+  export function observeCategoryTabs(tabs: HTMLElement): () => void {
+    void tabs;
+    throw new Error("Not implemented");
+  }
+</script>
+
 <style>
   .tabs {
     display: flex;

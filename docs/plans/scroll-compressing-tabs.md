@@ -1,6 +1,6 @@
 # Scroll-compressing category tabs
 
-Mode: chunked. Current stage: structure ready for review; scaffolding not started.
+Mode: chunked. Current stage: scaffolding ready for review; implementation not started.
 
 ## Agreed behavior
 
@@ -21,6 +21,7 @@ src/pages/{index,explore,djs,history}.astro   modified: provide named category-t
 src/layouts/BaseLayout.astro                modified: forward named slot to Navigation
 src/components/Navigation.astro             modified: render tabs after player in sticky header
 src/components/CategoryTabs.astro           modified: presentation and local scroll lifecycle
+src/utils/preserve-player-navigation.ts    modified: swap tabs without detaching the player
 tests/category-tabs.browser.mjs             new: browser regression coverage (currently empty)
 docs/css.md                                modified: authoritative styling guidance after integration
 docs/plans/scroll-compressing-tabs.md        new: task state and review boundaries
@@ -32,8 +33,8 @@ Flow: category page → BaseLayout named slot → Navigation sticky header after
 
 - [x] Inspect existing components, four callers, layout, lifecycle and verification guidance.
 - [x] Record structure and create empty browser test file; leave runtime unchanged.
-- [ ] Obtain structure approval and explicit scaffolding request.
-- [ ] Scaffold slot flow and controller contracts without activating animation; stop for review.
+- [x] Obtain structure approval and explicit scaffolding request.
+- [x] Scaffold slot flow and controller contracts without activating animation; stop for review.
 - [ ] Implement scroll lifecycle and focused behavioral coverage; stop for review.
 - [ ] Implement visual compression, responsive integration and documentation; verify and stop for final review.
 
@@ -48,4 +49,8 @@ Flow: category page → BaseLayout named slot → Navigation sticky header after
 
 ## Current validation
 
-Structure stage only: no runtime changes and no runtime tests run. Next action: review structure, then request scaffolding.
+The named slot is forwarded from BaseLayout to Navigation after the player, but category pages still render tabs in main until integration. The disconnected `observeCategoryTabs(HTMLElement): () => void` stub will own progress, endpoint state and lifecycle cleanup; it throws if called and has no current callers. No scroll listeners or animation are active.
+
+Integration must update the compatibility swap in `preserve-player-navigation.ts`: it retains the header and currently replaces only its title nav. Tabs must be replaced/removed/inserted with the destination page without moving the player iframe.
+
+Next action: approve scaffolding, then implement the controller and focused behavioral coverage. Astro check, lint and documentation checks pass. Lint initially flagged the unused stub argument; it is now explicitly consumed pending implementation.

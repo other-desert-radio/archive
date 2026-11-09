@@ -67,6 +67,7 @@ const title = (() => {
   <div class="miniplayer-slot" data-miniplayer-bar>
     <Miniplayer base={base} client:load transition:persist="miniplayer" />
   </div>
+  <slot name="category-tabs" />
 </header>
 
 <script>
