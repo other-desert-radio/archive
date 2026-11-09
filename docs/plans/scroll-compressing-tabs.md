@@ -5,6 +5,7 @@ Mode: chunked. Current stage: scroll controller ready for review; visual integra
 ## Agreed behavior
 
 - All four categories compress over the first 160px of document scroll and reverse on upward scrolling.
+- Tune the distance through the documented `TAB_COMPRESSION_SCROLL_PX` constant in `CategoryTabs.astro`.
 - CSS interpolates font size, gaps, inset and vertical spacing from existing responsive styles to compact styling: `--font-small`, `--space-sm` gaps and title-navigation left alignment.
 - At the endpoint, switch to black with white text and active underline.
 - Before the endpoint, keep the strip transparent so the existing page background shows through.

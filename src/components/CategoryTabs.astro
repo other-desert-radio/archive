@@ -10,44 +10,47 @@ const { active } = Astro.props;
 
 <div class="category-tabs" data-category-tabs>
   <div class="tabs-strip">
-  <nav class="tabs-inset" aria-label="Archive categories">
-  <div class="tabs">
-    <!-- Warm visible destinations before a touch user taps, without preloading
+    <nav class="tabs-inset" aria-label="Archive categories">
+      <div class="tabs">
+        <!-- Warm visible destinations before a touch user taps, without preloading
        the entire archive. Astro respects reduced-data/slow-connection settings. -->
-    <a
-      data-astro-prefetch="viewport"
-      aria-label="Explore archive"
-      href={`${base}explore`}
-      aria-current={active === "explore" ? "page" : undefined}>EXPLORE</a
-    >
-    <span aria-hidden="true"></span>
-    <!--- TODO: have explore be the base -->
-    <a
-      data-astro-prefetch="viewport"
-      aria-label="Browse shows"
-      href={base}
-      aria-current={active === "shows" ? "page" : undefined}>SHOWS</a
-    >
-    <span aria-hidden="true"></span>
-    <a
-      data-astro-prefetch="viewport"
-      aria-label="Browse DJs"
-      href={`${base}djs`}
-      aria-current={active === "djs" ? "page" : undefined}>DJs</a
-    >
-    <span aria-hidden="true"></span>
-    <a
-      data-astro-prefetch="viewport"
-      aria-label="View listening history"
-      href={`${base}history`}
-      aria-current={active === "history" ? "page" : undefined}>HISTORY</a
-    >
-  </div>
-  </nav>
+        <a
+          data-astro-prefetch="viewport"
+          aria-label="Explore archive"
+          href={`${base}explore`}
+          aria-current={active === "explore" ? "page" : undefined}>EXPLORE</a
+        >
+        <span aria-hidden="true"></span>
+        <!--- TODO: have explore be the base -->
+        <a
+          data-astro-prefetch="viewport"
+          aria-label="Browse shows"
+          href={base}
+          aria-current={active === "shows" ? "page" : undefined}>SHOWS</a
+        >
+        <span aria-hidden="true"></span>
+        <a
+          data-astro-prefetch="viewport"
+          aria-label="Browse DJs"
+          href={`${base}djs`}
+          aria-current={active === "djs" ? "page" : undefined}>DJs</a
+        >
+        <span aria-hidden="true"></span>
+        <a
+          data-astro-prefetch="viewport"
+          aria-label="View listening history"
+          href={`${base}history`}
+          aria-current={active === "history" ? "page" : undefined}>HISTORY</a
+        >
+      </div>
+    </nav>
   </div>
 </div>
 
 <script>
+  // Document scroll distance in CSS pixels from expanded tabs to fully compact.
+  const TAB_COMPRESSION_SCROLL_PX = 40;
+
   // Use one JS scroll driver across browsers to keep compression and the endpoint
   // color switch consistent without a separate CSS scroll-timeline fallback.
   function observeCategoryTabs(tabs: HTMLElement): () => void {
@@ -58,7 +61,7 @@ const { active } = Astro.props;
       frame = undefined;
       const progress = reducedMotion.matches
         ? 1
-        : Math.min(1, Math.max(0, window.scrollY / 160));
+        : Math.min(1, Math.max(0, window.scrollY / TAB_COMPRESSION_SCROLL_PX));
       tabs.style.setProperty("--tabs-progress", String(progress));
       tabs.toggleAttribute("data-compact", progress === 1);
     }
@@ -112,9 +115,15 @@ const { active } = Astro.props;
     --tabs-expanded-gap: var(--space-lg);
     --tabs-expanded-left: var(--page-inset-left);
     --tabs-expanded-right: var(--page-inset-right);
-    --tabs-gap: calc(var(--tabs-expanded-gap) + (var(--space-sm) - var(--tabs-expanded-gap)) * var(--tabs-progress));
+    --tabs-gap: calc(
+      var(--tabs-expanded-gap) + (var(--space-sm) - var(--tabs-expanded-gap)) *
+        var(--tabs-progress)
+    );
     /* Reserve flow space so compression cannot change scroll position or page length. */
-    height: calc(var(--space-sm) + max(2.75rem, var(--tabs-expanded-font) * 1.5) + var(--space-md));
+    height: calc(
+      var(--space-sm) + max(2.75rem, var(--tabs-expanded-font) * 1.5) +
+        var(--space-md)
+    );
     pointer-events: none;
   }
 
@@ -133,10 +142,27 @@ const { active } = Astro.props;
 
   .tabs-inset {
     width: 100%;
-    max-width: calc(var(--page-max-width) + (100% - var(--page-max-width)) * var(--tabs-progress));
+    max-width: calc(
+      var(--page-max-width) + (100% - var(--page-max-width)) *
+        var(--tabs-progress)
+    );
     margin-inline: auto;
-    padding-left: calc(var(--tabs-expanded-left) + (max(var(--nav-inline-padding), env(safe-area-inset-left)) - var(--tabs-expanded-left)) * var(--tabs-progress));
-    padding-right: calc(var(--tabs-expanded-right) + (max(var(--nav-inline-padding), env(safe-area-inset-right)) - var(--tabs-expanded-right)) * var(--tabs-progress));
+    padding-left: calc(
+      var(--tabs-expanded-left) +
+        (
+          max(var(--nav-inline-padding), env(safe-area-inset-left)) -
+            var(--tabs-expanded-left)
+        ) *
+        var(--tabs-progress)
+    );
+    padding-right: calc(
+      var(--tabs-expanded-right) +
+        (
+          max(var(--nav-inline-padding), env(safe-area-inset-right)) -
+            var(--tabs-expanded-right)
+        ) *
+        var(--tabs-progress)
+    );
   }
 
   .tabs {
@@ -145,7 +171,10 @@ const { active } = Astro.props;
     justify-content: flex-start;
 
     gap: var(--tabs-gap);
-    font-size: calc(var(--tabs-expanded-font) + (var(--font-small) - var(--tabs-expanded-font)) * var(--tabs-progress));
+    font-size: calc(
+      var(--tabs-expanded-font) +
+        (var(--font-small) - var(--tabs-expanded-font)) * var(--tabs-progress)
+    );
   }
 
   .tabs > span {
@@ -203,7 +232,10 @@ const { active } = Astro.props;
   a[aria-current="page"] {
     font-weight: bold;
     text-decoration: underline;
-    text-decoration-thickness: calc(var(--border-heavy) + (var(--border-secondary) - var(--border-heavy)) * var(--tabs-progress));
+    text-decoration-thickness: calc(
+      var(--border-heavy) + (var(--border-secondary) - var(--border-heavy)) *
+        var(--tabs-progress)
+    );
   }
 
   a {
