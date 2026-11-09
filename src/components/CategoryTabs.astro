@@ -40,7 +40,7 @@ const { active } = Astro.props;
           data-astro-prefetch="viewport"
           aria-label="View listening history"
           href={`${base}history`}
-          aria-current={active === "history" ? "page" : undefined}>HISTORY</a
+          aria-current={active === "history" ? "page" : undefined}>SAVED</a
         >
       </div>
     </nav>
@@ -58,8 +58,12 @@ const { active } = Astro.props;
   const styles = getComputedStyle(document.documentElement);
   setupCategoryTabsScrollBehavior({
     useCssTimeline,
-    compressionScrollPx: Number.parseFloat(styles.getPropertyValue("--tabs-compression-scroll-px")),
-    easeOutPower: Number.parseFloat(styles.getPropertyValue("--tabs-ease-out-power")),
+    compressionScrollPx: Number.parseFloat(
+      styles.getPropertyValue("--tabs-compression-scroll-px"),
+    ),
+    easeOutPower: Number.parseFloat(
+      styles.getPropertyValue("--tabs-ease-out-power"),
+    ),
     fastScrollPxPerMs: 0.5,
   });
 </script>
@@ -89,7 +93,9 @@ const { active } = Astro.props;
     background: rgb(0 0 0 / var(--tabs-progress));
     color: black;
     pointer-events: auto;
-    transition: background-color 120ms ease-out, color 120ms ease-out;
+    transition:
+      background-color 120ms ease-out,
+      color 120ms ease-out;
   }
 
   .category-tabs[data-fast-scroll] .tabs-strip,
@@ -108,7 +114,11 @@ const { active } = Astro.props;
   :global(header[data-tabs-driver="css"]) .tabs-strip {
     transition: none;
     animation: category-tabs-ink 1s steps(1, end) both;
-    animation-range: 0px calc(var(--tabs-compression-scroll-px) * (1 - pow(0.5, 1 / var(--tabs-ease-out-power))) * 1px);
+    animation-range: 0px
+      calc(
+        var(--tabs-compression-scroll-px) *
+          (1 - pow(0.5, 1 / var(--tabs-ease-out-power))) * 1px
+      );
   }
 
   :global(header[data-tabs-driver="css"]) .category-tabs .tabs-strip {
@@ -116,8 +126,12 @@ const { active } = Astro.props;
   }
 
   @keyframes category-tabs-ink {
-    from { color: black; }
-    to { color: white; }
+    from {
+      color: black;
+    }
+    to {
+      color: white;
+    }
   }
 
   .tabs-inset {
@@ -238,6 +252,5 @@ const { active } = Astro.props;
       animation: none;
       color: white;
     }
-
   }
 </style>
