@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { ShowCard } from "../src/components/shows";
-import { formatDate, formatDateTime } from "../src/utils/format-date";
+import { formatDate } from "../src/utils/format-date";
 import fixture from "./res/shows.json";
 
 test("saved playlist links follow DJ links and display hearts with titles", () => {
@@ -43,46 +43,6 @@ test("saved playlist links follow DJ links and display hearts with titles", () =
 
 test("formats a show date in UTC", () => {
 	assert.equal(formatDate("2026-05-25T00:00:00.000Z"), "May 25, 2026");
-});
-
-test("formats an entry update in local time without a year", () => {
-	assert.equal(
-		formatDateTime(new Date(2026, 6, 10, 10, 1).toISOString()),
-		"Jul 10, 10:01am",
-	);
-	assert.equal(
-		formatDateTime(new Date(2026, 6, 10, 22, 1).toISOString()),
-		"Jul 10, 10:01pm",
-	);
-});
-
-test("a supplied note replaces playlist controls and an empty note hides the panel", () => {
-	const show = fixture.data[0];
-	assert.ok(show);
-	for (const note of ["", "Keep <script>raw</script>\nSecond line"]) {
-		const html = renderToStaticMarkup(
-			<ShowCard
-				show={{ ...show, tagIds: [] }}
-				tags={new Map()}
-				playlistSaves={[{ playlistId: "custom", title: "Favorites" }]}
-				note={note}
-				noteUpdatedAt={new Date(2026, 6, 10, 10, 1).toISOString()}
-			/>,
-		);
-		assert.doesNotMatch(html, /View playlist|Save to Playlist|<script>/);
-		if (note) {
-			assert.doesNotMatch(html, /<span>[Nn]ote<\/span>/);
-			assert.match(html, /class="button-secondary"/);
-			assert.match(html, /Jul 10, 10:01am<\/time>/);
-			assert.ok(
-				html.indexOf("Jul 10, 10:01am") < html.indexOf("Edit note for"),
-			);
-			assert.match(html, /aria-label="Edit note for /);
-			assert.match(html, /Keep &lt;script&gt;raw&lt;\/script&gt;\nSecond line/);
-		} else {
-			assert.doesNotMatch(html, />Note<\/span>|aria-label="Edit note for /);
-		}
-	}
 });
 
 test("renders default-base detail links, large show artwork, and small DJ artwork", () => {

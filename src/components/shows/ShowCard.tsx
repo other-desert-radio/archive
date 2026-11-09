@@ -2,7 +2,7 @@ import type { PlaybackRecord } from "../../stores/playback/types";
 import type { PlaylistSave } from "../../stores/playlists/types";
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
-import { formatDate, formatDateTime } from "../../utils/format-date";
+import { formatDate } from "../../utils/format-date";
 import { getBasePath } from "../../utils/get-base-path";
 import PlaylistModal from "../playlists/PlaylistModal";
 import TagContainer from "../TagContainer";
@@ -13,8 +13,6 @@ type Props = {
 	show: Show;
 	tags: TagMap;
 	playlistSaves: readonly PlaylistSave[];
-	note?: string;
-	noteUpdatedAt?: string;
 	record?: Pick<PlaybackRecord, "positionInSeconds" | "inProgress"> | undefined;
 };
 
@@ -47,14 +45,7 @@ const renderDJs = (djs: Show["djs"], base: string) =>
 /**
  * Renders one archive show with its date, tags, and associated DJs.
  */
-export default function ShowCard({
-	show,
-	tags,
-	record,
-	playlistSaves,
-	note,
-	noteUpdatedAt,
-}: Props) {
+export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
 	const detailBase = getBasePath();
 	const modal = useRef<HTMLDialogElement>(null);
 	const [modalMounted, setModalMounted] = useState(false);
@@ -89,26 +80,7 @@ export default function ShowCard({
 				</time>
 				<TagContainer tagIds={show.tagIds} tags={tags} size="large" />
 				{renderDJs(show.djs, detailBase)}
-				{note !== undefined && note !== "" && (
-					<div className={styles["note"]}>
-						<div className={styles["note-header"]}>
-							{noteUpdatedAt && (
-								<time className={styles["note-date"]} dateTime={noteUpdatedAt}>
-									{formatDateTime(noteUpdatedAt)}
-								</time>
-							)}
-							<button
-								type="button"
-								className="button-secondary"
-								aria-label={`Edit note for ${show.title}`}
-							>
-								Edit
-							</button>
-						</div>
-						<div className={styles["note-text"]}>{note}</div>
-					</div>
-				)}
-				{note === undefined && playlistSaves.length > 0 && (
+				{playlistSaves.length > 0 && (
 					<div className={styles["playlist-save"]}>
 						<button
 							type="button"
