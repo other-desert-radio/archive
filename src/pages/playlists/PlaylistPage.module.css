@@ -8,6 +8,7 @@
 
 .title-flex h1 {
 	min-width: 0;
+	margin: var(--space-sm) 0 0 0;
 	overflow-wrap: anywhere;
 }
 
@@ -20,6 +21,11 @@
 .title-actions button {
 	touch-action: manipulation;
 }
+
+.disclaimer {
+	margin: var(--space-xs) 0;
+}
+
 .shows-grid {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -27,7 +27,9 @@ export default function PlaylistPage() {
 					<button type="button">Delete</button>
 				</div>
 			</div>
-			<p>Playlists are stored in this browser.</p>
+			<p className={styles["disclaimer"]}>
+				Playlists are stored locally on this device.
+			</p>
 			<LoadingState
 				status={status}
 				loading="Loading playlist..."
