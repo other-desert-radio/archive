@@ -81,6 +81,15 @@ try {
   await browser("wait", titleInput);
   assert.equal(await evaluate(`document.activeElement.getAttribute('aria-label')`), "Playlist title");
   assert.equal(await evaluate(`document.querySelector('${titleInput}').value`), originalTitle);
+  for (const label of ["Save playlist title", "Cancel playlist rename"]) {
+    await evaluate(`(async () => {
+      document.querySelector('button[aria-label="${label}"]').focus();
+      await playlistFixture.stores.playbackStore.progress(42, 12);
+      await new Promise(requestAnimationFrame);
+      return true;
+    })()`);
+    assert.equal(await evaluate(`document.activeElement.getAttribute('aria-label')`), label);
+  }
   for (const width of [320, 750, 1440]) {
     await browser("set", "viewport", String(width), "900");
     assert.ok(await evaluate(`(() => {

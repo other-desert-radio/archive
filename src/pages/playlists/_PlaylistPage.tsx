@@ -9,6 +9,10 @@ import { getBasePath } from "../../utils/get-base-path";
 import styles from "./PlaylistPage.module.css";
 import { usePlaylistShows } from "./usePlaylistShows";
 
+function focusTitle(input: HTMLTextAreaElement | null) {
+	input?.focus();
+}
+
 export default function PlaylistPage() {
 	const { playlists, status } = usePlaylists();
 	const { playlistStore } = useStores();
@@ -102,7 +106,7 @@ export default function PlaylistPage() {
 						className={styles["title-input"]}
 						rows={1}
 						aria-label="Playlist title"
-						ref={(input) => input?.focus()}
+						ref={focusTitle}
 						value={draftTitle}
 						required
 						disabled={saving}
