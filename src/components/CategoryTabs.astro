@@ -52,6 +52,8 @@ const { active } = Astro.props;
   const compressionScrollPx = 40;
   // 1 is linear; 2 is a gentle ease-out; 3 slows more strongly near the end.
   const easeOutPower = 3;
+  // Fling speed in CSS pixels per millisecond; slow drags keep the eased curve.
+  const fastScrollPxPerMs = 0.5;
 
   // Use one JS scroll driver across browsers to keep compression and the endpoint
   // color switch consistent without a separate CSS scroll-timeline fallback.
@@ -59,13 +61,43 @@ const { active } = Astro.props;
     const header = tabs.closest<HTMLElement>("[data-site-header]");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame: number | undefined;
+    let lastProgress: number | undefined;
+    let lastScrollY = window.scrollY;
+    let lastScrollTime = performance.now();
+    let snapDirection = 0;
 
     function update(): void {
       frame = undefined;
+      const now = performance.now();
+      const scrollY = window.scrollY;
+      const delta = scrollY - lastScrollY;
+      // An idle gap is not part of the next gesture's velocity sample.
+      const sampleMs = Math.min(32, Math.max(1, now - lastScrollTime));
+      const fast = !reducedMotion.matches && Math.abs(delta) / sampleMs >= fastScrollPxPerMs;
+      const direction = Math.sign(delta);
+      if (direction !== 0 && direction !== snapDirection) {
+        snapDirection = 0;
+      }
+      if (scrollY <= 0 || scrollY >= compressionScrollPx || reducedMotion.matches) {
+        snapDirection = 0;
+      } else if (fast) {
+        snapDirection = direction;
+      }
+      lastScrollY = scrollY;
+      lastScrollTime = now;
+      tabs.toggleAttribute("data-fast-scroll", fast || snapDirection !== 0);
       const scrollProgress = reducedMotion.matches
         ? 1
-        : Math.min(1, Math.max(0, window.scrollY / compressionScrollPx));
+        : snapDirection > 0
+          ? 1
+          : snapDirection < 0
+            ? 0
+            : Math.min(1, Math.max(0, scrollY / compressionScrollPx));
       const progress = 1 - (1 - scrollProgress) ** easeOutPower;
+      if (progress === lastProgress) {
+        return;
+      }
+      lastProgress = progress;
       tabs.style.setProperty("--tabs-progress", String(progress));
       header?.style.setProperty("--tabs-progress", String(progress));
       tabs.toggleAttribute("data-compact", scrollProgress === 1);
@@ -139,9 +171,11 @@ const { active } = Astro.props;
     background: rgb(0 0 0 / var(--tabs-progress));
     color: black;
     pointer-events: auto;
-    transition:
-      background-color 120ms ease-out,
-      color 120ms ease-out;
+    transition: background-color 120ms ease-out, color 120ms ease-out;
+  }
+
+  .category-tabs[data-fast-scroll] .tabs-strip {
+    transition: none;
   }
 
   .category-tabs[data-dark] .tabs-strip {
@@ -261,5 +295,6 @@ const { active } = Astro.props;
       color: white;
       transition: none;
     }
+
   }
 </style>

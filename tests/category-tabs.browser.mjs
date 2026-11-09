@@ -24,7 +24,20 @@ async function evaluate(code) {
 	return JSON.parse(await browser("eval", code));
 }
 async function verifyProgress(y, progress) {
-	await evaluate(`window.scrollTo(0, ${y}); true`);
+	if (y > 0 && y < compressionScrollPx) {
+		// Small frame-by-frame moves exercise the slow path independently of flings.
+		await evaluate(`new Promise(resolve => {
+			window.scrollTo(0, scrollY >= ${compressionScrollPx} ? ${compressionScrollPx} : 0);
+			const step = () => {
+				if (scrollY === ${y}) { resolve(true); return; }
+				window.scrollTo(0, scrollY + Math.sign(${y} - scrollY) * Math.min(2, Math.abs(${y} - scrollY)));
+				requestAnimationFrame(step);
+			};
+			requestAnimationFrame(() => requestAnimationFrame(step));
+		})`);
+	} else {
+		await evaluate(`window.scrollTo(0, ${y}); true`);
+	}
 	await browser("wait", "--fn", `(() => {
 		const tabs = document.querySelector('[data-category-tabs]');
 		return tabs.style.getPropertyValue('--tabs-progress') === '${progress}'
@@ -66,12 +79,28 @@ try {
 		let changes = 0;
 		const original = tabs.style.setProperty.bind(tabs.style);
 		tabs.style.setProperty = (...args) => { changes++; original(...args); };
+		window.scrollTo(0, ${halfwayScroll});
 		for (let i = 0; i < 10; i++) window.dispatchEvent(new Event('scroll'));
 		requestAnimationFrame(() => {
 			tabs.style.setProperty = original;
 			resolve(changes);
 		});
 	})`), 1);
+	await verifyProgress(0, 0);
+	await verifyProgress(compressionScrollPx * 2, 1);
+	assert.equal(await evaluate(`new Promise(resolve => {
+		const tabs = document.querySelector('[data-category-tabs]');
+		let changes = 0;
+		const observer = new MutationObserver(records => { changes += records.length; });
+		observer.observe(tabs, { attributes: true });
+		window.scrollTo(0, ${compressionScrollPx * 3});
+		window.dispatchEvent(new Event('scroll'));
+		requestAnimationFrame(() => requestAnimationFrame(() => {
+			observer.disconnect();
+			resolve(changes);
+		}));
+	})`), 0, "scrolling beyond compact must not rewrite styles or attributes");
+	await verifyProgress(0, 0);
 
 	// Disposal must cancel queued work and stop updates on the outgoing element.
 	assert.equal(await evaluate(`new Promise(resolve => {
@@ -167,6 +196,26 @@ try {
 		assert.deepEqual(reversed, expanded);
 		assert.ok(states.every(state => Math.abs(state.pageHeight - expanded.pageHeight) <= 1 && Math.abs(state.mainY - expanded.mainY) < 1), "compression must preserve document geometry");
 	}
+	await verifyProgress(0, 0);
+	await evaluate(`window.scrollTo(0, ${halfwayScroll}); true`);
+	await browser("wait", "--fn", "document.querySelector('[data-category-tabs]').hasAttribute('data-compact')");
+	assert.equal(await evaluate("getComputedStyle(document.querySelector('.tabs-strip')).transitionDuration"), "0s", "fast downward scrolling must skip transitions");
+	// A slower continuation in the same direction must not bounce out of the snapped state.
+	await evaluate(`new Promise(resolve => requestAnimationFrame(() => {
+		window.scrollBy(0, 1);
+		requestAnimationFrame(() => requestAnimationFrame(() => resolve(true)));
+	}))`);
+	assert.equal(await evaluate("document.querySelector('[data-category-tabs]').style.getPropertyValue('--tabs-progress')"), "1");
+	await verifyProgress(compressionScrollPx * 4, 1);
+	await evaluate(`window.scrollTo(0, ${compressionScrollPx * 3}); true`);
+	await browser("wait", "--fn", "new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve(true))))");
+	assert.equal(await evaluate("document.querySelector('[data-category-tabs]').hasAttribute('data-compact')"), true, "fast upward scrolling farther down must stay compact");
+	await evaluate(`window.scrollTo(0, ${halfwayScroll}); true`);
+	await browser("wait", "--fn", "document.querySelector('[data-category-tabs]').style.getPropertyValue('--tabs-progress') === '0'");
+	assert.equal(await evaluate("getComputedStyle(document.querySelector('.tabs-strip')).transitionDuration"), "0s", "fast return near the top must expand immediately");
+	await verifyProgress(0, 0);
+	await verifyProgress(halfwayScroll, halfwayProgress);
+	await verifyProgress(0, 0);
 	// Empty history must stay usable without adding artificial scrolling to reach the endpoint.
 	await browser("click", "[data-category-tabs] a[href='/archive/history']");
 	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/history' && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === '0'");
@@ -177,6 +226,7 @@ try {
 	await verifyProgress(0, 0);
 	console.log("Tab progress, reversal, frame batching, cleanup, reduced motion, reload and history restoration pass.");
 	console.log("Transparent-to-black styling, responsive compression, alignment, touch targets and stable scroll geometry pass.");
+	console.log("Fast flings snap without transitions, upward scrolling stays compact outside the top zone, and slow scrolling restores easing.");
 } finally {
 	await browser("close");
 	server.stop(true);

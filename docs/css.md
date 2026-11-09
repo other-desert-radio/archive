@@ -68,8 +68,13 @@ decreasing it reaches the compact state sooner. Progress clamps at the endpoint
 and reverses when scrolling back up. Beside it, `easeOutPower` controls the curve:
 `1` is linear, `2` is a gentle ease-out (75% compressed halfway through the scroll
 distance), and `3` is stronger (87.5% halfway through). Keep it at least `1`.
-The black background's opacity follows eased scroll progress, with 180ms color
-smoothing. The text and active underline switch to white at 50% opacity so they
+The black background's opacity follows eased scroll progress, with 120ms
+smoothing. `fastScrollPxPerMs` controls the fling threshold in CSS pixels per
+millisecond. Fast scrolling skips color transitions and snaps to the endpoint
+in the scroll direction inside the compression zone. Hold that endpoint until
+direction reverses or scrolling leaves the zone; upward scrolling farther down
+the page stays compact. Skip unchanged progress after compression finishes.
+The text and active underline switch to white at 50% opacity so they
 remain fully opaque and readable. Reduced motion shows static compact
 tabs immediately. The sticky header reserves the expanded tab height to keep
 document geometry stable and lets clicks through the transparent remainder.
