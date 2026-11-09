@@ -1,17 +1,23 @@
 type CategoryTabsConfig = {
+	/** Scroll distance in CSS pixels to fully compress the tabs; must match CSS. */
 	compressionScrollPx: number;
+	/** Exponent of the ease-out curve; must match the CSS timeline's exponent. */
 	easeOutPower: number;
-	// Fling speed in CSS pixels per millisecond; slow drags keep the eased curve.
+	/** Fling threshold in CSS pixels per millisecond; slower drags keep easing. */
 	fastScrollPxPerMs: number;
 };
 
+/**
+ * Sets up tab compression and compact-entry restoration across Astro navigation.
+ * Call once per document: navigation listeners persist and rebind each page's tabs.
+ * Uses native CSS timelines when supported, otherwise a JavaScript scroll driver.
+ */
 export function setupCategoryTabsScrollBehavior({
 	compressionScrollPx,
 	easeOutPower,
 	fastScrollPxPerMs,
 }: CategoryTabsConfig): void {
-	// Native timelines follow browser scrolling; this fast-scroll fallback is only
-	// for browsers missing the CSS timeline, range, math or typed-property support.
+	/** Starts the fallback scroll driver and returns listener/frame cleanup. */
 	function observeCategoryTabs(tabs: HTMLElement): () => void {
 		const header = tabs.closest<HTMLElement>("[data-site-header]");
 		const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -21,6 +27,7 @@ export function setupCategoryTabsScrollBehavior({
 		let lastScrollTime = performance.now();
 		let snapDirection = 0;
 
+		/** Applies eased progress, snapping fast gestures toward their endpoint. */
 		function update(): void {
 			frame = undefined;
 			const now = performance.now();
@@ -71,12 +78,14 @@ export function setupCategoryTabsScrollBehavior({
 			tabs.toggleAttribute("data-dark", progress >= 0.5);
 		}
 
+		/** Batches scroll and motion-preference changes into one animation frame. */
 		function scheduleUpdate(): void {
 			if (frame === undefined) {
 				frame = window.requestAnimationFrame(update);
 			}
 		}
 
+		/** Resamples restored scroll positions without treating them as flings. */
 		function restoreScroll(): void {
 			if (frame !== undefined) {
 				window.cancelAnimationFrame(frame);
@@ -109,11 +118,13 @@ export function setupCategoryTabsScrollBehavior({
 	let stopObservingTabs: (() => void) | undefined;
 	let categoryEntryScroll: number | undefined;
 
+	/** Stops the outgoing page's fallback driver before its DOM is replaced. */
 	function disposeCategoryTabs(): void {
 		stopObservingTabs?.();
 		stopObservingTabs = undefined;
 	}
 
+	/** Resets the current page and selects its native or fallback scroll driver. */
 	function initializePageTabs(): void {
 		disposeCategoryTabs();
 		const header = document.querySelector<HTMLElement>("[data-site-header]");
