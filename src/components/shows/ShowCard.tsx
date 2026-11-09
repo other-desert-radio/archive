@@ -95,7 +95,7 @@ export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
 								<span key={playlistId}>
 									{index > 0 && ", "}
 									<a
-										href={`${detailBase}/playlists/#${playlistId}`}
+										href={`${detailBase}/playlists/?id=${playlistId}`}
 										className={styles["playlist-title"]}
 										aria-label={`View playlist ${title}`}
 									>

@@ -7,22 +7,7 @@ export default function PlaylistPage() {
 	const { playlists, status } = usePlaylists();
 	const [playlistId, setPlaylistId] = useState("");
 	useEffect(() => {
-		const pathname = window.location.pathname;
-		const update = () => {
-			// Back changes the URL before Astro swaps out this page.
-			if (window.location.pathname === pathname) {
-				setPlaylistId(window.location.hash.slice(1));
-			}
-		};
-		update();
-		window.addEventListener("hashchange", update);
-		window.addEventListener("popstate", update);
-		document.addEventListener("astro:page-load", update);
-		return () => {
-			window.removeEventListener("hashchange", update);
-			window.removeEventListener("popstate", update);
-			document.removeEventListener("astro:page-load", update);
-		};
+		setPlaylistId(new URLSearchParams(window.location.search).get("id") ?? "");
 	}, []);
 	const playlist = playlists.find((item) => item.id === playlistId);
 	return (

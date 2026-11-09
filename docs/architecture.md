@@ -76,8 +76,8 @@ Entries retain insertion order, UTC ISO timestamps and optional notes. Duplicate
 shows reject, and missing catalog references remain stored for callers to resolve
 through ShowStore. Storage is local to the browser; remote sync, cross-tab edit
 coordination and sharing are not implemented. History lists local playlists, including
-Liked Shows. Each links to `/playlists/#<id>` under the configured base path.
-The static Astro shell hosts a React component that resolves the hash through
+Liked Shows. Each links to `/playlists/?id=<id>` under the configured base path.
+The static Astro shell hosts a React component that reads the query ID on mount and resolves it through
 PlaylistStore and displays the stored record as JSON; missing IDs show a
 browser-local not-found message. Playlist loading is independent of the catalog.
 

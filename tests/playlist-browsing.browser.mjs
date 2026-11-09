@@ -64,13 +64,13 @@ try {
    await store.setNote({ playlistId: p.id, showId: 42, note: "Keep <b>raw</b>" });
    return p.id;
  })()`);
-  await browser("wait", `a[href="/playlists/#${id}"]`);
+  await browser("wait", `a[href="/playlists/?id=${id}"]`);
   assert.ok(
     await evaluate(
       'document.body.textContent.includes("Could not load shows.")',
     ),
   );
-  await browser("click", `a[href="/playlists/#${id}"]`);
+  await browser("click", `a[href="/playlists/?id=${id}"]`);
   await browser("wait", "pre");
   assert.equal(
     await evaluate(
@@ -85,7 +85,7 @@ try {
     await evaluate('JSON.parse(document.querySelector("pre").textContent).id'),
     id,
   );
-  await evaluate('location.hash = "unknown"; true');
+  await evaluate('location.search = "?id=unknown"; true');
   await browser(
     "wait",
     "--fn",
@@ -93,20 +93,20 @@ try {
   );
   await browser("back");
   await browser("wait", "pre");
-  await evaluate('location.hash = ""; true');
+  await evaluate('location.search = ""; true');
   await browser(
     "wait",
     "--fn",
     'document.body.textContent.includes("Choose a playlist from History.")',
   );
-  await browser("open", `${server.url}playlists/?fail#${id}`);
+  await browser("open", `${server.url}playlists/?fail&id=${id}`);
   await browser("wait", '[role="alert"]');
   assert.equal(await evaluate('document.querySelector("pre")'), null);
   await browser("open", `${server.url}?fail`);
   await browser("wait", 'section[aria-label="Playlists"] [role="alert"]');
   // Check the actual static Astro shell and its client router using the same storage.
   await browser("open", `${server.url}archive/history`);
-  await browser("wait", `a[href="/archive/playlists/#${id}"]`);
+  await browser("wait", `a[href="/archive/playlists/?id=${id}"]`);
   for (const width of [320, 1440]) {
     await browser("set", "viewport", String(width), "900");
     assert.equal(
@@ -118,7 +118,7 @@ try {
     `window.navigationMarker = {}; window.playerMarker = document.querySelector('[data-miniplayer]'); true`,
   );
   await evaluate(
-    `document.querySelector('a[href="/archive/playlists/#${id}"]').focus(); true`,
+    `document.querySelector('a[href="/archive/playlists/?id=${id}"]').focus(); true`,
   );
   await browser("press", "Enter");
   await browser("wait", "pre");
@@ -132,6 +132,21 @@ try {
     ),
     true,
   );
+  // Query-only navigation must remount the island without reloading the player.
+  await evaluate(`(() => {
+    const link = document.createElement('a');
+    link.href = '/archive/playlists/?id=unknown';
+    link.id = 'other-playlist';
+    link.textContent = 'Other playlist';
+    document.querySelector('main').append(link);
+    return true;
+  })()`);
+  await browser("click", "#other-playlist");
+  await browser("wait", "--fn", 'document.body.textContent.includes("Playlist not found in this browser.")');
+  await browser("back");
+  await browser("wait", "pre");
+  assert.equal(await evaluate('JSON.parse(document.querySelector("pre").textContent).id'), id);
+  assert.equal(await evaluate('window.playerMarker === document.querySelector("[data-miniplayer]")'), true);
   for (const width of [320, 332, 750, 1440, 1920]) {
     await browser("set", "viewport", String(width), "900");
     assert.equal(
@@ -151,7 +166,7 @@ try {
     return true;
   })()`);
   await browser("back");
-  await browser("wait", `a[href="/archive/playlists/#${id}"]`);
+  await browser("wait", `a[href="/archive/playlists/?id=${id}"]`);
   assert.equal(
     await evaluate("window.playlistDisappeared"),
     false,
@@ -160,7 +175,7 @@ try {
   await browser("forward");
   await browser("wait", "pre");
   await browser("click", 'a[aria-label="Return to history"]');
-  await browser("wait", `a[href="/archive/playlists/#${id}"]`);
+  await browser("wait", `a[href="/archive/playlists/?id=${id}"]`);
   await browser("back");
   await browser("wait", "pre");
   await browser("reload");
@@ -170,7 +185,7 @@ try {
     id,
   );
   console.log(
-    "Playlist browsing passed: local lookup, reload, hash history, escaped JSON and independent errors.",
+    "Playlist browsing passed: local lookup, reload, query history, escaped JSON and independent errors.",
   );
 } finally {
   await browser("close").catch(() => {});

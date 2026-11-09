@@ -8,7 +8,7 @@ const stores = createStores();
 stores.initialize = async () => {
 	throw new Error("Catalog unavailable");
 };
-if (location.search === "?fail") {
+if (new URLSearchParams(location.search).has("fail")) {
 	stores.playlistStore.initialize = async () => {
 		throw new Error("Storage unavailable");
 	};

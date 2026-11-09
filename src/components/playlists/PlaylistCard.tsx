@@ -21,7 +21,7 @@ export default function PlaylistCard({ playlist, shows }: PlaylistCardProps) {
 	return (
 		<a
 			className={styles["playlist-container"]}
-			href={`${base}/playlists/#${playlist.id}`}
+			href={`${base}/playlists/?id=${playlist.id}`}
 			aria-label={`View playlist ${playlist.title}`}
 		>
 			<div className={styles["playlist-shows-grid"]}>

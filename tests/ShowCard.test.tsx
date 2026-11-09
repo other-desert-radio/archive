@@ -28,7 +28,7 @@ test("saved playlist links follow DJ links and display hearts with titles", () =
 		},
 	]);
 	assert.equal((html.match(/aria-label="View playlist /g) ?? []).length, 3);
-	assert.match(html, /href="\/playlists\/#custom"/);
+	assert.match(html, /href="\/playlists\/\?id=custom"/);
 	assert.match(html, /<b>Favorites<\/b>/);
 	assert.equal((html.match(/aria-hidden="true">♥/g) ?? []).length, 1);
 	assert.equal(
