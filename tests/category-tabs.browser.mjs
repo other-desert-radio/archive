@@ -2,7 +2,6 @@
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import console from "node:console";
-import process from "node:process";
 import { URL } from "node:url";
 import { promisify } from "node:util";
 import { file, serve } from "bun";
@@ -48,7 +47,25 @@ async function verifyProgress(y, progress) {
 	assert.equal(await evaluate("scrollY"), y);
 }
 
-let forceFallback = !process.argv.includes("--native-only");
+async function verifyCompactCategorySwitch(driver, destination) {
+	await evaluate(`(() => {
+		window.categorySwapState = undefined;
+		document.addEventListener('astro:after-swap', () => {
+			const tabs = document.querySelector('[data-category-tabs]');
+			window.categorySwapState = {
+				progress: Number(getComputedStyle(tabs).getPropertyValue('--tabs-progress')),
+				background: getComputedStyle(tabs.querySelector('.tabs-strip')).backgroundColor,
+			};
+		}, { once: true });
+		return true;
+	})()`);
+	await browser("click", `[data-category-tabs] a[href='/archive/${destination}']`);
+	await browser("wait", "--fn", `location.pathname.replace(/\\/$/, '') === '/archive/${destination}' && document.querySelector('header[data-tabs-driver=${driver}]') !== null && scrollY >= ${compressionScrollPx} && Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) === 1`);
+	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
+	assert.deepEqual(await evaluate("window.categorySwapState"), { progress: 1, background: "rgb(0, 0, 0)" }, "the replacement strip must already be compact during the swap");
+}
+
+let forceFallback = true;
 const server = serve({
 	hostname: "127.0.0.1",
 	port: 0,
@@ -71,7 +88,6 @@ const server = serve({
 });
 const base = `http://127.0.0.1:${server.port}/archive`;
 try {
-	if (forceFallback) {
 	await browser("set", "viewport", "1440", "800");
 	await browser("open", `${base}/`);
 	await browser("wait", "--fn", "document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === '0'");
@@ -119,7 +135,9 @@ try {
 		const tabs = document.querySelector('[data-category-tabs]');
 		window.scrollTo(0, ${halfwayScroll});
 		window.dispatchEvent(new Event('scroll'));
-		document.dispatchEvent(new Event('astro:before-swap'));
+		const swap = new Event('astro:before-swap');
+		Object.defineProperty(swap, 'newDocument', { value: document.implementation.createHTMLDocument('') });
+		document.dispatchEvent(swap);
 		requestAnimationFrame(() => {
 			resolve(tabs.style.getPropertyValue('--tabs-progress'));
 		});
@@ -249,11 +267,14 @@ try {
 	assert.equal(await evaluate("getComputedStyle(document.querySelector('.tabs-strip')).backgroundColor"), "rgb(0, 0, 0)");
 	await browser("set", "media", "light");
 	await verifyProgress(0, 0);
+	await browser("click", "[data-category-tabs] a[href='/archive/djs']");
+	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/djs' && document.querySelector('header[data-tabs-driver=js]') !== null");
+	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
+	await verifyProgress(compressionScrollPx * 4, 1);
+	await verifyCompactCategorySwitch("js", "history");
 	console.log("Tab progress, reversal, frame batching, cleanup, reduced motion, reload and history restoration pass.");
 	console.log("Transparent-to-black styling, responsive compression, alignment, touch targets and stable scroll geometry pass.");
 	console.log("Fast flings snap without transitions, upward scrolling stays compact outside the top zone, and slow scrolling restores easing.");
-	}
-
 	// Exercise the real supported path separately from the forced fallback above.
 	forceFallback = false;
 	await browser("set", "media", "light");
@@ -307,15 +328,47 @@ try {
 	}
 	await browser("click", "[data-category-tabs] a[href='/archive/explore']");
 	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/explore' && document.querySelector('header[data-tabs-driver=css]') !== null");
+	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
 	await browser("click", "[data-category-tabs] a[href='/archive/history']");
 	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/history' && document.querySelector('header[data-tabs-driver=css]') !== null");
+	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
 	await browser("set", "media", "light", "reduced-motion");
 	await browser("wait", "--fn", "getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress').trim() === '1'");
 	assert.equal(await evaluate("getComputedStyle(document.querySelector('[data-site-header]')).animationName"), "none");
 	assert.equal(await evaluate("getComputedStyle(document.querySelector('.tabs-strip')).backgroundColor"), "rgb(0, 0, 0)");
 	await browser("set", "media", "light");
 	await browser("wait", "--fn", "getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress').trim() === '0'");
+	await browser("click", "[data-category-tabs] a[href='/archive/djs']");
+	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/djs' && document.querySelector('header[data-tabs-driver=css]') !== null");
+	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
+	await evaluate(`window.scrollTo(0, ${compressionScrollPx * 4}); true`);
+	await browser("wait", "--fn", "Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) === 1");
+	await verifyCompactCategorySwitch("css", "history");
+	await browser("back");
+	await browser("wait", "--fn", `location.pathname.replace(/\\/$/, '') === '/archive/djs' && scrollY === ${compressionScrollPx * 4} && Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) === 1`);
+	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
+	await browser("forward");
+	await browser("wait", "--fn", `location.pathname.replace(/\\/$/, '') === '/archive/history' && scrollY >= ${compressionScrollPx} && Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) === 1`);
+	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
+	await browser("reload");
+	await browser("wait", "--fn", `document.querySelector('header[data-tabs-driver=css]') !== null && scrollY >= ${compressionScrollPx} && Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) === 1`);
+	await evaluate(`(() => {
+		Object.defineProperty(Element.prototype, 'moveBefore', { value: undefined, configurable: true });
+		window.tabsPlayerHeader = document.querySelector('[data-site-header]');
+		window.tabsPlayerProbe = document.createElement('iframe');
+		window.tabsPlayerProbe.style.cssText = 'width:1px;height:1px;display:block';
+		window.tabsPlayerProbe.srcdoc = '<p>Category player fixture</p>';
+		document.querySelector('[data-miniplayer-bar]').append(window.tabsPlayerProbe);
+		return true;
+	})()`);
+	await browser("wait", "--fn", "window.tabsPlayerProbe.contentDocument?.body.textContent.includes('Category player fixture')");
+	await evaluate("window.tabsPlayerProbe.contentWindow.playbackPosition = 123; true");
+	await verifyCompactCategorySwitch("css", "djs");
+	assert.equal(await evaluate("window.tabsPlayerHeader === document.querySelector('[data-site-header]') && window.tabsPlayerProbe.isConnected && window.tabsPlayerProbe.contentWindow.playbackPosition === 123"), true, "compact navigation must preserve the player document");
+	await evaluate("window.scrollTo(0, 0); true");
+	await browser("wait", "--fn", "Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) === 0");
 	console.log("Native CSS timelines, eased progress, immediate color reversal, responsive layout, navigation and reduced motion pass.");
+	console.log("Compact category entry, empty History, Back/Forward, reload and player-preserving swaps pass.");
 } catch (error) {
 	console.error(await evaluate(`({ path: location.pathname, y: scrollY, driver: document.querySelector('[data-site-header]')?.dataset.tabsDriver, progress: document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress'), computed: getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress') })`));
 	throw error;

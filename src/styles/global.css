@@ -68,6 +68,11 @@ body {
 	min-height: 100vh;
 }
 
+/* Short category destinations still need enough range to retain a compact entry. */
+body[data-compact-category-entry] {
+	min-height: calc(100vh + var(--tabs-compression-scroll-px) * 1px);
+}
+
 /* Keep the image in front of the root canvas, behind the page content. */
 .site-background {
 	position: fixed;
@@ -83,6 +88,10 @@ body {
 @supports (height: 100dvh) {
 	body {
 		min-height: 100dvh;
+	}
+
+	body[data-compact-category-entry] {
+		min-height: calc(100dvh + var(--tabs-compression-scroll-px) * 1px);
 	}
 
 	.site-background {

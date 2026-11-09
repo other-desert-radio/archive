@@ -145,6 +145,7 @@ const { active } = Astro.props;
   }
 
   let stopObservingTabs: (() => void) | undefined;
+  let categoryEntryScroll: number | undefined;
 
   function disposeCategoryTabs(): void {
     stopObservingTabs?.();
@@ -157,7 +158,9 @@ const { active } = Astro.props;
     header?.removeAttribute("data-tabs-driver");
     header?.style.removeProperty("--tabs-progress");
     const tabs = document.querySelector<HTMLElement>("[data-category-tabs]");
+    document.body.toggleAttribute("data-compact-category-entry", !!tabs && !!history.state?.categoryTabsCompactEntry);
     if (tabs && header) {
+      tabs.style.removeProperty("--tabs-progress");
       if (
         typeof CSS.registerProperty === "function" &&
         CSS.supports("(animation-timeline: scroll(root block)) and (animation-range: 0px 40px) and (width: calc(1px * pow(0.5, 3)))")
@@ -172,7 +175,40 @@ const { active } = Astro.props;
 
   initializeCategoryTabs();
   document.addEventListener("astro:page-load", initializeCategoryTabs);
-  document.addEventListener("astro:before-swap", disposeCategoryTabs);
+  document.addEventListener("astro:before-swap", (event) => {
+    disposeCategoryTabs();
+    categoryEntryScroll = undefined;
+    const tabs = document.querySelector<HTMLElement>("[data-category-tabs]");
+    const nextTabs = event.newDocument.querySelector<HTMLElement>("[data-category-tabs]");
+    if (!nextTabs) {
+      return;
+    }
+    const distance = Number.parseFloat(getComputedStyle(tabs ?? document.documentElement).getPropertyValue("--tabs-compression-scroll-px"));
+    if (event.navigationType === "traverse") {
+      if (history.state?.categoryTabsCompactEntry || history.state?.scrollY >= distance) {
+        categoryEntryScroll = history.state.scrollY;
+      }
+    } else if (
+      tabs && event.sourceElement?.closest("[data-category-tabs] a") &&
+      Number.parseFloat(getComputedStyle(tabs).getPropertyValue("--tabs-progress")) >= 1
+    ) {
+      categoryEntryScroll = distance;
+    }
+    if (categoryEntryScroll !== undefined && categoryEntryScroll >= distance) {
+      event.newDocument.querySelector<HTMLElement>("[data-site-header]")?.style.setProperty("--tabs-progress", "1");
+      nextTabs.style.setProperty("--tabs-progress", "1");
+      nextTabs.toggleAttribute("data-dark", true);
+      nextTabs.toggleAttribute("data-fast-scroll", true);
+    }
+  });
+  document.addEventListener("astro:after-swap", () => {
+    document.body.toggleAttribute("data-compact-category-entry", categoryEntryScroll !== undefined);
+    if (categoryEntryScroll !== undefined) {
+      window.scrollTo({ top: categoryEntryScroll, left: 0, behavior: "instant" });
+      history.replaceState({ ...history.state, categoryTabsCompactEntry: true, scrollY: window.scrollY }, "");
+    }
+    categoryEntryScroll = undefined;
+  });
 </script>
 
 <style>
@@ -219,8 +255,11 @@ const { active } = Astro.props;
   :global(header[data-tabs-driver="css"]) .tabs-strip {
     transition: none;
     animation: category-tabs-ink 1s steps(1, end) both;
-    animation-timeline: scroll(root block);
     animation-range: 0px calc(var(--tabs-compression-scroll-px) * (1 - pow(0.5, 1 / var(--tabs-ease-out-power))) * 1px);
+  }
+
+  :global(header[data-tabs-driver="css"]) .category-tabs .tabs-strip {
+    animation-timeline: scroll(root block);
   }
 
   @keyframes category-tabs-ink {

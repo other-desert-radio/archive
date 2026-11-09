@@ -58,9 +58,9 @@ in place. DJ detail artwork uses a bounded fluid column at 40% of the available
 width, with a single-column layout at 600px and below. Verify these layouts in the browser, including long names and
 tags, at 320px, 332px, 750px, 1440px, and wide desktop widths.
 
-Category tabs stay on one row, with smaller fluid text, reduced gaps and no
-extra inline padding at 750px and below. They spread across the available width
-at 600px and below and form a left-aligned group on larger screens.
+Category tabs stay on one row, with smaller fluid text and reduced gaps at
+750px and below. Expanded tabs spread across the available width at 600px and
+below; compact tabs form a left-aligned group matching the title navigation.
 `--tabs-compression-scroll-px` in `src/styles/styles.css` controls the document
 scroll distance in CSS pixels from expanded tabs to fully compact (a bare number,
 currently `40`). Increasing it makes compression take more scrolling; decreasing
@@ -88,6 +88,11 @@ document geometry stable and lets clicks through the transparent remainder.
 Compression also reduces title-row bottom padding to leave approximately `1.5rem`
 between the title text and compact tab text when the desktop player row is absent.
 Tune this with `--tabs-title-gap` in `Navigation.astro`.
+Switching categories from a compact strip starts the destination at the
+compression threshold and seeds compact styling before the swap. Short compact
+entries reserve one compression distance beyond the viewport so History can
+retain that state and still scroll back to expanded. Astro history state records
+the compact entry; range reservation runs before reload scroll restoration.
 Navigation items wrap naturally when
 their combined widths exceed the available space. Keep the return link together, and
 allow the navigation title to wrap within its own line on tiny screens.

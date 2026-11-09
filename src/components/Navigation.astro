@@ -186,8 +186,12 @@ const title = (() => {
   header[data-tabs-driver="css"] {
     --tabs-progress: calc(1 - pow(1 - var(--tabs-scroll-progress), var(--tabs-ease-out-power)));
     animation: category-tabs-scroll 1s linear both;
-    animation-timeline: scroll(root block);
     animation-range: 0px calc(var(--tabs-compression-scroll-px) * 1px);
+  }
+
+  /* Keep the minifier from folding the timeline into a newer unsupported shorthand. */
+  header[data-tabs-driver="css"][data-site-header] {
+    animation-timeline: scroll(root block);
   }
 
   @keyframes category-tabs-scroll {
