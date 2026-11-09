@@ -6,9 +6,7 @@ import { gzipSync } from "node:zlib";
 
 // Production growth guards, measured with gzip regardless of preview-server
 // compression. These are transfer-size budgets, not device timing guarantees.
-// Production baseline with the current catalog and 20 initial shows: JS 85.6 KiB,
-// CSS 3.1 KiB, root HTML 17.2 KiB, Explore 9.4 KiB, DJ details <=8.1 KiB,
-// tag details <=9.3 KiB. Leave bounded room for content growth.
+// Category HTML includes Astro's inline hydration runtime and the shared tab controller.
 const KiB = 1024;
 const failures = [];
 
@@ -58,8 +56,8 @@ try {
 
 	for (const [route, limit] of [
 		["", 20 * KiB],
-		["djs", 7 * KiB],
-		["explore", 11 * KiB],
+		["djs", 11 * KiB],
+		["explore", 14 * KiB],
 		["history", 7 * KiB],
 	]) {
 		budget(

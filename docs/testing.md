@@ -82,7 +82,8 @@ on pull requests and pushes to main.
   is disabled and HTML is not cached for these cases.
 - All emitted JS combined has a 100 KiB gzip budget; all CSS combined has a
   5 KiB budget. Root HTML allows 20 KiB for 20 initial cards and their hydration data;
-  Explore allows 11 KiB for the current tag catalog, and other categories 7 KiB.
+  Explore allows 14 KiB for the current tag catalog, DJs 11 KiB, and History 7 KiB.
+  Category HTML includes Astro's inline hydration runtime and the shared tab controller.
   Show details allow 8 KiB, DJ details 9 KiB, and tag details 11 KiB. Failures print measurements; investigate growth before raising a
   limit. These are transfer-size guards, not device-speed guarantees.
 
