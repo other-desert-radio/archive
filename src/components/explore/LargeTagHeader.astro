@@ -20,11 +20,8 @@ const { tag } = Astro.props;
 
 <style>
   .large-tag-header {
-    /* Reach the viewport edge beyond the centered main on wide screens. */
-    --header-inset: calc(max(0rem, (100vw - var(--page-max-width)) / 2));
     width: fit-content;
-    max-width: calc(100% + var(--header-inset));
-    margin-left: calc(-1 * var(--header-inset));
+    max-width: 100%;
     padding-block: var(--space-lg);
     padding-left: max(
       min(var(--page-gutter), 3.2rem),

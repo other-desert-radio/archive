@@ -89,9 +89,9 @@ try {
 	}
 	browser("open", `${base}/tags/4`);
 	browser("wait", ".dj-explore-card");
-	for (const width of [320, 332, 750, 1440, 2000]) {
+    for (const width of [320, 332, 750, 1440, 2000, 2560]) {
 		browser("set", "viewport", String(width), "1000");
-		verifyRow('.gutter-scroll', '#tag-djs-heading');
+        verifyRow('.gutter-scroll', '#tag-djs-heading', false, true);
 	}
 	// Focus must bring the final link into the scroll viewport.
 	evaluate(`document.querySelector('.tag-row').lastElementChild.focus(); true`);
@@ -100,7 +100,7 @@ try {
 		const s = document.querySelector('.gutter-scroll').getBoundingClientRect();
 		return r.left >= s.left && r.right <= s.right + 1;
 	})()`), true);
-	console.log("Horizontal row boundaries, alignment, sizing and focus passed at five viewport widths.");
+    console.log("Full-width row boundaries, alignment, sizing and focus passed at six viewport widths.");
 } finally {
 	browser("close");
 }

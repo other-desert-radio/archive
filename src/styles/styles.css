@@ -94,6 +94,20 @@ textarea {
 
 .gutter-scroll {
 	overflow-x: auto;
+	/* Align end cards with capped content while allowing edge-to-edge scrolling. */
+	padding-left: calc(
+		max(0px, (100% - var(--page-max-width)) / 2) +
+		var(--page-inset-left)
+	);
+	padding-right: calc(
+		max(0px, (100% - var(--page-max-width)) / 2) +
+		var(--page-inset-right)
+	);
+}
+
+.page-inset {
+	max-width: var(--page-max-width);
+	margin-inline: auto;
 }
 
 .tag {

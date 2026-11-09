@@ -47,9 +47,9 @@ const { tag, djs, shows } = Astro.props as Props;
   {
     djs.length > 0 && (
       <section aria-labelledby="tag-djs-heading">
-        <h2 class="page-inset" id="tag-djs-heading">
-          DJs
-        </h2>
+        <div class="page-inset">
+          <h2 id="tag-djs-heading">DJs</h2>
+        </div>
         <div class="gutter-scroll tag-row">
           {djs.map((dj) => (
             <DJExploreCard dj={dj} fromTag={tag.id} />

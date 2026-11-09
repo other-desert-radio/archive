@@ -1,21 +1,7 @@
-.content {
-	max-width: var(--page-max-width);
-	margin-inline: auto;
-}
-
 .show-container {
 	display: flex;
 	gap: calc(var(--grid-column-gap) * 0.25);
 	padding-bottom: var(--space-sm);
-	/* Keep end cards aligned with capped content while the row fills the device. */
-	padding-left: calc(
-		max(0px, (100% - var(--page-max-width)) / 2) +
-		var(--page-inset-left)
-	);
-	padding-right: calc(
-		max(0px, (100% - var(--page-max-width)) / 2) +
-		var(--page-inset-right)
-	);
 }
 
 .show-container > * {
