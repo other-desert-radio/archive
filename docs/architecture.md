@@ -79,7 +79,10 @@ coordination and sharing are not implemented. History lists local playlists, inc
 Liked Shows. Each links to `/playlists/?id=<id>` under the configured base path.
 The static Astro shell hosts a React component that reads the query ID on mount
 and resolves it through PlaylistStore; missing IDs show a browser-local not-found
-message. Playlist loading is independent of the catalog. After catalog initialization,
+message. User playlists can be renamed inline and deleted after confirmation; successful
+deletion returns to History through the client router. ConfirmationModal supplies
+configurable content and actions, including a red destructive primary action.
+Playlist loading is independent of the catalog. After catalog initialization,
 the page renders PlaylistShowCard in a responsive grid with up to four columns, newest additions first,
 retaining unavailable references and offering retry when catalog loading fails.
 Each playlist card has playable artwork above an optional note with the entry's

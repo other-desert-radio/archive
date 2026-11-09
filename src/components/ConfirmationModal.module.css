@@ -1,0 +1,46 @@
+.modal {
+	box-sizing: border-box;
+	width: min(30rem, calc(100% - 2rem));
+	max-height: calc(100dvh - 2rem);
+	overflow-y: auto;
+	overflow-wrap: anywhere;
+	margin: auto;
+	padding: var(--space-lg);
+	border: 0;
+	background: white;
+	color: black;
+}
+
+.modal::backdrop {
+	background: rgb(0 0 0 / 50%);
+}
+
+.modal h2 {
+	margin: 0 0 var(--space-md);
+	font-size: var(--font-small-title);
+	font-weight: normal;
+}
+
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: var(--space-sm);
+	margin-top: var(--space-md);
+}
+
+.actions button {
+	min-height: 2.75rem;
+}
+
+.actions button:disabled {
+	opacity: 0.5;
+	cursor: default;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.actions :global(.button-danger):hover:not(:disabled) {
+		background: #c00;
+		color: white;
+	}
+}

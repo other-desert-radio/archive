@@ -11,7 +11,7 @@ import type { Playlist } from "../../../src/stores/playlists/types";
 
 test("history puts Liked Shows first without changing user order or the snapshot", () => {
 	const playlists: readonly Playlist[] = Object.freeze(
-		["user", "liked", "user"].map((type, index) => ({
+		["user", "liked", "user"].map<Playlist>((type, index) => ({
 			id: String(index),
 			type: type === "liked" ? "liked" : "user",
 			title: "Playlist",

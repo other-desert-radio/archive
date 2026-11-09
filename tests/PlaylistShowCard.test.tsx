@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import PlaylistShowCard from "../src/components/playlists/PlaylistShowCard";
+import { getBasePath } from "../src/utils/get-base-path";
 import fixture from "./res/shows.json";
 
 test("playlist card hides tags and marks chins with notes while preserving playback and escaped note text", () => {
@@ -25,6 +26,8 @@ test("playlist card hides tags and marks chins with notes while preserving playb
 			/>,
 		);
 		assert.match(html, /data-show-playback/);
+		assert.ok(html.includes(`href="${getBasePath()}/shows/${show.id}"`));
+		assert.ok(html.includes(`>${show.title}</a>`));
 		assert.match(html, /role="progressbar"/);
 		assert.doesNotMatch(html, /Explore Ambient/);
 		assert.match(html, new RegExp(`data-has-note="${Boolean(note)}"`));

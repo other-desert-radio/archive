@@ -19,7 +19,7 @@ type Props = {
 	record?: Pick<PlaybackRecord, "positionInSeconds" | "inProgress"> | undefined;
 };
 
-/** Artwork above a full-width chin containing tags and the optional entry note. */
+/** Artwork above a full-width chin containing the title and optional entry note. */
 export default function PlaylistShowCard({
 	show,
 	entry,
@@ -32,6 +32,13 @@ export default function PlaylistShowCard({
 		<div className={styles["card"]}>
 			<PlayableShowArtwork show={show} record={record} base={getBasePath()} />
 			<div className={styles["chin"]} data-has-note={hasNote}>
+				<a
+					className={styles["title"]}
+					href={`${getBasePath()}/shows/${show.id}`}
+					aria-label={`View ${show.title}`}
+				>
+					{show.title}
+				</a>
 				{showTags && (
 					<TagContainer tagIds={show.tagIds} tags={tags} size="large" />
 				)}

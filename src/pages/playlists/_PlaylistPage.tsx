@@ -1,9 +1,11 @@
 import { type SubmitEvent, useEffect, useRef, useState } from "react";
+import ConfirmationModal from "../../components/ConfirmationModal";
 import LoadingState from "../../components/LoadingState";
 import PlaylistModal from "../../components/playlists/PlaylistModal";
 import PlaylistShowCard from "../../components/playlists/PlaylistShowCard";
 import { usePlaylists } from "../../components/playlists/usePlaylists";
 import { useStores } from "../../stores";
+import { getBasePath } from "../../utils/get-base-path";
 import styles from "./PlaylistPage.module.css";
 import { usePlaylistShows } from "./usePlaylistShows";
 
@@ -23,6 +25,10 @@ export default function PlaylistPage() {
 		setRenameError(undefined);
 		requestAnimationFrame(() => renameButton.current?.focus());
 	}
+	const deleteModal = useRef<HTMLDialogElement>(null);
+	const [deleting, setDeleting] = useState(false);
+	const [deleteError, setDeleteError] = useState<string>();
+	const deletePending = useRef(false);
 	const modal = useRef<HTMLDialogElement>(null);
 	const [editingShowId, setEditingShowId] = useState<number>();
 	useEffect(() => {
@@ -63,6 +69,27 @@ export default function PlaylistPage() {
 			setSaving(false);
 		}
 	}
+	async function deletePlaylist() {
+		if (deletePending.current || !playlist || playlist.type !== "user") {
+			return;
+		}
+		deletePending.current = true;
+		setDeleting(true);
+		setDeleteError(undefined);
+		try {
+			await playlistStore.delete({ playlistId: playlist.id });
+		} catch {
+			setDeleteError("Could not delete playlist. Please try again.");
+			return;
+		} finally {
+			deletePending.current = false;
+			setDeleting(false);
+		}
+		deleteModal.current?.close();
+		const { navigate } = await import("astro:transitions/client");
+		await navigate(`${getBasePath()}/history`);
+	}
+
 	return (
 		<div>
 			{draftTitle !== undefined ? (
@@ -129,6 +156,7 @@ export default function PlaylistPage() {
 								type="button"
 								className="button-primary button-danger"
 								aria-label="Delete playlist"
+								onClick={() => deleteModal.current?.showModal()}
 							>
 								Delete
 							</button>
@@ -198,6 +226,26 @@ export default function PlaylistPage() {
 					</p>
 				)}
 			</LoadingState>
+			<ConfirmationModal
+				ref={deleteModal}
+				title="Delete playlist?"
+				body={
+					<p>
+						Delete “{playlist?.title}” and its saved notes from this device?
+						This cannot be undone. Shows and other playlists will be kept.
+					</p>
+				}
+				primaryAction={{
+					label: deleting ? "Deleting..." : "Delete playlist",
+					onClick: deletePlaylist,
+					destructive: true,
+				}}
+				cancelLabel="Cancel"
+				pending={deleting}
+				error={deleteError}
+				onClose={() => setDeleteError(undefined)}
+			/>
+
 			{editingShowId !== undefined && (
 				<PlaylistModal
 					key={editingShowId}

@@ -17,6 +17,14 @@
 	padding: var(--space-sm);
 }
 
+.title {
+	display: block;
+	padding: var(--space-sm);
+	color: inherit;
+	font-size: var(--space-md);
+	text-decoration: none;
+}
+
 .note-header {
 	display: flex;
 	align-items: center;
@@ -26,7 +34,7 @@
 }
 
 .note-text {
-	padding: var(--space-sm);
+	padding: 0 var(--space-sm) var(--space-sm);
 	white-space: pre-wrap;
 }
 
@@ -41,6 +49,10 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+	.title:hover {
+		text-decoration: underline;
+	}
+
 	.card:hover :global([data-show-playback]) {
 		opacity: 1;
 	}
