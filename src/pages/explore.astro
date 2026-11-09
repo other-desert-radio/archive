@@ -31,7 +31,7 @@ const sortedTags = new Map(
   page={{ name: "explore" }}
   returning_page="home"
 >
-  <CategoryTabs active="explore" />
+  <CategoryTabs slot="category-tabs" active="explore" />
   <div class="page-inset">
     <ExplorePane tags={sortedTags} />
   </div>

@@ -16,7 +16,7 @@ const base = import.meta.env.BASE_URL;
   page={{ name: "djs" }}
   returning_page="home"
 >
-  <CategoryTabs active="djs" />
+  <CategoryTabs slot="category-tabs" active="djs" />
   <div class="page-inset">
     <DJsPane base={base} djs={djs} tags={tags} />
   </div>

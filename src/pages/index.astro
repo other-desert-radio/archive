@@ -19,7 +19,7 @@ const initialTags = new Map([...tags].filter(([id]) => initialTagIds.has(id)));
   page={{ name: "shows" }}
   returning_page="home"
 >
-  <CategoryTabs active="shows" />
+  <CategoryTabs slot="category-tabs" active="shows" />
   <div class="page-inset">
     <ShowsPane
       client:load

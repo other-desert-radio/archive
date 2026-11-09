@@ -1,3 +1,15 @@
+@property --tabs-scroll-progress {
+	syntax: "<number>";
+	inherits: false;
+	initial-value: 0;
+}
+
+@property --tabs-progress {
+	syntax: "<number>";
+	inherits: true;
+	initial-value: 0;
+}
+
 /* One rem at full density; 80% on phones and laptops. */
 :root {
 	--density-unit: 0.8rem;
@@ -17,6 +29,9 @@
 	--font-title: calc(var(--density-unit) * 2.5);
 	--font-small-title: calc(var(--density-unit) * 1.75);
 	--tabs-font-size: var(--space-lg);
+	/* Shared by native scroll animations and the JavaScript fallback. */
+	--tabs-compression-scroll-px: 40;
+	--tabs-ease-out-power: 3;
 	--tag-font-size: calc(var(--density-unit) * 0.85);
 	--tag-large-font-size: calc(var(--density-unit) * 1.2);
 	--border-secondary: calc(var(--density-unit) * 0.125);

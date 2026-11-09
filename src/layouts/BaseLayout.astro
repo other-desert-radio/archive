@@ -35,8 +35,18 @@ import Navigation from "../components/Navigation.astro";
     <ClientRouter fallback="swap" />
   </head>
   <body transition:animate="none">
+    {Astro.slots.has("category-tabs") && (
+      <script is:inline>
+        // Reserve short-page scroll range before ClientRouter restores history.
+        if (history.state?.categoryTabsCompactEntry) {
+          document.body.setAttribute("data-compact-category-entry", "");
+        }
+      </script>
+    )}
     <div class="site-background" aria-hidden="true"></div>
-    <Navigation page={page} returning_page={returning_page} />
+    <Navigation page={page} returning_page={returning_page}>
+      <slot name="category-tabs" slot="category-tabs" />
+    </Navigation>
     <main class:list={{ "full-width": page.name === "history" || page.name === "tag_page" }}>
       <slot />
     </main>

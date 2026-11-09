@@ -8,81 +8,236 @@ type Props = {
 const { active } = Astro.props;
 ---
 
-<div class="page-inset">
-  <div class="tabs">
-    <!-- Warm visible destinations before a touch user taps, without preloading
+<div class="category-tabs" data-category-tabs>
+  <div class="tabs-strip">
+    <nav class="tabs-inset" aria-label="Archive categories">
+      <div class="tabs">
+        <!-- Warm visible destinations before a touch user taps, without preloading
        the entire archive. Astro respects reduced-data/slow-connection settings. -->
-    <a
-      data-astro-prefetch="viewport"
-      href={`${base}explore`}
-      aria-current={active === "explore" ? "page" : undefined}>EXPLORE</a
-    >
-    <!--- TODO: have explore be the base -->
-    <a
-      data-astro-prefetch="viewport"
-      href={base}
-      aria-current={active === "shows" ? "page" : undefined}>SHOWS</a
-    >
-    <a
-      data-astro-prefetch="viewport"
-      href={`${base}djs`}
-      aria-current={active === "djs" ? "page" : undefined}>DJs</a
-    >
-    <a
-      data-astro-prefetch="viewport"
-      href={`${base}history`}
-      aria-current={active === "history" ? "page" : undefined}>HISTORY</a
-    >
+        <a
+          data-astro-prefetch="viewport"
+          aria-label="Explore archive"
+          href={`${base}explore`}
+          aria-current={active === "explore" ? "page" : undefined}>EXPLORE</a
+        >
+        <span aria-hidden="true"></span>
+        <!--- TODO: have explore be the base -->
+        <a
+          data-astro-prefetch="viewport"
+          aria-label="Browse shows"
+          href={base}
+          aria-current={active === "shows" ? "page" : undefined}>SHOWS</a
+        >
+        <span aria-hidden="true"></span>
+        <a
+          data-astro-prefetch="viewport"
+          aria-label="Browse DJs"
+          href={`${base}djs`}
+          aria-current={active === "djs" ? "page" : undefined}>DJs</a
+        >
+        <span aria-hidden="true"></span>
+        <a
+          data-astro-prefetch="viewport"
+          aria-label="View listening history"
+          href={`${base}history`}
+          aria-current={active === "history" ? "page" : undefined}>HISTORY</a
+        >
+      </div>
+    </nav>
   </div>
 </div>
 
+<script>
+  import { setupCategoryTabsScrollBehavior } from "./category-tabs";
+
+  const useCssTimeline =
+    typeof CSS.registerProperty === "function" &&
+    CSS.supports(
+      "(animation-timeline: scroll(root block)) and (animation-range: 0px 40px) and (width: calc(1px * pow(0.5, 3)))",
+    );
+  const styles = getComputedStyle(document.documentElement);
+  setupCategoryTabsScrollBehavior({
+    useCssTimeline,
+    compressionScrollPx: Number.parseFloat(styles.getPropertyValue("--tabs-compression-scroll-px")),
+    easeOutPower: Number.parseFloat(styles.getPropertyValue("--tabs-ease-out-power")),
+    fastScrollPxPerMs: 0.5,
+  });
+</script>
+
 <style>
+  .category-tabs {
+    --tabs-progress: 0;
+    --tabs-expanded-font: var(--tabs-font-size);
+    --tabs-expanded-gap: var(--space-lg);
+    --tabs-expanded-left: var(--page-inset-left);
+    --tabs-expanded-right: var(--page-inset-right);
+    --tabs-gap: calc(
+      var(--tabs-expanded-gap) + (var(--space-sm) - var(--tabs-expanded-gap)) *
+        var(--tabs-progress)
+    );
+    /* Reserve flow space so compression cannot change scroll position or page length. */
+    height: calc(
+      var(--space-sm) + max(2.75rem, var(--tabs-expanded-font) * 1.5) +
+        var(--space-md) + var(--tabs-title-lift, 0rem) * var(--tabs-progress)
+    );
+    pointer-events: none;
+  }
+
+  .tabs-strip {
+    padding-top: calc(var(--space-sm) * (1 - var(--tabs-progress)));
+    padding-bottom: calc(var(--space-md) * (1 - var(--tabs-progress)));
+    background: rgb(0 0 0 / var(--tabs-progress));
+    color: black;
+    pointer-events: auto;
+    transition: background-color 120ms ease-out, color 120ms ease-out;
+  }
+
+  .category-tabs[data-fast-scroll] .tabs-strip,
+  .category-tabs[data-expanded] .tabs-strip {
+    transition: none;
+  }
+
+  .category-tabs[data-dark] .tabs-strip {
+    color: white;
+  }
+
+  :global(header[data-tabs-driver="css"]) .category-tabs {
+    --tabs-progress: inherit;
+  }
+
+  :global(header[data-tabs-driver="css"]) .tabs-strip {
+    transition: none;
+    animation: category-tabs-ink 1s steps(1, end) both;
+    animation-range: 0px calc(var(--tabs-compression-scroll-px) * (1 - pow(0.5, 1 / var(--tabs-ease-out-power))) * 1px);
+  }
+
+  :global(header[data-tabs-driver="css"]) .category-tabs .tabs-strip {
+    animation-timeline: scroll(root block);
+  }
+
+  @keyframes category-tabs-ink {
+    from { color: black; }
+    to { color: white; }
+  }
+
+  .tabs-inset {
+    width: 100%;
+    max-width: calc(
+      var(--page-max-width) + (100% - var(--page-max-width)) *
+        var(--tabs-progress)
+    );
+    margin-inline: auto;
+    padding-left: calc(
+      var(--tabs-expanded-left) +
+        (
+          max(var(--nav-inline-padding), env(safe-area-inset-left)) -
+            var(--tabs-expanded-left)
+        ) *
+        var(--tabs-progress)
+    );
+    padding-right: calc(
+      var(--tabs-expanded-right) +
+        (
+          max(var(--nav-inline-padding), env(safe-area-inset-right)) -
+            var(--tabs-expanded-right)
+        ) *
+        var(--tabs-progress)
+    );
+  }
+
   .tabs {
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
 
-    gap: var(--space-lg);
+    gap: var(--tabs-gap);
+    font-size: calc(
+      var(--tabs-expanded-font) +
+        (var(--font-small) - var(--tabs-expanded-font)) * var(--tabs-progress)
+    );
+  }
 
-    margin-top: var(--space-sm);
-    margin-bottom: var(--space-md);
+  .tabs > span {
+    display: none;
   }
 
   a {
     flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    min-width: 2.75rem;
     white-space: nowrap;
     text-decoration: none;
-    color: black;
-    font-size: var(--tabs-font-size);
+    color: inherit;
   }
 
   @media (max-width: 750px) {
-    .tabs {
-      gap: clamp(var(--space-sm), 4vw, var(--space-lg));
-      padding-inline: 0;
-    }
-
-    a {
-      font-size: clamp(0.875rem, 3.5vw, var(--tabs-font-size));
+    .category-tabs {
+      --tabs-expanded-font: clamp(0.875rem, 3.5vw, var(--tabs-font-size));
+      --tabs-expanded-gap: clamp(var(--space-sm), 4vw, var(--space-lg));
     }
   }
 
   @media (max-width: 600px) {
+    .category-tabs {
+      --tabs-expanded-left: calc(var(--page-inset-left) + var(--space-md));
+      --tabs-expanded-right: calc(var(--page-inset-right) + var(--space-md));
+    }
+
     .tabs {
-      justify-content: space-between;
-      padding-left: var(--space-md);
-      padding-right: var(--space-md);
+      gap: 0;
+    }
+
+    /* Move spare space from between links to the end as the phone row contracts. */
+    .tabs > span {
+      display: block;
+      flex: calc(1 - var(--tabs-progress)) 1 0;
+      margin-left: var(--tabs-gap);
+    }
+
+    .tabs::after {
+      content: "";
+      flex: calc(3 * var(--tabs-progress)) 1 0;
     }
   }
 
   @media (hover: hover) and (pointer: fine) {
     a:hover {
-      border-bottom: var(--border-primary) solid;
+      text-decoration: underline;
     }
   }
 
   a[aria-current="page"] {
     font-weight: bold;
-    border-bottom: var(--border-heavy) solid;
+    text-decoration: underline;
+    text-decoration-thickness: calc(
+      var(--border-heavy) + (var(--border-secondary) - var(--border-heavy)) *
+        var(--tabs-progress)
+    );
+  }
+
+  a {
+    text-underline-offset: 0.3em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .category-tabs {
+      --tabs-progress: 1;
+      height: auto;
+    }
+
+    .tabs-strip {
+      background: black;
+      color: white;
+      transition: none;
+    }
+
+    :global(header[data-tabs-driver="css"]) .tabs-strip {
+      animation: none;
+      color: white;
+    }
+
   }
 </style>

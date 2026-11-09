@@ -67,6 +67,7 @@ const title = (() => {
   <div class="miniplayer-slot" data-miniplayer-bar>
     <Miniplayer base={base} client:load transition:persist="miniplayer" />
   </div>
+  <slot name="category-tabs" />
 </header>
 
 <script>
@@ -144,9 +145,12 @@ const title = (() => {
     top: 0;
     z-index: 100;
     color: white;
+    /* The tabs reserve expanded height; their transparent remainder passes clicks through. */
+    pointer-events: none;
   }
 
   nav {
+    pointer-events: auto;
     min-height: var(--nav-height);
     display: flex;
     flex-wrap: wrap;
@@ -173,7 +177,50 @@ const title = (() => {
     max-width: 100%;
   }
 
+  header:has([data-category-tabs]) {
+    --tabs-progress: 0;
+    --tabs-title-gap: 1.5rem;
+    --tabs-title-lift: max(0rem, calc(var(--density-unit) * 1.5625 + (2.75rem - var(--font-small) * 1.5) / 2 - var(--tabs-title-gap)));
+  }
+
+  header[data-tabs-driver="css"] {
+    --tabs-progress: calc(1 - pow(1 - var(--tabs-scroll-progress), var(--tabs-ease-out-power)));
+    animation: category-tabs-scroll 1s linear both;
+    animation-range: 0px calc(var(--tabs-compression-scroll-px) * 1px);
+  }
+
+  /* Keep the minifier from folding the timeline into a newer unsupported shorthand. */
+  header[data-tabs-driver="css"][data-site-header] {
+    animation-timeline: scroll(root block);
+  }
+
+  @keyframes category-tabs-scroll {
+    from { --tabs-scroll-progress: 0; }
+    to { --tabs-scroll-progress: 1; }
+  }
+
+  header:has([data-category-tabs]) nav {
+    min-height: calc(var(--nav-height) - var(--tabs-title-lift) * var(--tabs-progress));
+  }
+
+  header:has([data-category-tabs]) nav > span,
+  header:has([data-category-tabs]) .leading-box {
+    padding-bottom: calc(var(--density-unit) * 1.5625 - var(--tabs-title-lift) * var(--tabs-progress));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    header:has([data-category-tabs]) {
+      --tabs-progress: 1;
+    }
+
+    header[data-tabs-driver="css"] {
+      animation: none;
+      --tabs-progress: 1;
+    }
+  }
+
   .miniplayer-slot {
+    pointer-events: auto;
     min-width: 0;
     max-width: 100%;
     width: 100%;
