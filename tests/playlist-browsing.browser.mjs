@@ -146,6 +146,7 @@ try {
   assert.equal(await evaluate('window.playerMarker === document.querySelector("[data-miniplayer]")'), true);
   for (const width of [320, 332, 750, 1440, 1920]) {
     await browser("set", "viewport", String(width), "900");
+    assert.equal(await evaluate(`getComputedStyle(document.querySelector('section[aria-label="Playlist shows"]')).gridTemplateColumns.split(' ').length`), width <= 600 ? 1 : width < 1023 ? 2 : width < 1600 ? 3 : 4);
     assert.equal(
       await evaluate("document.documentElement.scrollWidth <= innerWidth"),
       true,

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import LoadingState from "../../components/LoadingState";
 import PlaylistShowCard from "../../components/playlists/PlaylistShowCard";
 import { usePlaylists } from "../../components/playlists/usePlaylists";
-import showStyles from "../../components/shows/ShowsPane.module.css";
 import styles from "./PlaylistPage.module.css";
 import { usePlaylistShows } from "./usePlaylistShows";
 
@@ -51,7 +50,7 @@ export default function PlaylistPage() {
 							<p>No shows in this playlist.</p>
 						) : (
 							<section
-								className={showStyles["show-container-grid"]}
+								className={styles["shows-grid"]}
 								aria-label="Playlist shows"
 							>
 								{shows.map(({ entry, show, record }) =>

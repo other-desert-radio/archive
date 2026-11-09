@@ -9,6 +9,8 @@ import PlayableShowArtwork from "../shows/PlayableShowArtwork";
 import TagContainer from "../TagContainer";
 import styles from "./PlaylistShowCard.module.css";
 
+const showTags = false;
+
 type Props = {
 	show: Show;
 	entry: PlaylistEntry;
@@ -23,12 +25,15 @@ export default function PlaylistShowCard({
 	tags,
 	record,
 }: Props): ReactElement {
+	const hasNote = entry.note !== undefined && entry.note !== "";
 	return (
 		<div className={styles["card"]}>
 			<PlayableShowArtwork show={show} record={record} base={getBasePath()} />
-			<div className={styles["chin"]}>
-				<TagContainer tagIds={show.tagIds} tags={tags} size="large" />
-				{entry.note !== undefined && entry.note !== "" && (
+			<div className={styles["chin"]} data-has-note={hasNote}>
+				{showTags && (
+					<TagContainer tagIds={show.tagIds} tags={tags} size="large" />
+				)}
+				{hasNote && (
 					<div className={styles["note"]}>
 						<div className={styles["note-header"]}>
 							<time className={styles["note-date"]} dateTime={entry.updatedAt}>
