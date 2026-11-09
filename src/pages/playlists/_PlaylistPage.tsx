@@ -91,15 +91,6 @@ export default function PlaylistPage() {
 					/>
 					<div className={styles["title-actions"]}>
 						<button
-							type="submit"
-							aria-label="Save playlist title"
-							disabled={saving || !draftTitle.trim()}
-						>
-							<svg viewBox="0 0 24 24" aria-hidden="true">
-								<path d="m5 12 4 4 10-10" />
-							</svg>
-						</button>
-						<button
 							type="button"
 							aria-label="Cancel playlist rename"
 							disabled={saving}
@@ -107,6 +98,15 @@ export default function PlaylistPage() {
 						>
 							<svg viewBox="0 0 24 24" aria-hidden="true">
 								<path d="m6 6 12 12M18 6 6 18" />
+							</svg>
+						</button>
+						<button
+							type="submit"
+							aria-label="Save playlist title"
+							disabled={saving || !draftTitle.trim()}
+						>
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<path d="m5 12 4 4 10-10" />
 							</svg>
 						</button>
 					</div>

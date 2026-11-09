@@ -112,5 +112,9 @@
 	height: 1rem;
 	fill: none;
 	stroke: currentColor;
+	stroke-width: 2.5;
+}
+
+.title-editor button[type="button"] svg {
 	stroke-width: 1.5;
 }
