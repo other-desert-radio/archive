@@ -74,6 +74,42 @@ try {
   await browser("wait", 'section[aria-label="Playlist shows"]');
   assert.equal(await evaluate(`document.querySelector('section[aria-label="Playlist shows"]').children.length`), 1);
   assert.equal(await evaluate(`!!document.querySelector('section[aria-label="Playlist shows"] [data-show-playback]')`), true);
+  const titleInput = 'input[aria-label="Playlist title"]';
+  const originalTitle = await evaluate('document.querySelector("h1").textContent');
+  await browser("click", 'button[aria-label="Rename playlist"]');
+  await browser("wait", titleInput);
+  assert.equal(await evaluate(`document.activeElement.getAttribute('aria-label')`), "Playlist title");
+  assert.equal(await evaluate(`document.querySelector('${titleInput}').value`), originalTitle);
+  await browser("fill", titleInput, "Discard this");
+  await browser("click", 'button[aria-label="Cancel playlist rename"]');
+  assert.equal(await evaluate('document.querySelector("h1").textContent'), originalTitle);
+  await browser("click", 'button[aria-label="Rename playlist"]');
+  await browser("fill", titleInput, "Escape this");
+  await browser("press", "Escape");
+  assert.equal(await evaluate('document.querySelector("h1").textContent'), originalTitle);
+  await browser("click", 'button[aria-label="Rename playlist"]');
+  await browser("fill", titleInput, "   ");
+  assert.equal(await evaluate(`document.querySelector('button[aria-label="Save playlist title"]').disabled`), true);
+  await evaluate(`(() => {
+    const store = playlistFixture.stores.playlistStore;
+    const rename = store.rename.bind(store);
+    store.rename = async (args) => {
+      store.rename = rename;
+      throw new Error("disk full");
+    };
+    return true;
+  })()`);
+  await browser("fill", titleInput, "  Renamed playlist  ");
+  await browser("click", 'button[aria-label="Save playlist title"]');
+  await browser("wait", '[role="alert"]');
+  assert.equal(await evaluate(`document.querySelector('${titleInput}').value`), "  Renamed playlist  ");
+  assert.equal(await evaluate(`playlistFixture.stores.playlistStore.get({ playlistId: '${id}' }).title`), originalTitle);
+  await browser("click", titleInput);
+  await browser("press", "Enter");
+  await browser("wait", "--fn", `document.querySelector('h1')?.textContent === 'Renamed playlist'`);
+  await browser("reload");
+  await browser("wait", 'section[aria-label="Playlist shows"]');
+  assert.equal(await evaluate('document.querySelector("h1").textContent'), "Renamed playlist");
   const editButton = 'section[aria-label="Playlist shows"] button.button-secondary';
   const editDialog = 'dialog[aria-label="Playlist"][open]';
   await browser("click", editButton);
@@ -188,6 +224,8 @@ try {
   await browser("wait", 'section[aria-label="Playlist shows"]');
   assert.equal(await evaluate('new URLSearchParams(location.search).get("id")'), id);
   assert.equal(await evaluate('window.playerMarker === document.querySelector("[data-miniplayer]")'), true);
+  await browser("click", 'button[aria-label="Rename playlist"]');
+  await browser("wait", titleInput);
   for (const width of [320, 332, 750, 1440, 1920]) {
     await browser("set", "viewport", String(width), "900");
     assert.equal(await evaluate(`getComputedStyle(document.querySelector('section[aria-label="Playlist shows"]')).gridTemplateColumns.split(' ').length`), width <= 600 ? 1 : width < 1023 ? 2 : width < 1600 ? 3 : 4);
@@ -196,6 +234,27 @@ try {
       true,
     );
   }
+  assert.equal(await evaluate(`(() => {
+    const input = document.querySelector('${titleInput}');
+    const style = getComputedStyle(input);
+    const form = input.closest('form');
+    const button = form.querySelector('button');
+    const icon = button.querySelector('svg');
+    const buttonRect = button.getBoundingClientRect();
+    const iconRect = icon.getBoundingClientRect();
+    return style.backgroundColor === 'rgba(0, 0, 0, 0)' && style.borderTopWidth === '0px'
+      && style.outlineStyle === 'none' && getComputedStyle(form).borderBottomStyle === 'solid'
+      && Math.abs((buttonRect.left + buttonRect.right) - (iconRect.left + iconRect.right)) < 1
+      && Math.abs((buttonRect.top + buttonRect.bottom) - (iconRect.top + iconRect.bottom)) < 1;
+  })()`), true);
+  assert.equal(await evaluate(`(() => {
+    const heading = document.createElement('h1');
+    document.body.append(heading);
+    const matches = getComputedStyle(document.querySelector('${titleInput}')).fontSize === getComputedStyle(heading).fontSize;
+    heading.remove();
+    return matches;
+  })()`), true);
+  await browser("click", 'button[aria-label="Cancel playlist rename"]');
   // Back updates location before Astro finishes loading the destination.
   await evaluate(`(() => {
     const main = document.querySelector('main');

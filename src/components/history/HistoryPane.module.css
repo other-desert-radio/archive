@@ -1,3 +1,7 @@
+.heading {
+	margin-block: var(--space-xs);
+}
+
 .show-container {
 	display: flex;
 	gap: calc(var(--grid-column-gap) * 0.25);
@@ -18,4 +22,11 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--space-sm);
+}
+
+.disclaimer {
+	margin: var(--space-xs) 0;
+	font-size: var(--font-small);
+	font-style: italic;
+	color: #666;
 }
