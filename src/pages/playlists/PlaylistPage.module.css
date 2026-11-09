@@ -54,3 +54,79 @@
 		grid-template-columns: repeat(4, minmax(0, 1fr));
 	}
 }
+
+.title-editor {
+	display: flex;
+	align-items: center;
+	gap: var(--space-xs);
+	border-bottom: 1px solid currentColor;
+}
+
+.title-editor:focus-within {
+	box-shadow: 0 1px 0 currentColor;
+}
+
+.title-input {
+	field-sizing: content;
+	flex: 1;
+	min-width: 0;
+	width: 100%;
+	padding: var(--space-xs) 0;
+	border: 0;
+	border-radius: 0;
+	outline: none;
+	background: transparent;
+	color: inherit;
+	font-size: var(--font-title);
+	font-family: inherit;
+	resize: none;
+	overflow-wrap: anywhere;
+}
+
+.title-input::selection {
+	background: black;
+	color: white;
+}
+
+.title-editor .title-actions {
+	gap: var(--space-xs);
+}
+
+.title-editor button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+}
+
+.title-editor button:focus-visible {
+	outline: 1px solid currentColor;
+	outline-offset: -1px;
+}
+
+.title-actions svg {
+	display: block;
+	width: 1rem;
+	height: 1rem;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2.5;
+}
+
+.title-editor button[type="button"] svg {
+	stroke-width: 1.5;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.title-actions :global(.button-danger):hover:not(:disabled) {
+		background: #c00;
+		font-weight: bold;
+		color: white;
+	}
+}

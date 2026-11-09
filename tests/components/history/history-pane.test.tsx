@@ -2,10 +2,38 @@ import assert from "node:assert/strict";
 import { mock, test } from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import HistoryPane, {
+	historyPlaylists,
 	recentlyPlayed,
 } from "../../../src/components/history/HistoryPane";
 import { createStores, StoresProvider } from "../../../src/stores";
 import type { PlaybackRecord } from "../../../src/stores/playback/types";
+import type { Playlist } from "../../../src/stores/playlists/types";
+
+test("history puts Liked Shows first without changing user order or the snapshot", () => {
+	const playlists: readonly Playlist[] = Object.freeze(
+		["user", "liked", "user"].map<Playlist>((type, index) => ({
+			id: String(index),
+			type: type === "liked" ? "liked" : "user",
+			title: "Playlist",
+			createdAt: "2026-01-01T00:00:00Z",
+			updatedAt: "2026-01-01T00:00:00Z",
+			shows: [],
+		})),
+	);
+	assert.deepEqual(
+		historyPlaylists(playlists).map(({ id }) => id),
+		["1", "0", "2"],
+	);
+	assert.deepEqual(
+		playlists.map(({ id }) => id),
+		["0", "1", "2"],
+	);
+	assert.deepEqual(historyPlaylists([]), []);
+	assert.deepEqual(
+		historyPlaylists(playlists.slice(1, 2)),
+		playlists.slice(1, 2),
+	);
+});
 
 test("history waits for catalog initialization before looking up shows", () => {
 	const stores = createStores();

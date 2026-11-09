@@ -2,6 +2,7 @@ import { useCallback, useSyncExternalStore } from "react";
 import { useInitialization } from "../../hooks/useInitialization";
 import { useStores } from "../../stores";
 import type { PlaybackRecord } from "../../stores/playback/types";
+import type { Playlist } from "../../stores/playlists/types";
 import type { ShowStore } from "../../stores/shows/show-store";
 import LoadingState from "../LoadingState";
 import PlaylistCard from "../playlists/PlaylistCard";
@@ -10,6 +11,12 @@ import styles from "./HistoryPane.module.css";
 import HistoryShowCard from "./HistoryShowCard";
 
 const emptyRecords: readonly PlaybackRecord[] = [];
+
+export function historyPlaylists(playlists: readonly Playlist[]) {
+	return [...playlists].sort(
+		(a, b) => Number(b.type === "liked") - Number(a.type === "liked"),
+	);
+}
 
 export function recentlyPlayed(records: readonly PlaybackRecord[]) {
 	return records
@@ -47,7 +54,7 @@ export default function HistoryPane() {
 				loading="Loading shows..."
 				error="Could not load shows."
 			>
-				<h1 className="page-inset">Recently Played</h1>
+				<h1 className={`page-inset ${styles["heading"]}`}>Recently Played</h1>
 				<section
 					className={`gutter-scroll ${styles["show-container"]}`}
 					aria-label="Recently played shows"
@@ -56,15 +63,17 @@ export default function HistoryPane() {
 				</section>
 			</LoadingState>
 			<section className="page-inset" aria-label="Playlists">
-				<h1>Playlists</h1>
-				<p>Playlists are stored locally on your device.</p>
+				<h1 className={styles["heading"]}>Playlists</h1>
+				<p className={styles["disclaimer"]}>
+					Playlists are stored locally on your device.
+				</p>
 				<LoadingState
 					status={playlistStatus}
 					loading="Loading playlists..."
 					error="Could not load playlists. Reload the page to retry."
 				>
 					<div className={styles["playlists"]}>
-						{playlists.map((playlist) => (
+						{historyPlaylists(playlists).map((playlist) => (
 							<PlaylistCard
 								key={playlist.id}
 								playlist={playlist}

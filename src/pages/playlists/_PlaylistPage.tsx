@@ -1,13 +1,39 @@
-import { useEffect, useRef, useState } from "react";
+import { type SubmitEvent, useEffect, useRef, useState } from "react";
+import ConfirmationModal from "../../components/ConfirmationModal";
 import LoadingState from "../../components/LoadingState";
 import PlaylistModal from "../../components/playlists/PlaylistModal";
 import PlaylistShowCard from "../../components/playlists/PlaylistShowCard";
 import { usePlaylists } from "../../components/playlists/usePlaylists";
+import { useStores } from "../../stores";
+import { getBasePath } from "../../utils/get-base-path";
 import styles from "./PlaylistPage.module.css";
 import { usePlaylistShows } from "./usePlaylistShows";
 
+// Keep the ref stable so playback rerenders don't refocus the title field.
+function focusTitle(input: HTMLTextAreaElement | null) {
+	input?.focus();
+}
+
 export default function PlaylistPage() {
 	const { playlists, status } = usePlaylists();
+	const { playlistStore } = useStores();
+	const [draftTitle, setDraftTitle] = useState<string>();
+	const [saving, setSaving] = useState(false);
+	const [renameError, setRenameError] = useState<string>();
+	const pending = useRef(false);
+	const renameButton = useRef<HTMLButtonElement>(null);
+	function cancelRename() {
+		if (pending.current) {
+			return;
+		}
+		setDraftTitle(undefined);
+		setRenameError(undefined);
+		requestAnimationFrame(() => renameButton.current?.focus());
+	}
+	const deleteModal = useRef<HTMLDialogElement>(null);
+	const [deleting, setDeleting] = useState(false);
+	const [deleteError, setDeleteError] = useState<string>();
+	const deletePending = useRef(false);
 	const modal = useRef<HTMLDialogElement>(null);
 	const [editingShowId, setEditingShowId] = useState<number>();
 	useEffect(() => {
@@ -26,19 +52,129 @@ export default function PlaylistPage() {
 		status: showStatus,
 		retry,
 	} = usePlaylistShows(playlist?.shows ?? []);
+	async function rename(event: SubmitEvent<HTMLFormElement>) {
+		event.preventDefault();
+		if (pending.current || !playlist || !draftTitle?.trim()) {
+			return;
+		}
+		pending.current = true;
+		setSaving(true);
+		setRenameError(undefined);
+		try {
+			await playlistStore.rename({
+				playlistId: playlist.id,
+				title: draftTitle,
+			});
+			setDraftTitle(undefined);
+			requestAnimationFrame(() => renameButton.current?.focus());
+		} catch {
+			setRenameError("Could not rename playlist. Please try again.");
+		} finally {
+			pending.current = false;
+			setSaving(false);
+		}
+	}
+	async function deletePlaylist() {
+		if (deletePending.current || !playlist || playlist.type !== "user") {
+			return;
+		}
+		deletePending.current = true;
+		setDeleting(true);
+		setDeleteError(undefined);
+		try {
+			await playlistStore.delete({ playlistId: playlist.id });
+		} catch {
+			setDeleteError("Could not delete playlist. Please try again.");
+			return;
+		} finally {
+			deletePending.current = false;
+			setDeleting(false);
+		}
+		deleteModal.current?.close();
+		const { navigate } = await import("astro:transitions/client");
+		await navigate(`${getBasePath()}/history`);
+	}
+
 	return (
 		<div>
-			<div className={styles["title-flex"]}>
-				<h1>{playlist?.title ?? "Playlist"}</h1>
-				<div className={styles["title-actions"]}>
-					<button type="button" className="button-primary">
-						Rename
-					</button>
-					<button type="button" className="button-primary button-danger">
-						Delete
-					</button>
+			{draftTitle !== undefined ? (
+				<form
+					className={styles["title-editor"]}
+					onSubmit={rename}
+					aria-busy={saving}
+				>
+					<textarea
+						className={styles["title-input"]}
+						rows={1}
+						aria-label="Playlist title"
+						ref={focusTitle}
+						value={draftTitle}
+						required
+						disabled={saving}
+						onChange={(event) => {
+							setDraftTitle(event.currentTarget.value);
+							setRenameError(undefined);
+						}}
+						onKeyDown={(event) => {
+							if (event.key === "Enter" && !event.nativeEvent.isComposing) {
+								event.preventDefault();
+								event.currentTarget.form?.requestSubmit();
+							}
+							if (event.key === "Escape") {
+								event.preventDefault();
+								cancelRename();
+							}
+						}}
+					/>
+					<div className={styles["title-actions"]}>
+						<button
+							type="button"
+							aria-label="Cancel playlist rename"
+							disabled={saving}
+							onClick={cancelRename}
+						>
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<use href={`${getBasePath()}/assets/icons/close.svg#close`} />
+							</svg>
+						</button>
+						<button
+							type="submit"
+							aria-label="Save playlist title"
+							disabled={saving || !draftTitle.trim()}
+						>
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<use href={`${getBasePath()}/assets/icons/check.svg#check`} />
+							</svg>
+						</button>
+					</div>
+				</form>
+			) : (
+				<div className={styles["title-flex"]}>
+					<h1>{playlist?.title ?? "Playlist"}</h1>
+					{playlist?.type === "user" && (
+						<div className={styles["title-actions"]}>
+							<button
+								ref={renameButton}
+								type="button"
+								className="button-primary"
+								aria-label="Rename playlist"
+								onClick={() => setDraftTitle(playlist.title)}
+							>
+								Rename
+							</button>
+							<button
+								type="button"
+								className="button-primary button-danger"
+								aria-label="Delete playlist"
+								onClick={() => deleteModal.current?.showModal()}
+							>
+								Delete
+							</button>
+						</div>
+					)}
 				</div>
-			</div>
+			)}
+			{renameError && <p role="alert">{renameError}</p>}
 			<p className={styles["disclaimer"]}>
 				Playlists are stored locally on this device.
 			</p>
@@ -100,6 +236,25 @@ export default function PlaylistPage() {
 					</p>
 				)}
 			</LoadingState>
+			<ConfirmationModal
+				ref={deleteModal}
+				title="Delete playlist?"
+				body={
+					<p>
+						Delete “{playlist?.title}” from this device? This cannot be undone.
+					</p>
+				}
+				primaryAction={{
+					label: deleting ? "Deleting..." : "Delete playlist",
+					onClick: deletePlaylist,
+					destructive: true,
+				}}
+				cancelLabel="Cancel"
+				pending={deleting}
+				error={deleteError}
+				onClose={() => setDeleteError(undefined)}
+			/>
+
 			{editingShowId !== undefined && (
 				<PlaylistModal
 					key={editingShowId}
