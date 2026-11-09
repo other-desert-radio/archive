@@ -9,6 +9,7 @@ import { getBasePath } from "../../utils/get-base-path";
 import styles from "./PlaylistPage.module.css";
 import { usePlaylistShows } from "./usePlaylistShows";
 
+// Keep the ref stable so playback rerenders don't refocus the title field.
 function focusTitle(input: HTMLTextAreaElement | null) {
 	input?.focus();
 }
