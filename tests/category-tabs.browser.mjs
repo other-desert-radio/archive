@@ -9,6 +9,13 @@ import { file, serve } from "bun";
 const { Response } = globalThis;
 const exec = promisify(execFile);
 const session = "category-tabs";
+const source = await file("src/components/CategoryTabs.astro").text();
+const compressionScrollPx = Number(source.match(/const compressionScrollPx = ([\d.]+);/)?.[1]);
+const easeOutPower = Number(source.match(/const easeOutPower = ([\d.]+);/)?.[1]);
+assert.ok(compressionScrollPx > 2 && easeOutPower >= 1, "Readable scroll tuning constants are required");
+const halfwayScroll = compressionScrollPx / 2;
+const halfwayProgress = 1 - 0.5 ** easeOutPower;
+const restoredProgress = `String(1 - (1 - Math.min(1, Math.max(0, scrollY / ${compressionScrollPx}))) ** ${easeOutPower})`;
 async function browser(...args) {
 	const { stdout } = await exec("agent-browser", ["--session", session, ...args]);
 	return stdout.trim();
@@ -23,6 +30,7 @@ async function verifyProgress(y, progress) {
 		return tabs.style.getPropertyValue('--tabs-progress') === '${progress}'
 			&& tabs.hasAttribute('data-compact') === ${progress === 1};
 	})()`);
+	await browser("wait", "--fn", "document.querySelector('.tabs-strip').getAnimations().length === 0");
 	assert.equal(await evaluate("scrollY"), y);
 }
 
@@ -42,8 +50,8 @@ try {
 	await browser("set", "viewport", "1440", "800");
 	await browser("open", `${base}/`);
 	await browser("wait", "--fn", "document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === '0'");
-	for (const y of [0, 80, 160, 320, 80, 0]) {
-		await verifyProgress(y, Math.min(1, y / 160));
+	for (const [y, progress] of [[0, 0], [halfwayScroll, halfwayProgress], [compressionScrollPx, 1], [compressionScrollPx * 2, 1], [halfwayScroll, halfwayProgress], [0, 0]]) {
+		await verifyProgress(y, progress);
 	}
 
 	// Repeated page-load initialization must not leave duplicate scroll listeners.
@@ -68,7 +76,7 @@ try {
 	// Disposal must cancel queued work and stop updates on the outgoing element.
 	assert.equal(await evaluate(`new Promise(resolve => {
 		const tabs = document.querySelector('[data-category-tabs]');
-		window.scrollTo(0, 80);
+		window.scrollTo(0, ${halfwayScroll});
 		window.dispatchEvent(new Event('scroll'));
 		document.dispatchEvent(new Event('astro:before-swap'));
 		requestAnimationFrame(() => {
@@ -76,24 +84,24 @@ try {
 		});
 	})`), "0");
 	await evaluate("document.dispatchEvent(new Event('astro:page-load')); true");
-	await verifyProgress(80, 0.5);
+	await verifyProgress(halfwayScroll, halfwayProgress);
 	await browser("set", "media", "light", "reduced-motion");
 	await verifyProgress(0, 1);
 	await browser("set", "media", "light");
 	await verifyProgress(0, 0);
 
 	// Page-load must use restored scroll rather than assuming the top of the page.
-	await verifyProgress(80, 0.5);
+	await verifyProgress(halfwayScroll, halfwayProgress);
 	await browser("reload");
-	await browser("wait", "--fn", "Math.abs(scrollY - 80) < 2 && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === String(scrollY / 160)");
-	await verifyProgress(80, 0.5);
+	await browser("wait", "--fn", `Math.abs(scrollY - ${halfwayScroll}) < 2 && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === ${restoredProgress}`);
+	await verifyProgress(halfwayScroll, halfwayProgress);
 	await evaluate("window.outgoingTabs = document.querySelector('[data-category-tabs]'); true");
 	await browser("click", "[data-category-tabs] a[href='/archive/djs']");
 	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/djs' && document.querySelector('[data-category-tabs]') !== window.outgoingTabs && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === '0'");
-	await verifyProgress(160, 1);
-	assert.equal(await evaluate("window.outgoingTabs.style.getPropertyValue('--tabs-progress')"), "0.5");
+	await verifyProgress(compressionScrollPx, 1);
+	assert.equal(await evaluate("window.outgoingTabs.style.getPropertyValue('--tabs-progress')"), String(halfwayProgress));
 	await browser("back");
-	await browser("wait", "--fn", "location.pathname === '/archive/' && Math.abs(scrollY - 80) < 2 && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === String(scrollY / 160)");
+	await browser("wait", "--fn", `location.pathname === '/archive/' && Math.abs(scrollY - ${halfwayScroll}) < 2 && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === ${restoredProgress}`);
 
 	await browser("click", "[data-category-tabs] a[href='/archive/djs']");
 	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/djs'");
@@ -101,8 +109,8 @@ try {
 	for (const width of [320, 332, 750, 1440, 2000]) {
 		await browser("set", "viewport", String(width), "800");
 		const states = [];
-		for (const y of [0, 80, 159, 160, 320, 0]) {
-			await verifyProgress(y, Math.min(1, y / 160));
+		for (const [y, progress] of [[0, 0], [halfwayScroll, halfwayProgress], [compressionScrollPx - 1, 1 - (1 / compressionScrollPx) ** easeOutPower], [compressionScrollPx, 1], [compressionScrollPx * 2, 1], [0, 0]]) {
+			await verifyProgress(y, progress);
 			const state = await evaluate(`(() => {
 				const strip = document.querySelector('.tabs-strip');
 				const links = [...strip.querySelectorAll('a')];
@@ -111,6 +119,7 @@ try {
 				return {
 					font: parseFloat(getComputedStyle(links[0]).fontSize),
 					left: rects[0].left,
+					width: rects.at(-1).right - rects[0].left,
 					gaps: rects.slice(1).map((rect, i) => rect.left - rects[i].right),
 					height: strip.getBoundingClientRect().height,
 					background: getComputedStyle(strip).backgroundColor,
@@ -126,8 +135,8 @@ try {
 					clearBelow: !document.elementFromPoint(innerWidth / 2, strip.getBoundingClientRect().bottom + 4)?.closest('header')
 				};
 			})()`);
-			assert.equal(state.background, y < 160 ? "rgba(0, 0, 0, 0)" : "rgb(0, 0, 0)");
-			assert.equal(state.color, y < 160 ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)");
+			assert.equal(state.background, y < compressionScrollPx ? "rgba(0, 0, 0, 0)" : "rgb(0, 0, 0)");
+			assert.equal(state.color, y < compressionScrollPx ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)");
 			assert.equal(state.underline, "underline");
 			assert.equal(state.overflow, false, `overflow at ${width}px`);
 			assert.equal(state.hitTargets, true, `touch targets at ${width}px`);
@@ -140,8 +149,10 @@ try {
 		assert.ok(expanded.height > halfway.height && halfway.height > compact.height);
 		assert.ok(expanded.left >= halfway.left && halfway.left >= compact.left);
 		assert.ok(Math.abs(compact.left - compact.navLeft) < 1);
-		assert.ok(expanded.gaps.every((gap, i) => gap > halfway.gaps[i] && halfway.gaps[i] >= compact.gaps[i]));
-		assert.ok(nearEnd.font > compact.font);
+		assert.ok(expanded.width > halfway.width && halfway.width > compact.width);
+		assert.ok(expanded.gaps.every((gap, i) => gap > compact.gaps[i]));
+		assert.ok(nearEnd.font >= compact.font);
+		assert.ok(Math.abs((expanded.font - halfway.font) / (expanded.font - compact.font) - halfwayProgress) < 0.01, "font size must follow the configured ease-out curve");
 		assert.deepEqual(beyond, compact);
 		assert.deepEqual(reversed, expanded);
 		assert.ok(states.every(state => state.pageHeight === expanded.pageHeight && state.mainY === expanded.mainY), "compression must preserve document geometry");

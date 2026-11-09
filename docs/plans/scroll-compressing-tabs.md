@@ -4,10 +4,10 @@ Mode: chunked. Current stage: scroll controller ready for review; visual integra
 
 ## Agreed behavior
 
-- All four categories compress over the first 160px of document scroll and reverse on upward scrolling.
-- Tune the distance through the documented `TAB_COMPRESSION_SCROLL_PX` constant in `CategoryTabs.astro`.
+- All four categories compress over a configurable document scroll distance and reverse on upward scrolling. The user tuned the distance from 160px to 40px during integration.
+- Tune the distance through `compressionScrollPx` and the ease-out curve through `easeOutPower` in `CategoryTabs.astro`. Power 1 is linear, 2 is gentle ease-out, 3 is stronger. Endpoint colors follow raw scroll distance.
 - CSS interpolates font size, gaps, inset and vertical spacing from existing responsive styles to compact styling: `--font-small`, `--space-sm` gaps and title-navigation left alignment.
-- At the endpoint, switch to black with white text and active underline.
+- At the endpoint, fade to black with white text and active underline over 180ms. Reduced motion disables the color transition.
 - Before the endpoint, keep the strip transparent so the existing page background shows through.
 - Tabs remain sticky below the desktop player and below the title on phones, with comfortable touch targets.
 - Reduced motion uses static compact tabs; no JavaScript leaves usable expanded sticky tabs.

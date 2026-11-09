@@ -49,7 +49,9 @@ const { active } = Astro.props;
 
 <script>
   // Document scroll distance in CSS pixels from expanded tabs to fully compact.
-  const TAB_COMPRESSION_SCROLL_PX = 40;
+  const compressionScrollPx = 40;
+  // 1 is linear; 2 is a gentle ease-out; 3 slows more strongly near the end.
+  const easeOutPower = 3;
 
   // Use one JS scroll driver across browsers to keep compression and the endpoint
   // color switch consistent without a separate CSS scroll-timeline fallback.
@@ -59,11 +61,12 @@ const { active } = Astro.props;
 
     function update(): void {
       frame = undefined;
-      const progress = reducedMotion.matches
+      const scrollProgress = reducedMotion.matches
         ? 1
-        : Math.min(1, Math.max(0, window.scrollY / TAB_COMPRESSION_SCROLL_PX));
+        : Math.min(1, Math.max(0, window.scrollY / compressionScrollPx));
+      const progress = 1 - (1 - scrollProgress) ** easeOutPower;
       tabs.style.setProperty("--tabs-progress", String(progress));
-      tabs.toggleAttribute("data-compact", progress === 1);
+      tabs.toggleAttribute("data-compact", scrollProgress === 1);
     }
 
     function scheduleUpdate(): void {
@@ -133,6 +136,9 @@ const { active } = Astro.props;
     background: transparent;
     color: black;
     pointer-events: auto;
+    transition:
+      background-color 120ms ease-out,
+      color 120ms ease-out;
   }
 
   .category-tabs[data-compact] .tabs-strip {
@@ -251,6 +257,7 @@ const { active } = Astro.props;
     .tabs-strip {
       background: black;
       color: white;
+      transition: none;
     }
   }
 </style>
