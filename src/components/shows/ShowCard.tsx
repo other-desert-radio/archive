@@ -13,6 +13,7 @@ type Props = {
 	show: Show;
 	tags: TagMap;
 	playlistSaves: readonly PlaylistSave[];
+	note?: string;
 	record?: Pick<PlaybackRecord, "positionInSeconds" | "inProgress"> | undefined;
 };
 
@@ -45,7 +46,13 @@ const renderDJs = (djs: Show["djs"], base: string) =>
 /**
  * Renders one archive show with its date, tags, and associated DJs.
  */
-export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
+export default function ShowCard({
+	show,
+	tags,
+	record,
+	playlistSaves,
+	note,
+}: Props) {
 	const detailBase = getBasePath();
 	const modal = useRef<HTMLDialogElement>(null);
 	const [modalMounted, setModalMounted] = useState(false);
@@ -80,7 +87,18 @@ export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
 				</time>
 				<TagContainer tagIds={show.tagIds} tags={tags} size="large" />
 				{renderDJs(show.djs, detailBase)}
-				{playlistSaves.length > 0 && (
+				{note !== undefined && (
+					<div className={styles["note"]}>
+						<div className={styles["note-header"]}>
+							<span>Note</span>
+							<button type="button" aria-label={`Edit note for ${show.title}`}>
+								Edit
+							</button>
+						</div>
+						<div className={styles["note-text"]}>{note}</div>
+					</div>
+				)}
+				{note === undefined && playlistSaves.length > 0 && (
 					<div className={styles["playlist-save"]}>
 						<button
 							type="button"

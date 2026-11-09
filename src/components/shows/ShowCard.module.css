@@ -43,6 +43,33 @@
 	touch-action: manipulation;
 }
 
+.note {
+	align-self: flex-start;
+	max-width: 100%;
+	border: 1px solid black;
+	background: white;
+	color: black;
+	min-width: 0;
+}
+
+.note-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-xs);
+	padding: var(--space-xs);
+	border-bottom: 1px solid black;
+}
+
+.note-header button {
+	touch-action: manipulation;
+}
+
+.note-text {
+	padding: var(--space-xs);
+	white-space: pre-wrap;
+}
+
 .playlist-heart {
 	flex-shrink: 0;
 	border: 0;

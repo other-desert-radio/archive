@@ -45,6 +45,27 @@ test("formats a show date in UTC", () => {
 	assert.equal(formatDate("2026-05-25T00:00:00.000Z"), "May 25, 2026");
 });
 
+test("a supplied note replaces playlist controls, including an empty note", () => {
+	const show = fixture.data[0];
+	assert.ok(show);
+	for (const note of ["", "Keep <script>raw</script>\nSecond line"]) {
+		const html = renderToStaticMarkup(
+			<ShowCard
+				show={{ ...show, tagIds: [] }}
+				tags={new Map()}
+				playlistSaves={[{ playlistId: "custom", title: "Favorites" }]}
+				note={note}
+			/>,
+		);
+		assert.match(html, />Note<\/span>/);
+		assert.match(html, /aria-label="Edit note for /);
+		assert.doesNotMatch(html, /View playlist|Save to Playlist|<script>/);
+		if (note) {
+			assert.match(html, /Keep &lt;script&gt;raw&lt;\/script&gt;\nSecond line/);
+		}
+	}
+});
+
 test("renders default-base detail links, large show artwork, and small DJ artwork", () => {
 	const markup = renderToStaticMarkup(
 		<ShowCard

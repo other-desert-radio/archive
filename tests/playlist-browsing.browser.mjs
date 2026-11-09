@@ -74,6 +74,8 @@ try {
   await browser("wait", 'section[aria-label="Playlist shows"]');
   assert.equal(await evaluate('document.querySelectorAll("article").length'), 1);
   assert.equal(await evaluate('document.querySelector("article a").getAttribute("href")'), "/shows/42");
+  assert.equal(await evaluate('document.querySelector("article").textContent.includes("Keep <b>raw</b>")'), true);
+  assert.equal(await evaluate('document.querySelector("article b")'), null);
   await browser("reload");
   await browser("wait", 'section[aria-label="Playlist shows"]');
   assert.equal(
