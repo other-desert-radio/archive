@@ -117,6 +117,8 @@ try {
   );
   await browser("press", "Enter");
   await browser("wait", 'section[aria-label="Playlist shows"]');
+  assert.equal(await evaluate('getComputedStyle(document.querySelector("h1").parentElement).display'), "flex");
+  assert.equal(await evaluate(`getComputedStyle(document.querySelector('section[aria-label="Playlist shows"]')).display`), "grid");
   assert.equal(
     await evaluate('new URLSearchParams(location.search).get("id")'),
     id,
