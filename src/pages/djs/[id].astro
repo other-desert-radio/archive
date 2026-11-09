@@ -2,6 +2,7 @@
 import { getBasePath } from "../../utils/get-base-path";
 import { pathToFileURL } from "node:url";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import TagBar from "../../components/tag-bar/TagBar.tsx";
 import { tagBreakdown } from "../../utils/tag-breakdown";
 import { fetchDJ, type HydratedDJ } from "../../utils/fetch-dj";
 import { fetchDJs } from "../../utils/fetch-djs";
@@ -48,19 +49,7 @@ const breakdown = tagBreakdown(hydratedTags, djShows);
   <h1 class="dj-header">{dj.title}</h1>
   {breakdown.length > 0 && (
     <section class="tag-breakdown" aria-label="Tags">
-      <div class="tag-bar">
-        {breakdown.map(({ tag, percent }) => (
-          <a
-            class="tag-segment"
-            href={`${base}/tags/${tag.id}`}
-            title={tag.title}
-            aria-label={tag.title}
-            style={{ backgroundColor: tag.color, width: `${percent}%` }}
-          >
-            <span class="tag-label">{tag.title}</span>
-          </a>
-        ))}
-      </div>
+      <TagBar base={base} entries={breakdown} />
     </section>
   )}
 
@@ -141,69 +130,6 @@ const breakdown = tagBreakdown(hydratedTags, djShows);
     margin-bottom: var(--space-md);
   }
 
-  .tag-bar {
-    display: flex;
-    height: calc(var(--density-unit) * 2.5);
-  }
-
-  .tag-segment {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 0;
-    flex-shrink: 0;
-    color: black;
-    text-decoration: none;
-    overflow: hidden;
-  }
-
-  .tag-segment:focus-visible {
-    outline: var(--border-secondary) solid black;
-    outline-offset: calc(-1 * var(--border-secondary));
-  }
-
-  .tag-label {
-    flex-shrink: 0;
-    white-space: nowrap;
-    padding-inline: var(--space-xs);
-    font-size: var(--font-small);
-    font-weight: bold;
-    line-height: 1.2;
-    text-align: center;
-    visibility: hidden;
-  }
-
-  .tag-segment:focus-visible {
-    z-index: 1;
-    overflow: visible;
-  }
-
-  .tag-segment:focus-visible .tag-label {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    padding: var(--space-sm) var(--space-md);
-    background-color: inherit;
-    scale: 1 !important;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .tag-segment:hover {
-      z-index: 1;
-      overflow: visible;
-    }
-
-    .tag-segment:hover .tag-label {
-      display: flex;
-      align-items: center;
-      height: 100%;
-      padding: var(--space-sm) var(--space-md);
-      background-color: inherit;
-      scale: 1 !important;
-    }
-  }
-
   @media (max-width: 750px) {
     .dj-grid {
       column-gap: var(--space-sm);
@@ -211,10 +137,6 @@ const breakdown = tagBreakdown(hydratedTags, djShows);
   }
 
   @media (max-width: 600px) {
-    .tag-bar {
-      height: calc(var(--density-unit) * 3);
-    }
-
     .dj-grid {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -265,24 +187,3 @@ const breakdown = tagBreakdown(hydratedTags, djShows);
     }
   }
 </style>
-
-<script>
-  const observer = new ResizeObserver((entries) => {
-    for (const { target } of entries) {
-      const label = target.querySelector<HTMLElement>(".tag-label");
-      if (label) {
-        label.style.scale = String(Math.min(1, target.clientWidth / label.offsetWidth));
-        label.style.visibility = "visible";
-      }
-    }
-  });
-
-  function observeTags() {
-    observer.disconnect();
-    document.querySelectorAll(".tag-segment").forEach((segment) => observer.observe(segment));
-  }
-
-  observeTags();
-  document.addEventListener("astro:page-load", observeTags);
-  document.addEventListener("astro:before-swap", () => observer.disconnect());
-</script>
