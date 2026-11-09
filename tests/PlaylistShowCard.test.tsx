@@ -12,6 +12,7 @@ test("playlist card hides tags and marks chins with notes while preserving playb
 	for (const note of [undefined, "", "Keep <b>raw</b>\nNext line"]) {
 		const html = renderToStaticMarkup(
 			<PlaylistShowCard
+				onEdit={() => {}}
 				show={{ ...show, tagIds: [1] }}
 				entry={{
 					showId: show.id,

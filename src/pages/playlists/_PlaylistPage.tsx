@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LoadingState from "../../components/LoadingState";
+import PlaylistModal from "../../components/playlists/PlaylistModal";
 import PlaylistShowCard from "../../components/playlists/PlaylistShowCard";
 import { usePlaylists } from "../../components/playlists/usePlaylists";
 import styles from "./PlaylistPage.module.css";
@@ -7,6 +8,13 @@ import { usePlaylistShows } from "./usePlaylistShows";
 
 export default function PlaylistPage() {
 	const { playlists, status } = usePlaylists();
+	const modal = useRef<HTMLDialogElement>(null);
+	const [editingShowId, setEditingShowId] = useState<number>();
+	useEffect(() => {
+		if (editingShowId !== undefined) {
+			modal.current?.showModal();
+		}
+	}, [editingShowId]);
 	const [playlistId, setPlaylistId] = useState("");
 	useEffect(() => {
 		setPlaylistId(new URLSearchParams(window.location.search).get("id") ?? "");
@@ -66,6 +74,13 @@ export default function PlaylistPage() {
 											show={show}
 											tags={tags}
 											record={record}
+											onEdit={() => {
+												if (editingShowId === show.id) {
+													modal.current?.showModal();
+												} else {
+													setEditingShowId(show.id);
+												}
+											}}
 											entry={entry}
 										/>
 									) : (
@@ -85,6 +100,14 @@ export default function PlaylistPage() {
 					</p>
 				)}
 			</LoadingState>
+			{editingShowId !== undefined && (
+				<PlaylistModal
+					key={editingShowId}
+					ref={modal}
+					showId={editingShowId}
+					mode="edit"
+				/>
+			)}
 		</div>
 	);
 }

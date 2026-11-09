@@ -1,4 +1,4 @@
-import { type ReactElement, useEffect, useRef, useState } from "react";
+import type { ReactElement } from "react";
 import type { PlaybackRecord } from "../../stores/playback/types";
 import type { PlaylistEntry } from "../../stores/playlists/types";
 import type { Show } from "../../utils/fetch-shows";
@@ -7,7 +7,6 @@ import { formatDateTime } from "../../utils/format-date";
 import { getBasePath } from "../../utils/get-base-path";
 import PlayableShowArtwork from "../shows/PlayableShowArtwork";
 import TagContainer from "../TagContainer";
-import PlaylistModal from "./PlaylistModal";
 import styles from "./PlaylistShowCard.module.css";
 
 const showTags = false;
@@ -16,6 +15,7 @@ type Props = {
 	show: Show;
 	entry: PlaylistEntry;
 	tags: TagMap;
+	onEdit: () => void;
 	record?: Pick<PlaybackRecord, "positionInSeconds" | "inProgress"> | undefined;
 };
 
@@ -25,22 +25,9 @@ export default function PlaylistShowCard({
 	entry,
 	tags,
 	record,
+	onEdit,
 }: Props): ReactElement {
 	const hasNote = entry.note !== undefined && entry.note !== "";
-	const modal = useRef<HTMLDialogElement>(null);
-	const [modalMounted, setModalMounted] = useState(false);
-	useEffect(() => {
-		if (modalMounted) {
-			modal.current?.showModal();
-		}
-	}, [modalMounted]);
-	function openModal() {
-		if (modalMounted) {
-			modal.current?.showModal();
-		} else {
-			setModalMounted(true);
-		}
-	}
 	return (
 		<div className={styles["card"]}>
 			<PlayableShowArtwork show={show} record={record} base={getBasePath()} />
@@ -56,16 +43,13 @@ export default function PlaylistShowCard({
 						type="button"
 						className="button-secondary"
 						aria-label={`Edit note for ${show.title}`}
-						onClick={openModal}
+						onClick={onEdit}
 					>
 						Edit
 					</button>
 				</div>
 				{hasNote && <div className={styles["note-text"]}>{entry.note}</div>}
 			</div>
-			{modalMounted && (
-				<PlaylistModal key={show.id} ref={modal} showId={show.id} mode="edit" />
-			)}
 		</div>
 	);
 }

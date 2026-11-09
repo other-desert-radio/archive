@@ -89,6 +89,35 @@ try {
   await browser("wait", editDialog);
   assert.equal(await evaluate(`document.querySelector('${editDialog} textarea').value`), "Edited from the playlist");
   await browser("click", `${editDialog} button[aria-label="Close playlist"]`);
+  // Removing the visible card must leave the dialog alive for a later write failure.
+  const targetId = await evaluate(`(async () => {
+    const store = playlistFixture.stores.playlistStore;
+    await store.rename({ playlistId: "${id}", title: "Road trip" });
+    const target = await store.create({ title: "Retry destination" });
+    const addShow = store.addShow.bind(store);
+    store.addShow = async (args) => {
+      if (args.playlistId === target.id) {
+        store.addShow = addShow;
+        throw new Error("disk full");
+      }
+      return addShow(args);
+    };
+    return target.id;
+  })()`);
+  await browser("click", editButton);
+  await browser("wait", editDialog);
+  await browser("uncheck", `${editDialog} input[value="${id}"]`);
+  await browser("check", `${editDialog} input[value="${targetId}"]`);
+  await browser("fill", `${editDialog} textarea`, "Retained for retry");
+  await browser("click", `${editDialog} button[aria-label="Save playlist"]`);
+  await browser("wait", `${editDialog} [role="alert"]`);
+  assert.equal(await evaluate(`document.querySelector('section[aria-label="Playlist shows"]')`), null);
+  assert.equal(await evaluate(`document.querySelector('${editDialog} textarea').value`), "Retained for retry");
+  await browser("click", `${editDialog} button[aria-label="Save playlist"]`);
+  await browser("wait", "--fn", `!document.querySelector('${editDialog}')`);
+  assert.equal(await evaluate(`playlistFixture.stores.playlistStore.get({ playlistId: '${targetId}' }).shows[0].note`), "Retained for retry");
+  // Restore the viewed playlist for the navigation checks below.
+  await evaluate(`playlistFixture.stores.playlistStore.addShow({ playlistId: '${id}', showId: 42 }).then(() => true)`);
   await browser("reload");
   await browser("wait", 'section[aria-label="Playlist shows"]');
   assert.equal(
