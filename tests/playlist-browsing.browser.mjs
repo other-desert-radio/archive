@@ -64,49 +64,88 @@ try {
    await store.setNote({ playlistId: p.id, showId: 42, note: "Keep <b>raw</b>" });
    return p.id;
  })()`);
-  await browser("wait", `a[href="/playlists/#${id}"]`);
+  await browser("wait", `a[href="/playlists/?id=${id}"]`);
   assert.ok(
     await evaluate(
       'document.body.textContent.includes("Could not load shows.")',
     ),
   );
-  await browser("click", `a[href="/playlists/#${id}"]`);
-  await browser("wait", "pre");
-  assert.equal(
-    await evaluate(
-      'JSON.parse(document.querySelector("pre").textContent).shows[0].note',
-    ),
-    "Keep <b>raw</b>",
-  );
-  assert.equal(await evaluate('document.querySelector("pre b")'), null);
+  await browser("click", `a[href="/playlists/?id=${id}"]`);
+  await browser("wait", 'section[aria-label="Playlist shows"]');
+  assert.equal(await evaluate(`document.querySelector('section[aria-label="Playlist shows"]').children.length`), 1);
+  assert.equal(await evaluate(`!!document.querySelector('section[aria-label="Playlist shows"] [data-show-playback]')`), true);
+  const editButton = 'section[aria-label="Playlist shows"] button.button-secondary';
+  const editDialog = 'dialog[aria-label="Playlist"][open]';
+  await browser("click", editButton);
+  await browser("wait", editDialog);
+  assert.equal(await evaluate(`document.querySelector('${editDialog} h1').textContent`), "Edit");
+  assert.equal(await evaluate(`document.querySelector('${editDialog} textarea').getAttribute('aria-label')`), "Note");
+  await browser("fill", `${editDialog} textarea`, "Edited from the playlist");
+  await browser("click", `${editDialog} button[aria-label="Save playlist"]`);
+  await browser("wait", "--fn", `!document.querySelector('${editDialog}')`);
+  assert.equal(await evaluate(`playlistFixture.stores.playlistStore.get({ playlistId: '${id}' }).shows[0].note`), "Edited from the playlist");
+  assert.equal(await evaluate(`document.querySelector('section[aria-label="Playlist shows"]').textContent.includes('Edited from the playlist')`), true);
+  await browser("click", editButton);
+  await browser("wait", editDialog);
+  assert.equal(await evaluate(`document.querySelector('${editDialog} textarea').value`), "Edited from the playlist");
+  await browser("click", `${editDialog} button[aria-label="Close playlist"]`);
+  // Removing the visible card must leave the dialog alive for a later write failure.
+  const targetId = await evaluate(`(async () => {
+    const store = playlistFixture.stores.playlistStore;
+    await store.rename({ playlistId: "${id}", title: "Road trip" });
+    const target = await store.create({ title: "Retry destination" });
+    const addShow = store.addShow.bind(store);
+    store.addShow = async (args) => {
+      if (args.playlistId === target.id) {
+        store.addShow = addShow;
+        throw new Error("disk full");
+      }
+      return addShow(args);
+    };
+    return target.id;
+  })()`);
+  await browser("click", editButton);
+  await browser("wait", editDialog);
+  await browser("uncheck", `${editDialog} input[value="${id}"]`);
+  await browser("check", `${editDialog} input[value="${targetId}"]`);
+  await browser("fill", `${editDialog} textarea`, "Retained for retry");
+  await browser("click", `${editDialog} button[aria-label="Save playlist"]`);
+  await browser("wait", `${editDialog} [role="alert"]`);
+  assert.equal(await evaluate(`document.querySelector('section[aria-label="Playlist shows"]')`), null);
+  assert.equal(await evaluate(`document.querySelector('${editDialog} textarea').value`), "Retained for retry");
+  await browser("click", `${editDialog} button[aria-label="Save playlist"]`);
+  await browser("wait", "--fn", `!document.querySelector('${editDialog}')`);
+  assert.equal(await evaluate(`playlistFixture.stores.playlistStore.get({ playlistId: '${targetId}' }).shows[0].note`), "Retained for retry");
+  // Restore the viewed playlist for the navigation checks below.
+  await evaluate(`playlistFixture.stores.playlistStore.addShow({ playlistId: '${id}', showId: 42 }).then(() => true)`);
   await browser("reload");
-  await browser("wait", "pre");
+  await browser("wait", 'section[aria-label="Playlist shows"]');
   assert.equal(
-    await evaluate('JSON.parse(document.querySelector("pre").textContent).id'),
+    await evaluate('new URLSearchParams(location.search).get("id")'),
     id,
   );
-  await evaluate('location.hash = "unknown"; true');
+  await evaluate('location.search = "?id=unknown"; true');
   await browser(
     "wait",
     "--fn",
     'document.body.textContent.includes("Playlist not found in this browser.")',
   );
   await browser("back");
-  await browser("wait", "pre");
-  await evaluate('location.hash = ""; true');
+  await browser("wait", 'section[aria-label="Playlist shows"]');
+  await evaluate('location.search = ""; true');
   await browser(
     "wait",
     "--fn",
     'document.body.textContent.includes("Choose a playlist from History.")',
   );
-  await browser("open", `${server.url}playlists/?fail#${id}`);
+  await browser("open", `${server.url}playlists/?fail&id=${id}`);
   await browser("wait", '[role="alert"]');
-  assert.equal(await evaluate('document.querySelector("pre")'), null);
+  assert.equal(await evaluate(`document.querySelector('section[aria-label="Playlist shows"]')`), null);
   await browser("open", `${server.url}?fail`);
   await browser("wait", 'section[aria-label="Playlists"] [role="alert"]');
   // Check the actual static Astro shell and its client router using the same storage.
   await browser("open", `${server.url}archive/history`);
-  await browser("wait", `a[href="/archive/playlists/#${id}"]`);
+  await browser("wait", `a[href="/archive/playlists/?id=${id}"]`);
   for (const width of [320, 1440]) {
     await browser("set", "viewport", String(width), "900");
     assert.equal(
@@ -118,12 +157,14 @@ try {
     `window.navigationMarker = {}; window.playerMarker = document.querySelector('[data-miniplayer]'); true`,
   );
   await evaluate(
-    `document.querySelector('a[href="/archive/playlists/#${id}"]').focus(); true`,
+    `document.querySelector('a[href="/archive/playlists/?id=${id}"]').focus(); true`,
   );
   await browser("press", "Enter");
-  await browser("wait", "pre");
+  await browser("wait", 'section[aria-label="Playlist shows"]');
+  assert.equal(await evaluate('getComputedStyle(document.querySelector("h1").parentElement).display'), "flex");
+  assert.equal(await evaluate(`getComputedStyle(document.querySelector('section[aria-label="Playlist shows"]')).display`), "grid");
   assert.equal(
-    await evaluate('JSON.parse(document.querySelector("pre").textContent).id'),
+    await evaluate('new URLSearchParams(location.search).get("id")'),
     id,
   );
   assert.equal(
@@ -132,8 +173,24 @@ try {
     ),
     true,
   );
+  // Query-only navigation must remount the island without reloading the player.
+  await evaluate(`(() => {
+    const link = document.createElement('a');
+    link.href = '/archive/playlists/?id=unknown';
+    link.id = 'other-playlist';
+    link.textContent = 'Other playlist';
+    document.querySelector('main').append(link);
+    return true;
+  })()`);
+  await browser("click", "#other-playlist");
+  await browser("wait", "--fn", 'document.body.textContent.includes("Playlist not found in this browser.")');
+  await browser("back");
+  await browser("wait", 'section[aria-label="Playlist shows"]');
+  assert.equal(await evaluate('new URLSearchParams(location.search).get("id")'), id);
+  assert.equal(await evaluate('window.playerMarker === document.querySelector("[data-miniplayer]")'), true);
   for (const width of [320, 332, 750, 1440, 1920]) {
     await browser("set", "viewport", String(width), "900");
+    assert.equal(await evaluate(`getComputedStyle(document.querySelector('section[aria-label="Playlist shows"]')).gridTemplateColumns.split(' ').length`), width <= 600 ? 1 : width < 1023 ? 2 : width < 1600 ? 3 : 4);
     assert.equal(
       await evaluate("document.documentElement.scrollWidth <= innerWidth"),
       true,
@@ -144,33 +201,33 @@ try {
     const main = document.querySelector('main');
     window.playlistDisappeared = false;
     const observer = new MutationObserver(() => {
-      if (main.isConnected && !main.querySelector('pre')) window.playlistDisappeared = true;
+      if (main.isConnected && !main.querySelector('section[aria-label="Playlist shows"]')) window.playlistDisappeared = true;
     });
     observer.observe(main, { childList: true, subtree: true });
     document.addEventListener('astro:before-swap', () => observer.disconnect(), { once: true });
     return true;
   })()`);
   await browser("back");
-  await browser("wait", `a[href="/archive/playlists/#${id}"]`);
+  await browser("wait", `a[href="/archive/playlists/?id=${id}"]`);
   assert.equal(
     await evaluate("window.playlistDisappeared"),
     false,
     "outgoing playlist stays visible until the page swap",
   );
   await browser("forward");
-  await browser("wait", "pre");
+  await browser("wait", 'section[aria-label="Playlist shows"]');
   await browser("click", 'a[aria-label="Return to history"]');
-  await browser("wait", `a[href="/archive/playlists/#${id}"]`);
+  await browser("wait", `a[href="/archive/playlists/?id=${id}"]`);
   await browser("back");
-  await browser("wait", "pre");
+  await browser("wait", 'section[aria-label="Playlist shows"]');
   await browser("reload");
-  await browser("wait", "pre");
+  await browser("wait", 'section[aria-label="Playlist shows"]');
   assert.equal(
-    await evaluate('JSON.parse(document.querySelector("pre").textContent).id'),
+    await evaluate('new URLSearchParams(location.search).get("id")'),
     id,
   );
   console.log(
-    "Playlist browsing passed: local lookup, reload, hash history, escaped JSON and independent errors.",
+    "Playlist browsing passed: local lookup, reload, query history, show cards and independent errors.",
   );
 } finally {
   await browser("close").catch(() => {});

@@ -1,0 +1,56 @@
+.card {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.chin {
+	width: 100%;
+	color: black;
+	overflow-wrap: anywhere;
+	background: white;
+	border: 2px solid transparent;
+	border-top: 0;
+}
+
+.chin > :global(.tag-container) {
+	padding: var(--space-sm);
+}
+
+.note-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-xs);
+	padding: var(--space-sm);
+}
+
+.note-text {
+	padding: var(--space-sm);
+	white-space: pre-wrap;
+}
+
+.note-date {
+	font-style: italic;
+}
+
+.note-header button {
+	margin-left: auto;
+	color: black;
+	font-weight: bold;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.card:hover :global([data-show-playback]) {
+		opacity: 1;
+	}
+
+	.card:hover .chin {
+		border-color: black;
+	}
+
+	.note-header button:hover {
+		font-style: italic;
+		text-decoration: underline;
+	}
+}

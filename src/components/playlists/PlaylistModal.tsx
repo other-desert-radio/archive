@@ -10,9 +10,11 @@ import { usePlaylists } from "./usePlaylists";
 export default function PlaylistModal({
 	ref,
 	showId,
+	mode = "save",
 }: {
 	ref: Ref<HTMLDialogElement>;
 	showId: number;
+	mode?: "save" | "edit";
 }) {
 	const { playlistStore } = useStores();
 	const newPlaylistModal = useRef<HTMLDialogElement>(null);
@@ -37,6 +39,7 @@ export default function PlaylistModal({
 		playlists
 			.flatMap((playlist) => playlist.shows)
 			.find((entry) => entry.showId === showId && entry.note)?.note ?? "";
+	const noteLabel = savedNote ? "Note" : "Add a note";
 	const dirty =
 		selectedIds.length !== savedIds.length ||
 		selectedIds.some((id) => !savedIds.includes(id)) ||
@@ -116,7 +119,7 @@ export default function PlaylistModal({
 			>
 				<form method="dialog" onSubmit={save} aria-busy={saving}>
 					<div className={styles["header"]}>
-						<h1>Save Show</h1>
+						<h1>{mode === "edit" ? "Edit" : "Save Show"}</h1>
 						<button
 							type="button"
 							aria-label="Close playlist"
@@ -181,11 +184,11 @@ export default function PlaylistModal({
 
 					{playlists.length > 0 && (
 						<label>
-							Add a note
+							{noteLabel}
 							<textarea
 								name="note"
 								rows={6}
-								aria-label="Add a note"
+								aria-label={noteLabel}
 								disabled={saving}
 								value={note ?? savedNote}
 								onChange={(event) => setNote(event.currentTarget.value)}
