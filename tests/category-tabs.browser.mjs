@@ -88,14 +88,74 @@ try {
 	await browser("wait", "--fn", "Math.abs(scrollY - 80) < 2 && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === String(scrollY / 160)");
 	await verifyProgress(80, 0.5);
 	await evaluate("window.outgoingTabs = document.querySelector('[data-category-tabs]'); true");
-	// Preserve the saved scroll position even before tabs move into the sticky header.
-	await evaluate("document.querySelector('[data-category-tabs] a[href=\"/archive/djs\"]').click(); true");
+	await browser("click", "[data-category-tabs] a[href='/archive/djs']");
 	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/djs' && document.querySelector('[data-category-tabs]') !== window.outgoingTabs && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === '0'");
 	await verifyProgress(160, 1);
 	assert.equal(await evaluate("window.outgoingTabs.style.getPropertyValue('--tabs-progress')"), "0.5");
 	await browser("back");
 	await browser("wait", "--fn", "location.pathname === '/archive/' && Math.abs(scrollY - 80) < 2 && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === String(scrollY / 160)");
+
+	await browser("click", "[data-category-tabs] a[href='/archive/djs']");
+	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/djs'");
+	await evaluate("document.fonts.ready.then(() => true)");
+	for (const width of [320, 332, 750, 1440, 2000]) {
+		await browser("set", "viewport", String(width), "800");
+		const states = [];
+		for (const y of [0, 80, 159, 160, 320, 0]) {
+			await verifyProgress(y, Math.min(1, y / 160));
+			const state = await evaluate(`(() => {
+				const strip = document.querySelector('.tabs-strip');
+				const links = [...strip.querySelectorAll('a')];
+				const rects = links.map(link => link.getBoundingClientRect());
+				const active = strip.querySelector('[aria-current="page"]');
+				return {
+					font: parseFloat(getComputedStyle(links[0]).fontSize),
+					left: rects[0].left,
+					gaps: rects.slice(1).map((rect, i) => rect.left - rects[i].right),
+					height: strip.getBoundingClientRect().height,
+					background: getComputedStyle(strip).backgroundColor,
+					color: getComputedStyle(active).color,
+					underline: getComputedStyle(active).textDecorationLine,
+					navLeft: document.querySelector('.leading-box').getBoundingClientRect().left,
+					stripTop: strip.getBoundingClientRect().top,
+					navBottom: document.querySelector('header > nav').getBoundingClientRect().bottom,
+					pageHeight: document.documentElement.scrollHeight,
+					mainY: document.querySelector('main').getBoundingClientRect().top + scrollY,
+					overflow: document.documentElement.scrollWidth > innerWidth,
+					hitTargets: rects.every(rect => rect.height >= 44 && rect.width >= 44),
+					clearBelow: !document.elementFromPoint(innerWidth / 2, strip.getBoundingClientRect().bottom + 4)?.closest('header')
+				};
+			})()`);
+			assert.equal(state.background, y < 160 ? "rgba(0, 0, 0, 0)" : "rgb(0, 0, 0)");
+			assert.equal(state.color, y < 160 ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)");
+			assert.equal(state.underline, "underline");
+			assert.equal(state.overflow, false, `overflow at ${width}px`);
+			assert.equal(state.hitTargets, true, `touch targets at ${width}px`);
+			assert.equal(state.clearBelow, true, "reserved transparent space must pass clicks through");
+			assert.ok(Math.abs(state.stripTop - state.navBottom) < 1);
+			states.push(state);
+		}
+		const [expanded, halfway, nearEnd, compact, beyond, reversed] = states;
+		assert.ok(expanded.font > halfway.font && halfway.font > compact.font);
+		assert.ok(expanded.height > halfway.height && halfway.height > compact.height);
+		assert.ok(expanded.left >= halfway.left && halfway.left >= compact.left);
+		assert.ok(Math.abs(compact.left - compact.navLeft) < 1);
+		assert.ok(expanded.gaps.every((gap, i) => gap > halfway.gaps[i] && halfway.gaps[i] >= compact.gaps[i]));
+		assert.ok(nearEnd.font > compact.font);
+		assert.deepEqual(beyond, compact);
+		assert.deepEqual(reversed, expanded);
+		assert.ok(states.every(state => state.pageHeight === expanded.pageHeight && state.mainY === expanded.mainY), "compression must preserve document geometry");
+	}
+	// Empty history must stay usable without adding artificial scrolling to reach the endpoint.
+	await browser("click", "[data-category-tabs] a[href='/archive/history']");
+	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/history' && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === '0'");
+	await browser("set", "media", "light", "reduced-motion");
+	await verifyProgress(0, 1);
+	assert.equal(await evaluate("getComputedStyle(document.querySelector('.tabs-strip')).backgroundColor"), "rgb(0, 0, 0)");
+	await browser("set", "media", "light");
+	await verifyProgress(0, 0);
 	console.log("Tab progress, reversal, frame batching, cleanup, reduced motion, reload and history restoration pass.");
+	console.log("Transparent-to-black styling, responsive compression, alignment, touch targets and stable scroll geometry pass.");
 } finally {
 	await browser("close");
 	server.stop(true);

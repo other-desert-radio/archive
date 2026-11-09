@@ -121,7 +121,7 @@ const { active } = Astro.props;
   .tabs-strip {
     padding-top: calc(var(--space-sm) * (1 - var(--tabs-progress)));
     padding-bottom: calc(var(--space-md) * (1 - var(--tabs-progress)));
-    background: white;
+    background: transparent;
     color: black;
     pointer-events: auto;
   }
@@ -156,7 +156,9 @@ const { active } = Astro.props;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     min-height: 2.75rem;
+    min-width: 2.75rem;
     white-space: nowrap;
     text-decoration: none;
     color: inherit;
