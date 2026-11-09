@@ -36,6 +36,20 @@ export default function ConfirmationModal({
 			aria-describedby={bodyId}
 			aria-busy={pending}
 			onClose={onClose}
+			onPointerDown={(event) => {
+				if (pending || event.target !== event.currentTarget) {
+					return;
+				}
+				const rect = event.currentTarget.getBoundingClientRect();
+				if (
+					event.clientX < rect.left ||
+					event.clientX > rect.right ||
+					event.clientY < rect.top ||
+					event.clientY > rect.bottom
+				) {
+					event.currentTarget.close();
+				}
+			}}
 			onCancel={(event) => {
 				if (pending) {
 					event.preventDefault();

@@ -124,7 +124,7 @@ export default function PlaylistPage() {
 							onClick={cancelRename}
 						>
 							<svg viewBox="0 0 24 24" aria-hidden="true">
-								<path d="m6 6 12 12M18 6 6 18" />
+								<use href={`${getBasePath()}/assets/icons/x.svg#x`} />
 							</svg>
 						</button>
 						<button
@@ -133,7 +133,7 @@ export default function PlaylistPage() {
 							disabled={saving || !draftTitle.trim()}
 						>
 							<svg viewBox="0 0 24 24" aria-hidden="true">
-								<path d="m5 12 4 4 10-10" />
+								<use href={`${getBasePath()}/assets/icons/check.svg#check`} />
 							</svg>
 						</button>
 					</div>
@@ -231,8 +231,7 @@ export default function PlaylistPage() {
 				title="Delete playlist?"
 				body={
 					<p>
-						Delete “{playlist?.title}” and its saved notes from this device?
-						This cannot be undone. Shows and other playlists will be kept.
+						Delete “{playlist?.title}” from this device? This cannot be undone.
 					</p>
 				}
 				primaryAction={{

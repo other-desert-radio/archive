@@ -45,7 +45,6 @@ const server = serve({
   },
 });
 async function browser(...args) {
-  console.log("browser", ...args);
   const { stdout } = await exec(
     "agent-browser",
     ["--session", session, ...args],
@@ -117,7 +116,10 @@ try {
   await browser("wait", confirmation);
   assert.equal(await evaluate(`document.activeElement.textContent.trim()`), "Cancel");
   assert.equal(await evaluate(`document.querySelector('${confirmation}').textContent.includes('Renamed playlist')`), true);
-  await browser("click", `${confirmation} button[aria-label="Cancel"]`);
+  await browser("mouse", "move", "1", "1");
+  await browser("mouse", "down");
+  await browser("mouse", "up");
+  await browser("wait", "--fn", `!document.querySelector('${confirmation}')`);
   assert.equal(await evaluate(`!!playlistFixture.stores.playlistStore.get({ playlistId: '${id}' })`), true);
   await browser("click", 'button[aria-label="Delete playlist"]');
   await browser("press", "Escape");
@@ -135,6 +137,10 @@ try {
   assert.equal(await evaluate(`Array.from(document.querySelectorAll('${confirmation} button')).every(button => button.disabled)`), true);
   await browser("press", "Escape");
   assert.equal(await evaluate(`!!document.querySelector('${confirmation}')`), true);
+  await browser("mouse", "move", "1", "1");
+  await browser("mouse", "down");
+  await browser("mouse", "up");
+  assert.equal(await evaluate(`!!document.querySelector('${confirmation}')`), true);
   await evaluate('window.rejectDelete(); true');
   await browser("wait", `${confirmation} [role="alert"]`);
   assert.equal(await evaluate(`!!playlistFixture.stores.playlistStore.get({ playlistId: '${id}' })`), true);
@@ -144,9 +150,8 @@ try {
   await browser("click", `${confirmation} button[aria-label="Cancel"]`);
   const editButton = 'section[aria-label="Playlist shows"] button[aria-label^="Edit note for "]';
   const editDialog = 'dialog[aria-label="Playlist"][open]';
-  await browser("click", editButton);
-  console.log("dialogs", await browser("eval", "Array.from(document.querySelectorAll('dialog')).map(d=>({label:d.getAttribute('aria-label'),open:d.open}))"));
-  console.log("errors", await browser("errors"));
+  await evaluate(`document.querySelector('${editButton}').focus(); true`);
+  await browser("press", "Enter");
   await browser("wait", editDialog);
   assert.equal(await evaluate(`document.querySelector('${editDialog} h1').textContent`), "Edit");
   assert.equal(await evaluate(`document.querySelector('${editDialog} textarea').getAttribute('aria-label')`), "Note");
@@ -155,7 +160,8 @@ try {
   await browser("wait", "--fn", `!document.querySelector('${editDialog}')`);
   assert.equal(await evaluate(`playlistFixture.stores.playlistStore.get({ playlistId: '${id}' }).shows[0].note`), "Edited from the playlist");
   assert.equal(await evaluate(`document.querySelector('section[aria-label="Playlist shows"]').textContent.includes('Edited from the playlist')`), true);
-  await browser("click", editButton);
+  await evaluate(`document.querySelector('${editButton}').focus(); true`);
+  await browser("press", "Enter");
   await browser("wait", editDialog);
   assert.equal(await evaluate(`document.querySelector('${editDialog} textarea').value`), "Edited from the playlist");
   await browser("click", `${editDialog} button[aria-label="Close playlist"]`);
@@ -174,7 +180,8 @@ try {
     };
     return target.id;
   })()`);
-  await browser("click", editButton);
+  await evaluate(`document.querySelector('${editButton}').focus(); true`);
+  await browser("press", "Enter");
   await browser("wait", editDialog);
   await browser("uncheck", `${editDialog} input[value="${id}"]`);
   await browser("check", `${editDialog} input[value="${targetId}"]`);
@@ -322,6 +329,9 @@ try {
   await browser("click", 'button[aria-label="Delete playlist"]');
   await browser("wait", confirmation);
   assert.equal(await evaluate(`getComputedStyle(document.querySelector('${confirmation} button[aria-label="Delete playlist"]')).color`), "rgb(204, 0, 0)");
+  await browser("hover", `${confirmation} button[aria-label="Delete playlist"]`);
+  assert.equal(await evaluate(`getComputedStyle(document.querySelector('${confirmation} button[aria-label="Delete playlist"]')).backgroundColor`), "rgb(204, 0, 0)");
+  assert.equal(await evaluate(`getComputedStyle(document.querySelector('${confirmation} button[aria-label="Delete playlist"]')).color`), "rgb(255, 255, 255)");
   for (const width of [320, 750, 1440]) {
     await browser("set", "viewport", String(width), "900");
     assert.equal(await evaluate(`(() => {
@@ -342,6 +352,10 @@ try {
   console.log(
     "Playlist browsing passed: local lookup, reload, query history, show cards and independent errors.",
   );
+} catch (error) {
+  console.error(await browser("eval", "({url:location.href,text:document.body.innerText.slice(0,2500)})"));
+  console.error(await browser("errors"));
+  throw error;
 } finally {
   await browser("close").catch(() => {});
   server.stop(true);
