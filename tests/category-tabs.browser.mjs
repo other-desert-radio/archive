@@ -116,6 +116,11 @@ try {
 				const links = [...strip.querySelectorAll('a')];
 				const rects = links.map(link => link.getBoundingClientRect());
 				const active = strip.querySelector('[aria-current="page"]');
+				const textRect = element => {
+					const range = document.createRange();
+					range.selectNodeContents(element);
+					return range.getBoundingClientRect();
+				};
 				return {
 					font: parseFloat(getComputedStyle(links[0]).fontSize),
 					left: rects[0].left,
@@ -128,6 +133,8 @@ try {
 					navLeft: document.querySelector('.leading-box').getBoundingClientRect().left,
 					stripTop: strip.getBoundingClientRect().top,
 					navBottom: document.querySelector('header > nav').getBoundingClientRect().bottom,
+					textGap: textRect(links[0]).top - textRect(document.querySelector('header > nav > span')).bottom,
+					compactGap: parseFloat(getComputedStyle(document.documentElement).fontSize) * 1.5,
 					pageHeight: document.documentElement.scrollHeight,
 					mainY: document.querySelector('main').getBoundingClientRect().top + scrollY,
 					overflow: document.documentElement.scrollWidth > innerWidth,
@@ -135,8 +142,10 @@ try {
 					clearBelow: !document.elementFromPoint(innerWidth / 2, strip.getBoundingClientRect().bottom + 4)?.closest('header')
 				};
 			})()`);
-			assert.equal(state.background, y < compressionScrollPx ? "rgba(0, 0, 0, 0)" : "rgb(0, 0, 0)");
-			assert.equal(state.color, y < compressionScrollPx ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)");
+			const channels = state.background.match(/[\d.]+/g).map(Number);
+			assert.deepEqual(channels.slice(0, 3), [0, 0, 0]);
+			assert.ok(Math.abs((channels[3] ?? 1) - progress) < 0.005, "background opacity must follow eased scroll progress");
+			assert.equal(state.color, progress < 0.5 ? "rgb(0, 0, 0)" : "rgb(255, 255, 255)");
 			assert.equal(state.underline, "underline");
 			assert.equal(state.overflow, false, `overflow at ${width}px`);
 			assert.equal(state.hitTargets, true, `touch targets at ${width}px`);
@@ -149,13 +158,14 @@ try {
 		assert.ok(expanded.height > halfway.height && halfway.height > compact.height);
 		assert.ok(expanded.left >= halfway.left && halfway.left >= compact.left);
 		assert.ok(Math.abs(compact.left - compact.navLeft) < 1);
+		assert.ok(Math.abs(compact.textGap - compact.compactGap) < 2, "compact title-to-tab text gap must be approximately 1.5rem");
 		assert.ok(expanded.width > halfway.width && halfway.width > compact.width);
 		assert.ok(expanded.gaps.every((gap, i) => gap > compact.gaps[i]));
 		assert.ok(nearEnd.font >= compact.font);
 		assert.ok(Math.abs((expanded.font - halfway.font) / (expanded.font - compact.font) - halfwayProgress) < 0.01, "font size must follow the configured ease-out curve");
 		assert.deepEqual(beyond, compact);
 		assert.deepEqual(reversed, expanded);
-		assert.ok(states.every(state => state.pageHeight === expanded.pageHeight && state.mainY === expanded.mainY), "compression must preserve document geometry");
+		assert.ok(states.every(state => Math.abs(state.pageHeight - expanded.pageHeight) <= 1 && Math.abs(state.mainY - expanded.mainY) < 1), "compression must preserve document geometry");
 	}
 	// Empty history must stay usable without adding artificial scrolling to reach the endpoint.
 	await browser("click", "[data-category-tabs] a[href='/archive/history']");

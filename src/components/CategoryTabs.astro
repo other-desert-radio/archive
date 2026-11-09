@@ -69,6 +69,7 @@ const { active } = Astro.props;
       tabs.style.setProperty("--tabs-progress", String(progress));
       header?.style.setProperty("--tabs-progress", String(progress));
       tabs.toggleAttribute("data-compact", scrollProgress === 1);
+      tabs.toggleAttribute("data-dark", progress >= 0.5);
     }
 
     function scheduleUpdate(): void {
@@ -135,7 +136,7 @@ const { active } = Astro.props;
   .tabs-strip {
     padding-top: calc(var(--space-sm) * (1 - var(--tabs-progress)));
     padding-bottom: calc(var(--space-md) * (1 - var(--tabs-progress)));
-    background: transparent;
+    background: rgb(0 0 0 / var(--tabs-progress));
     color: black;
     pointer-events: auto;
     transition:
@@ -143,8 +144,7 @@ const { active } = Astro.props;
       color 120ms ease-out;
   }
 
-  .category-tabs[data-compact] .tabs-strip {
-    background: black;
+  .category-tabs[data-dark] .tabs-strip {
     color: white;
   }
 
