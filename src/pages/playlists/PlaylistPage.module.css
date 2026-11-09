@@ -67,6 +67,7 @@
 }
 
 .title-input {
+	field-sizing: content;
 	flex: 1;
 	min-width: 0;
 	width: 100%;
@@ -77,6 +78,9 @@
 	background: transparent;
 	color: inherit;
 	font-size: var(--font-title);
+	font-family: inherit;
+	resize: none;
+	overflow-wrap: anywhere;
 }
 
 .title-input::selection {

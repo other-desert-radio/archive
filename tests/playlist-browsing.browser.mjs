@@ -75,12 +75,21 @@ try {
   await browser("wait", 'section[aria-label="Playlist shows"]');
   assert.equal(await evaluate(`document.querySelector('section[aria-label="Playlist shows"]').children.length`), 1);
   assert.equal(await evaluate(`!!document.querySelector('section[aria-label="Playlist shows"] [data-show-playback]')`), true);
-  const titleInput = 'input[aria-label="Playlist title"]';
+  const titleInput = 'textarea[aria-label="Playlist title"]';
   const originalTitle = await evaluate('document.querySelector("h1").textContent');
   await browser("click", 'button[aria-label="Rename playlist"]');
   await browser("wait", titleInput);
   assert.equal(await evaluate(`document.activeElement.getAttribute('aria-label')`), "Playlist title");
   assert.equal(await evaluate(`document.querySelector('${titleInput}').value`), originalTitle);
+  for (const width of [320, 750, 1440]) {
+    await browser("set", "viewport", String(width), "900");
+    assert.ok(await evaluate(`(() => {
+      const input = document.querySelector('${titleInput}');
+      return input.clientHeight > parseFloat(getComputedStyle(input).fontSize) * 2
+        && input.scrollHeight <= input.clientHeight + 1
+        && document.documentElement.scrollWidth <= window.innerWidth;
+    })()`), `Long title wraps without overflow at ${width}px`);
+  }
   await browser("fill", titleInput, "Discard this");
   await browser("click", 'button[aria-label="Cancel playlist rename"]');
   assert.equal(await evaluate('document.querySelector("h1").textContent'), originalTitle);

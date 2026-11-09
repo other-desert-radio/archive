@@ -98,8 +98,9 @@ export default function PlaylistPage() {
 					onSubmit={rename}
 					aria-busy={saving}
 				>
-					<input
+					<textarea
 						className={styles["title-input"]}
+						rows={1}
 						aria-label="Playlist title"
 						ref={(input) => input?.focus()}
 						value={draftTitle}
@@ -110,6 +111,10 @@ export default function PlaylistPage() {
 							setRenameError(undefined);
 						}}
 						onKeyDown={(event) => {
+							if (event.key === "Enter" && !event.nativeEvent.isComposing) {
+								event.preventDefault();
+								event.currentTarget.form?.requestSubmit();
+							}
 							if (event.key === "Escape") {
 								event.preventDefault();
 								cancelRename();
@@ -124,7 +129,7 @@ export default function PlaylistPage() {
 							onClick={cancelRename}
 						>
 							<svg viewBox="0 0 24 24" aria-hidden="true">
-								<use href={`${getBasePath()}/assets/icons/x.svg#x`} />
+								<use href={`${getBasePath()}/assets/icons/close.svg#close`} />
 							</svg>
 						</button>
 						<button
