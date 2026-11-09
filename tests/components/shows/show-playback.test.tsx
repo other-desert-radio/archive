@@ -56,7 +56,7 @@ test("artwork progress reflects elapsed time and stays between zero and full", (
 		[0, 0],
 		[-10, 0],
 		[90, 100],
-	]) {
+	] as const) {
 		const html = renderToStaticMarkup(
 			<PlayableShowArtwork
 				show={show}

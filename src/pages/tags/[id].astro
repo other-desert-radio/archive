@@ -19,7 +19,9 @@ export async function getStaticPaths() {
   const djs = await fetchDJs(pathToFileURL("public/resources/djs_brief.json"));
   const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
   const profiles = await Promise.all(
-    djs.map(({ id }) => fetchDJ(pathToFileURL(`public/resources/djs/${id}.json`))),
+    djs.map(({ id }) =>
+      fetchDJ(pathToFileURL(`public/resources/djs/${id}.json`)),
+    ),
   );
 
   return Array.from(tags.values()).map((tag) => ({
@@ -42,27 +44,39 @@ const { tag, djs, shows } = Astro.props as Props;
 >
   <LargeTagHeader tag={tag} />
 
-  {djs.length > 0 && (
-    <section aria-labelledby="tag-djs-heading">
-      <h2 id="tag-djs-heading">DJs</h2>
-      <div class="tag-scroll">
-        <div class="tag-row">
-          {djs.map((dj) => <DJExploreCard dj={dj} fromTag={tag.id} />)}
+  {
+    djs.length > 0 && (
+      <section aria-labelledby="tag-djs-heading">
+        <div class="page-inset">
+          <h2 id="tag-djs-heading">DJs</h2>
         </div>
-      </div>
-    </section>
-  )}
+        <div class="gutter-scroll tag-row">
+          {djs.map((dj) => (
+            <DJExploreCard dj={dj} fromTag={tag.id} />
+          ))}
+        </div>
+      </section>
+    )
+  }
 
-  {shows.length > 0 && (
-    <section aria-labelledby="tag-shows-heading">
-      <div class="shows-heading-row">
-        <h2 id="tag-shows-heading">SHOWS</h2>
-      </div>
-      <div class="shows-grid">
-        {shows.map((show) => <SquareShowCard show={show} base={import.meta.env.BASE_URL} fromTag={tag.id} />)}
-      </div>
-    </section>
-  )}
+  {
+    shows.length > 0 && (
+      <section class="page-inset" aria-labelledby="tag-shows-heading">
+        <div class="shows-heading-row">
+          <h2 id="tag-shows-heading">SHOWS</h2>
+        </div>
+        <div class="shows-grid">
+          {shows.map((show) => (
+            <SquareShowCard
+              show={show}
+              base={import.meta.env.BASE_URL}
+              fromTag={tag.id}
+            />
+          ))}
+        </div>
+      </section>
+    )
+  }
 </BaseLayout>
 
 <style>
@@ -74,10 +88,6 @@ const { tag, djs, shows } = Astro.props as Props;
     margin: 0 0 var(--space-md);
     font-size: var(--font-title);
     font-weight: 400;
-  }
-
-  .tag-scroll {
-    overflow-x: auto;
   }
 
   .tag-row {

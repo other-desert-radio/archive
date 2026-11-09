@@ -32,5 +32,7 @@ const sortedTags = new Map(
   returning_page="home"
 >
   <CategoryTabs active="explore" />
-  <ExplorePane tags={sortedTags} />
+  <div class="page-inset">
+    <ExplorePane tags={sortedTags} />
+  </div>
 </BaseLayout>

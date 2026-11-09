@@ -17,5 +17,7 @@ const base = import.meta.env.BASE_URL;
   returning_page="home"
 >
   <CategoryTabs active="djs" />
-  <DJsPane base={base} djs={djs} tags={tags} />
+  <div class="page-inset">
+    <DJsPane base={base} djs={djs} tags={tags} />
+  </div>
 </BaseLayout>

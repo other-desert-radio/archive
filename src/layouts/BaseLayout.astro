@@ -37,7 +37,7 @@ import Navigation from "../components/Navigation.astro";
   <body transition:animate="none">
     <div class="site-background" aria-hidden="true"></div>
     <Navigation page={page} returning_page={returning_page} />
-    <main>
+    <main class:list={{ "full-width": page.name === "history" || page.name === "tag_page" }}>
       <slot />
     </main>
   </body>
@@ -54,11 +54,13 @@ import Navigation from "../components/Navigation.astro";
     width: 100%;
     max-width: var(--page-max-width);
     margin-inline: auto;
-    padding-left: max(var(--page-gutter), env(safe-area-inset-left));
-    padding-right: max(var(--page-gutter), env(safe-area-inset-right));
     padding-bottom: calc(
       var(--container-grid-padding-bottom) + env(safe-area-inset-bottom)
     );
+  }
+
+  main.full-width {
+    max-width: none;
   }
 
   @media (max-width: 600px) {

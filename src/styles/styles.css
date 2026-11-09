@@ -9,6 +9,8 @@
 	--grid-row-gap: calc(var(--density-unit) * 3);
 	--grid-column-gap: calc(var(--density-unit) * 4);
 	--page-gutter: var(--space-sm);
+	--page-inset-left: max(var(--page-gutter), env(safe-area-inset-left));
+	--page-inset-right: max(var(--page-gutter), env(safe-area-inset-right));
 	--page-max-width: 120rem;
 	--font-body: var(--density-unit);
 	--font-small: calc(var(--density-unit) * 0.875);
@@ -81,6 +83,31 @@ textarea {
 .flex-row {
 	display: flex;
 	flex-direction: row;
+}
+
+/* Content and scroll rows own their inset; main only constrains page width. */
+.page-inset,
+.gutter-scroll {
+	padding-left: var(--page-inset-left);
+	padding-right: var(--page-inset-right);
+}
+
+.gutter-scroll {
+	overflow-x: auto;
+	/* Align end cards with capped content while allowing edge-to-edge scrolling. */
+	padding-left: calc(
+		max(0px, (100% - var(--page-max-width)) / 2) +
+		var(--page-inset-left)
+	);
+	padding-right: calc(
+		max(0px, (100% - var(--page-max-width)) / 2) +
+		var(--page-inset-right)
+	);
+}
+
+.page-inset {
+	max-width: var(--page-max-width);
+	margin-inline: auto;
 }
 
 .tag {

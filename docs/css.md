@@ -12,6 +12,15 @@
   flex bases that become heights when a row stacks into a column.
 - Keep wide listing grids aligned with the category tabs; avoid an additional
   width cap or side inset within the shared page container.
+- `BaseLayout` constrains main width; content owns horizontal spacing through
+  `.page-inset`. Horizontal card rows use `.gutter-scroll` for internal padding
+  so cards can scroll through both gutters while preserving first/last alignment.
+  Both reuse safe-area-aware `--page-inset-left` and `--page-inset-right` tokens.
+  Rows normally stay within the centered main container on screens wider than
+  its cap. History and tag details use a full-width main: `.page-inset` keeps
+  tabs, headings and ordinary content capped, while scrolling rows reach both
+  device edges. Their internal padding includes the centered content offset so
+  end cards still align with the headings.
 - Bottom page spacing belongs to `BaseLayout`'s main container, which adds
   `--container-grid-padding-bottom` and the bottom safe-area inset. Listing
   components must not duplicate that padding.

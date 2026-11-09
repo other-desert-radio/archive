@@ -1,7 +1,6 @@
 .show-container {
 	display: flex;
 	gap: calc(var(--grid-column-gap) * 0.25);
-	overflow-x: auto;
 	padding-bottom: var(--space-sm);
 }
 
