@@ -2,6 +2,7 @@
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
 import console from "node:console";
+import process from "node:process";
 import { URL } from "node:url";
 import { promisify } from "node:util";
 import { file, serve } from "bun";
@@ -47,7 +48,7 @@ async function verifyProgress(y, progress) {
 	assert.equal(await evaluate("scrollY"), y);
 }
 
-let forceFallback = true;
+let forceFallback = !process.argv.includes("--native-only");
 const server = serve({
 	hostname: "127.0.0.1",
 	port: 0,
@@ -58,8 +59,10 @@ const server = serve({
 		const asset = file(`dist/${assetPath}`);
 		if (forceFallback && assetPath.endsWith(".html") && await asset.exists()) {
 			const html = (await asset.text()).replace("<head>", `<head><script>
-				const supports = CSS.supports.bind(CSS);
-				CSS.supports = (...args) => args.some(arg => arg.includes('animation-timeline')) ? false : supports(...args);
+				(() => {
+					const supports = CSS.supports.bind(CSS);
+					CSS.supports = (...args) => args.some(arg => arg.includes('animation-timeline')) ? false : supports(...args);
+				})();
 			</script>`);
 			return new Response(html, { headers: { "Content-Type": "text/html" } });
 		}
@@ -68,6 +71,7 @@ const server = serve({
 });
 const base = `http://127.0.0.1:${server.port}/archive`;
 try {
+	if (forceFallback) {
 	await browser("set", "viewport", "1440", "800");
 	await browser("open", `${base}/`);
 	await browser("wait", "--fn", "document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === '0'");
@@ -248,9 +252,11 @@ try {
 	console.log("Tab progress, reversal, frame batching, cleanup, reduced motion, reload and history restoration pass.");
 	console.log("Transparent-to-black styling, responsive compression, alignment, touch targets and stable scroll geometry pass.");
 	console.log("Fast flings snap without transitions, upward scrolling stays compact outside the top zone, and slow scrolling restores easing.");
+	}
 
 	// Exercise the real supported path separately from the forced fallback above.
 	forceFallback = false;
+	await browser("set", "media", "light");
 	await browser("open", `${base}/djs`);
 	await browser("wait", "header[data-tabs-driver='css']");
 	await evaluate("document.fonts.ready.then(() => true)");
@@ -281,7 +287,7 @@ try {
 				};
 			})()`);
 			assert.equal(state.inlineProgress, "", "native scrolling must not write progress through JavaScript");
-			assert.ok(state.timeline.includes("scroll(root"));
+			assert.ok(state.timeline.includes("scroll(root"), JSON.stringify(state));
 			assert.equal(state.transition, "0s", "native colors must follow scroll without a trailing timed transition");
 			assert.equal(state.color, progress >= 0.5 ? "rgb(255, 255, 255)" : "rgb(0, 0, 0)");
 			const channels = state.background.match(/[\d.]+/g).map(Number);

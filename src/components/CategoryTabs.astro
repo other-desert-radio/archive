@@ -115,15 +115,28 @@ const { active } = Astro.props;
       }
     }
 
+    function restoreScroll(): void {
+      if (frame !== undefined) {
+        window.cancelAnimationFrame(frame);
+      }
+      frame = window.requestAnimationFrame(() => {
+        // History restoration is a new starting position, not a fling.
+        snapDirection = 0;
+        lastScrollY = window.scrollY;
+        lastScrollTime = performance.now();
+        update();
+      });
+    }
+
     window.addEventListener("scroll", scheduleUpdate, { passive: true });
-    window.addEventListener("pageshow", scheduleUpdate);
+    window.addEventListener("pageshow", restoreScroll);
     reducedMotion.addEventListener("change", scheduleUpdate);
     update();
     scheduleUpdate();
 
     return () => {
       window.removeEventListener("scroll", scheduleUpdate);
-      window.removeEventListener("pageshow", scheduleUpdate);
+      window.removeEventListener("pageshow", restoreScroll);
       reducedMotion.removeEventListener("change", scheduleUpdate);
       if (frame !== undefined) {
         window.cancelAnimationFrame(frame);
