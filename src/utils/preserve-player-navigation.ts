@@ -36,6 +36,11 @@ document.addEventListener("astro:before-swap", (event) => {
 
 		// Never detach the header or its iframe: Safari reloads moved iframes.
 		nav.replaceWith(nextNav);
+		header.querySelector("[data-category-tabs]")?.remove();
+		const nextTabs = nextHeader.querySelector("[data-category-tabs]");
+		if (nextTabs) {
+			header.append(nextTabs);
+		}
 		for (const child of Array.from(document.body.childNodes)) {
 			if (child !== header) {
 				child.remove();

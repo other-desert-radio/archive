@@ -9,6 +9,6 @@ import HistoryPane from "../components/history/HistoryPane";
   page={{ name: "history" }}
   returning_page="home"
 >
-  <CategoryTabs active="history" />
+  <CategoryTabs slot="category-tabs" active="history" />
   <HistoryPane client:load />
 </BaseLayout>

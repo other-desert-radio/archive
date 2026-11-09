@@ -145,9 +145,12 @@ const title = (() => {
     top: 0;
     z-index: 100;
     color: white;
+    /* The tabs reserve expanded height; their transparent remainder passes clicks through. */
+    pointer-events: none;
   }
 
   nav {
+    pointer-events: auto;
     min-height: var(--nav-height);
     display: flex;
     flex-wrap: wrap;
@@ -175,6 +178,7 @@ const title = (() => {
   }
 
   .miniplayer-slot {
+    pointer-events: auto;
     min-width: 0;
     max-width: 100%;
     width: 100%;
