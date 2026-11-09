@@ -1,11 +1,18 @@
-.note {
-	box-sizing: border-box;
-	align-self: flex-start;
-	max-width: 100%;
+.card {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.chin {
+	width: 100%;
 	border: 1px solid black;
-	background: white;
 	color: black;
-	min-width: min(18rem, 100%);
+	overflow-wrap: anywhere;
+}
+
+.chin > :global(.tag-container) {
+	padding: var(--space-sm);
 }
 
 .note-header {
@@ -27,11 +34,16 @@
 
 .note-header button {
 	margin-left: auto;
-	color: #666;
+	color: black;
+	font-weight: bold;
 }
 
 @media (hover: hover) and (pointer: fine) {
+	.card:hover :global([data-show-playback]) {
+		opacity: 1;
+	}
+
 	.note-header button:hover {
-		color: black;
+		font-style: italic;
 	}
 }

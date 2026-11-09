@@ -80,8 +80,10 @@ Liked Shows. Each links to `/playlists/?id=<id>` under the configured base path.
 The static Astro shell hosts a React component that reads the query ID on mount
 and resolves it through PlaylistStore; missing IDs show a browser-local not-found
 message. Playlist loading is independent of the catalog. After catalog initialization,
-the page renders shared show cards in the Shows grid, newest additions first, retaining unavailable
-references and offering retry when catalog loading fails.
+the page renders PlaylistShowCard in the Shows grid, newest additions first,
+retaining unavailable references and offering retry when catalog loading fails.
+Each playlist card has playable artwork above a full-width bordered white panel
+containing tags and an optional note with the entry's local update time.
 
 ShowStore and TagStore first load their cached records into memory, then check
 the published revision.

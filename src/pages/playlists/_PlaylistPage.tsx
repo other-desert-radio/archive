@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import LoadingState from "../../components/LoadingState";
+import PlaylistShowCard from "../../components/playlists/PlaylistShowCard";
 import { usePlaylists } from "../../components/playlists/usePlaylists";
-import ShowCard from "../../components/shows/ShowCard";
 import showStyles from "../../components/shows/ShowsPane.module.css";
 import styles from "./PlaylistPage.module.css";
 import { usePlaylistShows } from "./usePlaylistShows";
@@ -56,12 +56,12 @@ export default function PlaylistPage() {
 							>
 								{shows.map(({ entry, show, record }) =>
 									show ? (
-										<ShowCard
+										<PlaylistShowCard
 											key={entry.showId}
 											show={show}
 											tags={tags}
 											record={record}
-											playlistSaves={[]}
+											entry={entry}
 										/>
 									) : (
 										<div key={entry.showId}>

@@ -72,8 +72,8 @@ try {
   );
   await browser("click", `a[href="/playlists/?id=${id}"]`);
   await browser("wait", 'section[aria-label="Playlist shows"]');
-  assert.equal(await evaluate('document.querySelectorAll("article").length'), 1);
-  assert.equal(await evaluate('document.querySelector("article a").getAttribute("href")'), "/shows/42");
+  assert.equal(await evaluate(`document.querySelector('section[aria-label="Playlist shows"]').children.length`), 1);
+  assert.equal(await evaluate(`!!document.querySelector('section[aria-label="Playlist shows"] [data-show-playback]')`), true);
   await browser("reload");
   await browser("wait", 'section[aria-label="Playlist shows"]');
   assert.equal(
