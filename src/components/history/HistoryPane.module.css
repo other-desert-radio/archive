@@ -1,6 +1,6 @@
 .show-container {
 	display: flex;
-	gap: var(--grid-column-gap);
+	gap: calc(var(--grid-column-gap) * 0.25);
 	padding-bottom: var(--space-sm);
 }
 
@@ -9,10 +9,6 @@
 }
 
 @media (max-width: 600px) {
-	.show-container {
-		gap: var(--space-sm);
-	}
-
 	.show-container > * {
 		flex-basis: min(60%, 12rem);
 	}

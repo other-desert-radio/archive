@@ -1,6 +1,6 @@
 {
-	"version": 7,
-	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"version": 8,
+	"updatedAt": "2026-11-06T23:56:06.238Z",
 	"data": {
 		"id": 41,
 		"title": "Paul Quattrone",
@@ -25,6 +25,16 @@
 				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/d/0/5/29cf-9c2d-4f7e-97f2-6a7cdb2366b0",
 				"tagIds": [320, 321, 322, 323],
 				"url": "https://www.mixcloud.com/otherdesertradio/paul-quattrone-episode-vii-acid-burnout-february-15-2021/"
+			},
+			{
+				"id": 304,
+				"title": "Episode VI, Pandemic NYE Dance Party",
+				"date": "2020-12-30T00:00:00.000Z",
+				"duration": 5337,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/6/4/8/e106-cba0-4c51-9461-642e4117e2b9",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/6/4/8/e106-cba0-4c51-9461-642e4117e2b9",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/paul-quattrone-episode-vi-pandemic-nye-dance-party/"
 			},
 			{
 				"id": 216,

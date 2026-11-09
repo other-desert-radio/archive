@@ -1,6 +1,6 @@
 {
-	"version": 7,
-	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"version": 8,
+	"updatedAt": "2026-11-06T23:56:06.238Z",
 	"data": {
 		"id": 30,
 		"title": "DJ PUBLIC ROAD",
@@ -10,7 +10,38 @@
 		"socials": "<p>@public.road</p>",
 		"showTitle": "Genius Tapes",
 		"showDescription": "to make Swiss cheese,you take a hole and put some cheese around it",
-		"shows": [],
-		"tagIds": []
+		"shows": [
+			{
+				"id": 306,
+				"title": "From the Vault 4 - Sounds from 6th and Market, 2012",
+				"date": "2020-10-28T00:00:00.000Z",
+				"duration": 1690,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/d/5/5/7/f342-d8e4-40df-8a5f-964e0ba365e7",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/d/5/5/7/f342-d8e4-40df-8a5f-964e0ba365e7",
+				"tagIds": [330, 337, 373, 374],
+				"url": "https://www.mixcloud.com/otherdesertradio/andrew-storrs-from-the-vault-4-sounds-from-6th-and-market-2012/"
+			},
+			{
+				"id": 307,
+				"title": "From the Vault 3 - Brody's JT Demo, 2017",
+				"date": "2020-10-20T00:00:00.000Z",
+				"duration": 1983,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/c/d/f/6/718b-0c10-4904-8680-d91fd5be9bf7",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/c/d/f/6/718b-0c10-4904-8680-d91fd5be9bf7",
+				"tagIds": [373, 375],
+				"url": "https://www.mixcloud.com/otherdesertradio/andrew-storrs-from-the-vault-3-brodys-jt-demo-2017/"
+			},
+			{
+				"id": 308,
+				"title": "From the Vault 2 - The Savage Young Tater Bug, Live, 2012",
+				"date": "2020-10-13T00:00:00.000Z",
+				"duration": 1833,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/0/8/2/68fd-18d7-4431-a925-422d74450459",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/0/8/2/68fd-18d7-4431-a925-422d74450459",
+				"tagIds": [330, 335, 337, 376],
+				"url": "https://www.mixcloud.com/otherdesertradio/andrew-storrs-from-the-vault-the-savage-young-tater-bug-live-2012/"
+			}
+		],
+		"tagIds": [330, 335, 337, 373, 374, 375, 376]
 	}
 }

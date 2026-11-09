@@ -1,6 +1,6 @@
 {
-	"version": 7,
-	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"version": 8,
+	"updatedAt": "2026-11-06T23:56:06.238Z",
 	"data": {
 		"id": 29,
 		"title": "LUVWAVE",
@@ -10,7 +10,18 @@
 		"socials": "<p>https://www.patreon.com/AnitaHatesCars?utm_campaign=creatorshare_creator</p>",
 		"showTitle": "WARTIME/PEACETIME PRODUCTS",
 		"showDescription": "I hope you feel just as adaptable while indignant about your right to continue on existing.",
-		"shows": [],
-		"tagIds": []
+		"shows": [
+			{
+				"id": 315,
+				"title": "Episode 1 Beat Play Spring Mix",
+				"date": "2026-04-13T00:00:00.000Z",
+				"duration": 3085,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/6/a/b/4/a2d5-9cef-428d-aa1e-7af452040929",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/a/b/4/a2d5-9cef-428d-aa1e-7af452040929",
+				"tagIds": [214, 387],
+				"url": "https://www.mixcloud.com/otherdesertradio/wartime-product-episode-1-beat-play-spring-mix-april-13-2026/"
+			}
+		],
+		"tagIds": [214, 387]
 	}
 }

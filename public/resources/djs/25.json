@@ -1,6 +1,6 @@
 {
-	"version": 7,
-	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"version": 8,
+	"updatedAt": "2026-11-06T23:56:06.238Z",
 	"data": {
 		"id": 25,
 		"title": "Kayla",
@@ -10,7 +10,18 @@
 		"socials": "<p>www.instagram.com/kayla_itasca</p>",
 		"showTitle": "Kayla's Mix",
 		"showDescription": "Kayla's Mix is a radio program by Kayla of Itasca.",
-		"shows": [],
-		"tagIds": []
+		"shows": [
+			{
+				"id": 301,
+				"title": "Kayla's Mix, April 26, 2021",
+				"date": "2021-04-26T00:00:00.000Z",
+				"duration": 4968,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/e/2/4/3e12-cce7-4d4a-b72f-01c1640b5419",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/e/2/4/3e12-cce7-4d4a-b72f-01c1640b5419",
+				"tagIds": [369, 370],
+				"url": "https://www.mixcloud.com/otherdesertradio/kaylas-mix-april-26-2021/"
+			}
+		],
+		"tagIds": [369, 370]
 	}
 }

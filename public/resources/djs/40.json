@@ -1,6 +1,6 @@
 {
-	"version": 7,
-	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"version": 8,
+	"updatedAt": "2026-11-06T23:56:06.238Z",
 	"data": {
 		"id": 40,
 		"title": "Dana",
@@ -47,6 +47,16 @@
 				"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-cybernetic-organisms-overdrive-march-15-2021/"
 			},
 			{
+				"id": 305,
+				"title": "Chri$ Kringles Christmas Jingles",
+				"date": "2020-12-22T00:00:00.000Z",
+				"duration": 5666,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/c/a/d/9052-83bd-4e1a-b161-596dd8503ee3",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/c/a/d/9052-83bd-4e1a-b161-596dd8503ee3",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-chri-kringles-christmas-jingles/"
+			},
+			{
 				"id": 220,
 				"title": "Light and Eulogy, a spiritually sexual mix part 2",
 				"date": "2020-09-26T00:00:00.000Z",
@@ -65,6 +75,16 @@
 				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/7/2/9/d085-f57b-4f60-8b6b-25b0cc8b5204",
 				"tagIds": [187, 295],
 				"url": "https://www.mixcloud.com/otherdesertradio/dj-chrityle-light-and-eulogy-a-spiritually-sexual-mix-part-1/"
+			},
+			{
+				"id": 311,
+				"title": "Paint Black Angels",
+				"date": "2020-06-27T00:00:00.000Z",
+				"duration": 3722,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/b/a/1/b/8b7f-a548-478c-a078-dd98f10c27ec",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/b/a/1/b/8b7f-a548-478c-a078-dd98f10c27ec",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/dana-paint-black-angeles-week-of-june-22-2020/"
 			}
 		],
 		"tagIds": [22, 37, 42, 46, 187, 234, 295, 316, 317, 318, 319]

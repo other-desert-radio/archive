@@ -1,11 +1,21 @@
-import { useEffect, useRef, useState } from "react";
+import {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+	useSyncExternalStore,
+} from "react";
 import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
 import { useInitialization } from "../../hooks/useInitialization";
 import { useStores } from "../../stores";
+import type { PlaybackRecord } from "../../stores/playback/types";
+import type { Playlist, PlaylistSave } from "../../stores/playlists/types";
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
 import LoadingState from "../LoadingState";
+import { usePlaylists } from "../playlists/usePlaylists";
 import ShowCard from "./ShowCard";
 import styles from "./ShowsPane.module.css";
 
@@ -25,6 +35,31 @@ type Props = {
  * Astro owns the saved scroll coordinates, which are not stored here.
  */
 const visits = new Map<number, Props>();
+const emptyRecords: readonly PlaybackRecord[] = [];
+const emptyPlaylistSaves: readonly PlaylistSave[] = [];
+
+// Index once per playlist snapshot so cards receive only their saves without rescanning every playlist.
+// Playlists                         Saves by show ID
+// A: [show 1, show 2]  -->           1: [{ playlistId: A, title }]
+// B: [show 2]                       2: [{ playlistId: A, title },
+//                                       { playlistId: B, title }]
+export function getPlaylistSavesByShowId(playlists: readonly Playlist[]) {
+	const savesByShowId = new Map<number, PlaylistSave[]>();
+	for (const playlist of playlists) {
+		for (const entry of playlist.shows) {
+			let saves = savesByShowId.get(entry.showId);
+			if (!saves) {
+				saves = [];
+				savesByShowId.set(entry.showId, saves);
+			}
+			saves.push({
+				playlistId: playlist.id,
+				title: playlist.title,
+			});
+		}
+	}
+	return savesByShowId;
+}
 
 if (typeof document !== "undefined") {
 	document.addEventListener("astro:before-swap", (event) => {
@@ -63,6 +98,26 @@ export default function ShowsPane({
 	initialLoading = showIds.length > shows.length,
 }: Props) {
 	const stores = useStores();
+	const { playlists, status: playlistStatus } = usePlaylists();
+	const playlistSavesByShowId = useMemo(
+		() => getPlaylistSavesByShowId(playlistStatus === "ready" ? playlists : []),
+		[playlists, playlistStatus],
+	);
+	const { playbackStore } = stores;
+	const subscribe = useCallback(
+		(notify: () => void) => playbackStore.subscribe(notify),
+		[playbackStore],
+	);
+	const records = useSyncExternalStore(
+		subscribe,
+		playbackStore.getSnapshot,
+		() => emptyRecords,
+	);
+	// Index the snapshot for fast lookups; playbackStore.get() bypasses it and breaks hydration.
+	const recordsByShowId = useMemo(
+		() => new Map(records.map((record) => [record.showId, record])),
+		[records],
+	);
 
 	const [visible, setVisible] = useState(shows);
 	const [visibleTags, setVisibleTags] = useState(tags);
@@ -134,7 +189,15 @@ export default function ShowsPane({
 		<>
 			<div className={styles["show-container-grid"]}>
 				{visible.map((show) => (
-					<ShowCard key={show.id} show={show} tags={visibleTags} />
+					<ShowCard
+						key={show.id}
+						show={show}
+						tags={visibleTags}
+						playlistSaves={
+							playlistSavesByShowId.get(show.id) ?? emptyPlaylistSaves
+						}
+						record={recordsByShowId.get(show.id)}
+					/>
 				))}
 			</div>
 			{needsCatalog && (

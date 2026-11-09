@@ -1,6 +1,6 @@
 {
-	"version": 7,
-	"updatedAt": "2026-11-04T21:17:09.785Z",
+	"version": 8,
+	"updatedAt": "2026-11-06T23:56:06.238Z",
 	"data": {
 		"id": 45,
 		"title": "Ethan Primason",
@@ -15,6 +15,26 @@
 				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/8/9/a/7f52-c677-4e05-9cdc-26499cfd78a2",
 				"tagIds": [],
 				"url": "https://www.mixcloud.com/otherdesertradio/ethan-corner-booth-episode-iii-july-5-2021/"
+			},
+			{
+				"id": 302,
+				"title": "Japanese Night Cruise Pt.2",
+				"date": "2021-01-15T00:00:00.000Z",
+				"duration": 5005,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/1/8/3/93c3-39cf-4b3f-a194-98e50f0b0753",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/1/8/3/93c3-39cf-4b3f-a194-98e50f0b0753",
+				"tagIds": [22, 35, 41, 84, 371],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-ethan-japanese-night-cruise-pt2/"
+			},
+			{
+				"id": 303,
+				"title": "Japanese Night Cruise Pt. 1",
+				"date": "2021-01-14T00:00:00.000Z",
+				"duration": 5628,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/e/e/f/ac57-c3d6-4bb4-bddc-dcb8a78add80",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/e/e/f/ac57-c3d6-4bb4-bddc-dcb8a78add80",
+				"tagIds": [22, 35, 41, 84, 372],
+				"url": "https://www.mixcloud.com/otherdesertradio/japanese-night-cruise-pt1/"
 			},
 			{
 				"id": 281,
@@ -35,6 +55,26 @@
 				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/6/2/8/e/9218-6e3d-4696-a331-ba593cb78e5a",
 				"tagIds": [40, 104, 338, 339, 340],
 				"url": "https://www.mixcloud.com/otherdesertradio/ethan-yugoslav-special-august-10-2020/"
+			},
+			{
+				"id": 310,
+				"title": "Ear to Ear: Collective Transmission",
+				"date": "2020-07-06T00:00:00.000Z",
+				"duration": 2279,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/caroline-and-ethan-ear-to-ear-collective-transmission-week-of-july-6-2020/"
+			},
+			{
+				"id": 312,
+				"title": "Calling Planet Earth",
+				"date": "2020-06-25T00:00:00.000Z",
+				"duration": 12998,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/2/2/2/b/c5f1-e703-4aae-a2ef-fb3dc30724ed",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/2/2/2/b/c5f1-e703-4aae-a2ef-fb3dc30724ed",
+				"tagIds": [271, 293, 368, 380, 381],
+				"url": "https://www.mixcloud.com/otherdesertradio/ethan-calling-planet-earth-week-of-june-22-2020/"
 			},
 			{
 				"id": 268,
@@ -107,6 +147,9 @@
 				"url": "https://www.mixcloud.com/otherdesertradio/ethan-side-april-6-2020/"
 			}
 		],
-		"tagIds": [40, 61, 104, 114, 338, 339, 340, 341, 342, 351, 352, 353]
+		"tagIds": [
+			22, 35, 40, 41, 61, 84, 104, 114, 271, 293, 338, 339, 340, 341, 342, 351,
+			352, 353, 368, 371, 372, 380, 381
+		]
 	}
 }
