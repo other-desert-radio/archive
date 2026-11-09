@@ -2,6 +2,7 @@ import { useCallback, useSyncExternalStore } from "react";
 import { useInitialization } from "../../hooks/useInitialization";
 import { useStores } from "../../stores";
 import type { PlaybackRecord } from "../../stores/playback/types";
+import type { Playlist } from "../../stores/playlists/types";
 import type { ShowStore } from "../../stores/shows/show-store";
 import LoadingState from "../LoadingState";
 import PlaylistCard from "../playlists/PlaylistCard";
@@ -10,6 +11,12 @@ import styles from "./HistoryPane.module.css";
 import HistoryShowCard from "./HistoryShowCard";
 
 const emptyRecords: readonly PlaybackRecord[] = [];
+
+export function historyPlaylists(playlists: readonly Playlist[]) {
+	return [...playlists].sort(
+		(a, b) => Number(b.type === "liked") - Number(a.type === "liked"),
+	);
+}
 
 export function recentlyPlayed(records: readonly PlaybackRecord[]) {
 	return records
@@ -64,7 +71,7 @@ export default function HistoryPane() {
 					error="Could not load playlists. Reload the page to retry."
 				>
 					<div className={styles["playlists"]}>
-						{playlists.map((playlist) => (
+						{historyPlaylists(playlists).map((playlist) => (
 							<PlaylistCard
 								key={playlist.id}
 								playlist={playlist}
