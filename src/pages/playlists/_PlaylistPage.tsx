@@ -23,8 +23,12 @@ export default function PlaylistPage() {
 			<div className={styles["title-flex"]}>
 				<h1>{playlist?.title ?? "Playlist"}</h1>
 				<div className={styles["title-actions"]}>
-					<button type="button">Edit</button>
-					<button type="button">Delete</button>
+					<button type="button" className="button-primary">
+						Edit
+					</button>
+					<button type="button" className="button-primary button-danger">
+						Delete
+					</button>
 				</div>
 			</div>
 			<p className={styles["disclaimer"]}>

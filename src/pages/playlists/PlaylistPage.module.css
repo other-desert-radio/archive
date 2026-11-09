@@ -24,6 +24,9 @@
 
 .disclaimer {
 	margin: var(--space-xs) 0;
+	font-size: var(--font-small);
+	font-style: italic;
+	color: #666;
 }
 
 .shows-grid {

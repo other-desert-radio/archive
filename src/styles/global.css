@@ -104,6 +104,19 @@ button {
 	touch-action: manipulation;
 }
 
+.button-primary {
+	padding: var(--space-xs);
+	border: 1px solid currentColor;
+	background: transparent;
+	color: black;
+	font: inherit;
+	cursor: pointer;
+}
+
+.button-danger {
+	color: #c00;
+}
+
 .button-secondary {
 	border: 0;
 	padding: 0;
@@ -114,6 +127,10 @@ button {
 }
 
 @media (hover: hover) and (pointer: fine) {
+	.button-primary:hover {
+		background: white;
+	}
+
 	.button-secondary:hover {
 		font-weight: bold;
 	}
