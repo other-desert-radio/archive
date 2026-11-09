@@ -47,6 +47,13 @@ test("history waits for catalog initialization before looking up shows", () => {
 	assert.ok(html.includes('role="status"'));
 	assert.ok(html.includes("Loading shows..."));
 	assert.ok(html.includes("Loading playlists..."));
+	assert.ok(html.includes(">Recently Played</h1>"));
+	assert.ok(html.includes(">Playlists</h1>"));
+	assert.equal((html.match(/aria-busy="true"/g) ?? []).length, 2);
+	assert.equal((html.match(/aria-hidden="true"/g) ?? []).length, 13);
+	assert.equal((html.match(/role="status"/g) ?? []).length, 2);
+	assert.ok(!html.includes("<a "));
+	assert.ok(!html.includes("<button"));
 	assert.ok(!html.includes("missing show id"));
 	assert.equal(getShow.mock.callCount(), 0);
 	assert.equal(initialize.mock.callCount(), 0);

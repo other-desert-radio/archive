@@ -55,6 +55,10 @@ import Navigation from "../components/Navigation.astro";
 
 <script>
   import "../utils/preserve-player-navigation";
+
+  document.addEventListener("astro:before-swap", (event) => {
+    event.newDocument.documentElement.setAttribute("data-client-navigation", "");
+  });
 </script>
 
 <style>

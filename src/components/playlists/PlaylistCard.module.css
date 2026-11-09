@@ -60,3 +60,21 @@
 		transition: transform 150ms ease;
 	}
 }
+
+.skeleton-title {
+	min-height: 2lh;
+}
+
+.skeleton-title::before,
+.skeleton-title::after {
+	content: "";
+	display: block;
+	width: 75%;
+	height: 0.8lh;
+	margin-block: 0.1lh;
+	background: var(--playlist-placeholder);
+}
+
+.skeleton-title::after {
+	width: 55%;
+}
