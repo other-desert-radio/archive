@@ -9,9 +9,9 @@ import { file, serve } from "bun";
 const { Response } = globalThis;
 const exec = promisify(execFile);
 const session = "category-tabs";
-const source = await file("src/components/CategoryTabs.astro").text();
-const compressionScrollPx = Number(source.match(/const compressionScrollPx = ([\d.]+);/)?.[1]);
-const easeOutPower = Number(source.match(/const easeOutPower = ([\d.]+);/)?.[1]);
+const source = await file("src/styles/styles.css").text();
+const compressionScrollPx = Number(source.match(/--tabs-compression-scroll-px: ([\d.]+);/)?.[1]);
+const easeOutPower = Number(source.match(/--tabs-ease-out-power: ([\d.]+);/)?.[1]);
 assert.ok(compressionScrollPx > 2 && easeOutPower >= 1, "Readable scroll tuning constants are required");
 const halfwayScroll = compressionScrollPx / 2;
 const halfwayProgress = 1 - 0.5 ** easeOutPower;
@@ -47,6 +47,7 @@ async function verifyProgress(y, progress) {
 	assert.equal(await evaluate("scrollY"), y);
 }
 
+let forceFallback = true;
 const server = serve({
 	hostname: "127.0.0.1",
 	port: 0,
@@ -55,6 +56,13 @@ const server = serve({
 		const assetPath = path && !path.split("/").at(-1).includes(".")
 			? `${path.replace(/\/$/, "")}/index.html` : path || "index.html";
 		const asset = file(`dist/${assetPath}`);
+		if (forceFallback && assetPath.endsWith(".html") && await asset.exists()) {
+			const html = (await asset.text()).replace("<head>", `<head><script>
+				const supports = CSS.supports.bind(CSS);
+				CSS.supports = (...args) => args.some(arg => arg.includes('animation-timeline')) ? false : supports(...args);
+			</script>`);
+			return new Response(html, { headers: { "Content-Type": "text/html" } });
+		}
 		return (await asset.exists()) ? new Response(asset) : new Response("Missing", { status: 404 });
 	},
 });
@@ -216,6 +224,19 @@ try {
 	await verifyProgress(0, 0);
 	await verifyProgress(halfwayScroll, halfwayProgress);
 	await verifyProgress(0, 0);
+	await verifyProgress(1, 1 - (1 - 1 / compressionScrollPx) ** easeOutPower);
+	const topState = await evaluate(`new Promise(resolve => {
+		window.scrollTo(0, 0);
+		requestAnimationFrame(() => requestAnimationFrame(() => {
+			window.dispatchEvent(new Event('scroll'));
+			requestAnimationFrame(() => {
+				const tabs = document.querySelector('[data-category-tabs]');
+				const strip = tabs.querySelector('.tabs-strip');
+				resolve({ expanded: tabs.hasAttribute('data-expanded'), background: getComputedStyle(strip).backgroundColor, transition: getComputedStyle(strip).transitionDuration, animations: strip.getAnimations().length });
+			});
+		}));
+	})`);
+	assert.deepEqual(topState, { expanded: true, background: "rgba(0, 0, 0, 0)", transition: "0s", animations: 0 }, "returning to the top must clear black immediately, including a settling scroll event");
 	// Empty history must stay usable without adding artificial scrolling to reach the endpoint.
 	await browser("click", "[data-category-tabs] a[href='/archive/history']");
 	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/history' && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === '0'");
@@ -227,6 +248,71 @@ try {
 	console.log("Tab progress, reversal, frame batching, cleanup, reduced motion, reload and history restoration pass.");
 	console.log("Transparent-to-black styling, responsive compression, alignment, touch targets and stable scroll geometry pass.");
 	console.log("Fast flings snap without transitions, upward scrolling stays compact outside the top zone, and slow scrolling restores easing.");
+
+	// Exercise the real supported path separately from the forced fallback above.
+	forceFallback = false;
+	await browser("open", `${base}/djs`);
+	await browser("wait", "header[data-tabs-driver='css']");
+	await evaluate("document.fonts.ready.then(() => true)");
+	for (const width of [320, 332, 750, 1440, 2000]) {
+		await browser("set", "viewport", String(width), "800");
+		const states = [];
+		for (const y of [0, halfwayScroll, compressionScrollPx, compressionScrollPx * 4, halfwayScroll, 0]) {
+			const progress = 1 - (1 - Math.min(1, y / compressionScrollPx)) ** easeOutPower;
+			await evaluate(`window.scrollTo(0, ${y}); true`);
+			await browser("wait", "--fn", `Math.abs(Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) - ${progress}) < 0.001`);
+			const state = await evaluate(`(() => {
+				const header = document.querySelector('[data-site-header]');
+				const tabs = document.querySelector('[data-category-tabs]');
+				const strip = tabs.querySelector('.tabs-strip');
+				const link = strip.querySelector('a');
+				return {
+					font: parseFloat(getComputedStyle(link).fontSize),
+					left: link.getBoundingClientRect().left,
+					titleLeft: header.querySelector('.leading-box').getBoundingClientRect().left,
+					background: getComputedStyle(strip).backgroundColor,
+					color: getComputedStyle(link).color,
+					timeline: getComputedStyle(header).animationTimeline,
+					transition: getComputedStyle(strip).transitionDuration,
+					inlineProgress: tabs.style.getPropertyValue('--tabs-progress') || header.style.getPropertyValue('--tabs-progress'),
+					mainY: document.querySelector('main').getBoundingClientRect().top + scrollY,
+					overflow: document.documentElement.scrollWidth > innerWidth,
+					hitTargets: [...tabs.querySelectorAll('a')].every(a => a.getBoundingClientRect().width >= 44 && a.getBoundingClientRect().height >= 44)
+				};
+			})()`);
+			assert.equal(state.inlineProgress, "", "native scrolling must not write progress through JavaScript");
+			assert.ok(state.timeline.includes("scroll(root"));
+			assert.equal(state.transition, "0s", "native colors must follow scroll without a trailing timed transition");
+			assert.equal(state.color, progress >= 0.5 ? "rgb(255, 255, 255)" : "rgb(0, 0, 0)");
+			const channels = state.background.match(/[\d.]+/g).map(Number);
+			assert.ok(Math.abs((channels[3] ?? 1) - progress) < 0.005);
+			assert.equal(state.overflow, false);
+			assert.equal(state.hitTargets, true);
+			states.push(state);
+		}
+		const [expanded, halfway, compact, beyond, reverseHalfway, reversed] = states;
+		assert.ok(expanded.font > halfway.font && halfway.font > compact.font);
+		assert.ok(Math.abs((expanded.font - halfway.font) / (expanded.font - compact.font) - halfwayProgress) < 0.01);
+		assert.ok(Math.abs(compact.left - compact.titleLeft) < 1);
+		assert.deepEqual(compact, beyond);
+		assert.deepEqual(halfway, reverseHalfway);
+		assert.deepEqual(expanded, reversed);
+		assert.ok(states.every(state => Math.abs(state.mainY - expanded.mainY) < 1));
+	}
+	await browser("click", "[data-category-tabs] a[href='/archive/explore']");
+	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/explore' && document.querySelector('header[data-tabs-driver=css]') !== null");
+	await browser("click", "[data-category-tabs] a[href='/archive/history']");
+	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/history' && document.querySelector('header[data-tabs-driver=css]') !== null");
+	await browser("set", "media", "light", "reduced-motion");
+	await browser("wait", "--fn", "getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress').trim() === '1'");
+	assert.equal(await evaluate("getComputedStyle(document.querySelector('[data-site-header]')).animationName"), "none");
+	assert.equal(await evaluate("getComputedStyle(document.querySelector('.tabs-strip')).backgroundColor"), "rgb(0, 0, 0)");
+	await browser("set", "media", "light");
+	await browser("wait", "--fn", "getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress').trim() === '0'");
+	console.log("Native CSS timelines, eased progress, immediate color reversal, responsive layout, navigation and reduced motion pass.");
+} catch (error) {
+	console.error(await evaluate(`({ path: location.pathname, y: scrollY, driver: document.querySelector('[data-site-header]')?.dataset.tabsDriver, progress: document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress'), computed: getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress') })`));
+	throw error;
 } finally {
 	await browser("close");
 	server.stop(true);

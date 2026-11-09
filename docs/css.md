@@ -61,19 +61,26 @@ tags, at 320px, 332px, 750px, 1440px, and wide desktop widths.
 Category tabs stay on one row, with smaller fluid text, reduced gaps and no
 extra inline padding at 750px and below. They spread across the available width
 at 600px and below and form a left-aligned group on larger screens.
-`compressionScrollPx` in `src/components/CategoryTabs.astro` controls the
-document scroll distance in CSS pixels from expanded tabs to fully compact
-without adding a time-based transition. Increasing it makes compression take more scrolling;
-decreasing it reaches the compact state sooner. Progress clamps at the endpoint
-and reverses when scrolling back up. Beside it, `easeOutPower` controls the curve:
+`--tabs-compression-scroll-px` in `src/styles/styles.css` controls the document
+scroll distance in CSS pixels from expanded tabs to fully compact (a bare number,
+currently `40`). Increasing it makes compression take more scrolling; decreasing
+it reaches the compact state sooner. Progress clamps at the endpoint and reverses
+when scrolling back up. Beside it, `--tabs-ease-out-power` controls the curve:
 `1` is linear, `2` is a gentle ease-out (75% compressed halfway through the scroll
 distance), and `3` is stronger (87.5% halfway through). Keep it at least `1`.
-The black background's opacity follows eased scroll progress, with 120ms
-smoothing. `fastScrollPxPerMs` controls the fling threshold in CSS pixels per
+Browsers supporting scroll timelines, animation ranges, typed custom properties
+and CSS exponential math use native `animation-timeline: scroll(root block)`.
+Registered progress drives the existing styling without JavaScript scroll
+listeners. Colors follow scroll directly, with no trailing timed transition.
+The JavaScript fallback reads the same distance and curve tokens. Its black
+background follows eased progress with 120ms smoothing.
+`fastScrollPxPerMs` in `CategoryTabs.astro` controls its fling threshold in CSS pixels per
 millisecond. Fast scrolling skips color transitions and snaps to the endpoint
 in the scroll direction inside the compression zone. Hold that endpoint until
 direction reverses or scrolling leaves the zone; upward scrolling farther down
 the page stays compact. Skip unchanged progress after compression finishes.
+The fallback's fully expanded endpoint clears color transitions immediately, and unchanged
+settling frames retain the fast-scroll bypass to avoid a delayed fade on iOS.
 The text and active underline switch to white at 50% opacity so they
 remain fully opaque and readable. Reduced motion shows static compact
 tabs immediately. The sticky header reserves the expanded tab height to keep

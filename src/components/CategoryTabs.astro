@@ -48,17 +48,16 @@ const { active } = Astro.props;
 </div>
 
 <script>
-  // Document scroll distance in CSS pixels from expanded tabs to fully compact.
-  const compressionScrollPx = 40;
-  // 1 is linear; 2 is a gentle ease-out; 3 slows more strongly near the end.
-  const easeOutPower = 3;
   // Fling speed in CSS pixels per millisecond; slow drags keep the eased curve.
   const fastScrollPxPerMs = 0.5;
 
-  // Use one JS scroll driver across browsers to keep compression and the endpoint
-  // color switch consistent without a separate CSS scroll-timeline fallback.
+  // Native timelines follow browser scrolling; this fast-scroll fallback is only
+  // for browsers missing the CSS timeline, range, math or typed-property support.
   function observeCategoryTabs(tabs: HTMLElement): () => void {
     const header = tabs.closest<HTMLElement>("[data-site-header]");
+    const styles = getComputedStyle(tabs);
+    const compressionScrollPx = Number.parseFloat(styles.getPropertyValue("--tabs-compression-scroll-px"));
+    const easeOutPower = Number.parseFloat(styles.getPropertyValue("--tabs-ease-out-power"));
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame: number | undefined;
     let lastProgress: number | undefined;
@@ -85,7 +84,11 @@ const { active } = Astro.props;
       }
       lastScrollY = scrollY;
       lastScrollTime = now;
-      tabs.toggleAttribute("data-fast-scroll", fast || snapDirection !== 0);
+      const fastScroll = fast || snapDirection !== 0;
+      // Keep the bypass through endpoint settling so a trailing fade cannot resume.
+      if (fastScroll) {
+        tabs.toggleAttribute("data-fast-scroll", true);
+      }
       const scrollProgress = reducedMotion.matches
         ? 1
         : snapDirection > 0
@@ -98,9 +101,11 @@ const { active } = Astro.props;
         return;
       }
       lastProgress = progress;
+      tabs.toggleAttribute("data-fast-scroll", fastScroll);
       tabs.style.setProperty("--tabs-progress", String(progress));
       header?.style.setProperty("--tabs-progress", String(progress));
       tabs.toggleAttribute("data-compact", scrollProgress === 1);
+      tabs.toggleAttribute("data-expanded", scrollProgress === 0);
       tabs.toggleAttribute("data-dark", progress >= 0.5);
     }
 
@@ -135,8 +140,19 @@ const { active } = Astro.props;
 
   function initializeCategoryTabs(): void {
     disposeCategoryTabs();
+    const header = document.querySelector<HTMLElement>("[data-site-header]");
+    header?.removeAttribute("data-tabs-driver");
+    header?.style.removeProperty("--tabs-progress");
     const tabs = document.querySelector<HTMLElement>("[data-category-tabs]");
-    if (tabs) {
+    if (tabs && header) {
+      if (
+        typeof CSS.registerProperty === "function" &&
+        CSS.supports("(animation-timeline: scroll(root block)) and (animation-range: 0px 40px) and (width: calc(1px * pow(0.5, 3)))")
+      ) {
+        header.dataset["tabsDriver"] = "css";
+        return;
+      }
+      header.dataset["tabsDriver"] = "js";
       stopObservingTabs = observeCategoryTabs(tabs);
     }
   }
@@ -174,12 +190,29 @@ const { active } = Astro.props;
     transition: background-color 120ms ease-out, color 120ms ease-out;
   }
 
-  .category-tabs[data-fast-scroll] .tabs-strip {
+  .category-tabs[data-fast-scroll] .tabs-strip,
+  .category-tabs[data-expanded] .tabs-strip {
     transition: none;
   }
 
   .category-tabs[data-dark] .tabs-strip {
     color: white;
+  }
+
+  :global(header[data-tabs-driver="css"]) .category-tabs {
+    --tabs-progress: inherit;
+  }
+
+  :global(header[data-tabs-driver="css"]) .tabs-strip {
+    transition: none;
+    animation: category-tabs-ink 1s steps(1, end) both;
+    animation-timeline: scroll(root block);
+    animation-range: 0px calc(var(--tabs-compression-scroll-px) * (1 - pow(0.5, 1 / var(--tabs-ease-out-power))) * 1px);
+  }
+
+  @keyframes category-tabs-ink {
+    from { color: black; }
+    to { color: white; }
   }
 
   .tabs-inset {
@@ -294,6 +327,11 @@ const { active } = Astro.props;
       background: black;
       color: white;
       transition: none;
+    }
+
+    :global(header[data-tabs-driver="css"]) .tabs-strip {
+      animation: none;
+      color: white;
     }
 
   }
