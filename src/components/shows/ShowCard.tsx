@@ -2,7 +2,7 @@ import type { PlaybackRecord } from "../../stores/playback/types";
 import type { PlaylistSave } from "../../stores/playlists/types";
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
-import { formatDate } from "../../utils/format-date";
+import { formatDate, formatDateTime } from "../../utils/format-date";
 import { getBasePath } from "../../utils/get-base-path";
 import PlaylistModal from "../playlists/PlaylistModal";
 import TagContainer from "../TagContainer";
@@ -14,6 +14,7 @@ type Props = {
 	tags: TagMap;
 	playlistSaves: readonly PlaylistSave[];
 	note?: string;
+	noteUpdatedAt?: string;
 	record?: Pick<PlaybackRecord, "positionInSeconds" | "inProgress"> | undefined;
 };
 
@@ -52,6 +53,7 @@ export default function ShowCard({
 	record,
 	playlistSaves,
 	note,
+	noteUpdatedAt,
 }: Props) {
 	const detailBase = getBasePath();
 	const modal = useRef<HTMLDialogElement>(null);
@@ -87,11 +89,19 @@ export default function ShowCard({
 				</time>
 				<TagContainer tagIds={show.tagIds} tags={tags} size="large" />
 				{renderDJs(show.djs, detailBase)}
-				{note !== undefined && (
+				{note !== undefined && note !== "" && (
 					<div className={styles["note"]}>
 						<div className={styles["note-header"]}>
-							<span>Note</span>
-							<button type="button" aria-label={`Edit note for ${show.title}`}>
+							{noteUpdatedAt && (
+								<time className={styles["note-date"]} dateTime={noteUpdatedAt}>
+									{formatDateTime(noteUpdatedAt)}
+								</time>
+							)}
+							<button
+								type="button"
+								className="button-secondary"
+								aria-label={`Edit note for ${show.title}`}
+							>
 								Edit
 							</button>
 						</div>

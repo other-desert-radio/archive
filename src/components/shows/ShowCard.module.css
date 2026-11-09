@@ -44,12 +44,13 @@
 }
 
 .note {
+	box-sizing: border-box;
 	align-self: flex-start;
 	max-width: 100%;
 	border: 1px solid black;
 	background: white;
 	color: black;
-	min-width: 0;
+	min-width: min(18rem, 100%);
 }
 
 .note-header {
@@ -57,17 +58,21 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: var(--space-xs);
-	padding: var(--space-xs);
-	border-bottom: 1px solid black;
-}
-
-.note-header button {
-	touch-action: manipulation;
+	padding: var(--space-sm);
 }
 
 .note-text {
-	padding: var(--space-xs);
+	padding: var(--space-sm);
 	white-space: pre-wrap;
+}
+
+.note-date {
+	font-style: italic;
+}
+
+.note-header button {
+	margin-left: auto;
+	color: #666;
 }
 
 .playlist-heart {
@@ -167,10 +172,12 @@
 		width: min(40%, var(--show-artwork-min));
 	}
 }
+
 @media (max-width: 300px) {
 	.show-card {
 		flex-direction: column;
 	}
+
 	.artwork {
 		width: 100%;
 	}

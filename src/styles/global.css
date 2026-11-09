@@ -103,3 +103,18 @@ a,
 button {
 	touch-action: manipulation;
 }
+
+.button-secondary {
+	border: 0;
+	padding: 0;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.button-secondary:hover {
+		font-weight: bold;
+	}
+}

@@ -62,6 +62,7 @@ export default function PlaylistPage() {
 											tags={tags}
 											record={record}
 											note={entry.note ?? ""}
+											noteUpdatedAt={entry.updatedAt}
 											playlistSaves={[]}
 										/>
 									) : (
