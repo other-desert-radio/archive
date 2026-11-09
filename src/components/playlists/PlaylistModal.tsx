@@ -39,6 +39,7 @@ export default function PlaylistModal({
 		playlists
 			.flatMap((playlist) => playlist.shows)
 			.find((entry) => entry.showId === showId && entry.note)?.note ?? "";
+	const noteLabel = savedNote ? "Note" : "Add a note";
 	const dirty =
 		selectedIds.length !== savedIds.length ||
 		selectedIds.some((id) => !savedIds.includes(id)) ||
@@ -183,11 +184,11 @@ export default function PlaylistModal({
 
 					{playlists.length > 0 && (
 						<label>
-							Add a note
+							{noteLabel}
 							<textarea
 								name="note"
 								rows={6}
-								aria-label="Add a note"
+								aria-label={noteLabel}
 								disabled={saving}
 								value={note ?? savedNote}
 								onChange={(event) => setNote(event.currentTarget.value)}

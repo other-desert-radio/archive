@@ -50,6 +50,7 @@ try {
 	await browser("click", button("Save to Playlist"));
 	await wait(`!document.querySelector('${saveDialog} ${button("New playlist")}').disabled`);
 	assert.equal(await evaluate(`document.querySelector('${saveDialog} h1').textContent`), "Save Show");
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} textarea').getAttribute('aria-label')`), "Add a note");
 	assert.equal(await evaluate(`document.querySelector('${saveDialog} ${button("Save playlist")}').disabled`), true);
 	// Clean backdrop dismisses; changed selections and notes require confirmation.
 	await browser("mouse", "move", "1", "1");

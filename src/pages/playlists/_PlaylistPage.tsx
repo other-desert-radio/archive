@@ -24,7 +24,7 @@ export default function PlaylistPage() {
 				<h1>{playlist?.title ?? "Playlist"}</h1>
 				<div className={styles["title-actions"]}>
 					<button type="button" className="button-primary">
-						Edit
+						Rename
 					</button>
 					<button type="button" className="button-primary button-danger">
 						Delete

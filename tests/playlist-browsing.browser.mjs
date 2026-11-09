@@ -79,6 +79,7 @@ try {
   await browser("click", editButton);
   await browser("wait", editDialog);
   assert.equal(await evaluate(`document.querySelector('${editDialog} h1').textContent`), "Edit");
+  assert.equal(await evaluate(`document.querySelector('${editDialog} textarea').getAttribute('aria-label')`), "Note");
   await browser("fill", `${editDialog} textarea`, "Edited from the playlist");
   await browser("click", `${editDialog} button[aria-label="Save playlist"]`);
   await browser("wait", "--fn", `!document.querySelector('${editDialog}')`);

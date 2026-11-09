@@ -51,5 +51,6 @@
 
 	.note-header button:hover {
 		font-style: italic;
+		text-decoration: underline;
 	}
 }
