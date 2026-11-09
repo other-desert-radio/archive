@@ -27,7 +27,13 @@ export default function PlaylistPage() {
 	const playlist = playlists.find((item) => item.id === playlistId);
 	return (
 		<div>
-			<h1>{playlist?.title ?? "Playlist"}</h1>
+			<div className={styles["title-flex"]}>
+				<h1>{playlist?.title ?? "Playlist"}</h1>
+				<div className={styles["title-actions"]}>
+					<button type="button">Edit</button>
+					<button type="button">Delete</button>
+				</div>
+			</div>
 			<p>Playlists are stored in this browser.</p>
 			<LoadingState
 				status={status}
