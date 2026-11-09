@@ -8,7 +8,7 @@ type Props = {
 const { active } = Astro.props;
 ---
 
-<div class="page-inset">
+<div class="page-inset" data-category-tabs>
   <div class="tabs">
     <!-- Warm visible destinations before a touch user taps, without preloading
        the entire archive. Astro respects reduced-data/slow-connection settings. -->
@@ -39,11 +39,59 @@ const { active } = Astro.props;
 <script>
   // Use one JS scroll driver across browsers to keep compression and the endpoint
   // color switch consistent without a separate CSS scroll-timeline fallback.
-  // The page-load binding will attach this controller and dispose it before swaps.
-  export function observeCategoryTabs(tabs: HTMLElement): () => void {
-    void tabs;
-    throw new Error("Not implemented");
+  function observeCategoryTabs(tabs: HTMLElement): () => void {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frame: number | undefined;
+
+    function update(): void {
+      frame = undefined;
+      const progress = reducedMotion.matches
+        ? 1
+        : Math.min(1, Math.max(0, window.scrollY / 160));
+      tabs.style.setProperty("--tabs-progress", String(progress));
+      tabs.toggleAttribute("data-compact", progress === 1);
+    }
+
+    function scheduleUpdate(): void {
+      if (frame === undefined) {
+        frame = window.requestAnimationFrame(update);
+      }
+    }
+
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("pageshow", scheduleUpdate);
+    reducedMotion.addEventListener("change", scheduleUpdate);
+    update();
+    scheduleUpdate();
+
+    return () => {
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("pageshow", scheduleUpdate);
+      reducedMotion.removeEventListener("change", scheduleUpdate);
+      if (frame !== undefined) {
+        window.cancelAnimationFrame(frame);
+      }
+    };
   }
+
+  let stopObservingTabs: (() => void) | undefined;
+
+  function disposeCategoryTabs(): void {
+    stopObservingTabs?.();
+    stopObservingTabs = undefined;
+  }
+
+  function initializeCategoryTabs(): void {
+    disposeCategoryTabs();
+    const tabs = document.querySelector<HTMLElement>("[data-category-tabs]");
+    if (tabs) {
+      stopObservingTabs = observeCategoryTabs(tabs);
+    }
+  }
+
+  initializeCategoryTabs();
+  document.addEventListener("astro:page-load", initializeCategoryTabs);
+  document.addEventListener("astro:before-swap", disposeCategoryTabs);
 </script>
 
 <style>
