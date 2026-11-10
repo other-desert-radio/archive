@@ -162,6 +162,7 @@ export default function SearchBar({
 					) {
 						event.preventDefault();
 						finalize(value);
+						event.currentTarget.blur();
 					}
 				}}
 			/>
@@ -172,9 +173,13 @@ export default function SearchBar({
 					className={styles["clear"]}
 					onClick={() => {
 						finalize(value);
-						root.current
-							?.querySelector("input")
-							?.focus({ preventScroll: true });
+						const input = root.current?.querySelector("input");
+						if (matchMedia("(pointer: coarse)").matches) {
+							input?.blur();
+							setOpen(false);
+						} else {
+							input?.focus({ preventScroll: true });
+						}
 						onChange("");
 					}}
 				>

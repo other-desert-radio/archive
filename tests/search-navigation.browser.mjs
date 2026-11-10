@@ -61,6 +61,8 @@ async function savedQueries(category) {
 async function historyChecks() {
 	await browser("fill", input, "history-enter");
 	await browser("press", "Enter");
+	assert.equal(await browser("eval", `document.activeElement === document.querySelector('${input}')`), "false");
+	await browser("click", input);
 	await browser("wait", 'button[aria-label="Search for history-enter"]');
 	await browser("fill", input, "history-clear");
 	await browser("click", 'button[aria-label="Clear search"]');
@@ -70,6 +72,7 @@ async function historyChecks() {
 	for (let index = 0; index < 4; index++) {
 		await browser("fill", input, `history-extra-${index}`);
 		await browser("press", "Enter");
+		await browser("click", input);
 		await browser("wait", `button[aria-label="Search for history-extra-${index}"]`);
 	}
 	assert.equal(await browser("eval", `(() => {
@@ -168,6 +171,14 @@ try {
 		assert.equal(await browser("eval", "window.searchNavigationDocument"), "true");
 		console.log("Detail Back restores each page's query; category navigation clears it; playlist Back restores its own query.");
 	}
+	await browser("set", "device", "iPhone 12");
+	await browser("reload");
+	await browser("wait", "--fn", 'matchMedia("(pointer: coarse)").matches && !document.querySelector("main astro-island").hasAttribute("ssr")');
+	await browser("fill", input, "mobile-clear");
+	await browser("press", "Enter");
+	await browser("click", 'button[aria-label="Clear search"]');
+	await waitForQuery("");
+	assert.equal(await browser("eval", `document.activeElement === document.querySelector('${input}')`), "false");
 } catch (error) {
 	console.error(await browser("eval", "JSON.stringify({url: location.href, main: document.querySelector('main')?.textContent.slice(0, 500)})"));
 	throw error;
