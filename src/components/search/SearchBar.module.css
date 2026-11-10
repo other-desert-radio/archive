@@ -72,11 +72,12 @@
 	top: 2.75rem;
 	z-index: 2;
 	box-sizing: border-box;
-	max-height: calc(13.75rem + 4px);
+	max-height: calc(13.75rem + 2px);
 	margin: 0;
 	padding: 0;
 	overflow-y: auto;
 	border: 2px solid black;
+	border-top: 0;
 	background: white;
 	color: black;
 	list-style: none;
