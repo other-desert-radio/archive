@@ -9,31 +9,19 @@ const tags = new Map([
 	[2, { id: 2, title: "Dark Ambient", color: "#ffffff" }],
 ]);
 
-test("Explore searches tag titles and keeps the supplied order", () => {
-	const html = renderToStaticMarkup(
-		<ExplorePane tags={tags} initialQuery="  aMbIeNt  " />,
-	);
-	assert.match(html, /aria-label="Explore Ambient"/);
-	assert.match(html, /aria-label="Explore Dark Ambient"/);
-	assert.doesNotMatch(html, /aria-label="Explore Jazz"/);
-	assert.ok(
-		html.indexOf("Explore Ambient") < html.indexOf("Explore Dark Ambient"),
-	);
-});
-
-test("Explore renders all tags for a whitespace query", () => {
-	const html = renderToStaticMarkup(
-		<ExplorePane tags={tags} initialQuery="  " />,
-	);
+test("Explore renders all tag links statically in supplied order", () => {
+	const html = renderToStaticMarkup(<ExplorePane tags={tags} />);
 	assert.equal((html.match(/aria-label="Explore /g) ?? []).length, tags.size);
+	assert.ok(html.indexOf("Explore Ambient") < html.indexOf("Explore Jazz"));
+	assert.ok(
+		html.indexOf("Explore Jazz") < html.indexOf("Explore Dark Ambient"),
+	);
+	assert.match(html, /data-explore-empty[^>]*hidden/);
+	assert.doesNotMatch(html, /<input/);
 });
 
-test("Explore shows an empty message for no matches or an empty catalog", () => {
-	for (const suppliedTags of [tags, new Map()]) {
-		const html = renderToStaticMarkup(
-			<ExplorePane tags={suppliedTags} initialQuery="no-matching-tag" />,
-		);
-		assert.match(html, /No tags found/);
-		assert.doesNotMatch(html, /aria-label="Explore /);
-	}
+test("Explore shows an empty message for an empty catalog", () => {
+	const html = renderToStaticMarkup(<ExplorePane tags={new Map()} />);
+	assert.match(html, /No tags found/);
+	assert.doesNotMatch(html, /hidden|aria-label="Explore /);
 });

@@ -7,6 +7,7 @@ import { gzipSync } from "node:zlib";
 // Production growth guards, measured with gzip regardless of preview-server
 // compression. These are transfer-size budgets, not device timing guarantees.
 // Category HTML includes Astro's inline hydration runtime and the shared tab controller.
+// Search hydrates DJ listings; Explore hydrates only its input, without catalog props.
 const KiB = 1024;
 const failures = [];
 
@@ -36,7 +37,7 @@ async function htmlFiles(directory) {
 try {
 	const assets = await readdir("dist/_astro");
 	for (const [extension, limit] of [
-		[".js", 100 * KiB],
+		[".js", 105 * KiB],
 		[".css", 5 * KiB],
 	]) {
 		const files = assets.filter((file) => file.endsWith(extension));
@@ -56,7 +57,7 @@ try {
 
 	for (const [route, limit] of [
 		["", 20 * KiB],
-		["djs", 11 * KiB],
+		["djs", 16 * KiB],
 		["explore", 14 * KiB],
 		["history", 7 * KiB],
 	]) {

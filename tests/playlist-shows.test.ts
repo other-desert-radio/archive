@@ -71,7 +71,7 @@ test("playlist search preserves matching entries, notes, playback, and newest-fi
 				showId,
 				addedAt: `2026-11-0${index + 1}T00:00:00Z`,
 				updatedAt: "2026-11-04T00:00:00Z",
-				note: "Keep Desert notes",
+				note: "Keep these notes",
 			}),
 		),
 	);
@@ -94,7 +94,7 @@ test("playlist search preserves matching entries, notes, playback, and newest-fi
 	assert.equal(matches[0]?.entry, entries[1]);
 	assert.equal(matches[0]?.record, record);
 	assert.equal(matches[0]?.show, catalog.get(2));
-	assert.equal(matches[0]?.entry.note, "Keep Desert notes");
+	assert.equal(matches[0]?.entry.note, "Keep these notes");
 	assert.deepEqual(resolvePlaylistShows({ ...input, query: "no-match" }), []);
 	assert.deepEqual(
 		resolvePlaylistShows({ ...input, query: "  " }).map(
@@ -106,4 +106,41 @@ test("playlist search preserves matching entries, notes, playback, and newest-fi
 		entries.map(({ showId }) => showId),
 		[1, 2, 3, -1],
 	);
+});
+
+test("playlist search matches user notes even when the show is unavailable", () => {
+	const template = fixture.data[0];
+	assert.ok(template);
+	const show = { ...template, id: 1, title: "Jazz" };
+	const entries = [
+		{
+			showId: 1,
+			addedAt: "2026-11-01T00:00:00Z",
+			updatedAt: "2026-11-01T00:00:00Z",
+			note: "Road trip favorite",
+		},
+		{
+			showId: -1,
+			addedAt: "2026-11-02T00:00:00Z",
+			updatedAt: "2026-11-02T00:00:00Z",
+			note: "Another road trip",
+		},
+		{
+			showId: -2,
+			addedAt: "2026-11-03T00:00:00Z",
+			updatedAt: "2026-11-03T00:00:00Z",
+		},
+	];
+	const matches = resolvePlaylistShows({
+		entries,
+		records: [],
+		showStore: { get: (id) => (id === 1 ? show : undefined) },
+		query: "  ROAD TRIP  ",
+	});
+	assert.deepEqual(
+		matches.map(({ entry }) => entry.showId),
+		[-1, 1],
+	);
+	assert.equal(matches[0]?.entry, entries[1]);
+	assert.equal(matches[1]?.entry, entries[0]);
 });

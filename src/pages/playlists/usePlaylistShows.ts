@@ -30,7 +30,11 @@ export function resolvePlaylistShows({
 			show: showStore.get(entry.showId),
 			record: recordsByShowId.get(entry.showId),
 		}));
-	return filterSearch(resolved, query, ({ show }) => show?.title ?? "");
+	return filterSearch(
+		resolved,
+		query,
+		({ show, entry }) => `${show?.title ?? ""} ${entry.note ?? ""}`,
+	);
 }
 
 /** Loads catalog data and subscribes to playback progress for playlist entries. */

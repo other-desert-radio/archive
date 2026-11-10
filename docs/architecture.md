@@ -140,11 +140,18 @@ the controlled SearchBar. The shared filterSearch helper trims queries, matches
 case-insensitive substrings in caller-selected text, and preserves result order
 and object references. Empty queries return all input items. Shows filters the
 complete initialized catalog in listing order before pagination and saves its
-query in history snapshots. DJs and Explore hydrate their existing build-time
-props and search names and tag titles respectively. Playlist search filters
-resolved entries by show title, keeping notes and playback metadata attached;
-unavailable entries remain stored and reappear when search is cleared. Search
+query in history snapshots. DJs hydrate their build-time props and search names.
+Explore keeps its tag links static; a small search island filters their rendered
+text without serializing the catalog again. Playlist search filters
+resolved entries by show title or user note, keeping playback metadata attached;
+unavailable entries can match their notes and remain stored when filtered out. Search
 has no global store and remains in normal document flow.
+
+The shared useSearchQuery hook retains queries in module memory during detail
+visits, keyed by page and playlist ID. Choosing a category tab clears this cache,
+so category navigation starts a fresh search. Shows history snapshots still
+restore their own query and pagination on Back/Forward. A full reload clears the
+query cache. Touch search inputs use at least 16px text to avoid iOS focus zoom.
 
 The archive listings use `src/pages/index.astro` for SHOWS and
 `src/pages/djs.astro` for DJs. Both use `CategoryTabs.astro` to select the

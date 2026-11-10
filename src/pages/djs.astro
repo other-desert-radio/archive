@@ -9,6 +9,8 @@ import { fetchTags } from "../utils/fetch-tags";
 
 const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
 const djs = await fetchDJs(pathToFileURL("public/resources/djs_brief.json"));
+const djTagIds = new Set(djs.flatMap((dj) => dj.tagIds.slice(0, 8)));
+const djTags = new Map([...tags].filter(([id]) => djTagIds.has(id)));
 const base = import.meta.env.BASE_URL;
 ---
 
@@ -19,6 +21,6 @@ const base = import.meta.env.BASE_URL;
 >
   <CategoryTabs slot="category-tabs" active="djs" />
   <div class="page-inset">
-    <DJsPane client:load base={base} djs={djs} tags={tags} />
+    <DJsPane client:load base={base} djs={djs} tags={djTags} />
   </div>
 </BaseLayout>

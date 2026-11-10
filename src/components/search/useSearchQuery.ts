@@ -1,7 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
 
-// Keep each page's query across client navigation; a full reload starts fresh.
+// Keep queries during detail visits; choosing a category starts a fresh search.
 const queries = new Map<string, string>();
+
+if (typeof document !== "undefined") {
+	document.addEventListener("astro:before-preparation", (event) => {
+		if (event.sourceElement?.closest("[data-category-tabs] a")) {
+			queries.clear();
+		}
+	});
+}
 
 export function useSearchQuery(key: string, initialQuery?: string) {
 	const [query, setQuery] = useState(initialQuery ?? "");

@@ -28,13 +28,12 @@ type Props = {
 	showIds: number[];
 	tags: TagMap;
 	initialOffset?: number;
-	initialLoading?: boolean;
 	initialQuery?: string;
 };
 
 /**
  * Listing snapshots keyed by Astro's history.state.index, so Back/Forward can
- * restore each visit's loaded cards, tags, pagination offset and loading state.
+ * restore each visit's loaded cards, tags, pagination offset and query.
  * Module memory survives ClientRouter swaps even though the island unmounts.
  * A full refresh clears this map; IndexedDB caches catalog data separately.
  * Astro owns the saved scroll coordinates, which are not stored here.
@@ -77,7 +76,6 @@ export default function ShowsPane({
 	showIds,
 	tags,
 	initialOffset = shows.length,
-	initialLoading = showIds.length > shows.length,
 	initialQuery,
 }: Props) {
 	const stores = useStores();
@@ -105,10 +103,7 @@ export default function ShowsPane({
 
 	const [visibleTags, setVisibleTags] = useState(tags);
 	const [offset, setOffset] = useState(initialOffset);
-	const { status, retry: retryLoading } = useInitialization(
-		stores,
-		initialLoading ? "loading" : "ready",
-	);
+	const { status, retry: retryLoading } = useInitialization(stores);
 
 	const matchingShows = useMemo(() => {
 		if (status !== "ready") {
@@ -144,14 +139,13 @@ export default function ShowsPane({
 				shows: visible,
 				tags: visibleTags,
 				initialOffset: offset,
-				initialLoading: loading,
 				initialQuery: query,
 			});
 		};
 		// Save the outgoing history entry before the router unmounts this listing.
 		document.addEventListener("astro:before-swap", saveVisit);
 		return () => document.removeEventListener("astro:before-swap", saveVisit);
-	}, [showIds, visible, visibleTags, offset, loading, query]);
+	}, [showIds, visible, visibleTags, offset, query]);
 
 	useEffect(() => {
 		if (needsCatalog && status === "ready") {

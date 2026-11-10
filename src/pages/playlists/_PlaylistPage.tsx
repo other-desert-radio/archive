@@ -45,16 +45,19 @@ export default function PlaylistPage() {
 	}, [editingShowId]);
 	const [playlistId, setPlaylistId] = useState("");
 	const [query, setQuery] = useSearchQuery(`playlist:${playlistId}`);
+
 	useEffect(() => {
 		setPlaylistId(new URLSearchParams(window.location.search).get("id") ?? "");
 	}, []);
 	const playlist = playlists.find((item) => item.id === playlistId);
+
 	const {
 		shows,
 		tags,
 		status: showStatus,
 		retry,
-	} = usePlaylistShows(playlist?.shows ?? [], query);
+	} = usePlaylistShows(playlist?.shows ?? [], query); // search happens in here
+
 	async function rename(event: SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
 		if (pending.current || !playlist || !draftTitle?.trim()) {

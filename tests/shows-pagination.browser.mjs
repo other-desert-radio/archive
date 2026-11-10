@@ -103,7 +103,7 @@ try {
 	assert.equal(await evaluate("document.querySelector('main [class*=sentinel]') === null"), true);
 	await evaluate("scrollTo(0, 0); true");
 	const searchInput = 'input[type="search"]';
-	const matching = catalog.data.filter((show) => show.title.toLowerCase().includes("the"));
+	const matching = catalog.data.filter((show) => `${show.title} ${show.djs.map((dj) => dj.title)} ${show.date}`.toLowerCase().includes("the"));
 	assert.ok(matching.length > 20);
 	await browser("fill", searchInput, "  ThE  ");
 	await browser("wait", "--fn", "document.querySelectorAll('main article').length === 20");
