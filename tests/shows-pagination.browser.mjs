@@ -97,16 +97,6 @@ try {
 	const cardTags = await evaluate(`Array.from(document.querySelectorAll('main article'), (card) => Array.from(card.querySelectorAll('a.tag'), (link) => Number(link.pathname.split('/').pop())))`);
 	assert.deepEqual(cardTags, catalog.data.map((show) => show.tagIds));
 	assert.equal(await evaluate("document.querySelector('main [class*=sentinel]') === null"), true);
-	await browser("click", "main article:last-child button[aria-label^='Play ']");
-	await browser("wait", "main article:last-child button[aria-label^='Pause ']");
-	await browser("wait", "[data-miniplayer] iframe");
-	// Exercise the Safari compatibility swap while an iframe is active.
-	await evaluate("Object.defineProperty(Element.prototype, 'moveBefore', { value: undefined, configurable: true }); true");
-	for (const width of [390, 1440]) {
-		await browser("set", "viewport", String(width), "844");
-		await verifyHistoryReturn(65);
-	}
-	console.log("History Back restores loaded batches and scroll on phone and desktop.");
 	await evaluate("scrollTo(0, 0); true");
 	const searchInput = 'input[type="search"]';
 	const matching = catalog.data.filter((show) => show.title.toLowerCase().includes("the"));
@@ -129,6 +119,22 @@ try {
 	await browser("wait", "--fn", "document.querySelectorAll('main article').length === 20");
 	assert.deepEqual(await showIds(), catalog.data.slice(0, 20).map((show) => show.id));
 	console.log("Search covers the full catalog, paginates ordered matches, resets queries, handles no matches, and clears to the first batch.");
+	// Restore the full listing for the existing playback/history checks.
+	while (await evaluate("document.querySelectorAll('main article').length") < catalog.data.length) {
+		const count = await evaluate("document.querySelectorAll('main article').length");
+		await evaluate("scrollTo(0, document.body.scrollHeight); true");
+		await browser("wait", "--fn", `document.querySelectorAll('main article').length > ${count}`);
+	}
+	await browser("click", "main article:last-child button[aria-label^='Play ']");
+	await browser("wait", "main article:last-child button[aria-label^='Pause ']");
+	await browser("wait", "[data-miniplayer] iframe");
+	// Exercise the Safari compatibility swap while an iframe is active.
+	await evaluate("Object.defineProperty(Element.prototype, 'moveBefore', { value: undefined, configurable: true }); true");
+	for (const width of [390, 1440]) {
+		await browser("set", "viewport", String(width), "844");
+		await verifyHistoryReturn(65);
+	}
+	console.log("History Back restores loaded batches and scroll on phone and desktop.");
 	console.log("Static first batch, loading style, retry, ordered infinite scroll, final batch, responsive layout and appended playback pass.");
 } finally {
 	await browser("close");

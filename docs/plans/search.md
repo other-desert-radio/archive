@@ -50,12 +50,17 @@ No cross-island event bridge. Main risk: Shows pagination and navigation snapsho
 
 ## Next action
 
-Chunk 6 is being reviewed in smaller steps. Added matchingShows in ShowsPane:
-after initialization, getPage resolves all showIds in listing order and
-filterSearch matches titles. Rendering and pagination are not connected yet.
-The unused matchingShows variable temporarily fails the unused-variable checks;
-the next step is to consume it in pagination after review.
-All four panes have controlled inputs; filtering remains disconnected. Each page
+Chunk 6 is being reviewed in smaller steps. matchingShows uses getPage to resolve
+all showIds in listing order and filterSearch to match titles after initialization.
+Pagination now slices matchingShows to the visible offset, increasing by 20;
+query changes reset to 20. Initial HTML still uses supplied cards, and active
+search waits for initialization rather than reporting false no-matches.
+Browser checks confirm filtered batches and no-results behavior. Build, Astro
+check, TypeScript and ESLint pass; formatting remains blocked by existing manual
+spacing changes. The broader browser regression restores all cards synchronously
+but later shifts history scroll by 10px (15644 to 15634); investigate during the
+next history-restoration step, along with saving the query.
+All four panes have controlled inputs; only Shows filters results. Each page
 shell explicitly imports search CSS so ClientRouter swaps and manual Shows
 history mounts retain styles. Focus thickens the existing border without an
 outer outline or layout shift.
