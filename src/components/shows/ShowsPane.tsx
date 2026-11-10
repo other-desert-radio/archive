@@ -18,6 +18,7 @@ import LoadingState from "../LoadingState";
 import { usePlaylists } from "../playlists/usePlaylists";
 import { filterSearch } from "../search/filterSearch";
 import SearchBar from "../search/SearchBar";
+import { useSearchQuery } from "../search/useSearchQuery";
 import ShowCard from "./ShowCard";
 import styles from "./ShowsPane.module.css";
 import { getPlaylistSavesByShowId } from "./utils/getPlaylistSavesByShowId";
@@ -77,10 +78,10 @@ export default function ShowsPane({
 	tags,
 	initialOffset = shows.length,
 	initialLoading = showIds.length > shows.length,
-	initialQuery = "",
+	initialQuery,
 }: Props) {
 	const stores = useStores();
-	const [query, setQuery] = useState(initialQuery);
+	const [query, setQuery] = useSearchQuery("shows", initialQuery);
 	const { playlists, status: playlistStatus } = usePlaylists();
 	const playlistSavesByShowId = useMemo(
 		() => getPlaylistSavesByShowId(playlistStatus === "ready" ? playlists : []),
@@ -111,7 +112,7 @@ export default function ShowsPane({
 
 	const matchingShows = useMemo(() => {
 		if (status !== "ready") {
-			return query === initialQuery ? shows : [];
+			return query === (initialQuery ?? "") ? shows : [];
 		}
 		const allShows = stores.showStore.getPage(showIds, 0, showIds.length);
 

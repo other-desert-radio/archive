@@ -5,6 +5,7 @@ import PlaylistModal from "../../components/playlists/PlaylistModal";
 import PlaylistShowCard from "../../components/playlists/PlaylistShowCard";
 import { usePlaylists } from "../../components/playlists/usePlaylists";
 import SearchBar from "../../components/search/SearchBar";
+import { useSearchQuery } from "../../components/search/useSearchQuery";
 import { useStores } from "../../stores";
 import { getBasePath } from "../../utils/get-base-path";
 import styles from "./PlaylistPage.module.css";
@@ -17,7 +18,6 @@ function focusTitle(input: HTMLTextAreaElement | null) {
 
 export default function PlaylistPage() {
 	const { playlists, status } = usePlaylists();
-	const [query, setQuery] = useState("");
 	const { playlistStore } = useStores();
 	const [draftTitle, setDraftTitle] = useState<string>();
 	const [saving, setSaving] = useState(false);
@@ -44,6 +44,7 @@ export default function PlaylistPage() {
 		}
 	}, [editingShowId]);
 	const [playlistId, setPlaylistId] = useState("");
+	const [query, setQuery] = useSearchQuery(`playlist:${playlistId}`);
 	useEffect(() => {
 		setPlaylistId(new URLSearchParams(window.location.search).get("id") ?? "");
 	}, []);

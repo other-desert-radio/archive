@@ -1,9 +1,10 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import type { DJ } from "../../utils/fetch-djs";
 import type { TagMap } from "../../utils/fetch-tags";
 import { getBasePath } from "../../utils/get-base-path";
 import { filterSearch } from "../search/filterSearch";
 import SearchBar from "../search/SearchBar";
+import { useSearchQuery } from "../search/useSearchQuery";
 import DJCard from "./DJCard";
 import styles from "./DJsPane.module.css";
 
@@ -14,8 +15,8 @@ type Props = {
 	initialQuery?: string;
 };
 
-export default function DJsPane({ base, djs, tags, initialQuery = "" }: Props) {
-	const [query, setQuery] = useState(initialQuery);
+export default function DJsPane({ base, djs, tags, initialQuery }: Props) {
+	const [query, setQuery] = useSearchQuery("djs", initialQuery);
 	const detailBase = getBasePath(base);
 
 	const matchingDJs = useMemo(
