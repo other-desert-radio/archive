@@ -33,7 +33,10 @@ async function verifyHistoryReturn(index) {
 			y: scrollY,
 		};
 	}, { once: true }); history.back(); true`);
-	await browser("wait", "--fn", `location.pathname === '/archive/' && document.querySelectorAll('main article').length === ${saved.count} && Math.abs(scrollY - ${saved.y}) < 2`);
+	await browser("wait", "--fn", `location.pathname === '/archive/' && document.querySelectorAll('main article').length === ${saved.count} && Math.abs(scrollY - ${saved.y}) < 2`).catch(async (error) => {
+		console.log("History restore failure", saved, await evaluate(`({ count: document.querySelectorAll('main article').length, y: scrollY, first: window.paginationFirstSwap })`));
+		throw error;
+	});
 	assert.deepEqual(await evaluate("window.paginationFirstSwap"), { count: saved.count, y: saved.y });
 	assert.equal(await evaluate("window.paginationDocument"), true);
 	assert.equal(await evaluate("!window.paginationIframe || document.querySelector('[data-miniplayer] iframe') === window.paginationIframe"), true);
@@ -104,6 +107,28 @@ try {
 		await verifyHistoryReturn(65);
 	}
 	console.log("History Back restores loaded batches and scroll on phone and desktop.");
+	await evaluate("scrollTo(0, 0); true");
+	const searchInput = 'input[type="search"]';
+	const matching = catalog.data.filter((show) => show.title.toLowerCase().includes("the"));
+	assert.ok(matching.length > 20);
+	await browser("fill", searchInput, "  ThE  ");
+	await browser("wait", "--fn", "document.querySelectorAll('main article').length === 20");
+	const showIds = () => evaluate(`Array.from(document.querySelectorAll('main article a[aria-label^="View "][href*="/shows/"]'), (link) => Number(link.pathname.split('/').pop()))`);
+	assert.deepEqual(await showIds(), matching.slice(0, 20).map((show) => show.id));
+	await evaluate("scrollTo(0, document.body.scrollHeight); true");
+	await browser("wait", "--fn", "document.querySelectorAll('main article').length === 40");
+	assert.deepEqual(await showIds(), matching.slice(0, 40).map((show) => show.id));
+	await evaluate("scrollTo(0, 0); true");
+	const beyondFirstBatch = catalog.data[20];
+	await browser("fill", searchInput, beyondFirstBatch.title);
+	await browser("wait", "--fn", "document.querySelectorAll('main article').length > 0 && document.querySelectorAll('main article').length < 20");
+	assert.deepEqual(await showIds(), catalog.data.filter((show) => show.title.toLowerCase().includes(beyondFirstBatch.title.toLowerCase())).map((show) => show.id));
+	await browser("fill", searchInput, "no-matching-show-92873");
+	await browser("wait", "--fn", "document.querySelectorAll('main article').length === 0 && document.querySelector('main').textContent.includes('No shows found.')");
+	await browser("fill", searchInput, "   ");
+	await browser("wait", "--fn", "document.querySelectorAll('main article').length === 20");
+	assert.deepEqual(await showIds(), catalog.data.slice(0, 20).map((show) => show.id));
+	console.log("Search covers the full catalog, paginates ordered matches, resets queries, handles no matches, and clears to the first batch.");
 	console.log("Static first batch, loading style, retry, ordered infinite scroll, final batch, responsive layout and appended playback pass.");
 } finally {
 	await browser("close");

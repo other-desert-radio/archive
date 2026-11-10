@@ -50,7 +50,11 @@ No cross-island event bridge. Main risk: Shows pagination and navigation snapsho
 
 ## Next action
 
-Review shared filtering and its focused tests, then integrate Shows in chunk 6.
+Chunk 6 is being reviewed in smaller steps. Added matchingShows in ShowsPane:
+after initialization, getPage resolves all showIds in listing order and
+filterSearch matches titles. Rendering and pagination are not connected yet.
+The unused matchingShows variable temporarily fails the unused-variable checks;
+the next step is to consume it in pagination after review.
 All four panes have controlled inputs; filtering remains disconnected. Each page
 shell explicitly imports search CSS so ClientRouter swaps and manual Shows
 history mounts retain styles. Focus thickens the existing border without an

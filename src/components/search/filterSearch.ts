@@ -6,7 +6,7 @@ export function filterSearch<T>(
 ): readonly T[] {
 	const normalizedQuery = query.trim().toLowerCase();
 	/**
-	 * return all if no saerch item
+	 * return all if no search item
 	 */
 	if (!normalizedQuery) {
 		return items;

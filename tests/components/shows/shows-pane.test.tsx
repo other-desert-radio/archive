@@ -1,9 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
-import ShowsPane, {
-	getPlaylistSavesByShowId,
-} from "../../../src/components/shows/ShowsPane";
+import ShowsPane from "../../../src/components/shows/ShowsPane";
+import { getPlaylistSavesByShowId } from "../../../src/components/shows/utils/getPlaylistSavesByShowId";
 import fixture from "../../res/shows.json";
 import tags from "../../res/tags.json";
 
