@@ -18,7 +18,8 @@
 	opacity: 1;
 }
 
-.input:focus-visible {
-	outline: 2px solid black;
-	outline-offset: 0.125rem;
+.input:focus {
+	padding: calc(var(--space-xs) - 2px) calc(var(--space-sm) - 2px);
+	border-width: 4px;
+	outline: none;
 }
