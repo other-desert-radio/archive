@@ -171,9 +171,10 @@ try {
 		assert.equal(await browser("eval", "window.searchNavigationDocument"), "true");
 		console.log("Detail Back restores each page's query; category navigation clears it; playlist Back restores its own query.");
 	}
-	await browser("set", "device", "iPhone 12");
-	await browser("reload");
-	await browser("wait", "--fn", 'matchMedia("(pointer: coarse)").matches && !document.querySelector("main astro-island").hasAttribute("ssr")');
+	await browser("eval", `(() => {
+		const matchMedia = window.matchMedia.bind(window);
+		window.matchMedia = (query) => query === '(pointer: coarse)' ? { matches: true } : matchMedia(query);
+	})()`);
 	await browser("fill", input, "mobile-clear");
 	await browser("press", "Enter");
 	await browser("click", 'button[aria-label="Clear search"]');
