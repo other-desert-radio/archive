@@ -181,7 +181,7 @@ export default function ShowsPane({
 
 	return (
 		<>
-			<SearchBar value={query} onChange={changeQuery} />
+			<SearchBar historyCategory="shows" value={query} onChange={changeQuery} />
 			{!loading && !failed && resultCount === 0 && <p>No shows found.</p>}
 			<div className={styles["show-container-grid"]}>
 				{visible.map((show) => (

@@ -74,7 +74,7 @@ export async function runIndexedDBChecks() {
 				request.onerror = () => reject(request.error);
 			});
 			const inspect = () => new Promise((resolve, reject) => {
-				const request = indexedDB.open('odr-archive', 4);
+				const request = indexedDB.open('odr-archive', 5);
 				request.onsuccess = () => resolve(request.result);
 				request.onerror = () => reject(request.error);
 			});
@@ -97,7 +97,7 @@ export async function runIndexedDBChecks() {
 			check(initial[0].length === 0 && initial[1] === undefined, 'Empty reads');
 			const db = await inspect();
 			const schema = db.transaction(['shows', 'metadata', 'tags', 'playback', 'playlists'], 'readonly');
-			check(db.version === 4, 'Schema version');
+			check(db.version === 5, 'Schema version');
 			check(schema.objectStore('playlists').keyPath === 'id', 'Playlist primary key');
 			check(schema.objectStore('playback').keyPath === 'showId', 'Playback primary key');
 			check(schema.objectStore('tags').keyPath === 'id', 'Tag primary key');
@@ -283,6 +283,37 @@ export async function runIndexedDBChecks() {
 			title: "Preserved", revision: 12, tags: [{ id: 7, title: "Preserved tag" }],
 			playback: [{ showId: 42, inProgress: true, positionInSeconds: 23, history: [] }], playlists: [],
 		});
+		const upgradedV4 = JSON.parse(await browser("eval", `(async () => {
+			await new Promise((resolve, reject) => {
+				const request = indexedDB.deleteDatabase('odr-archive');
+				request.onsuccess = resolve; request.onerror = () => reject(request.error);
+			});
+			await new Promise((resolve, reject) => {
+				const request = indexedDB.open('odr-archive', 4);
+				request.onupgradeneeded = () => {
+					for (const [name, keyPath, record] of [
+						['shows', 'id', {id: 42}], ['tags', 'id', {id: 7}],
+						['metadata', 'key', {key: 'shows', revision: 12}],
+						['playback', 'showId', {showId: 42}], ['playlists', 'id', {id: 'keep'}]
+					]) request.result.createObjectStore(name, {keyPath}).put(record);
+				};
+				request.onsuccess = () => { request.result.close(); resolve(); };
+				request.onerror = () => reject(request.error);
+			});
+			const { createIndexedDB } = await import('/database.js');
+			const db = createIndexedDB();
+			for (const category of ['shows', 'explore', 'djs']) {
+				const store = db.getObjectStore('search_' + category);
+				await store.set({query: 'jazz', date: 123});
+				if ((await store.get('jazz')).date !== 123) throw new Error('History persistence');
+				await store.delete('jazz');
+				if ((await store.getAll()).length) throw new Error('History deletion');
+			}
+			const counts = await Promise.all(['shows', 'tags', 'metadata', 'playback', 'playlists'].map(async name => (await db.getObjectStore(name).getAll()).length));
+			await db.getObjectStore('playlists').delete('keep');
+			return counts;
+		})()`));
+		assert.deepEqual(upgradedV4, [1, 1, 1, 1, 1]);
 		const likedCreation = JSON.parse(await browser("eval", `(async () => {
 			const check = (ok, message) => { if (!ok) throw new Error(message); };
 			const { createIndexedDB } = await import(new URL('/database.js', location.href).href);

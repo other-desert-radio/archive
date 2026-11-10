@@ -26,7 +26,7 @@ export default function DJsPane({ base, djs, tags, initialQuery }: Props) {
 
 	return (
 		<>
-			<SearchBar value={query} onChange={setQuery} />
+			<SearchBar historyCategory="djs" value={query} onChange={setQuery} />
 			{matchingDJs.length === 0 && <p>No DJs found.</p>}
 			<div className={styles["djs-container-grid"]}>
 				{matchingDJs.map((dj) => (

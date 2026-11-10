@@ -81,8 +81,9 @@ on pull requests and pushes to main.
   takes 2000ms; DJ/show content must be visible before it finishes. Prefetching
   is disabled and HTML is not cached for these cases.
 - All emitted JS combined has a 105 KiB gzip budget; all CSS combined has a
-  5 KiB budget. Root HTML allows 20 KiB for 20 initial cards and their hydration data;
-  Explore allows 14 KiB for the current tag catalog, DJs 16 KiB, and History 7 KiB.
+  5 KiB budget. Root HTML allows 20.1 KiB for 20 initial cards and their hydration data;
+  Explore allows 14 KiB for the current tag catalog, DJs 16 KiB, and History 7 KiB. The root allowance includes the shared search-history
+  markup and asset references.
   Search hydrates DJs with catalog props containing only tags displayed by its
   cards. Explore keeps its links static and hydrates only the input. The JS
   budget includes shared search behavior.

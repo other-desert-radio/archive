@@ -16,7 +16,7 @@ export function createIndexedDB(): Database {
 			return connection;
 		}
 		connection = new Promise<IDBDatabase>((resolve, reject) => {
-			const request = indexedDB.open("odr-archive", 4);
+			const request = indexedDB.open("odr-archive", 5);
 			let abandoned = false;
 			const timeout = setTimeout(() => {
 				fail(new Error("Opening archive storage timed out"));
@@ -35,6 +35,11 @@ export function createIndexedDB(): Database {
 					return;
 				}
 				const db = request.result;
+				for (const name of ["search_shows", "search_explore", "search_djs"]) {
+					if (!db.objectStoreNames.contains(name)) {
+						db.createObjectStore(name, { keyPath: "query" });
+					}
+				}
 				if (!db.objectStoreNames.contains("playlists")) {
 					db.createObjectStore("playlists", { keyPath: "id" });
 				}
