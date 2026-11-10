@@ -17,8 +17,8 @@ separate scaffolding request before advancing, per the development workflow.
 ## Chunks
 
 - [x] 1. Create empty SearchBar.tsx, SearchBar.module.css, filterSearch.ts, and
-  tests/search.test.ts. Await structure review.
-- [ ] 2. Define controlled SearchBar props (value, onChange) and generic
+  tests/search.test.ts. Structure approved.
+- [x] 2. Define controlled SearchBar props (value, onChange) and generic
   filterSearch<T>(items: readonly T[], query: string, stringify: (item: T) => string):
   readonly T[]. Keep unfinished code disconnected from working pages.
 - [ ] 3. Implement SearchBar: accessible label, SEARCH... placeholder, transparent
@@ -50,4 +50,6 @@ No cross-island event bridge. Main risk: Shows pagination and navigation snapsho
 
 ## Next action
 
-Review the empty file structure, then request scaffolding to begin chunk 2.
+Review scaffolding, then implement SearchBar in chunk 3. Both exported functions
+currently throw "Not implemented" and have no page callers. CSS and tests remain
+empty until their implementation chunks.
