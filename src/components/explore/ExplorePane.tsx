@@ -7,15 +7,16 @@ type Props = {
 };
 
 export default function ExplorePane({ tags }: Props) {
-	if (tags.size === 0) {
-		return <p>No tags found.</p>;
-	}
-
 	return (
-		<div className={styles["tags-container"]}>
-			{Array.from(tags.values()).map((tag) => (
-				<ExploreTagView key={tag.id} tag={tag} />
-			))}
-		</div>
+		<>
+			<p data-explore-empty hidden={tags.size > 0}>
+				No tags found.
+			</p>
+			<div className={styles["tags-container"]} data-explore-tags>
+				{Array.from(tags.values()).map((tag) => (
+					<ExploreTagView key={tag.id} tag={tag} />
+				))}
+			</div>
+		</>
 	);
 }

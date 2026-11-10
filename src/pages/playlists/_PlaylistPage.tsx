@@ -4,6 +4,8 @@ import LoadingState from "../../components/LoadingState";
 import PlaylistModal from "../../components/playlists/PlaylistModal";
 import PlaylistShowCard from "../../components/playlists/PlaylistShowCard";
 import { usePlaylists } from "../../components/playlists/usePlaylists";
+import SearchBar from "../../components/search/SearchBar";
+import { useSearchQuery } from "../../components/search/useSearchQuery";
 import { useStores } from "../../stores";
 import { getBasePath } from "../../utils/get-base-path";
 import styles from "./PlaylistPage.module.css";
@@ -42,16 +44,20 @@ export default function PlaylistPage() {
 		}
 	}, [editingShowId]);
 	const [playlistId, setPlaylistId] = useState("");
+	const [query, setQuery] = useSearchQuery(`playlist:${playlistId}`);
+
 	useEffect(() => {
 		setPlaylistId(new URLSearchParams(window.location.search).get("id") ?? "");
 	}, []);
 	const playlist = playlists.find((item) => item.id === playlistId);
+
 	const {
 		shows,
 		tags,
 		status: showStatus,
 		retry,
-	} = usePlaylistShows(playlist?.shows ?? []);
+	} = usePlaylistShows(playlist?.shows ?? [], query); // search happens in here
+
 	async function rename(event: SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
 		if (pending.current || !playlist || !draftTitle?.trim()) {
@@ -178,6 +184,7 @@ export default function PlaylistPage() {
 			<p className={styles["disclaimer"]}>
 				Playlists are stored locally on this device.
 			</p>
+			{playlist && <SearchBar value={query} onChange={setQuery} />}
 			<LoadingState
 				status={status}
 				loading="Loading playlist..."
@@ -197,7 +204,11 @@ export default function PlaylistPage() {
 						}
 					>
 						{shows.length === 0 ? (
-							<p>No shows in this playlist.</p>
+							<p>
+								{playlist.shows.length === 0
+									? "No shows in this playlist."
+									: "No shows found."}
+							</p>
 						) : (
 							<section
 								className={styles["shows-grid"]}

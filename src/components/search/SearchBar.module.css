@@ -1,0 +1,62 @@
+.search {
+	position: relative;
+	margin-bottom: var(--space-md);
+}
+
+.input {
+	box-sizing: border-box;
+	display: block;
+	width: 100%;
+	min-width: 0;
+	min-height: 2.75rem;
+	padding: var(--space-xs) 2.75rem var(--space-xs) var(--space-sm);
+	border: 2px solid black;
+	border-radius: 0;
+	background: transparent;
+	color: black;
+	font: inherit;
+}
+
+.input::placeholder {
+	color: black;
+	opacity: 1;
+}
+
+@media (hover: none) and (pointer: coarse) {
+	.input {
+		/* iOS zooms focused inputs when their text is smaller than 16px. */
+		font-size: max(1rem, 16px);
+	}
+}
+
+.input:focus {
+	padding: calc(var(--space-xs) - 2px) calc(2.75rem - 2px)
+		calc(var(--space-xs) - 2px) calc(var(--space-sm) - 2px);
+	border-width: 4px;
+	outline: none;
+}
+
+.input::-webkit-search-cancel-button {
+	display: none;
+}
+
+.clear {
+	position: absolute;
+	inset-inline-end: 0;
+	top: 0;
+	display: grid;
+	place-items: center;
+	width: 2.75rem;
+	height: 100%;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: black;
+	cursor: pointer;
+	touch-action: manipulation;
+}
+
+.clear svg {
+	width: 1.25rem;
+	height: 1.25rem;
+}

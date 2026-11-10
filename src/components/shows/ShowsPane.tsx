@@ -11,25 +11,29 @@ import { createRoot } from "react-dom/client";
 import { useInitialization } from "../../hooks/useInitialization";
 import { useStores } from "../../stores";
 import type { PlaybackRecord } from "../../stores/playback/types";
-import type { Playlist, PlaylistSave } from "../../stores/playlists/types";
+import type { PlaylistSave } from "../../stores/playlists/types";
 import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
 import LoadingState from "../LoadingState";
 import { usePlaylists } from "../playlists/usePlaylists";
+import { filterSearch } from "../search/filterSearch";
+import SearchBar from "../search/SearchBar";
+import { useSearchQuery } from "../search/useSearchQuery";
 import ShowCard from "./ShowCard";
 import styles from "./ShowsPane.module.css";
+import { getPlaylistSavesByShowId } from "./utils/getPlaylistSavesByShowId";
 
 type Props = {
 	shows: Show[];
 	showIds: number[];
 	tags: TagMap;
 	initialOffset?: number;
-	initialLoading?: boolean;
+	initialQuery?: string;
 };
 
 /**
  * Listing snapshots keyed by Astro's history.state.index, so Back/Forward can
- * restore each visit's loaded cards, tags, pagination offset and loading state.
+ * restore each visit's loaded cards, tags, pagination offset and query.
  * Module memory survives ClientRouter swaps even though the island unmounts.
  * A full refresh clears this map; IndexedDB caches catalog data separately.
  * Astro owns the saved scroll coordinates, which are not stored here.
@@ -37,29 +41,6 @@ type Props = {
 const visits = new Map<number, Props>();
 const emptyRecords: readonly PlaybackRecord[] = [];
 const emptyPlaylistSaves: readonly PlaylistSave[] = [];
-
-// Index once per playlist snapshot so cards receive only their saves without rescanning every playlist.
-// Playlists                         Saves by show ID
-// A: [show 1, show 2]  -->           1: [{ playlistId: A, title }]
-// B: [show 2]                       2: [{ playlistId: A, title },
-//                                       { playlistId: B, title }]
-export function getPlaylistSavesByShowId(playlists: readonly Playlist[]) {
-	const savesByShowId = new Map<number, PlaylistSave[]>();
-	for (const playlist of playlists) {
-		for (const entry of playlist.shows) {
-			let saves = savesByShowId.get(entry.showId);
-			if (!saves) {
-				saves = [];
-				savesByShowId.set(entry.showId, saves);
-			}
-			saves.push({
-				playlistId: playlist.id,
-				title: playlist.title,
-			});
-		}
-	}
-	return savesByShowId;
-}
 
 if (typeof document !== "undefined") {
 	document.addEventListener("astro:before-swap", (event) => {
@@ -95,9 +76,10 @@ export default function ShowsPane({
 	showIds,
 	tags,
 	initialOffset = shows.length,
-	initialLoading = showIds.length > shows.length,
+	initialQuery,
 }: Props) {
 	const stores = useStores();
+	const [query, setQuery] = useSearchQuery("shows", initialQuery);
 	const { playlists, status: playlistStatus } = usePlaylists();
 	const playlistSavesByShowId = useMemo(
 		() => getPlaylistSavesByShowId(playlistStatus === "ready" ? playlists : []),
@@ -119,18 +101,34 @@ export default function ShowsPane({
 		[records],
 	);
 
-	const [visible, setVisible] = useState(shows);
 	const [visibleTags, setVisibleTags] = useState(tags);
 	const [offset, setOffset] = useState(initialOffset);
-	const { status, retry: retryLoading } = useInitialization(
-		stores,
-		initialLoading ? "loading" : "ready",
-	);
-	const needsCatalog = showIds.length > shows.length;
+	const { status, retry: retryLoading } = useInitialization(stores);
+
+	const matchingShows = useMemo(() => {
+		if (status !== "ready") {
+			return query === (initialQuery ?? "") ? shows : [];
+		}
+		const allShows = stores.showStore.getPage(showIds, 0, showIds.length);
+
+		return filterSearch(allShows, query, (show) => {
+			return `${show.title} ${show.djs.map((dj) => dj.title)} ${show.date}`;
+		});
+	}, [stores, showIds, query, status, initialQuery, shows]);
+
+	const searching = query.trim().length > 0;
+	const visible = matchingShows.slice(0, offset);
+	const needsCatalog = searching || showIds.length > shows.length;
 	const loading = needsCatalog && status === "loading";
 	const failed = needsCatalog && status === "error";
 	const sentinel = useRef<HTMLDivElement>(null);
-	const hasMore = offset < showIds.length;
+	const resultCount =
+		status === "ready" ? matchingShows.length : showIds.length;
+	const hasMore = offset < resultCount;
+	function changeQuery(nextQuery: string) {
+		setQuery(nextQuery);
+		setOffset(20);
+	}
 	useEffect(() => {
 		// Capture this mount's entry: Back changes history.state before before-swap fires.
 		const entry = history.state?.index;
@@ -141,13 +139,13 @@ export default function ShowsPane({
 				shows: visible,
 				tags: visibleTags,
 				initialOffset: offset,
-				initialLoading: loading,
+				initialQuery: query,
 			});
 		};
 		// Save the outgoing history entry before the router unmounts this listing.
 		document.addEventListener("astro:before-swap", saveVisit);
 		return () => document.removeEventListener("astro:before-swap", saveVisit);
-	}, [showIds, visible, visibleTags, offset, loading]);
+	}, [showIds, visible, visibleTags, offset, query]);
 
 	useEffect(() => {
 		if (needsCatalog && status === "ready") {
@@ -169,24 +167,22 @@ export default function ShowsPane({
 					return;
 				}
 				appended = true;
-				const next = stores.showStore.getPage(showIds, offset, 20);
-				setVisible((current) => {
-					const ids = new Set(current.map((show) => show.id));
-					return [...current, ...next.filter((show) => !ids.has(show.id))];
-				});
-				setOffset(Math.min(offset + 20, showIds.length));
+				setOffset(Math.min(offset + 20, resultCount));
 			},
 			{ rootMargin: "0px 0px 400px 0px" },
 		);
 
 		observer.observe(sentinel.current);
-		return () => observer.disconnect();
-	}, [stores, showIds, offset, loading, failed, hasMore]);
-
-	if (showIds.length === 0) return <p>No shows found.</p>;
+		return () => {
+			appended = true;
+			observer.disconnect();
+		};
+	}, [offset, loading, failed, hasMore, resultCount]);
 
 	return (
 		<>
+			<SearchBar value={query} onChange={changeQuery} />
+			{!loading && !failed && resultCount === 0 && <p>No shows found.</p>}
 			<div className={styles["show-container-grid"]}>
 				{visible.map((show) => (
 					<ShowCard

@@ -27,7 +27,33 @@ test("renders an empty message when no DJs are supplied", () => {
 		<DJsPane base="/archive/" djs={[]} tags={tags} />,
 	);
 
-	assert.equal(markup, "<p>No DJs found.</p>");
+	assert.match(markup, /<p>No DJs found\.<\/p>/);
+	assert.match(markup, /type="search"/);
+	assert.doesNotMatch(markup, /<article\b/);
+});
+
+test("search renders only matching DJ names", () => {
+	const markup = renderToStaticMarkup(
+		<DJsPane
+			base="/archive/"
+			djs={djs}
+			tags={tags}
+			initialQuery="  eMoCeAn  "
+		/>,
+	);
+
+	assert.match(markup, /href="\/archive\/djs\/16"/);
+	assert.doesNotMatch(markup, /href="\/archive\/djs\/11"/);
+	assert.doesNotMatch(markup, /No DJs found/);
+});
+
+test("search shows an empty message when no DJ name matches", () => {
+	const markup = renderToStaticMarkup(
+		<DJsPane base="/archive/" djs={djs} tags={tags} initialQuery="Ambient" />,
+	);
+
+	assert.match(markup, /No DJs found/);
+	assert.doesNotMatch(markup, /<article\b/);
 });
 
 test("renders base-aware links for supplied DJs", () => {

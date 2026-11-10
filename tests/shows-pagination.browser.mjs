@@ -18,15 +18,21 @@ async function evaluate(code) {
 	return JSON.parse(await browser("eval", code));
 }
 async function verifyHistoryReturn(index) {
+	const query = await evaluate('document.querySelector("input[type=search]").value');
 	const saved = await evaluate(`(() => {
 		const link = document.querySelectorAll('main article a[href*="/shows/"]')[${index}];
 		link.scrollIntoView({ block: 'center' });
+		link.focus({ preventScroll: true });
 		window.paginationDocument = true;
+		window.paginationDetailReady = false;
+		document.addEventListener('astro:page-load', () => { window.paginationDetailReady = true; }, { once: true });
 		window.paginationIframe = document.querySelector('[data-miniplayer] iframe');
 		return { x: scrollX, y: scrollY, count: document.querySelectorAll('main article').length, path: link.pathname };
 	})()`);
 	await evaluate(`document.querySelectorAll('main article a[href*="/shows/"]')[${index}].click(); true`);
 	await browser("wait", "--fn", `location.pathname === ${JSON.stringify(saved.path)}`);
+	await browser("wait", "--fn", "window.paginationDetailReady && history.state.scrollY === scrollY");
+	await evaluate("new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve(true))))");
 	await evaluate(`document.addEventListener('astro:after-swap', () => {
 		window.paginationFirstSwap = {
 			count: document.querySelectorAll('main article').length,
@@ -38,6 +44,7 @@ async function verifyHistoryReturn(index) {
 	assert.equal(await evaluate("window.paginationDocument"), true);
 	assert.equal(await evaluate("!window.paginationIframe || document.querySelector('[data-miniplayer] iframe') === window.paginationIframe"), true);
 	assert.equal(await evaluate("scrollX"), saved.x);
+	assert.equal(await evaluate('document.querySelector("input[type=search]").value'), query);
 }
 
 const catalog = await file("public/resources/shows.json").json();
@@ -94,6 +101,36 @@ try {
 	const cardTags = await evaluate(`Array.from(document.querySelectorAll('main article'), (card) => Array.from(card.querySelectorAll('a.tag'), (link) => Number(link.pathname.split('/').pop())))`);
 	assert.deepEqual(cardTags, catalog.data.map((show) => show.tagIds));
 	assert.equal(await evaluate("document.querySelector('main [class*=sentinel]') === null"), true);
+	await evaluate("scrollTo(0, 0); true");
+	const searchInput = 'input[type="search"]';
+	const matching = catalog.data.filter((show) => `${show.title} ${show.djs.map((dj) => dj.title)} ${show.date}`.toLowerCase().includes("the"));
+	assert.ok(matching.length > 20);
+	await browser("fill", searchInput, "  ThE  ");
+	await browser("wait", "--fn", "document.querySelectorAll('main article').length === 20");
+	const showIds = () => evaluate(`Array.from(document.querySelectorAll('main article a[aria-label^="View "][href*="/shows/"]'), (link) => Number(link.pathname.split('/').pop()))`);
+	assert.deepEqual(await showIds(), matching.slice(0, 20).map((show) => show.id));
+	await evaluate("scrollTo(0, document.body.scrollHeight); true");
+	await browser("wait", "--fn", "document.querySelectorAll('main article').length === 40");
+	assert.deepEqual(await showIds(), matching.slice(0, 40).map((show) => show.id));
+	await verifyHistoryReturn(25);
+	assert.deepEqual(await showIds(), matching.slice(0, 40).map((show) => show.id));
+	await evaluate("scrollTo(0, 0); true");
+	const beyondFirstBatch = catalog.data[20];
+	await browser("fill", searchInput, beyondFirstBatch.title);
+	await browser("wait", "--fn", "document.querySelectorAll('main article').length > 0 && document.querySelectorAll('main article').length < 20");
+	assert.deepEqual(await showIds(), catalog.data.filter((show) => show.title.toLowerCase().includes(beyondFirstBatch.title.toLowerCase())).map((show) => show.id));
+	await browser("fill", searchInput, "no-matching-show-92873");
+	await browser("wait", "--fn", "document.querySelectorAll('main article').length === 0 && document.querySelector('main').textContent.includes('No shows found.')");
+	await browser("fill", searchInput, "   ");
+	await browser("wait", "--fn", "document.querySelectorAll('main article').length === 20");
+	assert.deepEqual(await showIds(), catalog.data.slice(0, 20).map((show) => show.id));
+	console.log("Search covers the full catalog, paginates ordered matches, resets queries, handles no matches, and clears to the first batch.");
+	// Restore the full listing for the existing playback/history checks.
+	while (await evaluate("document.querySelectorAll('main article').length") < catalog.data.length) {
+		const count = await evaluate("document.querySelectorAll('main article').length");
+		await evaluate("scrollTo(0, document.body.scrollHeight); true");
+		await browser("wait", "--fn", `document.querySelectorAll('main article').length > ${count}`);
+	}
 	await browser("click", "main article:last-child button[aria-label^='Play ']");
 	await browser("wait", "main article:last-child button[aria-label^='Pause ']");
 	await browser("wait", "[data-miniplayer] iframe");

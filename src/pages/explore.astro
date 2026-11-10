@@ -2,6 +2,8 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CategoryTabs from "../components/CategoryTabs.astro";
 import ExplorePane from "../components/explore/ExplorePane";
+import ExploreSearch from "../components/explore/ExploreSearch";
+import "../components/search/SearchBar.module.css";
 import { fetchTags } from "../utils/fetch-tags";
 import { fetchShows } from "../utils/fetch-shows";
 import { pathToFileURL } from "node:url";
@@ -33,6 +35,7 @@ const sortedTags = new Map(
 >
   <CategoryTabs slot="category-tabs" active="explore" />
   <div class="page-inset">
+    <ExploreSearch client:load />
     <ExplorePane tags={sortedTags} />
   </div>
 </BaseLayout>

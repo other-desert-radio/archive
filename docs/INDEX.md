@@ -16,6 +16,7 @@ and standards. None of these links automatically imports another file.
 | [Deployment](deployment.md) | Changing hosting/build configuration or base-path URLs; GitHub Pages and production checks. |
 | [SHOWS design](shows-ui-guideline.md) | Changing SHOWS presentation/search/filter behavior; observed design evidence and unimplemented proposals, not current code contracts. |
 | [Archive search and storage plan](plans/future/archive-search-and-storage.md) | User goals, terminology, ShowStore boundaries, pagination, initialization, and local storage proposals; decisions and open choices, not implemented behavior. |
+| [Tag service note](plans/future/tag-service.md) | Future Explore migration to a shared tag service without duplicate hydration data. |
 | [Shareable playlist URLs plan](plans/future/shareable-playlist-urls.md) | Future address-bar snapshots with playlist titles and ordered show IDs, excluding notes; local precedence, shared previews, and implementation checks. |
 
 There is no database or server runtime in this repository. Archive JSON
