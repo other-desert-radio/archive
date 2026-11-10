@@ -27,7 +27,7 @@ separate scaffolding request before advancing, per the development workflow.
   Explore using existing props. Leave filtering disconnected for placement review.
 - [x] 5. Implement shared filtering and focused tests for empty/whitespace queries,
   trimming, case, substrings, no matches, ordering, references, and selected fields.
-- [ ] 6. Integrate Shows: filter complete initialized catalog in showIds order
+- [x] 6. Integrate Shows: filter complete initialized catalog in showIds order
   before pagination, retain batches of 20 and initial server-rendered cards, reset
   on query changes, retain loading/retry, prevent stale observer appends, and save
   query in Back/Forward snapshots. Verify matches beyond initial cards, pagination,
@@ -50,16 +50,17 @@ No cross-island event bridge. Main risk: Shows pagination and navigation snapsho
 
 ## Next action
 
-Chunk 6 is being reviewed in smaller steps. matchingShows uses getPage to resolve
-all showIds in listing order and filterSearch to match titles after initialization.
-Pagination now slices matchingShows to the visible offset, increasing by 20;
-query changes reset to 20. Initial HTML still uses supplied cards, and active
-search waits for initialization rather than reporting false no-matches.
-Browser checks confirm filtered batches and no-results behavior. Build, Astro
-check, TypeScript and ESLint pass; formatting remains blocked by existing manual
-spacing changes. The broader browser regression restores all cards synchronously
-but later shifts history scroll by 10px (15644 to 15634); investigate during the
-next history-restoration step, along with saving the query.
+Review completed Shows integration, then integrate DJs in chunk 7.
+Shows snapshots now include initialQuery and retain saved cards while the
+catalog initialization hook settles. The playback-preserving compatibility swap
+carries the incoming tab compression seed to its retained header, fixing the
+10px scroll shift. The browser test waits for detail navigation to settle before
+going Back, avoiding a race with Astro's scroll-state updates.
+The full Shows browser regression passed: ordered matching batches, matching
+beyond the initial cards, clearing, no matches, query/card restoration, exact
+scroll restoration on phone/desktop, retry, and preserved playback iframe.
+Build, Astro check, TypeScript, ESLint, and the four filter tests pass.
+Formatting checks remain blocked by manual spacing changes in ShowsPane.
 All four panes have controlled inputs; only Shows filters results. Each page
 shell explicitly imports search CSS so ClientRouter swaps and manual Shows
 history mounts retain styles. Focus thickens the existing border without an

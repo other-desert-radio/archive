@@ -114,8 +114,10 @@ export default function ShowsPane({
 			return query === initialQuery ? shows : [];
 		}
 		const allShows = stores.showStore.getPage(showIds, 0, showIds.length);
-		// TODO: update stringify
-		return filterSearch(allShows, query, (show) => show.title);
+
+		return filterSearch(allShows, query, (show) => {
+			return `${show.title} ${show.djs.map((dj) => dj.title)} ${show.date}`;
+		});
 	}, [stores, showIds, query, status, initialQuery, shows]);
 
 	const searching = query.trim().length > 0;

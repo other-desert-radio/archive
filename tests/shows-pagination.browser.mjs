@@ -23,9 +23,6 @@ async function verifyHistoryReturn(index) {
 		const link = document.querySelectorAll('main article a[href*="/shows/"]')[${index}];
 		link.scrollIntoView({ block: 'center' });
 		link.focus({ preventScroll: true });
-		window.paginationGeometry = () => Array.from(document.querySelectorAll('header, main, main input, main article')).slice(0, 5).map(el => ({ tag: el.tagName, top: el.getBoundingClientRect().top + scrollY, height: el.getBoundingClientRect().height }));
-		window.paginationSavedGeometry = window.paginationGeometry();
-		document.addEventListener('astro:before-preparation', () => { window.paginationOutgoing = { y: scrollY, state: history.state }; }, { once: true });
 		window.paginationDocument = true;
 		window.paginationDetailReady = false;
 		document.addEventListener('astro:page-load', () => { window.paginationDetailReady = true; }, { once: true });
@@ -37,17 +34,12 @@ async function verifyHistoryReturn(index) {
 	await browser("wait", "--fn", "window.paginationDetailReady && history.state.scrollY === scrollY");
 	await evaluate("new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve(true))))");
 	await evaluate(`document.addEventListener('astro:after-swap', () => {
-		window.paginationFirstState = history.state;
-		window.paginationFirstGeometry = window.paginationGeometry();
 		window.paginationFirstSwap = {
 			count: document.querySelectorAll('main article').length,
 			y: scrollY,
 		};
 	}, { once: true }); history.back(); true`);
-	await browser("wait", "--fn", `location.pathname === '/archive/' && document.querySelectorAll('main article').length === ${saved.count} && Math.abs(scrollY - ${saved.y}) < 2`).catch(async (error) => {
-		console.log("History restore failure", saved, await evaluate(`({ count: document.querySelectorAll('main article').length, y: scrollY, first: window.paginationFirstSwap, outgoing: window.paginationOutgoing, incoming: window.paginationFirstState, savedGeometry: window.paginationSavedGeometry, firstGeometry: window.paginationFirstGeometry, nowGeometry: window.paginationGeometry() })`));
-		throw error;
-	});
+	await browser("wait", "--fn", `location.pathname === '/archive/' && document.querySelectorAll('main article').length === ${saved.count} && Math.abs(scrollY - ${saved.y}) < 2`);
 	assert.deepEqual(await evaluate("window.paginationFirstSwap"), { count: saved.count, y: saved.y });
 	assert.equal(await evaluate("window.paginationDocument"), true);
 	assert.equal(await evaluate("!window.paginationIframe || document.querySelector('[data-miniplayer] iframe') === window.paginationIframe"), true);
