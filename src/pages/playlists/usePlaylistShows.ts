@@ -1,4 +1,5 @@
 import { useCallback, useSyncExternalStore } from "react";
+import { filterSearch } from "../../components/search/filterSearch";
 import { useInitialization } from "../../hooks/useInitialization";
 import { useStores } from "../../stores";
 import type { PlaybackRecord } from "../../stores/playback/types";
@@ -12,25 +13,31 @@ export function resolvePlaylistShows({
 	entries,
 	showStore,
 	records,
+	query = "",
 }: {
 	entries: readonly PlaylistEntry[];
 	showStore: Pick<ShowStore, "get">;
 	records: readonly PlaybackRecord[];
+	query?: string;
 }) {
 	const recordsByShowId = new Map(
 		records.map((record) => [record.showId, record]),
 	);
-	return [...entries]
+	const resolved = [...entries]
 		.sort((a, b) => Date.parse(b.addedAt) - Date.parse(a.addedAt))
 		.map((entry) => ({
 			entry,
 			show: showStore.get(entry.showId),
 			record: recordsByShowId.get(entry.showId),
 		}));
+	return filterSearch(resolved, query, ({ show }) => show?.title ?? "");
 }
 
 /** Loads catalog data and subscribes to playback progress for playlist entries. */
-export function usePlaylistShows(entries: readonly PlaylistEntry[]) {
+export function usePlaylistShows(
+	entries: readonly PlaylistEntry[],
+	query = "",
+) {
 	const stores = useStores();
 	const { status, retry } = useInitialization(stores);
 	const { playbackStore } = stores;
@@ -52,6 +59,7 @@ export function usePlaylistShows(entries: readonly PlaylistEntry[]) {
 						entries,
 						showStore: stores.showStore,
 						records,
+						query,
 					})
 				: [],
 		tags: stores.tagStore.getMap(),

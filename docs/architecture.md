@@ -135,6 +135,17 @@ The initial metadata and detail links retain their
 server-rendered HTML. Show URLs are converted to validated Mixcloud keys
 by `src/components/shows/show-playback.ts` before publishing playback requests.
 
+Shows, DJs, Explore, and playlist detail each own a local search query through
+the controlled SearchBar. The shared filterSearch helper trims queries, matches
+case-insensitive substrings in caller-selected text, and preserves result order
+and object references. Empty queries return all input items. Shows filters the
+complete initialized catalog in listing order before pagination and saves its
+query in history snapshots. DJs and Explore hydrate their existing build-time
+props and search names and tag titles respectively. Playlist search filters
+resolved entries by show title, keeping notes and playback metadata attached;
+unavailable entries remain stored and reappear when search is cleared. Search
+has no global store and remains in normal document flow.
+
 The archive listings use `src/pages/index.astro` for SHOWS and
 `src/pages/djs.astro` for DJs. Both use `CategoryTabs.astro` to select the
 active category. `src/pages/explore.astro` and `src/pages/history.astro`

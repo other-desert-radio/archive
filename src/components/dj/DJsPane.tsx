@@ -18,9 +18,10 @@ export default function DJsPane({ base, djs, tags, initialQuery = "" }: Props) {
 	const [query, setQuery] = useState(initialQuery);
 	const detailBase = getBasePath(base);
 
-	const matchingDJs = useMemo(() => {
-		return filterSearch(djs, query, (dj) => `${dj.title}`);
-	}, [djs, query]);
+	const matchingDJs = useMemo(
+		() => filterSearch(djs, query, (dj) => dj.title),
+		[djs, query],
+	);
 
 	return (
 		<>

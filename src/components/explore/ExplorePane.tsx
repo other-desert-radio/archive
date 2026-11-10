@@ -1,21 +1,29 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { TagMap } from "../../utils/fetch-tags";
+import { filterSearch } from "../search/filterSearch";
 import SearchBar from "../search/SearchBar";
 import styles from "./ExplorePane.module.css";
 import { ExploreTagView } from "./ExploreTagView";
 
 type Props = {
 	tags: TagMap;
+	initialQuery?: string;
 };
 
-export default function ExplorePane({ tags }: Props) {
-	const [query, setQuery] = useState("");
+export default function ExplorePane({ tags, initialQuery = "" }: Props) {
+	const [query, setQuery] = useState(initialQuery);
+
+	const matchingTags = useMemo(
+		() => filterSearch(Array.from(tags.values()), query, (tag) => tag.title),
+		[query, tags],
+	);
+
 	return (
 		<>
 			<SearchBar value={query} onChange={setQuery} />
-			{tags.size === 0 && <p>No tags found.</p>}
+			{matchingTags.length === 0 && <p>No tags found.</p>}
 			<div className={styles["tags-container"]}>
-				{Array.from(tags.values()).map((tag) => (
+				{matchingTags.map((tag) => (
 					<ExploreTagView key={tag.id} tag={tag} />
 				))}
 			</div>

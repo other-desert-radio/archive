@@ -53,7 +53,7 @@ export default function PlaylistPage() {
 		tags,
 		status: showStatus,
 		retry,
-	} = usePlaylistShows(playlist?.shows ?? []);
+	} = usePlaylistShows(playlist?.shows ?? [], query);
 	async function rename(event: SubmitEvent<HTMLFormElement>) {
 		event.preventDefault();
 		if (pending.current || !playlist || !draftTitle?.trim()) {
@@ -200,7 +200,11 @@ export default function PlaylistPage() {
 						}
 					>
 						{shows.length === 0 ? (
-							<p>No shows in this playlist.</p>
+							<p>
+								{playlist.shows.length === 0
+									? "No shows in this playlist."
+									: "No shows found."}
+							</p>
 						) : (
 							<section
 								className={styles["shows-grid"]}
