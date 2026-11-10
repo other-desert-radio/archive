@@ -13,14 +13,15 @@ document.addEventListener("astro:before-swap", (event) => {
 		return;
 	}
 
-	const header = document.querySelector("[data-site-header]");
+	const header = document.querySelector<HTMLElement>("[data-site-header]");
 	// Only pay for the compatibility swap when there is a widget to preserve.
 	// Keep paused/loading widgets too: moving them would reset their document.
 	if (!header?.querySelector("[data-miniplayer-bar] iframe")) {
 		return;
 	}
 
-	const nextHeader = event.newDocument.querySelector("[data-site-header]");
+	const nextHeader =
+		event.newDocument.querySelector<HTMLElement>("[data-site-header]");
 	const nav = header?.querySelector("nav");
 	const nextNav = nextHeader?.querySelector("nav");
 	if (!header || !nextHeader || !nav || !nextNav) {
@@ -35,6 +36,11 @@ document.addEventListener("astro:before-swap", (event) => {
 		const restoreFocus = swapFunctions.saveFocus();
 
 		// Never detach the header or its iframe: Safari reloads moved iframes.
+		// Carry the incoming tab compression seed onto the retained header before restoring scroll.
+		header.style.setProperty(
+			"--tabs-progress",
+			nextHeader.style.getPropertyValue("--tabs-progress"),
+		);
 		nav.replaceWith(nextNav);
 		header.querySelector("[data-category-tabs]")?.remove();
 		const nextTabs = nextHeader.querySelector("[data-category-tabs]");

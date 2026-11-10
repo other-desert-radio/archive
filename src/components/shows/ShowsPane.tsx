@@ -28,6 +28,7 @@ type Props = {
 	tags: TagMap;
 	initialOffset?: number;
 	initialLoading?: boolean;
+	initialQuery?: string;
 };
 
 /**
@@ -76,9 +77,10 @@ export default function ShowsPane({
 	tags,
 	initialOffset = shows.length,
 	initialLoading = showIds.length > shows.length,
+	initialQuery = "",
 }: Props) {
 	const stores = useStores();
-	const [query, setQuery] = useState("");
+	const [query, setQuery] = useState(initialQuery);
 	const { playlists, status: playlistStatus } = usePlaylists();
 	const playlistSavesByShowId = useMemo(
 		() => getPlaylistSavesByShowId(playlistStatus === "ready" ? playlists : []),
@@ -106,21 +108,18 @@ export default function ShowsPane({
 		stores,
 		initialLoading ? "loading" : "ready",
 	);
+
 	const matchingShows = useMemo(() => {
 		if (status !== "ready") {
-			return [];
+			return query === initialQuery ? shows : [];
 		}
 		const allShows = stores.showStore.getPage(showIds, 0, showIds.length);
 		// TODO: update stringify
 		return filterSearch(allShows, query, (show) => show.title);
-	}, [stores, showIds, query, status]);
+	}, [stores, showIds, query, status, initialQuery, shows]);
+
 	const searching = query.trim().length > 0;
-	const visible =
-		status === "ready"
-			? matchingShows.slice(0, offset)
-			: searching
-				? []
-				: shows;
+	const visible = matchingShows.slice(0, offset);
 	const needsCatalog = searching || showIds.length > shows.length;
 	const loading = needsCatalog && status === "loading";
 	const failed = needsCatalog && status === "error";
@@ -143,12 +142,13 @@ export default function ShowsPane({
 				tags: visibleTags,
 				initialOffset: offset,
 				initialLoading: loading,
+				initialQuery: query,
 			});
 		};
 		// Save the outgoing history entry before the router unmounts this listing.
 		document.addEventListener("astro:before-swap", saveVisit);
 		return () => document.removeEventListener("astro:before-swap", saveVisit);
-	}, [showIds, visible, visibleTags, offset, loading]);
+	}, [showIds, visible, visibleTags, offset, loading, query]);
 
 	useEffect(() => {
 		if (needsCatalog && status === "ready") {
