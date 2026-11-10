@@ -21,7 +21,7 @@ separate scaffolding request before advancing, per the development workflow.
 - [x] 2. Define controlled SearchBar props (value, onChange) and generic
   filterSearch<T>(items: readonly T[], query: string, stringify: (item: T) => string):
   readonly T[]. Keep unfinished code disconnected from working pages.
-- [ ] 3. Implement SearchBar: accessible label, SEARCH... placeholder, transparent
+- [x] 3. Implement SearchBar: accessible label, SEARCH... placeholder, transparent
   background, 2px black border, visible keyboard focus.
 - [ ] 4. Place SearchBar in all four panes with local query state. Hydrate DJs and
   Explore using existing props. Leave filtering disconnected for placement review.
@@ -50,6 +50,6 @@ No cross-island event bridge. Main risk: Shows pagination and navigation snapsho
 
 ## Next action
 
-Review scaffolding, then implement SearchBar in chunk 3. Both exported functions
-currently throw "Not implemented" and have no page callers. CSS and tests remain
-empty until their implementation chunks.
+Review SearchBar, then place it in the four panes in chunk 4. SearchBar is
+implemented but has no page callers. filterSearch still throws "Not implemented";
+its tests remain empty until chunk 5.

@@ -89,6 +89,7 @@ background server with `astro dev status`, `astro dev logs`, and `astro dev stop
 
 `bun run format` applies Biome formatting, safe lint fixes and import
 organization. The pre-commit hook runs it before staging resulting changes.
+Lint then runs shell syntax, ESLint and TypeScript checks in parallel.
 Use the [testing reference](testing.md) when selecting verification commands.
 The mode and stage sections above own implementation review checkpoints.
 
