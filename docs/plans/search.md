@@ -23,7 +23,7 @@ separate scaffolding request before advancing, per the development workflow.
   readonly T[]. Keep unfinished code disconnected from working pages.
 - [x] 3. Implement SearchBar: accessible label, SEARCH... placeholder, transparent
   background, 2px black border, visible keyboard focus.
-- [ ] 4. Place SearchBar in all four panes with local query state. Hydrate DJs and
+- [x] 4. Place SearchBar in all four panes with local query state. Hydrate DJs and
   Explore using existing props. Leave filtering disconnected for placement review.
 - [ ] 5. Implement shared filtering and focused tests for empty/whitespace queries,
   trimming, case, substrings, no matches, ordering, references, and selected fields.
@@ -50,6 +50,10 @@ No cross-island event bridge. Main risk: Shows pagination and navigation snapsho
 
 ## Next action
 
-Review SearchBar, then place it in the four panes in chunk 4. SearchBar is
-implemented but has no page callers. filterSearch still throws "Not implemented";
-its tests remain empty until chunk 5.
+Review placement, then implement shared filtering in chunk 5. All four panes
+have controlled inputs; DJs and Explore hydrate with existing props. Each page
+shell explicitly imports search CSS so ClientRouter swaps and manual Shows
+history mounts retain styles. Browser checks covered typing in DJs, Explore,
+and playlist detail, narrow layout, and Shows styles after category navigation
+and Back. filterSearch still throws "Not implemented"; tests remain empty until
+chunk 5. Filtering is intentionally disconnected.

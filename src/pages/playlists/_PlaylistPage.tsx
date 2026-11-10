@@ -4,6 +4,7 @@ import LoadingState from "../../components/LoadingState";
 import PlaylistModal from "../../components/playlists/PlaylistModal";
 import PlaylistShowCard from "../../components/playlists/PlaylistShowCard";
 import { usePlaylists } from "../../components/playlists/usePlaylists";
+import SearchBar from "../../components/search/SearchBar";
 import { useStores } from "../../stores";
 import { getBasePath } from "../../utils/get-base-path";
 import styles from "./PlaylistPage.module.css";
@@ -16,6 +17,7 @@ function focusTitle(input: HTMLTextAreaElement | null) {
 
 export default function PlaylistPage() {
 	const { playlists, status } = usePlaylists();
+	const [query, setQuery] = useState("");
 	const { playlistStore } = useStores();
 	const [draftTitle, setDraftTitle] = useState<string>();
 	const [saving, setSaving] = useState(false);
@@ -178,6 +180,7 @@ export default function PlaylistPage() {
 			<p className={styles["disclaimer"]}>
 				Playlists are stored locally on this device.
 			</p>
+			{playlist && <SearchBar value={query} onChange={setQuery} />}
 			<LoadingState
 				status={status}
 				loading="Loading playlist..."

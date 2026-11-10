@@ -2,6 +2,8 @@
 import { pathToFileURL } from "node:url";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CategoryTabs from "../components/CategoryTabs.astro";
+// Keep search styles present when history restoration mounts ShowsPane manually.
+import "../components/search/SearchBar.module.css";
 import { ShowsPane } from "../components/shows";
 import { fetchShows } from "../utils/fetch-shows";
 import { fetchTags } from "../utils/fetch-tags";

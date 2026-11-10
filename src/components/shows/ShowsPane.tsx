@@ -16,6 +16,7 @@ import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
 import LoadingState from "../LoadingState";
 import { usePlaylists } from "../playlists/usePlaylists";
+import SearchBar from "../search/SearchBar";
 import ShowCard from "./ShowCard";
 import styles from "./ShowsPane.module.css";
 
@@ -98,6 +99,7 @@ export default function ShowsPane({
 	initialLoading = showIds.length > shows.length,
 }: Props) {
 	const stores = useStores();
+	const [query, setQuery] = useState("");
 	const { playlists, status: playlistStatus } = usePlaylists();
 	const playlistSavesByShowId = useMemo(
 		() => getPlaylistSavesByShowId(playlistStatus === "ready" ? playlists : []),
@@ -183,10 +185,10 @@ export default function ShowsPane({
 		return () => observer.disconnect();
 	}, [stores, showIds, offset, loading, failed, hasMore]);
 
-	if (showIds.length === 0) return <p>No shows found.</p>;
-
 	return (
 		<>
+			<SearchBar value={query} onChange={setQuery} />
+			{showIds.length === 0 && <p>No shows found.</p>}
 			<div className={styles["show-container-grid"]}>
 				{visible.map((show) => (
 					<ShowCard
