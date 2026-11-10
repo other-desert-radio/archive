@@ -25,7 +25,7 @@ separate scaffolding request before advancing, per the development workflow.
   background, 2px black border, visible keyboard focus.
 - [x] 4. Place SearchBar in all four panes with local query state. Hydrate DJs and
   Explore using existing props. Leave filtering disconnected for placement review.
-- [ ] 5. Implement shared filtering and focused tests for empty/whitespace queries,
+- [x] 5. Implement shared filtering and focused tests for empty/whitespace queries,
   trimming, case, substrings, no matches, ordering, references, and selected fields.
 - [ ] 6. Integrate Shows: filter complete initialized catalog in showIds order
   before pagination, retain batches of 20 and initial server-rendered cards, reset
@@ -50,10 +50,8 @@ No cross-island event bridge. Main risk: Shows pagination and navigation snapsho
 
 ## Next action
 
-Review placement, then implement shared filtering in chunk 5. All four panes
-have controlled inputs; DJs and Explore hydrate with existing props. Each page
+Review shared filtering and its focused tests, then integrate Shows in chunk 6.
+All four panes have controlled inputs; filtering remains disconnected. Each page
 shell explicitly imports search CSS so ClientRouter swaps and manual Shows
-history mounts retain styles. Browser checks covered typing in DJs, Explore,
-and playlist detail, narrow layout, and Shows styles after category navigation
-and Back. filterSearch still throws "Not implemented"; tests remain empty until
-chunk 5. Filtering is intentionally disconnected.
+history mounts retain styles. Focus thickens the existing border without an
+outer outline or layout shift.
