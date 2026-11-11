@@ -21,5 +21,7 @@ export default function ExploreSearch() {
 			empty.hidden = matches.size > 0;
 		}
 	}, [query]);
-	return <SearchBar value={query} onChange={setQuery} />;
+	return (
+		<SearchBar historyCategory="explore" value={query} onChange={setQuery} />
+	);
 }

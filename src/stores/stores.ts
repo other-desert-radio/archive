@@ -3,11 +3,13 @@ import type { Database } from "../database/types";
 import { AudioStore } from "./audio/audio-store";
 import { PlaybackStore } from "./playback/playback-store";
 import { PlaylistStore } from "./playlists/playlist-store";
+import { SearchHistoryStore } from "./search-history-store";
 import { ShowStore } from "./shows/show-store";
 import { TagStore } from "./tags/tag-store";
 import { VersionsStore } from "./versions/versions-store";
 
 export type Stores = {
+	searchHistoryStore: SearchHistoryStore;
 	audioStore: AudioStore;
 	playbackStore: PlaybackStore;
 	playlistStore: PlaylistStore;
@@ -23,6 +25,7 @@ export function createStores(database: Database = createIndexedDB()): Stores {
 	const tagStore = new TagStore(database, versionsStore);
 	let initialization: Promise<void> | undefined;
 	return {
+		searchHistoryStore: new SearchHistoryStore(database),
 		audioStore: new AudioStore(),
 		playbackStore: new PlaybackStore(database),
 		playlistStore: new PlaylistStore({ database }),

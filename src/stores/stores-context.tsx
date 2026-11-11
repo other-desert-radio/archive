@@ -30,3 +30,8 @@ export function useStores(): Stores {
 	}, [stores]);
 	return stores;
 }
+
+// Search history does not need to initialize the published catalog.
+export function useSearchHistoryStore() {
+	return useContext(StoresContext).searchHistoryStore;
+}

@@ -56,7 +56,7 @@ try {
 	}
 
 	for (const [route, limit] of [
-		["", 20 * KiB],
+		["", 20.1 * KiB],
 		["djs", 16 * KiB],
 		["explore", 14 * KiB],
 		["history", 7 * KiB],

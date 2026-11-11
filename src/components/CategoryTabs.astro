@@ -73,6 +73,7 @@ const { active } = Astro.props;
     --tabs-progress: 0;
     --tabs-expanded-font: var(--tabs-font-size);
     --tabs-expanded-gap: var(--space-lg);
+    --tabs-bottom-padding: var(--space-md);
     --tabs-expanded-left: var(--page-inset-left);
     --tabs-expanded-right: var(--page-inset-right);
     --tabs-gap: calc(
@@ -82,14 +83,14 @@ const { active } = Astro.props;
     /* Reserve flow space so compression cannot change scroll position or page length. */
     height: calc(
       var(--space-sm) + max(2.75rem, var(--tabs-expanded-font) * 1.5) +
-        var(--space-md) + var(--tabs-title-lift, 0rem) * var(--tabs-progress)
+        var(--tabs-bottom-padding) + var(--tabs-title-lift, 0rem) * var(--tabs-progress)
     );
     pointer-events: none;
   }
 
   .tabs-strip {
     padding-top: calc(var(--space-sm) * (1 - var(--tabs-progress)));
-    padding-bottom: calc(var(--space-md) * (1 - var(--tabs-progress)));
+    padding-bottom: calc(var(--tabs-bottom-padding) * (1 - var(--tabs-progress)));
     background: rgb(0 0 0 / var(--tabs-progress));
     color: black;
     pointer-events: auto;
@@ -196,6 +197,7 @@ const { active } = Astro.props;
 
   @media (max-width: 600px) {
     .category-tabs {
+      --tabs-bottom-padding: var(--space-sm);
       --tabs-expanded-left: calc(var(--page-inset-left) + var(--space-md));
       --tabs-expanded-right: calc(var(--page-inset-right) + var(--space-md));
     }

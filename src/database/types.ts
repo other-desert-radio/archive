@@ -1,10 +1,14 @@
 import type { PlaybackRecord } from "../stores/playback/types";
 import type { Playlist } from "../stores/playlists/types";
+import type { SearchEntry } from "../stores/search-history-store";
 import type { Show } from "../utils/fetch-shows";
 
 import type { Tag } from "../utils/fetch-tags";
 
 export type StoreSchema = {
+	search_shows: { value: SearchEntry; key: string };
+	search_explore: { value: SearchEntry; key: string };
+	search_djs: { value: SearchEntry; key: string };
 	// local user playlists; independent of published catalog revisions
 	playlists: { value: Playlist; key: string };
 

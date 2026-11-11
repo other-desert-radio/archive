@@ -145,7 +145,12 @@ Explore keeps its tag links static; a small search island filters their rendered
 text without serializing the catalog again. Playlist search filters
 resolved entries by show title or user note, keeping playback metadata attached;
 unavailable entries can match their notes and remain stored when filtered out. Search
-has no global store and remains in normal document flow.
+keeps its current query local; saved history is shared through SearchHistoryStore.
+The focused search bar overlays a white history list with five rows before scrolling.
+Shows, Explore, and DJs have separate newest-first histories. Clear, Enter, and
+three seconds without typing save trimmed nonempty queries; blur and navigation
+cancel pending saves. Reusing an exact query updates its timestamp; each row can
+be reapplied or deleted. Playlist search has no saved history.
 
 The shared useSearchQuery hook retains queries in module memory during detail
 visits, keyed by page and playlist ID. Choosing a category tab clears this cache,
@@ -189,6 +194,9 @@ Browser stores use envelope versions and `data_versions.json` to refresh shows
 and tags. IndexedDB schema v3 adds a local `playback` store keyed by `showId`,
 preserving existing shows, tags, and committed revision metadata during upgrades.
 Schema v4 adds `playlists` keyed by `id`, preserving all existing records.
+Schema v5 adds `search_shows`, `search_explore`, and `search_djs`, keyed by
+`query`, with `{ query, date }` records and millisecond timestamps. History loads
+independently of catalog refresh; serialized writes publish only after commit.
 PlaybackStore provides independent local initialization, memory subscriptions,
 and serialized retryable saves. A listen counts when the Mixcloud widget emits
 `ended`, regardless of the starting position. Its history entry receives
