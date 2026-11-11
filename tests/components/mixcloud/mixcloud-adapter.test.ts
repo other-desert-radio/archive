@@ -151,6 +151,34 @@ test("serializes loads and skips superseded intermediate selections", async () =
 	adapter.dispose();
 });
 
+test("switches to another show by the same DJ while the old pause is pending", async () => {
+	const f = fixture();
+	const pausing = deferred<void>();
+	const pause = mock.method(f.widget, "pause", () => pausing.promise);
+	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
+	f.ready.resolve(f.widget);
+	f.select("first");
+	await setImmediate();
+	f.calls[0]?.result.resolve();
+	await setImmediate();
+	f.events.play.emit();
+	assert.equal(f.store.getSnapshot().status, "playing");
+
+	f.select("next", show.id + 1);
+	await setImmediate();
+	assert.equal(f.calls[1]?.key, "/dj/next/");
+	assert.equal(pause.mock.callCount(), 1);
+	f.calls[1]?.result.resolve();
+	await setImmediate();
+	assert.deepEqual(f.commands(), ["play", "play"]);
+	f.events.play.emit();
+	const state = f.store.getSnapshot();
+	assert.equal(state.status, "playing");
+	assert.equal(state.track.show.title, "next");
+	pausing.resolve();
+	adapter.dispose();
+});
+
 test("current load errors report to the store and a newer request retries", async () => {
 	const f = fixture();
 	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);

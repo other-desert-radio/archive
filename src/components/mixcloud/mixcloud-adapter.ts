@@ -315,15 +315,7 @@ export class MixcloudAdapter {
 					continue;
 				}
 				if (request.track !== this.loadedTrack) {
-					if (this.loadedTrack) {
-						await this.pauseGently(widget);
-						if (this.disposed) {
-							return;
-						}
-						if (this.store.getRequestSnapshot()?.id !== request.id) {
-							continue;
-						}
-					}
+					// The subscription already requested a pause; its promise can stall the switch.
 					try {
 						this.loadedTrack = undefined;
 						this.completed = false;
