@@ -1,6 +1,6 @@
 {
-	"version": 6,
-	"updatedAt": "2026-11-06T23:56:06.238Z",
+	"version": 7,
+	"updatedAt": "2026-11-16T18:10:50.565Z",
 	"data": [
 		{
 			"id": 99,
@@ -2575,6 +2575,24 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/dev01d-tantalizing-temperament-5-june-26-2023/"
 		},
 		{
+			"id": 318,
+			"title": "Mojave Mouth Episode 3: Bob's Art Party",
+			"date": "2023-06-26T00:00:00.000Z",
+			"duration": 1779,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/2/6/5/76ec-0518-401b-8684-07b43d473a27",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/2/6/5/76ec-0518-401b-8684-07b43d473a27",
+			"djs": [
+				{
+					"id": 27,
+					"title": "Lindsey Cooper Andersen",
+					"image_small": "assets/djs/27_small.webp",
+					"image_large": "assets/djs/27_large.webp"
+				}
+			],
+			"tagIds": [65],
+			"url": "https://www.mixcloud.com/otherdesertradio/lindsey-anderson-mojave-mouth-episode-3-bobs-art-party-june-26-2023/"
+		},
+		{
 			"id": 41,
 			"title": "Freedom Overspill Radio Hour Episode 25, The Necks",
 			"date": "2023-06-05T00:00:00.000Z",
@@ -2591,6 +2609,42 @@
 			],
 			"tagIds": [33, 66, 67, 68],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-25-the-necks-june-5-2023/"
+		},
+		{
+			"id": 317,
+			"title": "Mojave Mouth Episode 2: Boogieman",
+			"date": "2023-05-29T00:00:00.000Z",
+			"duration": 1418,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/0/c/7/ffe7-fe10-4c6c-8647-01b4c8357454",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/0/c/7/ffe7-fe10-4c6c-8647-01b4c8357454",
+			"djs": [
+				{
+					"id": 27,
+					"title": "Lindsey Cooper Andersen",
+					"image_small": "assets/djs/27_small.webp",
+					"image_large": "assets/djs/27_large.webp"
+				}
+			],
+			"tagIds": [65],
+			"url": "https://www.mixcloud.com/otherdesertradio/lindsey-andersen-mojave-mouth-episode-2-boogieman-may-29-2023/"
+		},
+		{
+			"id": 316,
+			"title": "Mojave Mouth Episode 1: Medicine",
+			"date": "2023-04-24T00:00:00.000Z",
+			"duration": 779,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/4/8/a/0d23-5ca5-4b1c-a332-db81794424f8",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/4/8/a/0d23-5ca5-4b1c-a332-db81794424f8",
+			"djs": [
+				{
+					"id": 27,
+					"title": "Lindsey Cooper Andersen",
+					"image_small": "assets/djs/27_small.webp",
+					"image_large": "assets/djs/27_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/lindsey-anderson-mojave-mouth-episode-1-medicine-april-24-2023/"
 		},
 		{
 			"id": 173,

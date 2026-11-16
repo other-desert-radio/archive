@@ -1,6 +1,6 @@
 {
-	"version": 8,
-	"updatedAt": "2026-11-06T23:56:06.238Z",
+	"version": 9,
+	"updatedAt": "2026-11-16T18:10:50.565Z",
 	"data": [
 		{
 			"id": 42,
@@ -188,12 +188,7 @@
 			"title": "Lindsey Cooper Andersen",
 			"image_small": "assets/djs/27_small.webp",
 			"image_large": "assets/djs/27_large.webp",
-			"tagIds": []
-		},
-		{
-			"id": 50,
-			"title": "Lindsey Cooper Andersen",
-			"tagIds": []
+			"tagIds": [65]
 		},
 		{
 			"id": 22,
