@@ -122,10 +122,14 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-	.clear:hover,
-	.remove:hover {
+	.clear:hover {
 		background: black;
 		color: white;
+	}
+
+	.remove:hover svg {
+		color: black;
+		stroke-width: 3;
 	}
 }
 
