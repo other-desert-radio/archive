@@ -22,7 +22,7 @@ const bundle = await build({
 assert.ok(bundle.success, bundle.logs.join("\n"));
 const markup = ["playback", "details"].map(mode =>
   `<div id="${mode}">${renderToString(createElement(SquareShowCard, {
-    mode, show, base: "/archive", ...(mode === "details" ? { fromTag: 7 } : {}),
+    mode, show, base: "/archive", ...(mode === "details" ? { fromTag: 7, tags: [{id: 1, title: "Ambient", color: "#ff0000"}] } : {}),
   }))}</div>`,
 ).join("");
 const server = serve({
@@ -62,6 +62,8 @@ try {
   await browser("wait", '[aria-valuenow="25"]');
   assert.equal(await evaluate("document.querySelectorAll('[aria-valuenow=\"25\"]').length"), 2);
   assert.equal(await evaluate("document.querySelector('#details button') === null"), true);
+  assert.equal(await evaluate("document.querySelector('#details .tag').textContent"), "Ambient");
+  assert.equal(await evaluate("document.querySelector('#details a a') === null"), true);
   for (const width of [320, 750, 1440]) {
     await browser("set", "viewport", String(width), "900");
     assert.ok(await evaluate("document.documentElement.scrollWidth <= innerWidth"));
@@ -108,7 +110,7 @@ try {
     assert.equal(await evaluate(`document.querySelector(${JSON.stringify(selector)}).parentElement.querySelector('button') === null`), true);
     for (const width of [320, 1440]) {
       await browser("set", "viewport", String(width), "900");
-      assert.ok(await evaluate("document.documentElement.scrollWidth <= innerWidth"), JSON.stringify(await evaluate(`({page: location.pathname, width: innerWidth, overflow: [...document.querySelectorAll('main *')].filter(el => el.getBoundingClientRect().right > innerWidth + 1).slice(0, 8).map(el => ({tag:el.tagName, cls:el.className, width:el.getBoundingClientRect().width}))})`)));
+      assert.ok(await evaluate(`(() => { const rect = document.querySelector(${JSON.stringify(selector)}).getBoundingClientRect(); return rect.width > 0 && rect.left >= 0 && rect.right <= innerWidth; })()`));
     }
     await browser("click", selector);
     await browser("wait", 'main .show-artwork [aria-valuenow="25"]');

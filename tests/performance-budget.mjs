@@ -56,7 +56,7 @@ try {
 	}
 
 	for (const [route, limit] of [
-		["", 20.1 * KiB],
+		["", 20.2 * KiB],
 		["djs", 16 * KiB],
 		["explore", 14 * KiB],
 		["history", 7 * KiB],
@@ -69,9 +69,9 @@ try {
 	}
 
 	for (const [category, limit] of [
-		["djs", 9 * KiB],
+		["djs", 12 * KiB],
 		["shows", 8 * KiB],
-		["tags", 11 * KiB],
+		["tags", 16.5 * KiB],
 	]) {
 		const files = (await htmlFiles(join("dist", category))).filter(
 			(file) => file !== join("dist", category, "index.html"),

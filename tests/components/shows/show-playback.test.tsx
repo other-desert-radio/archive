@@ -51,7 +51,7 @@ test("show listing uses the empty server snapshot even with loaded playback reco
 });
 
 for (const mode of ["playback", "details"] as const) {
-	test("artwork progress reflects elapsed time and stays between zero and full", () => {
+	test(`artwork progress reflects elapsed time and stays between zero and full (${mode})`, () => {
 		for (const [positionInSeconds, percentage] of [
 			[15, 25],
 			[0, 0],
@@ -59,7 +59,7 @@ for (const mode of ["playback", "details"] as const) {
 		] as const) {
 			const html = renderToStaticMarkup(
 				<SquareShowCard
-					mode={mode}
+					{...(mode === "details" ? { mode, tags: [] } : { mode })}
 					show={show}
 					base=""
 					record={{ positionInSeconds, inProgress: true }}
@@ -79,7 +79,7 @@ for (const mode of ["playback", "details"] as const) {
 		]) {
 			const html = renderToStaticMarkup(
 				<SquareShowCard
-					mode={mode}
+					{...(mode === "details" ? { mode, tags: [] } : { mode })}
 					show={show}
 					base="/archive"
 					record={record}
@@ -91,15 +91,19 @@ for (const mode of ["playback", "details"] as const) {
 		}
 	});
 
-	test("artwork hides progress without a record or a valid duration", () => {
+	test(`artwork hides progress without a record or a valid duration (${mode})`, () => {
 		const withoutRecord = renderToStaticMarkup(
-			<SquareShowCard mode={mode} show={show} base="" />,
+			<SquareShowCard
+				{...(mode === "details" ? { mode, tags: [] } : { mode })}
+				show={show}
+				base=""
+			/>,
 		);
 		assert.doesNotMatch(withoutRecord, /role="progressbar"/);
 		for (const duration of [0, -1, Number.NaN, Number.POSITIVE_INFINITY]) {
 			const html = renderToStaticMarkup(
 				<SquareShowCard
-					mode={mode}
+					{...(mode === "details" ? { mode, tags: [] } : { mode })}
 					show={{ ...show, duration }}
 					base=""
 					record={{ positionInSeconds: 15, inProgress: true }}
@@ -109,7 +113,7 @@ for (const mode of ["playback", "details"] as const) {
 		}
 	});
 
-	test("artwork shows remaining minutes and padded seconds, bounded at zero", () => {
+	test(`artwork shows remaining minutes and padded seconds, bounded at zero (${mode})`, () => {
 		for (const [positionInSeconds, expected] of [
 			[5, "2:00"],
 			[60, "1:05"],
@@ -117,7 +121,7 @@ for (const mode of ["playback", "details"] as const) {
 		] as const) {
 			const html = renderToStaticMarkup(
 				<SquareShowCard
-					mode={mode}
+					{...(mode === "details" ? { mode, tags: [] } : { mode })}
 					show={{ ...show, duration: 125 }}
 					base=""
 					record={{ positionInSeconds, inProgress: true }}

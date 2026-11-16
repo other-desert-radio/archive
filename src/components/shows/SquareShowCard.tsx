@@ -2,6 +2,7 @@ import { useCallback, useSyncExternalStore } from "react";
 import { useAudioState, useStores } from "../../stores";
 import type { PlaybackRecord } from "../../stores/playback/types";
 import type { Show } from "../../utils/fetch-shows";
+import type { Tag } from "../../utils/fetch-tags";
 import { getBasePath } from "../../utils/get-base-path";
 import styles from "./SquareShowCard.module.css";
 import {
@@ -23,6 +24,7 @@ type Props = {
 	| {
 			mode: "details";
 			show: DetailsShow;
+			tags: Tag[];
 			fromTag?: number | undefined;
 	  }
 );
@@ -33,7 +35,7 @@ export function SquareShowCards({
 	base,
 	fromTag,
 }: {
-	shows: DetailsShow[];
+	shows: (DetailsShow & { tags: Tag[] })[];
 	base: string;
 	fromTag?: number;
 }) {
@@ -42,22 +44,23 @@ export function SquareShowCards({
 			key={show.id}
 			mode="details"
 			show={show}
+			tags={show.tags}
 			base={base}
 			fromTag={fromTag}
 		/>
 	));
 }
 
-export default function SquareShowCard({
-	show,
-	mode,
-	fromTag,
-	record,
-	base,
-	loading = "lazy",
-	border = "primary",
-	alwaysShowProgress = false,
-}: Props) {
+export default function SquareShowCard(props: Props) {
+	const {
+		show,
+		fromTag,
+		record,
+		base,
+		loading = "lazy",
+		border = "primary",
+		alwaysShowProgress = false,
+	} = props;
 	const detailBase = getBasePath(base);
 	const { playbackStore } = useStores();
 	const subscribe = useCallback(
@@ -101,8 +104,8 @@ export default function SquareShowCard({
 				loading={loading}
 				decoding="async"
 			/>
-			{mode === "playback" ? (
-				<PlaybackButton show={show} base={detailBase} />
+			{props.mode === "playback" ? (
+				<PlaybackButton show={props.show} base={detailBase} />
 			) : (
 				<a
 					className={styles["details-link"]}
@@ -111,6 +114,19 @@ export default function SquareShowCard({
 				>
 					<span className={`${styles["overlay"]} image-border-${border}`}>
 						<span className={styles["title"]}>{show.title}</span>
+						{props.tags.length > 0 && (
+							<span className={styles["tags"]}>
+								{props.tags.map((tag) => (
+									<span
+										key={tag.id}
+										className="tag"
+										style={{ backgroundColor: tag.color }}
+									>
+										{tag.title}
+									</span>
+								))}
+							</span>
+						)}
 					</span>
 				</a>
 			)}

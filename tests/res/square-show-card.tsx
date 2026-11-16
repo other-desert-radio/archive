@@ -21,7 +21,13 @@ hydrateRoot(
 			<SquareShowCard mode="playback" show={show} base="/archive" />
 		</div>
 		<div id="details">
-			<SquareShowCard mode="details" show={show} base="/archive" fromTag={7} />
+			<SquareShowCard
+				mode="details"
+				tags={[{ id: 1, title: "Ambient", color: "#ff0000" }]}
+				show={show}
+				base="/archive"
+				fromTag={7}
+			/>
 		</div>
 	</StoresProvider>,
 );

@@ -1,4 +1,5 @@
 ---
+import { hydrateTags } from "../../utils/hydrate-tags";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LargeTagHeader from "../../components/explore/LargeTagHeader.astro";
 import DJExploreCard from "../../components/explore/DJExploreCard.astro";
@@ -35,6 +36,7 @@ export async function getStaticPaths() {
 }
 
 const { tag, djs, shows } = Astro.props as Props;
+const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
 ---
 
 <BaseLayout
@@ -67,7 +69,7 @@ const { tag, djs, shows } = Astro.props as Props;
         </div>
         <div class="shows-grid">
           <SquareShowCards
-            shows={shows.map(({ id, title, duration, image_large }) => ({ id, title, duration, image_large }))}
+            shows={shows.map((show) => ({ id: show.id, title: show.title, duration: show.duration, image_large: show.image_large, tags: hydrateTags(show, tags) }))}
             base={import.meta.env.BASE_URL}
             fromTag={tag.id}
             client:load
