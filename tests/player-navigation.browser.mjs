@@ -45,17 +45,11 @@ function verifyPlayerLayout(width) {
 			baseClearance
 		};
 	})()`);
-	if (width <= 600) {
-		assert.equal(layout.position, "fixed");
-		assert.ok(Math.abs(layout.bottom - layout.viewportHeight) < 1);
-		assert.equal(layout.left, 0);
-		assert.equal(layout.right, layout.viewportWidth);
-		assert.ok(Math.abs(layout.clearance - layout.baseClearance - layout.height) < 1);
-	} else {
-		assert.equal(layout.position, "static");
-		assert.ok(Math.abs(layout.top - layout.navBottom) < 1);
-		assert.ok(Math.abs(layout.clearance - layout.baseClearance) < 1);
-	}
+	assert.equal(layout.position, "fixed", `Player must stay at the bottom at ${width}px`);
+	assert.ok(Math.abs(layout.bottom - layout.viewportHeight) < 1);
+	assert.equal(layout.left, 0);
+	assert.equal(layout.right, layout.viewportWidth);
+	assert.ok(Math.abs(layout.clearance - layout.baseClearance - layout.height) < 1);
 }
 
 browser("open", `${base}/`);
