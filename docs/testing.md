@@ -103,6 +103,11 @@ assertions instead of Bun’s default five-second test timeout.
 
 ## Responsive browser checks
 
+For shared show artwork, build first, then run
+`bun tests/square-show-card.browser.mjs`. It checks both interaction modes,
+saved and live progress, completed badges, hydration, keyboard focus, and
+DJ/tag links at phone and desktop widths. It requires `agent-browser`.
+
 For search navigation, build first, then run
 `bun tests/search-navigation.browser.mjs`. It serves its own production fixture
 and checks query restoration after detail visits, fresh search on category-tab

@@ -1,7 +1,7 @@
 import type { PlaybackRecord } from "../../stores/playback/types";
 import type { Show } from "../../utils/fetch-shows";
 import { getBasePath } from "../../utils/get-base-path";
-import PlayableShowArtwork from "../shows/PlayableShowArtwork";
+import SquareShowCard from "../shows/SquareShowCard";
 import styles from "./HistoryShowCard.module.css";
 
 type Props = {
@@ -13,7 +13,8 @@ export default function HistoryShowCard({ show, record }: Props) {
 	const base = getBasePath();
 	return (
 		<article className={styles["card"]}>
-			<PlayableShowArtwork
+			<SquareShowCard
+				mode="playback"
 				show={show}
 				record={record}
 				base={base}
