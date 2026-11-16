@@ -6,8 +6,8 @@ import { formatDate } from "../../utils/format-date";
 import { getBasePath } from "../../utils/get-base-path";
 import PlaylistModal from "../playlists/PlaylistModal";
 import TagContainer from "../TagContainer";
-import PlayableShowArtwork from "./PlayableShowArtwork";
 import styles from "./ShowCard.module.css";
+import SquareShowCard from "./SquareShowCard";
 
 type Props = {
 	show: Show;
@@ -65,7 +65,12 @@ export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
 	return (
 		<article className={styles["show-card"]}>
 			<div className={styles["artwork"]}>
-				<PlayableShowArtwork show={show} record={record} base={detailBase} />
+				<SquareShowCard
+					mode="playback"
+					show={show}
+					record={record}
+					base={detailBase}
+				/>
 			</div>
 			<div className={styles["trailing-content"]}>
 				<a

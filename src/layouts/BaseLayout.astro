@@ -69,7 +69,8 @@ import Navigation from "../components/Navigation.astro";
     max-width: var(--page-max-width);
     margin-inline: auto;
     padding-bottom: calc(
-      var(--container-grid-padding-bottom) + env(safe-area-inset-bottom)
+      var(--container-grid-padding-bottom) +
+        max(var(--miniplayer-height, 0px), env(safe-area-inset-bottom))
     );
   }
 
@@ -77,12 +78,4 @@ import Navigation from "../components/Navigation.astro";
     max-width: none;
   }
 
-  @media (max-width: 600px) {
-    main {
-      padding-bottom: calc(
-        var(--container-grid-padding-bottom) +
-          max(var(--miniplayer-height, 0px), env(safe-area-inset-bottom))
-      );
-    }
-  }
 </style>

@@ -1,8 +1,9 @@
 ---
+import { hydrateTags } from "../../utils/hydrate-tags";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LargeTagHeader from "../../components/explore/LargeTagHeader.astro";
 import DJExploreCard from "../../components/explore/DJExploreCard.astro";
-import { SquareShowCard } from "../../components/shows";
+import { SquareShowCards } from "../../components/shows/SquareShowCard";
 import { fetchShows, type Show } from "../../utils/fetch-shows";
 import { fetchDJs } from "../../utils/fetch-djs";
 import { fetchDJ, type HydratedDJ } from "../../utils/fetch-dj";
@@ -35,6 +36,7 @@ export async function getStaticPaths() {
 }
 
 const { tag, djs, shows } = Astro.props as Props;
+const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
 ---
 
 <BaseLayout
@@ -66,13 +68,12 @@ const { tag, djs, shows } = Astro.props as Props;
           <h2 id="tag-shows-heading">SHOWS</h2>
         </div>
         <div class="shows-grid">
-          {shows.map((show) => (
-            <SquareShowCard
-              show={show}
-              base={import.meta.env.BASE_URL}
-              fromTag={tag.id}
-            />
-          ))}
+          <SquareShowCards
+            shows={shows.map((show) => ({ id: show.id, title: show.title, duration: show.duration, image_large: show.image_large, tags: hydrateTags(show, tags) }))}
+            base={import.meta.env.BASE_URL}
+            fromTag={tag.id}
+            client:load
+          />
         </div>
       </section>
     )

@@ -35,8 +35,8 @@ command completion alone does not. Events during loads are ignored.
 
 ## Responsive layout
 
-The shared sticky header contains navigation followed by a full-width bar using
-`--miniplayer-background`. The idle bar collapses; the active player supplies its
+The shared sticky header contains navigation and a full-width player bar fixed
+to the viewport bottom using `--miniplayer-background`. The idle bar collapses; the active player supplies its
 height. Metadata aligns with navigation text. Above 1023px, linked DJ names, a
 decorative divider and the linked show title sit alongside the widget, followed
 by text heart and fullscreen buttons. Each DJ has its own link; shows without
@@ -46,8 +46,7 @@ a maximum width of 40rem.
 From above 600px through 1023px, metadata wraps onto its own row. The widget fills
 the available width underneath alongside the desktop controls on the right.
 
-At 600px and below, the bar is fixed to the viewport bottom while navigation
-stays at the top. Metadata and desktop actions are hidden. A borderless,
+At 600px and below, metadata and desktop actions are hidden. A borderless,
 content-width “expand ↑” button sits immediately above the widget at its right
 edge, without a full-width background strip. The heart remains unwired.
 

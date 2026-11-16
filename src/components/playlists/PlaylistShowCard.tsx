@@ -5,7 +5,7 @@ import type { Show } from "../../utils/fetch-shows";
 import type { TagMap } from "../../utils/fetch-tags";
 import { formatDateTime } from "../../utils/format-date";
 import { getBasePath } from "../../utils/get-base-path";
-import PlayableShowArtwork from "../shows/PlayableShowArtwork";
+import SquareShowCard from "../shows/SquareShowCard";
 import TagContainer from "../TagContainer";
 import styles from "./PlaylistShowCard.module.css";
 
@@ -30,7 +30,12 @@ export default function PlaylistShowCard({
 	const hasNote = entry.note !== undefined && entry.note !== "";
 	return (
 		<div className={styles["card"]}>
-			<PlayableShowArtwork show={show} record={record} base={getBasePath()} />
+			<SquareShowCard
+				mode="playback"
+				show={show}
+				record={record}
+				base={getBasePath()}
+			/>
 			<div className={styles["chin"]} data-has-note={hasNote}>
 				<a
 					className={styles["title"]}
