@@ -101,6 +101,32 @@ test("DJ scrolling eases, reverses, pauses for interaction and cleans up", () =>
 		assert.equal(row.scrollLeft, before, pause);
 	}
 	events.dispatchEvent(new Event("pointerup"));
+	row.scrollWidth = 400;
+	row.scrollLeft = 100;
+	events.dispatchEvent(new Event("touchstart"));
+	events.dispatchEvent(new Event("pointerdown"));
+	tick();
+	events.dispatchEvent(new Event("pointercancel"));
+	row.scrollLeft = 150;
+	for (let i = 0; i < 6; i++) {
+		tick();
+		assert.equal(row.scrollLeft, 150, "native pan stays paused while touching");
+	}
+	events.dispatchEvent(new Event("touchend"));
+	for (const position of [170, 180, 185]) {
+		row.scrollLeft = position;
+		tick();
+		assert.equal(row.scrollLeft, position, "momentum is not overwritten");
+	}
+	for (let i = 0; i < 3; i++) {
+		tick();
+		assert.equal(row.scrollLeft, 185, "waits for native scrolling to settle");
+	}
+	tick();
+	assert.ok(
+		row.scrollLeft > 185 && row.scrollLeft < 188,
+		"resumes from native position",
+	);
 	row.scrollWidth = 100;
 	const before = row.scrollLeft;
 	tick();
