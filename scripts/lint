@@ -2,4 +2,6 @@
 set -euo pipefail
 
 ./node_modules/.bin/biome check .
-bun run --parallel lint:shell lint:eslint lint:types
+bun run lint:shell
+bun run lint:eslint
+bun run lint:types
