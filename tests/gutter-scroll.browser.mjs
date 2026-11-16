@@ -94,7 +94,7 @@ try {
         verifyRow('.gutter-scroll', '#tag-djs-heading', false, true);
 	}
 	// Focus must bring the final link into the scroll viewport.
-	evaluate(`document.querySelector('.tag-row').lastElementChild.focus(); true`);
+	evaluate(`document.querySelector('.dj-row').lastElementChild.focus(); true`);
 	assert.equal(evaluate(`(() => {
 		const r = document.activeElement.getBoundingClientRect();
 		const s = document.querySelector('.gutter-scroll').getBoundingClientRect();

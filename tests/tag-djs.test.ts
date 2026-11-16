@@ -9,7 +9,7 @@ import { fetchDJs } from "../src/utils/fetch-djs";
 import { fetchShows } from "../src/utils/fetch-shows";
 import { fetchTags } from "../src/utils/fetch-tags";
 
-test("tag pages render only matching DJ cards with profiles and detail links", {
+test("tag pages render only matching DJ cards with names, images and detail links", {
 	timeout: 30_000,
 }, async () => {
 	execFileSync("bun", ["run", "build"], {
@@ -56,12 +56,16 @@ test("tag pages render only matching DJ cards with profiles and detail links", {
 				card.includes(`href="/archive/djs/${dj.id}?fromTag=${tag.id}"`),
 			);
 			assert.ok(card.includes(`aria-label="View ${dj.title}"`));
+			assert.ok(card.includes('class="artwork"'));
 			if (dj.image_large) {
 				assert.ok(card.includes(`src="/archive/${dj.image_large}"`));
 				assert.ok(card.includes(`alt="${dj.title}"`));
 			}
 			if (dj.bio) {
-				assert.ok(card.includes(dj.bio), `tag ${tag.id}: DJ ${dj.id} bio`);
+				assert.ok(
+					!card.includes(dj.bio),
+					`tag ${tag.id}: DJ ${dj.id} bio omitted`,
+				);
 			}
 		}
 	}
