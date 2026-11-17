@@ -1,6 +1,7 @@
 import type { PlaybackRecord } from "../stores/playback/types";
 import type { Playlist } from "../stores/playlists/types";
 import type { SearchEntry } from "../stores/search-history-store";
+import type { ShowDetail } from "../stores/show-details/types";
 import type { Show } from "../utils/fetch-shows";
 
 import type { Tag } from "../utils/fetch-tags";
@@ -17,6 +18,7 @@ export type StoreSchema = {
 
 	// local cache of shows
 	shows: { value: Show; key: number };
+	show_details: { value: ShowDetail; key: number };
 	// local cache of tags
 	tags: { value: Tag; key: number };
 	// local cache of data_versions.json

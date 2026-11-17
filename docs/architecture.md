@@ -197,6 +197,8 @@ Schema v4 adds `playlists` keyed by `id`, preserving all existing records.
 Schema v5 adds `search_shows`, `search_explore`, and `search_djs`, keyed by
 `query`, with `{ query, date }` records and millisecond timestamps. History loads
 independently of catalog refresh; serialized writes publish only after commit.
+Schema v6 adds `show_details` keyed by `id`, preserving all existing stores and
+records. Dataset revisions remain independent of the IndexedDB schema version.
 PlaybackStore provides independent local initialization, memory subscriptions,
 and serialized retryable saves. A listen counts when the Mixcloud widget emits
 `ended`, regardless of the starting position. Its history entry receives
