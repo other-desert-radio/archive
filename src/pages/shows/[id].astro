@@ -10,30 +10,48 @@ import { fetchTags } from "../../utils/fetch-tags";
 import { formatDate } from "../../utils/format-date";
 import { hydrateTags } from "../../utils/hydrate-tags";
 import { pathToFileURL } from "node:url";
+import { readFile } from "node:fs/promises";
+import { isMatching } from "ts-pattern";
+import { ShowDetailsExportPattern } from "../../stores/show-details/types";
 
 type Props = {
   show: Show;
   djs: HydratedDJ[];
+  description: string | undefined;
 };
 export async function getStaticPaths() {
   const shows = await fetchShows(pathToFileURL("public/resources/shows.json"));
+  const exported: unknown = JSON.parse(
+    await readFile("public/resources/show_details.json", "utf8"),
+  );
+  if (!isMatching(ShowDetailsExportPattern, exported)) {
+    throw new Error("Show details have an unexpected format.");
+  }
+  const details = new Map(exported.data.map((detail) => [detail.id, detail]));
 
   return Promise.all(
-    shows.map(async (show) => ({
-      params: { id: String(show.id) },
-      props: {
-        show: show,
-        djs: await Promise.all(
-          show.djs.map(({ id }) =>
-            fetchDJ(pathToFileURL(`public/resources/djs/${id}.json`)),
+    shows.map(async (show) => {
+      const detail = details.get(show.id);
+      if (!detail) {
+        throw new Error(`Missing details for show ${show.id}`);
+      }
+      return {
+        params: { id: String(show.id) },
+        props: {
+          show: show,
+          description: detail.description,
+          djs: await Promise.all(
+            show.djs.map(({ id }) =>
+              fetchDJ(pathToFileURL(`public/resources/djs/${id}.json`)),
+            ),
           ),
-        ),
-      },
-    })),
+        },
+      };
+    }),
   );
 }
 
-const { show, djs } = Astro.props;
+const { show, djs, description } = Astro.props;
 const base = getBasePath();
 const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
 const hydratedTags = hydrateTags(show, tags);
@@ -62,7 +80,7 @@ const hydratedTags = hydrateTags(show, tags);
     <section
       class:list={[
         "show-grid",
-        { "has-description": show.description !== undefined },
+        { "has-description": Boolean(description) },
       ]}
       aria-labelledby="show-title"
     >
@@ -78,12 +96,12 @@ const hydratedTags = hydrateTags(show, tags);
         <SaveToPlaylist showId={show.id} client:load />
       </div>
       {
-        show.description !== undefined ? (
+        description ? (
           <section class="show-description" aria-labelledby="description-title">
             <h2 id="description-title" class="description-title">
               DESCRIPTION
             </h2>
-            <div class="description-content" set:html={show.description} />
+            <div class="description-content" set:html={description} />
           </section>
         ) : null
       }

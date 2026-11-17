@@ -137,7 +137,12 @@ test("details require a manifest entry and a readable file", async () => {
 	});
 });
 
-for (const { name, data, version = 1, error } of [
+const invalidDetailCases: {
+	name: string;
+	data: unknown[];
+	version?: number;
+	error: RegExp;
+}[] = [
 	{ name: "missing record", data: [], error: /missing detail for show 1/ },
 	{ name: "orphan record", data: [{ id: 99 }], error: /unknown ID 99/ },
 	{
@@ -166,7 +171,9 @@ for (const { name, data, version = 1, error } of [
 		data: [{ id: 1, tracklist: [{ artist: "Artist" }] }],
 		error: /tracklist/,
 	},
-]) {
+];
+
+for (const { name, data, version = 1, error } of invalidDetailCases) {
 	test(`rejects details with ${name}`, async () => {
 		await fixture(async (directory) => {
 			await replace(directory, "show_details.json", {

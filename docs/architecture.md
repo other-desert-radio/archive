@@ -179,6 +179,13 @@ static detail page. `src/pages/djs/[id].astro` loads the matching full DJ
 profile during the build and generates one static detail page per DJ; it
 renders the profile image, tags, socials, biography and show information.
 
+Show detail routes still come from `shows.json`. During the build, their Astro
+page reads `show_details.json` once and joins descriptions by show ID. Only the
+current show's description is rendered into each page as backend-sanitized HTML;
+missing or empty descriptions omit that section. Descriptions need no React
+hydration or browser fetch on these pages. Tracklists remain in the details
+dataset and browser store, without a tracklist UI or serialization into islands.
+
 For the current site, a browser requests `/`, Astro resolves that URL to `src/pages/index.astro`, and the build emits a static `dist/index.html`. `src/layouts/BaseLayout.astro` provides the document shell and imports `src/styles/global.css`, which registers Space Mono and applies the base font to the page. Files in `public/` are available at root-relative URLs, such as `/background.jpeg` and `/fonts/space-mono-regular.woff2`.
 
 As routes are added, place them under `src/pages/` using Astro's file-based routing and wrap them in `BaseLayout.astro` so the global styles and document metadata are consistently applied. Shared presentation should move into `src/components/`; reusable data or content can live in a dedicated `src/` module or Astro content collection when the project needs one. Keep browser-only interactivity isolated to React components or client-side scripts rather than introducing a runtime dependency for otherwise static pages.
