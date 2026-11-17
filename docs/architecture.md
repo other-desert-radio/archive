@@ -48,11 +48,18 @@ to avoid circular dependencies through the barrels.
 Store construction is side-effect free during server rendering. `useStores()`
 starts shared initialization in a React effect, which runs only in the browser.
 The composition root initializes `VersionsStore` first, then ShowStore and TagStore in sequence.
+After that initialization resolves, `useStores()` starts ShowDetailStore in the
+background. Details are outside the shared blocking promise; failures are logged
+without failing browsing or playback. Direct browser consumers can initialize
+ShowDetailStore independently, sharing its pending request with other consumers.
+The store publishes cached descriptions and tracklists before refreshing their
+independent revision, commits replacements atomically, and permits retry after
+failure. A revision mismatch refreshes the manifest and retries once.
 Browser consumers separately initialize PlaybackStore and PlaylistStore so catalog refresh failures
 do not prevent reading local playback progress or playlists. The Mixcloud adapter also awaits
 that shared local initialization before loading a selection.
 VersionsStore fetches and validates the shared manifest and reads locally cached
-revisions from metadata. Both dataset stores consume its cached/published revision getters.
+revisions from metadata. Dataset stores consume its cached/published revision getters.
 After a dataset and revision commit atomically, `VersionsStore.refreshCached()`
 reloads the committed revisions; fetching a manifest never advances them. Concurrent consumers share one initialization promise;
 a failed attempt rejects and permits a later retry. Individual stores do not
