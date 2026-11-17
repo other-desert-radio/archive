@@ -101,8 +101,11 @@ buttons use `touch-action: manipulation` to avoid waiting for double taps.
 The shared layout renders a decorative fixed background layer at z-index 0,
 with page content above it. Its height is `100dvh` (`100vh` fallback), so it
 tracks the visible viewport as mobile browser controls expand or collapse.
-Both layers tile `background2.avif` at its native size, switching to the 90°
-clockwise-rotated `background2-vertical.avif` at 600px and below. The root canvas uses
+Both layers center the background with `cover` sizing and no repetition,
+filling the viewport while preserving the image proportions. Explore and tag detail pages use `backgrounds/background-explore.webp`; all other pages
+use `backgrounds/background-white.webp`. At 600px and below, each switches to its
+`-vertical.webp` variant. Explore backgrounds use `rgb(205, 194, 187)`
+while the image loads. `BaseLayout` selects the background on the root element. The root canvas uses
 the same image, and `viewport-fit=cover` allows it to
 extend into safe areas; keep safe-area padding on content, not the image.
 Use neither fixed background attachment nor a negative-z-index pseudo-element.

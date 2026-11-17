@@ -181,9 +181,9 @@ for (const [width, height] of [[320, 800], [332, 600], [600, 800], [601, 800], [
 	assert.ok(layout.bottom >= layout.viewportHeight);
 	assert.equal(layout.attachment, "scroll");
 	assert.equal(layout.zIndex, "0");
-	assert.equal(layout.repeat, "repeat");
-	assert.equal(layout.size, "auto");
-	assert.ok(layout.canvasImage.includes(width <= 600 ? "background2-vertical.avif" : "background2.avif"));
+	assert.equal(layout.repeat, "no-repeat");
+	assert.equal(layout.size, "cover");
+	assert.ok(layout.canvasImage.includes(width <= 600 ? "/backgrounds/background-white-vertical.webp" : "/backgrounds/background-white.webp"));
 	assert.equal(layout.layerImage, layout.canvasImage);
 	assert.ok(layout.viewport.includes("viewport-fit=cover"));
 	assert.equal(layout.touchAction, "manipulation");
