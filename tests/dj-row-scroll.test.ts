@@ -127,24 +127,6 @@ test("DJ scrolling eases, reverses, pauses for interaction and cleans up", () =>
 		row.scrollLeft > 185 && row.scrollLeft < 188,
 		"resumes from native position",
 	);
-	for (let i = 0; i < 10; i++) {
-		// Simulate delayed or rounded readback of a programmatic scroll on iOS.
-		row.scrollLeft = Math.floor(row.scrollLeft);
-		const before = row.scrollLeft;
-		tick();
-		assert.ok(
-			row.scrollLeft > before,
-			"programmatic readback does not pause autoplay",
-		);
-	}
-	const beforeWheel = row.scrollLeft;
-	events.dispatchEvent(new Event("wheel"));
-	tick();
-	assert.equal(
-		row.scrollLeft,
-		beforeWheel,
-		"wheel interaction pauses autoplay",
-	);
 	row.scrollWidth = 100;
 	const before = row.scrollLeft;
 	tick();

@@ -35,14 +35,6 @@ export function setupDJRowScroll(row: HTMLElement) {
 	}
 
 	row.addEventListener(
-		"wheel",
-		() => {
-			nativeScrollUntil = (previousTime ?? 0) + NATIVE_SCROLL_IDLE_MS;
-		},
-		options,
-	);
-
-	row.addEventListener(
 		"pointerdown",
 		() => {
 			dragging = true;
@@ -69,10 +61,7 @@ export function setupDJRowScroll(row: HTMLElement) {
 			previousTime === undefined ? 0 : Math.min(time - previousTime, 50);
 		previousTime = time;
 		// Native panning and momentum can continue after pointercancel.
-		if (
-			(touching || time < nativeScrollUntil) &&
-			row.scrollLeft !== lastScrollLeft
-		) {
+		if (row.scrollLeft !== lastScrollLeft) {
 			nativeScrollUntil = time + NATIVE_SCROLL_IDLE_MS;
 		}
 		const end = row.scrollWidth - row.clientWidth;

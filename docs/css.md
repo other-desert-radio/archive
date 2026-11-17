@@ -99,8 +99,9 @@ allow the navigation title to wrap within its own line on tiny screens.
 Hover effects are limited to `(hover: hover) and (pointer: fine)`; links and
 buttons use `touch-action: manipulation` to avoid waiting for double taps.
 The shared layout renders a decorative fixed background layer at z-index 0,
-with page content above it. Its height is `100dvh` (`100vh` fallback), so it
-tracks the visible viewport as mobile browser controls expand or collapse.
+with page content above it. Both the root canvas and background layer use `100lvh` (`100vh` fallback),
+so the image size stays stable as mobile browser controls expand or collapse.
+Content retains `100dvh` minimum sizing.
 Both layers center the background with `cover` sizing and no repetition,
 filling the viewport while preserving the image proportions. Explore and tag detail pages use `backgrounds/background-explore.webp`; all other pages
 use `backgrounds/background-white.webp`. At 600px and below, each switches to its
