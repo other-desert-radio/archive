@@ -7,7 +7,7 @@ import {
 	ShowDetailsExportPattern,
 } from "./types";
 
-// Composition will supply the shared database and manifest store without blocking browsing.
+// Browsing stays available while composition sets up the shared database and manifest store.
 export class ShowDetailStore {
 	private details = new Map<number, ShowDetail>();
 	private initialization: Promise<void> | undefined;
