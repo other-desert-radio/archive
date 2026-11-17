@@ -190,7 +190,12 @@ test("retry refreshes the manifest after a deployment revision mismatch", async 
 		if (String(url).endsWith("data_versions.json")) {
 			manifestFetches++;
 			const version = { id: revision, updatedAt: fixtureShows.updatedAt };
-			return Response.json({ shows: version, djs: version, tags: version });
+			return Response.json({
+				shows: version,
+				show_details: version,
+				djs: version,
+				tags: version,
+			});
 		}
 		return Response.json({
 			...(String(url).endsWith("tags.json") ? fixtureTags : fixtureShows),

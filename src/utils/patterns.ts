@@ -23,6 +23,7 @@ export const AssetReferencePattern = P.string.regex(
 export const VersionPattern = { id: P.number, updatedAt: IsoDatePattern };
 export const VersionsPattern = {
 	shows: VersionPattern,
+	show_details: VersionPattern,
 	djs: VersionPattern,
 	tags: VersionPattern,
 };

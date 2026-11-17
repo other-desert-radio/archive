@@ -37,6 +37,7 @@ export async function runIndexedDBChecks() {
 				case "/resources/data_versions.json":
 					return Response.json({
 						shows: { id: 1, updatedAt: "2026-10-30T12:00:00.000Z" },
+						show_details: { id: 1, updatedAt: "2026-10-30T12:00:00.000Z" },
 						djs: { id: 1, updatedAt: "2026-10-30T12:00:00.000Z" },
 						tags: { id: 1, updatedAt: "2026-10-30T12:00:00.000Z" },
 					});
