@@ -37,6 +37,27 @@ test("show details include each associated DJ's profile and biography", {
 				`Show ${show.id} must include its description in static HTML`,
 			);
 		}
+		assert.equal(
+			html.includes('id="tracklist-title"'),
+			Boolean(detail.tracklist?.length),
+		);
+		if (detail.tracklist?.length) {
+			const tracklistHtml = html.slice(
+				html.indexOf('<ol class="tracklist"'),
+				html.indexOf("</ol>", html.indexOf('<ol class="tracklist"')),
+			);
+			assert.equal(
+				(tracklistHtml.match(/<li(?:\s[^>]*)?>/g) ?? []).length,
+				detail.tracklist.length,
+			);
+			if (detail.description) {
+				assert.ok(
+					html.indexOf('id="description-title"') <
+						html.indexOf('id="tracklist-title"'),
+				);
+			}
+		}
+
 		assert.ok(
 			!html.includes("&quot;tracklist&quot;"),
 			"Tracklists must not be serialized into island props",
