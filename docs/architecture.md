@@ -48,11 +48,18 @@ to avoid circular dependencies through the barrels.
 Store construction is side-effect free during server rendering. `useStores()`
 starts shared initialization in a React effect, which runs only in the browser.
 The composition root initializes `VersionsStore` first, then ShowStore and TagStore in sequence.
+After that initialization resolves, `useStores()` starts ShowDetailStore in the
+background. Details are outside the shared blocking promise; failures are logged
+without failing browsing or playback. Direct browser consumers can initialize
+ShowDetailStore independently, sharing its pending request with other consumers.
+The store publishes cached descriptions and tracklists before refreshing their
+independent revision, commits replacements atomically, and permits retry after
+failure. A revision mismatch refreshes the manifest and retries once.
 Browser consumers separately initialize PlaybackStore and PlaylistStore so catalog refresh failures
 do not prevent reading local playback progress or playlists. The Mixcloud adapter also awaits
 that shared local initialization before loading a selection.
 VersionsStore fetches and validates the shared manifest and reads locally cached
-revisions from metadata. Both dataset stores consume its cached/published revision getters.
+revisions from metadata. Dataset stores consume its cached/published revision getters.
 After a dataset and revision commit atomically, `VersionsStore.refreshCached()`
 reloads the committed revisions; fetching a manifest never advances them. Concurrent consumers share one initialization promise;
 a failed attempt rejects and permits a later retry. Individual stores do not
@@ -172,6 +179,13 @@ static detail page. `src/pages/djs/[id].astro` loads the matching full DJ
 profile during the build and generates one static detail page per DJ; it
 renders the profile image, tags, socials, biography and show information.
 
+Show detail routes still come from `shows.json`. During the build, their Astro
+page reads `show_details.json` once and joins descriptions by show ID. Only the
+current show's description is rendered into each page as backend-sanitized HTML;
+missing or empty descriptions omit that section. Descriptions need no React
+hydration or browser fetch on these pages. Tracklists remain in the details
+dataset and browser store, without a tracklist UI or serialization into islands.
+
 For the current site, a browser requests `/`, Astro resolves that URL to `src/pages/index.astro`, and the build emits a static `dist/index.html`. `src/layouts/BaseLayout.astro` provides the document shell and imports `src/styles/global.css`, which registers Space Mono and applies the base font to the page. Files in `public/` are available at root-relative URLs, such as `/background.jpeg` and `/fonts/space-mono-regular.woff2`.
 
 As routes are added, place them under `src/pages/` using Astro's file-based routing and wrap them in `BaseLayout.astro` so the global styles and document metadata are consistently applied. Shared presentation should move into `src/components/`; reusable data or content can live in a dedicated `src/` module or Astro content collection when the project needs one. Keep browser-only interactivity isolated to React components or client-side scripts rather than introducing a runtime dependency for otherwise static pages.
@@ -197,6 +211,8 @@ Schema v4 adds `playlists` keyed by `id`, preserving all existing records.
 Schema v5 adds `search_shows`, `search_explore`, and `search_djs`, keyed by
 `query`, with `{ query, date }` records and millisecond timestamps. History loads
 independently of catalog refresh; serialized writes publish only after commit.
+Schema v6 adds `show_details` keyed by `id`, preserving all existing stores and
+records. Dataset revisions remain independent of the IndexedDB schema version.
 PlaybackStore provides independent local initialization, memory subscriptions,
 and serialized retryable saves. A listen counts when the Mixcloud widget emits
 `ended`, regardless of the starting position. Its history entry receives

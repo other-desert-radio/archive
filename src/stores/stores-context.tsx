@@ -24,9 +24,17 @@ export function useStores(): Stores {
 		void stores.playbackStore.initialize().catch((error: unknown) => {
 			console.error("[PlaybackStore] initialization failed", error);
 		});
-		void stores.initialize().catch((error: unknown) => {
-			console.error("[Stores] initialization failed", error);
-		});
+		void stores
+			.initialize()
+			.then(() => {
+				// Start details after the catalog, without making browsing wait for them.
+				void stores.showDetailStore.initialize().catch((error: unknown) => {
+					console.error("[ShowDetailStore] initialization failed", error);
+				});
+			})
+			.catch((error: unknown) => {
+				console.error("[Stores] initialization failed", error);
+			});
 	}, [stores]);
 	return stores;
 }

@@ -37,6 +37,8 @@ test("fresh store sets have independent playback and subscriptions", () => {
 	assert.notEqual(first.audioStore, stores.audioStore);
 	assert.notEqual(first.playlistStore, second.playlistStore);
 	assert.notEqual(first.playlistStore, stores.playlistStore);
+	assert.notEqual(first.showDetailStore, second.showDetailStore);
+	assert.notEqual(first.showDetailStore, stores.showDetailStore);
 	let secondNotifications = 0;
 	const unsubscribe = second.audioStore.subscribe(() => secondNotifications++);
 	first.audioStore.select({
@@ -110,6 +112,13 @@ test("server rendering never initializes browser storage", () => {
 			throw new Error("Must not initialize playlists during SSR");
 		},
 	);
+	const details = mock.method(
+		injected.showDetailStore,
+		"initialize",
+		async () => {
+			throw new Error("Must not initialize details during SSR");
+		},
+	);
 	renderToStaticMarkup(
 		<StoresProvider stores={injected}>
 			<ServerSnapshotProbe />
@@ -117,6 +126,30 @@ test("server rendering never initializes browser storage", () => {
 	);
 	assert.equal(initialize.mock.callCount(), 0);
 	assert.equal(playlists.mock.callCount(), 0);
+	assert.equal(details.mock.callCount(), 0);
+});
+
+test("catalog readiness does not start or await details; direct consumers can start them independently", async () => {
+	const injected = createStores();
+	const catalog = Promise.withResolvers<void>();
+	const details = Promise.withResolvers<void>();
+	mock.method(injected.versionsStore, "initialize", () => catalog.promise);
+	mock.method(injected.showStore, "initialize", async () => {});
+	mock.method(injected.tagStore, "initialize", async () => {});
+	const initializeDetails = mock.method(
+		injected.showDetailStore,
+		"initialize",
+		() => details.promise,
+	);
+	const browsing = injected.initialize();
+	assert.equal(initializeDetails.mock.callCount(), 0);
+	const direct = injected.showDetailStore.initialize();
+	catalog.resolve();
+	await browsing;
+	details.reject(new Error("Details offline"));
+	await assert.rejects(direct, /Details offline/);
+	await injected.initialize();
+	assert.equal(initializeDetails.mock.callCount(), 1);
 });
 
 test("initialization loads shared versions before initializing ShowStore and TagStore", async () => {
@@ -190,7 +223,12 @@ test("retry refreshes the manifest after a deployment revision mismatch", async 
 		if (String(url).endsWith("data_versions.json")) {
 			manifestFetches++;
 			const version = { id: revision, updatedAt: fixtureShows.updatedAt };
-			return Response.json({ shows: version, djs: version, tags: version });
+			return Response.json({
+				shows: version,
+				show_details: version,
+				djs: version,
+				tags: version,
+			});
 		}
 		return Response.json({
 			...(String(url).endsWith("tags.json") ? fixtureTags : fixtureShows),

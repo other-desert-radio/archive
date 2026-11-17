@@ -2,6 +2,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { isMatching, P } from "ts-pattern";
+import { ShowDetailPattern } from "../src/stores/show-details/types";
 import { HydratedDJPattern } from "../src/utils/fetch-dj";
 import { DJPattern } from "../src/utils/fetch-djs";
 import { ShowPattern } from "../src/utils/fetch-shows";
@@ -99,7 +100,7 @@ export async function validateResources(directory: string): Promise<void> {
 	const manifestFile = "data_versions.json";
 	const manifest = await readJson(directory, manifestFile);
 	assertFields(manifest, VersionsPattern, manifestFile);
-	for (const name of ["shows", "djs", "tags"] as const) {
+	for (const name of ["shows", "show_details", "djs", "tags"] as const) {
 		const version = manifest[name];
 		if (!Number.isFinite(version.id)) {
 			throw new Error(`${manifestFile}.${name}.id: expected a finite number`);
@@ -135,6 +136,24 @@ export async function validateResources(directory: string): Promise<void> {
 	}
 	for (const dj of djs) {
 		checkReferences(dj.tagIds, tagIds, `djs_brief.json: DJ ${dj.id}.tagIds`);
+	}
+	const details = await readCatalog(
+		directory,
+		"show_details.json",
+		ShowDetailPattern,
+		manifest.show_details.id,
+	);
+	const showIds = new Set(shows.map(({ id }) => id));
+	checkReferences(
+		details.map(({ id }) => id),
+		showIds,
+		"show_details.json",
+	);
+	const detailIds = new Set(details.map(({ id }) => id));
+	for (const id of showIds) {
+		if (!detailIds.has(id)) {
+			throw new Error(`show_details.json: missing detail for show ${id}`);
+		}
 	}
 	let filenames: string[];
 	try {

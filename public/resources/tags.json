@@ -1,6 +1,6 @@
 {
-	"version": 5,
-	"updatedAt": "2026-11-06T23:56:06.238Z",
+	"version": 6,
+	"updatedAt": "2026-11-17T02:25:44.298Z",
 	"data": [
 		{
 			"id": 4,
@@ -2513,7 +2513,7 @@
 		{
 			"id": 387,
 			"title": "Narrative",
-			"color": "#54f672",
+			"color": "#f6d32d",
 			"mixcloud_key": "/genres/narrative/",
 			"mixcloud_url": "https://www.mixcloud.com/genres/narrative/"
 		}

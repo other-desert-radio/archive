@@ -10,30 +10,53 @@ import { fetchTags } from "../../utils/fetch-tags";
 import { formatDate } from "../../utils/format-date";
 import { hydrateTags } from "../../utils/hydrate-tags";
 import { pathToFileURL } from "node:url";
+import { readFile } from "node:fs/promises";
+import { isMatching } from "ts-pattern";
+import {
+  type ShowDetail,
+  ShowDetailsExportPattern,
+} from "../../stores/show-details/types";
 
 type Props = {
   show: Show;
   djs: HydratedDJ[];
+  description: string | undefined;
+  tracklist: ShowDetail["tracklist"];
 };
 export async function getStaticPaths() {
   const shows = await fetchShows(pathToFileURL("public/resources/shows.json"));
+  const exported: unknown = JSON.parse(
+    await readFile("public/resources/show_details.json", "utf8"),
+  );
+  if (!isMatching(ShowDetailsExportPattern, exported)) {
+    throw new Error("Show details have an unexpected format.");
+  }
+  const details = new Map(exported.data.map((detail) => [detail.id, detail]));
 
   return Promise.all(
-    shows.map(async (show) => ({
-      params: { id: String(show.id) },
-      props: {
-        show: show,
-        djs: await Promise.all(
-          show.djs.map(({ id }) =>
-            fetchDJ(pathToFileURL(`public/resources/djs/${id}.json`)),
+    shows.map(async (show) => {
+      const detail = details.get(show.id);
+      if (!detail) {
+        throw new Error(`Missing details for show ${show.id}`);
+      }
+      return {
+        params: { id: String(show.id) },
+        props: {
+          show: show,
+          description: detail.description,
+          tracklist: detail.tracklist,
+          djs: await Promise.all(
+            show.djs.map(({ id }) =>
+              fetchDJ(pathToFileURL(`public/resources/djs/${id}.json`)),
+            ),
           ),
-        ),
-      },
-    })),
+        },
+      };
+    }),
   );
 }
 
-const { show, djs } = Astro.props;
+const { show, djs, description, tracklist } = Astro.props as Props;
 const base = getBasePath();
 const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
 const hydratedTags = hydrateTags(show, tags);
@@ -62,7 +85,7 @@ const hydratedTags = hydrateTags(show, tags);
     <section
       class:list={[
         "show-grid",
-        { "has-description": show.description !== undefined },
+        { "has-description": Boolean(description || tracklist?.length) },
       ]}
       aria-labelledby="show-title"
     >
@@ -77,16 +100,36 @@ const hydratedTags = hydrateTags(show, tags);
         />
         <SaveToPlaylist showId={show.id} client:load />
       </div>
-      {
-        show.description !== undefined ? (
-          <section class="show-description" aria-labelledby="description-title">
-            <h2 id="description-title" class="description-title">
-              DESCRIPTION
-            </h2>
-            <div class="description-content" set:html={show.description} />
-          </section>
-        ) : null
-      }
+      <div class="show-description" hidden={!description && !tracklist?.length}>
+        {
+          description && (
+            <section aria-labelledby="description-title">
+              <h2 id="description-title" class="description-title">
+                DESCRIPTION
+              </h2>
+              <div class="description-content" set:html={description} />
+            </section>
+          )
+        }
+        {
+          Boolean(tracklist?.length) && (
+            <section aria-labelledby="tracklist-title">
+              <h2 id="tracklist-title" class="description-title">
+                TRACKLIST
+              </h2>
+              <ol class="tracklist">
+                {tracklist?.map((entry) => (
+                  <li>
+                    {"chapter" in entry
+                      ? entry.chapter
+                      : `${entry.artist} — ${entry.song}`}
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )
+        }
+      </div>
       <div class="show-djs">
         {
           djs.map((dj) => (
@@ -197,11 +240,23 @@ const hydratedTags = hydrateTags(show, tags);
   }
 
   .show-description {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
     grid-column: 2;
     grid-row: 1 / span 2;
     min-width: 0;
     overflow-wrap: anywhere;
     border-left: var(--border-secondary) solid currentColor;
+    padding-left: var(--space-lg);
+  }
+
+  .show-description[hidden] {
+    display: none;
+  }
+
+  .tracklist {
+    margin: 0;
     padding-left: var(--space-lg);
   }
 

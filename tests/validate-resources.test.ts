@@ -26,7 +26,16 @@ async function fixture(run: (directory: string) => Promise<void>) {
 			"shows.json": shows,
 			"djs_brief.json": djs,
 			"tags.json": tags,
-			"data_versions.json": { shows: revision, djs: revision, tags: revision },
+			"show_details.json": {
+				...shows,
+				data: shows.data.map(({ id }) => ({ id })),
+			},
+			"data_versions.json": {
+				shows: revision,
+				show_details: revision,
+				djs: revision,
+				tags: revision,
+			},
 			"djs/1.json": profile,
 			"djs/2.json": { ...profile, data: { ...profile.data, id: 2 } },
 		})) {
@@ -58,6 +67,7 @@ test("valid exports and existing permissive profile fields pass", async () => {
 		const revision = { id: 1, updatedAt: tags.updatedAt };
 		await replace(directory, "data_versions.json", {
 			shows: revision,
+			show_details: revision,
 			djs: revision,
 			tags: revision,
 			extra: null,
@@ -68,7 +78,12 @@ test("valid exports and existing permissive profile fields pass", async () => {
 
 test("empty catalogs with an empty profile directory pass", async () => {
 	await fixture(async (directory) => {
-		for (const filename of ["shows.json", "djs_brief.json", "tags.json"]) {
+		for (const filename of [
+			"shows.json",
+			"show_details.json",
+			"djs_brief.json",
+			"tags.json",
+		]) {
 			await replace(directory, filename, { ...tags, data: [] });
 		}
 		await rm(join(directory, "djs/1.json"));
@@ -76,6 +91,100 @@ test("empty catalogs with an empty profile directory pass", async () => {
 		await validateResources(directory);
 	});
 });
+
+test("details preserve empty descriptions, chapters, order and known or omitted offsets", async () => {
+	await fixture(async (directory) => {
+		const details = {
+			...shows,
+			data: [
+				{
+					id: 1,
+					description: "",
+					tracklist: [
+						{ chapter: "Opening", start_time: 0 },
+						{ artist: "Artist", song: "Unknown offset" },
+						{ artist: "Artist", song: "Later", start_time: 42 },
+					],
+				},
+			],
+		};
+		await replace(directory, "show_details.json", details);
+		await validateResources(directory);
+		assert.deepEqual(
+			JSON.parse(await readFile(join(directory, "show_details.json"), "utf8")),
+			details,
+		);
+	});
+});
+
+test("details require a manifest entry and a readable file", async () => {
+	await fixture(async (directory) => {
+		const path = join(directory, "data_versions.json");
+		const manifest = JSON.parse(await readFile(path, "utf8"));
+		delete manifest.show_details;
+		await replace(directory, "data_versions.json", manifest);
+		await assert.rejects(
+			validateResources(directory),
+			/data_versions.json.show_details/,
+		);
+	});
+	await fixture(async (directory) => {
+		await rm(join(directory, "show_details.json"));
+		await assert.rejects(
+			validateResources(directory),
+			/show_details.json: cannot read JSON/,
+		);
+	});
+});
+
+const invalidDetailCases: {
+	name: string;
+	data: unknown[];
+	version?: number;
+	error: RegExp;
+}[] = [
+	{ name: "missing record", data: [], error: /missing detail for show 1/ },
+	{ name: "orphan record", data: [{ id: 99 }], error: /unknown ID 99/ },
+	{
+		name: "duplicate record",
+		data: [{ id: 1 }, { id: 1 }],
+		error: /duplicate ID 1/,
+	},
+	{
+		name: "revision mismatch",
+		data: [{ id: 1 }],
+		version: 2,
+		error: /version: expected 1, received 2/,
+	},
+	{
+		name: "null description",
+		data: [{ id: 1, description: null }],
+		error: /description/,
+	},
+	...[null, -1, 0.5].map((start_time) => ({
+		name: `invalid offset ${start_time}`,
+		data: [{ id: 1, tracklist: [{ chapter: "Chapter", start_time }] }],
+		error: /tracklist/,
+	})),
+	{
+		name: "incomplete track",
+		data: [{ id: 1, tracklist: [{ artist: "Artist" }] }],
+		error: /tracklist/,
+	},
+];
+
+for (const { name, data, version = 1, error } of invalidDetailCases) {
+	test(`rejects details with ${name}`, async () => {
+		await fixture(async (directory) => {
+			await replace(directory, "show_details.json", {
+				...shows,
+				version,
+				data,
+			});
+			await assert.rejects(validateResources(directory), error);
+		});
+	});
+}
 
 const invalidCases = [
 	{

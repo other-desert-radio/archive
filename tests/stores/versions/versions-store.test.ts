@@ -4,6 +4,7 @@ import { createIndexedDB } from "../../../src/database/indexed-db";
 import { VersionsStore } from "../../../src/stores/versions/versions-store";
 
 const manifest = {
+	show_details: { id: 7, updatedAt: "2026-11-02T19:09:00.560Z" },
 	shows: { id: 13, updatedAt: "2026-11-02T19:09:00.560Z" },
 	djs: { id: 5, updatedAt: "2026-11-02T19:09:00.560Z" },
 	tags: { id: 3, updatedAt: "2026-11-02T19:09:00.560Z" },
@@ -49,6 +50,7 @@ test("construction is inert and initialization shares one fetch without overwrit
 		assert.equal(store.getCached("djs"), undefined);
 		assert.equal(store.getPublished("djs"), 5);
 		assert.equal(store.getPublished("tags"), 3);
+		assert.equal(store.getPublished("show_details"), 7);
 	}
 });
 

@@ -105,6 +105,13 @@ assertions instead of Bun’s default five-second test timeout.
 
 ## Responsive browser checks
 
+For the split show-details dataset, build first, then run
+`bun tests/show-details.browser.mjs` (requires `agent-browser`). It serves its own
+production fixture and checks browsing and playback selection while details are
+delayed, shared downloads, warm-cache reuse, failed-refresh preservation, retry,
+and build-rendered descriptions outside React islands. It does not verify actual
+Mixcloud audio playback.
+
 For shared show artwork, build first, then run
 `bun tests/square-show-card.browser.mjs`. It checks both interaction modes,
 saved and live progress, completed badges, hydration, keyboard focus, and

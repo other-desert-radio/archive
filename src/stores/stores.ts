@@ -4,6 +4,7 @@ import { AudioStore } from "./audio/audio-store";
 import { PlaybackStore } from "./playback/playback-store";
 import { PlaylistStore } from "./playlists/playlist-store";
 import { SearchHistoryStore } from "./search-history-store";
+import { ShowDetailStore } from "./show-details/show-detail-store";
 import { ShowStore } from "./shows/show-store";
 import { TagStore } from "./tags/tag-store";
 import { VersionsStore } from "./versions/versions-store";
@@ -14,6 +15,7 @@ export type Stores = {
 	playbackStore: PlaybackStore;
 	playlistStore: PlaylistStore;
 	showStore: ShowStore;
+	showDetailStore: ShowDetailStore;
 	tagStore: TagStore;
 	versionsStore: VersionsStore;
 	initialize(): Promise<void>;
@@ -30,6 +32,7 @@ export function createStores(database: Database = createIndexedDB()): Stores {
 		playbackStore: new PlaybackStore(database),
 		playlistStore: new PlaylistStore({ database }),
 		showStore,
+		showDetailStore: new ShowDetailStore(database, versionsStore),
 		tagStore,
 		versionsStore,
 		initialize() {

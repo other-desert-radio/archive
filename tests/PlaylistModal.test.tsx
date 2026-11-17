@@ -6,6 +6,7 @@ import PlaylistModal from "../src/components/playlists/PlaylistModal";
 test("server rendering shows loading without claiming playlists are empty", () => {
 	const markup = renderToStaticMarkup(<PlaylistModal ref={null} showId={42} />);
 	assert.ok(markup.includes("Loading playlists..."));
+	assert.match(markup, /<button[^>]*aria-label="New playlist"[^>]*disabled=""/);
 	assert.ok(!markup.includes("No playlists yet."));
 	assert.ok(
 		markup.indexOf("Loading playlists...") < markup.indexOf("+ New Playlist"),

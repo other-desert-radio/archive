@@ -4,6 +4,8 @@ import { readFile } from "node:fs/promises";
 import process from "node:process";
 import test from "node:test";
 import { pathToFileURL } from "node:url";
+import { isMatching } from "ts-pattern";
+import { ShowDetailsExportPattern } from "../src/stores/show-details/types";
 import { fetchDJ } from "../src/utils/fetch-dj";
 import { fetchShows } from "../src/utils/fetch-shows";
 
@@ -16,8 +18,50 @@ test("show details include each associated DJ's profile and biography", {
 		env: { ...process.env, NODE_ENV: "production" },
 	});
 	const shows = await fetchShows(pathToFileURL("public/resources/shows.json"));
+	const exported: unknown = JSON.parse(
+		await readFile("public/resources/show_details.json", "utf8"),
+	);
+	assert.ok(isMatching(ShowDetailsExportPattern, exported));
+	const details = new Map(exported.data.map((detail) => [detail.id, detail]));
 	for (const show of shows) {
 		const html = await readFile(`dist/shows/${show.id}/index.html`, "utf8");
+		const detail = details.get(show.id);
+		assert.ok(detail);
+		assert.equal(
+			html.includes('id="description-title"'),
+			Boolean(detail.description),
+		);
+		if (detail.description) {
+			assert.ok(
+				html.includes(detail.description),
+				`Show ${show.id} must include its description in static HTML`,
+			);
+		}
+		assert.equal(
+			html.includes('id="tracklist-title"'),
+			Boolean(detail.tracklist?.length),
+		);
+		if (detail.tracklist?.length) {
+			const tracklistHtml = html.slice(
+				html.indexOf('<ol class="tracklist"'),
+				html.indexOf("</ol>", html.indexOf('<ol class="tracklist"')),
+			);
+			assert.equal(
+				(tracklistHtml.match(/<li(?:\s[^>]*)?>/g) ?? []).length,
+				detail.tracklist.length,
+			);
+			if (detail.description) {
+				assert.ok(
+					html.indexOf('id="description-title"') <
+						html.indexOf('id="tracklist-title"'),
+				);
+			}
+		}
+
+		assert.ok(
+			!html.includes("&quot;tracklist&quot;"),
+			"Tracklists must not be serialized into island props",
+		);
 		assert.ok(html.includes('aria-label="Save to Playlist"'));
 		assert.ok(html.includes("/archive/assets/icons/heart.svg#heart"));
 		assert.ok(html.includes('aria-label="Playlist"'));

@@ -37,6 +37,7 @@ export async function runIndexedDBChecks() {
 				case "/resources/data_versions.json":
 					return Response.json({
 						shows: { id: 1, updatedAt: "2026-10-30T12:00:00.000Z" },
+						show_details: { id: 1, updatedAt: "2026-10-30T12:00:00.000Z" },
 						djs: { id: 1, updatedAt: "2026-10-30T12:00:00.000Z" },
 						tags: { id: 1, updatedAt: "2026-10-30T12:00:00.000Z" },
 					});
@@ -74,7 +75,7 @@ export async function runIndexedDBChecks() {
 				request.onerror = () => reject(request.error);
 			});
 			const inspect = () => new Promise((resolve, reject) => {
-				const request = indexedDB.open('odr-archive', 5);
+				const request = indexedDB.open('odr-archive', 6);
 				request.onsuccess = () => resolve(request.result);
 				request.onerror = () => reject(request.error);
 			});
@@ -96,8 +97,9 @@ export async function runIndexedDBChecks() {
 			const initial = await Promise.all([shows.getAll(), shows.get(42)]);
 			check(initial[0].length === 0 && initial[1] === undefined, 'Empty reads');
 			const db = await inspect();
-			const schema = db.transaction(['shows', 'metadata', 'tags', 'playback', 'playlists'], 'readonly');
-			check(db.version === 5, 'Schema version');
+			const schema = db.transaction(['shows', 'show_details', 'metadata', 'tags', 'playback', 'playlists'], 'readonly');
+			check(db.version === 6, 'Schema version');
+			check(schema.objectStore('show_details').keyPath === 'id', 'Show detail primary key');
 			check(schema.objectStore('playlists').keyPath === 'id', 'Playlist primary key');
 			check(schema.objectStore('playback').keyPath === 'showId', 'Playback primary key');
 			check(schema.objectStore('tags').keyPath === 'id', 'Tag primary key');
@@ -314,6 +316,65 @@ export async function runIndexedDBChecks() {
 			return counts;
 		})()`));
 		assert.deepEqual(upgradedV4, [1, 1, 1, 1, 1]);
+		const upgradedV5 = JSON.parse(await browser("eval", `(async () => {
+			await new Promise((resolve, reject) => {
+				const request = indexedDB.deleteDatabase('odr-archive');
+				request.onsuccess = resolve; request.onerror = () => reject(request.error);
+			});
+			const records = {
+				shows: [{ id: 42, title: 'Keep show', description: 'Legacy description' }],
+				tags: [{ id: 7, title: 'Keep tag' }],
+				metadata: [{ key: 'shows', revision: 12 }, { key: 'tags', revision: 3 }],
+				playback: [{ showId: 42, inProgress: true, positionInSeconds: 23, history: [] }],
+				playlists: [
+					{ id: 'user', type: 'user', title: 'Keep playlist', shows: [{ showId: 42, note: 'Keep note' }] },
+					{ id: 'liked', type: 'liked', title: 'Liked Shows', shows: [{ showId: 42 }] },
+				],
+				search_shows: [{ query: 'jazz', date: 123 }],
+				search_explore: [{ query: 'ambient', date: 456 }],
+				search_djs: [{ query: 'artist', date: 789 }],
+			};
+			await new Promise((resolve, reject) => {
+				const request = indexedDB.open('odr-archive', 5);
+				request.onupgradeneeded = () => {
+					for (const [name, values] of Object.entries(records)) {
+						const keyPath = name.startsWith('search_') ? 'query' : name === 'metadata' ? 'key' : name === 'playback' ? 'showId' : 'id';
+						const store = request.result.createObjectStore(name, { keyPath });
+						for (const value of values) store.put(value);
+					}
+				};
+				request.onsuccess = () => { request.result.close(); resolve(); };
+				request.onerror = () => reject(request.error);
+			});
+			const { createIndexedDB } = await import('/database.js');
+			const database = createIndexedDB();
+			const details = database.getObjectStore('show_details');
+			if ((await details.getAll()).length) throw new Error('New details store must be empty');
+			for (const [name, expected] of Object.entries(records)) {
+				const actual = await database.getObjectStore(name).getAll();
+				const ordered = (values) => values.map(value => JSON.stringify(value)).sort();
+				if (JSON.stringify(ordered(actual)) !== JSON.stringify(ordered(expected))) throw new Error('Upgrade changed ' + name);
+			}
+			const detail = { id: 42, description: '<p>Details</p>', tracklist: [{ chapter: 'Intro', start_time: 0 }] };
+			await database.transaction([
+				{ store: 'show_details', action: 'set', value: detail },
+				{ store: 'metadata', action: 'set', value: { key: 'show_details', revision: 1 } },
+			]);
+			if (JSON.stringify(await details.get(42)) !== JSON.stringify(detail)) throw new Error('Details round trip');
+			let rejected = false;
+			try {
+				await database.transaction([
+					{ store: 'show_details', action: 'clear' },
+					{ store: 'metadata', action: 'set', value: { key: 'show_details', revision: 2 } },
+					{ store: 'show_details', action: 'set', value: { id: 43, uncloneable: () => {} } },
+				]);
+			} catch { rejected = true; }
+			if (!rejected || JSON.stringify(await details.get(42)) !== JSON.stringify(detail) || (await database.getObjectStore('metadata').get('show_details')).revision !== 1) throw new Error('Details transaction rollback');
+			// Leave the later playlist checks with their original empty state.
+			await database.transaction(Object.keys(records).map(store => ({ store, action: 'clear' })));
+			return { passed: true };
+		})()`));
+		assert.deepEqual(upgradedV5, { passed: true });
 		const likedCreation = JSON.parse(await browser("eval", `(async () => {
 			const check = (ok, message) => { if (!ok) throw new Error(message); };
 			const { createIndexedDB } = await import(new URL('/database.js', location.href).href);
