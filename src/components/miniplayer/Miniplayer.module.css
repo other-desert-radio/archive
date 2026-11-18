@@ -66,6 +66,7 @@
 
 .mobile-expand {
 	display: none;
+	cursor: grab;
 }
 
 .widget-slot {
@@ -159,7 +160,7 @@
 		background: var(--miniplayer-background);
 		color: inherit;
 		font-size: var(--font-body);
-		touch-action: manipulation;
+		touch-action: none;
 	}
 
 	.widget-slot {
@@ -179,7 +180,7 @@
 	padding-left: env(safe-area-inset-left);
 	padding-right: env(safe-area-inset-right);
 	gap: 0;
-	background: black;
+	background: var(--miniplayer-background);
 	color: white;
 }
 
@@ -189,6 +190,8 @@
 }
 
 .fullscreen-header > span {
+	opacity: clamp(0, calc((var(--player-open) - 0.55) / 0.45), 1);
+	pointer-events: none;
 	font-weight: 700;
 }
 
@@ -395,6 +398,7 @@
 		grid-template-rows: auto minmax(min-content, 1fr);
 		gap: var(--space-md);
 		overflow-y: auto;
+		overscroll-behavior-y: contain;
 		padding: 0;
 	}
 
@@ -452,4 +456,178 @@
 
 .player-shell {
 	min-width: 0;
+}
+
+.miniplayer[data-presentation="compact"] {
+	position: relative;
+}
+
+.expand-handle,
+.mobile-expand {
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.expand-handle {
+	position: absolute;
+	bottom: calc(100% - 0.125rem);
+	left: clamp(
+		0px,
+		calc(var(--mound-x, 50%) - 10rem),
+		max(0px, calc(100% - 20rem))
+	);
+	width: min(20rem, 100%);
+	height: 2rem;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	cursor: grab;
+	touch-action: none;
+	transform: scaleY(0);
+	transform-origin: bottom;
+	transition:
+		transform 220ms ease-out,
+		left 100ms ease-out;
+}
+
+.expand-handle svg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	fill: var(--miniplayer-background);
+}
+
+.expand-handle span {
+	position: relative;
+}
+
+.expand-handle[hidden] {
+	display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.miniplayer[data-presentation="compact"]:hover > .expand-handle {
+		transform: scaleY(var(--mound-scale, 0.3));
+	}
+}
+
+.expand-handle:focus-visible,
+.expand-handle[data-dragging] {
+	transform: scaleY(1);
+}
+
+.expand-handle[data-dragging] {
+	cursor: grabbing;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.expand-handle {
+		transition: none;
+	}
+}
+
+.expand-handle[data-direction="down"] {
+	inset: 0 0 auto;
+	width: 100%;
+	height: 3.5rem;
+	z-index: 1;
+	transform: none;
+}
+
+.expand-handle[data-direction="down"] svg,
+.expand-handle[data-direction="down"] span {
+	display: none;
+}
+
+.fullscreen-header {
+	position: relative;
+}
+
+.fullscreen-header .close-button {
+	opacity: clamp(0, calc((var(--player-open) - 0.55) / 0.45), 1);
+	position: relative;
+	z-index: 2;
+}
+
+@property --player-open {
+	syntax: "<number>";
+	inherits: true;
+	initial-value: 0;
+}
+
+.miniplayer[data-presentation="fullscreen"] {
+	--player-open: 1;
+}
+
+.miniplayer[data-presentation="fullscreen"] .title {
+	position: absolute;
+	top: var(--space-sm);
+	left: 0;
+	right: 3.5rem;
+	opacity: clamp(0, calc(1 - var(--player-open) / 0.45), 1);
+	pointer-events: none;
+}
+
+@media (max-width: 600px) {
+	.expand-handle,
+	.expand-handle[data-direction="down"] {
+		width: 0;
+		height: 0;
+		pointer-events: none;
+	}
+
+	.expand-handle svg,
+	.expand-handle span {
+		display: none;
+	}
+
+	.miniplayer[data-presentation="fullscreen"] .mobile-expand {
+		display: none;
+	}
+
+	.miniplayer[data-presentation="fullscreen"][data-opening] .mobile-expand {
+		display: flex;
+		z-index: 2;
+	}
+}
+
+@property --player-offset {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 0px;
+}
+
+@media (max-width: 600px) {
+	.miniplayer[data-presentation="fullscreen"][data-closing] .widget-slot {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: calc(var(--player-offset) + env(safe-area-inset-bottom));
+		z-index: 2;
+	}
+}
+
+@media (max-width: 600px) {
+	.miniplayer[data-presentation="fullscreen"][data-closing] .mobile-expand {
+		display: flex;
+		position: fixed;
+		bottom: calc(
+			var(--player-offset) +
+			var(--compact-height, 3.75rem) +
+			env(safe-area-inset-bottom)
+		);
+		z-index: 3;
+	}
+}
+
+.miniplayer[data-presentation="compact"][data-mound-dismissed]
+	> .expand-handle:not(:focus-visible) {
+	transform: scaleY(0);
+	transition: none;
+}
+
+.miniplayer:has(.expand-handle[data-dragging]) .mobile-expand {
+	cursor: grabbing;
 }

@@ -9,7 +9,7 @@ type Props = {
 // Presentational only: the parent owns closing and scroll-lock cleanup.
 export default function FullscreenNav({ base, onClose }: Props): ReactElement {
 	return (
-		<div className={styles["fullscreen-header"]}>
+		<div className={styles["fullscreen-header"]} data-fullscreen-nav>
 			<span>OTHER DESERT RADIO</span>
 			<button
 				type="button"

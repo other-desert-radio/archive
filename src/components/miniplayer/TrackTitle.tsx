@@ -6,15 +6,18 @@ type Props = {
 	show: Show;
 	base: string;
 	hidden?: boolean;
+	/** Disables interaction and hides the compact title from assistive technology while fullscreen. */
+	inert?: boolean;
 };
 
 export default function TrackTitle({
 	show,
 	base,
 	hidden = false,
+	inert = false,
 }: Props): ReactElement {
 	return (
-		<div className={styles["title"]} hidden={hidden}>
+		<div className={styles["title"]} hidden={hidden} inert={inert}>
 			<span className={styles["desktop-title"]}>
 				{show.djs.map((dj, index) => (
 					<span key={dj.id}>

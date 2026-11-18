@@ -48,7 +48,7 @@ the available width underneath alongside the desktop controls on the right.
 
 At 600px and below, metadata and desktop actions are hidden. A borderless,
 content-width “expand ↑” button sits immediately above the widget at its right
-edge, without a full-width background strip. The heart remains unwired.
+edge, without a full-width background strip. The button supports tap-to-expand and upward dragging with inertia. It stays labeled expand throughout the upward movement and disappears once fullscreen is reached. At phone widths it is the only upward drag target; the mound is hidden. Fullscreen has no mobile collapse button; use X to dismiss. The heart remains unwired.
 
 Safe-area padding stays inside the active bar. A border-box ResizeObserver
 publishes its height as `--miniplayer-height`; BaseLayout reserves that height in
@@ -57,10 +57,12 @@ outside the measured bar above its top edge.
 
 ## Fullscreen presentation
 
+The compact player also has a curved hover mound that follows the mouse, with an up arrow at its crest. It starts small and grows smoothly as the pointer approaches the top edge, reaching full height at the mound. Clicking the mound opens fullscreen; dragging it reveals the fullscreen player directly. Release distance and recent pointer velocity determine whether it settles open or returns to compact. The fullscreen nav accepts downward drags without a hover nudge or arrow. The compact title fades out before the station name and close control fade in, with a brief gap between labels; pulling down reverses that sequence. Pulling down reverses the gesture; X slides down and the fullscreen button slides up. Empty compact-player space also accepts upward drags, excluding text and interactive controls. Reduced motion disables the settling animation. Pointer tracking applies to the player surface; the cross-origin Mixcloud iframe does not forward pointer movement.
+
 Both expand controls switch local presentation state to fullscreen; the close
 button restores compact presentation. Activating fullscreen show, tag or DJ
-links closes fullscreen and releases scroll locking before client navigation while playback continues. The same player container becomes fixed
-and fills the viewport with a black background, a station header and a close SVG.
+links uses the immediate-close path and releases scroll locking synchronously before client navigation while playback continues. The X button retains its animated dismissal. During phone dismissal, the existing widget stays anchored above the bottom safe area while the fullscreen panel moves down, avoiding an empty bar before the compact layout returns. The mobile expand button is also visible in its compact position during dismissal. The same player container becomes fixed
+and fills the viewport with the miniplayer background, a station header and a close SVG.
 Compact metadata and actions are hidden. The existing iframe stays mounted in
 its original position in the React tree: at the viewport bottom on mobile and
 in the right-hand content area on desktop.
@@ -88,8 +90,7 @@ in fullscreen. The widget retains its existing parent in both modes.
 
 A player-shell wrapper reserves the compact height measured on expand, so the
 bar's resize observer does not turn fullscreen height into page clearance.
-Fullscreen fixes the body at its current scroll offset and hides root overflow to
-lock background scrolling, including iOS touch scrolling. Closing or unmounting
+Fullscreen hides root overflow without fixing the body or creating a body scroll container, preserving sticky navigation and the category tabs’ scroll timeline. A touch guard blocks background gestures while the fullscreen controls retain contained scrolling. Closing or unmounting
 restores prior inline styles and scroll position. Scrollbar space is compensated
 to avoid shifting page content.
 

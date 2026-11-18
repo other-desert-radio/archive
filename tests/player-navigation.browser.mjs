@@ -240,18 +240,123 @@ evaluate(`(() => {
 })()`);
 browser("wait", "--fn", "window.fullscreenFrame.contentDocument?.body.textContent.includes('Fullscreen playback fixture')");
 evaluate("window.fullscreenDocument = window.fullscreenFrame.contentDocument; true");
+// Drag the mound with real pointer capture; a short pull returns, a long pull opens.
+browser("set", "viewport", "1440", "844");
+const compactBounds = evaluate("document.querySelector('[data-miniplayer]').getBoundingClientRect().toJSON()");
+browser("mouse", "move", "2", String(compactBounds.bottom - 2));
+assert.equal(evaluate("getComputedStyle(document.elementFromPoint(2, innerHeight - 2)).cursor"), "grab", "Compact whitespace advertises dragging");
+browser("mouse", "move", "400", String(compactBounds.bottom - 2));
+browser("wait", "250");
+const smallMoundHeight = evaluate("document.querySelector('[data-miniplayer] button[class*=\"expand-handle\"]').getBoundingClientRect().height");
+browser("mouse", "move", "400", String(compactBounds.top + 1));
+browser("wait", "250");
+const largeMoundHeight = evaluate("document.querySelector('[data-miniplayer] button[class*=\"expand-handle\"]').getBoundingClientRect().height");
+assert.ok(largeMoundHeight > smallMoundHeight * 2, "Mound grows as the pointer approaches its crest");
+for (const [distance, expected] of [[60, "compact"], [500, "fullscreen"]]) {
+	browser("mouse", "move", "400", "820");
+	browser("wait", "250");
+	const handle = evaluate(`(() => {
+		const button = document.querySelector('[data-miniplayer] button[class*="expand-handle"]');
+		const rect = button.getBoundingClientRect();
+		return { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 };
+	})()`);
+	browser("mouse", "move", String(handle.x), String(handle.y));
+	browser("mouse", "down");
+	browser("mouse", "move", String(handle.x), String(handle.y - distance), "--duration", "800", "--steps", "20");
+	browser("wait", "150");
+	browser("mouse", "up");
+	browser("wait", "600");
+	assert.equal(evaluate("document.querySelector('[data-miniplayer]').dataset.presentation"), expected);
+	assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame && window.fullscreenFrame.contentDocument === window.fullscreenDocument"), true);
+	if (expected === "fullscreen") {
+		assert.equal(evaluate(`(() => {
+			const player = document.querySelector('[data-miniplayer]');
+			const title = player.querySelector('[class*="controls"] > [class*="title"]');
+			const station = player.querySelector('[data-fullscreen-nav] > span');
+			try {
+				return [0, .2, .44, .45, .5, .55, .56, .8, 1].every(progress => {
+					player.style.setProperty('--player-open', String(progress));
+					const titleOpacity = Number(getComputedStyle(title).opacity);
+					const stationOpacity = Number(getComputedStyle(station).opacity);
+					return titleOpacity === 0 || stationOpacity === 0;
+				});
+			} finally {
+				player.style.removeProperty('--player-open');
+			}
+		})()`), true, "Title and station labels must never overlap during either transition direction");
+		browser("mouse", "move", "600", "400");
+		browser("wait", "250");
+		assert.equal(evaluate("getComputedStyle(document.querySelector('[aria-label=\"Collapse player\"] svg')).display"), "none");
+		browser("mouse", "move", "600", "30");
+		browser("wait", "250");
+		assert.equal(evaluate("getComputedStyle(document.querySelector('[aria-label=\"Collapse player\"] span')).display"), "none");
+		browser("mouse", "down");
+		browser("mouse", "move", "600", "600", "--duration", "800", "--steps", "20");
+		assert.equal(evaluate("getComputedStyle(document.querySelector('[data-miniplayer] button[class*=\"expand-handle\"] svg')).display"), "none", "Grabber stays hidden during downward dragging and settling");
+		browser("mouse", "up");
+		assert.equal(evaluate("getComputedStyle(document.querySelector('[data-miniplayer] button[class*=\"expand-handle\"] svg')).display"), "none", "Grabber stays hidden during downward dragging and settling");
+		browser("mouse", "move", "600", "820");
+		browser("wait", "600");
+		assert.equal(evaluate("document.querySelector('[data-miniplayer]').dataset.presentation"), "compact");
+		browser("mouse", "move", "600", "400");
+		browser("wait", "50");
+		assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame"), true);
+	}
+}
+// The visible mobile expand button shares pointer capture and settling behavior.
+browser("set", "viewport", "390", "844");
+for (const [distance, expected] of [[0, "fullscreen"], [60, "compact"], [500, "fullscreen"]]) {
+	const button = evaluate(`(() => {
+		const rect = document.querySelector('[data-player-drag-handle]').getBoundingClientRect();
+		return { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 };
+	})()`);
+	browser("mouse", "move", String(button.x), String(button.y));
+	browser("mouse", "down");
+	assert.equal(evaluate("getComputedStyle(document.querySelector('[data-player-drag-handle]')).display"), "flex");
+	assert.equal(evaluate("document.querySelector('[data-player-drag-handle]').textContent.trim()"), "expand ↑");
+	browser("mouse", "move", String(button.x), String(button.y - distance), "--duration", "800", "--steps", "20");
+	browser("wait", "150");
+	browser("mouse", "up");
+	browser("wait", "600");
+	assert.equal(evaluate("document.querySelector('[data-miniplayer]').dataset.presentation"), expected);
+	assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame"), true);
+	if (expected === "fullscreen") {
+		evaluate(`(() => {
+			window.dismissFrameBounds = [];
+			function sample() {
+				const player = document.querySelector('[data-miniplayer]');
+				if (player.dataset.presentation !== 'fullscreen') { return; }
+				const frame = player.querySelector('iframe').getBoundingClientRect();
+				window.dismissFrameBounds.push({ bottom: frame.bottom, height: frame.height, viewport: innerHeight });
+				requestAnimationFrame(sample);
+			}
+			document.querySelector('[data-miniplayer] button[aria-label="Close player"]').click();
+			requestAnimationFrame(sample);
+			return true;
+		})()`);
+		browser("wait", '[data-presentation="compact"]');
+		assert.equal(evaluate("window.dismissFrameBounds.length > 0 && window.dismissFrameBounds.every(frame => frame.height > 0 && frame.bottom <= frame.viewport + 1 && frame.bottom >= frame.viewport - 100)"), true, "Mobile playback controls stay onscreen throughout dismissal");
+	}
+}
 for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [601, 844], [750, 844], [840, 782], [1440, 844], [2041, 1352], [2560, 844]]) {
 	browser("set", "viewport", String(width), String(height));
 	evaluate("window.scrollTo(0, 200); true");
 	const savedScrollY = evaluate("window.scrollY");
 	const savedBodyStyles = evaluate("document.body.style.cssText");
+	const savedNavTop = evaluate("document.querySelector('[data-site-header] nav').getBoundingClientRect().top");
+	const savedTabsTop = evaluate("document.querySelector('[data-category-tabs]').getBoundingClientRect().top");
 	const compactHeight = evaluate("document.querySelector('[data-miniplayer-bar]').getBoundingClientRect().height");
+
 	const expand = width <= 600
 		? '[data-miniplayer] > button[aria-label="Expand player"]'
 		: '[data-miniplayer] div > button[aria-label="Expand player"]';
 	browser("click", expand);
 	browser("wait", '[data-presentation="fullscreen"]');
-	browser("wait", "--fn", "document.body.style.position === 'fixed'");
+	browser("wait", "550");
+	browser("wait", "--fn", "getComputedStyle(document.documentElement).overflow === 'hidden'");
+	assert.equal(evaluate("window.scrollY"), savedScrollY, "Opening must preserve the background scroll timeline");
+	assert.equal(evaluate("document.querySelector('[data-site-header] nav').getBoundingClientRect().top"), savedNavTop);
+	assert.equal(evaluate("document.querySelector('[data-category-tabs]').getBoundingClientRect().top"), savedTabsTop);
 	const lockedTop = evaluate("document.body.getBoundingClientRect().top");
 	browser("scroll", "down", "400");
 	assert.equal(evaluate("document.body.getBoundingClientRect().top"), lockedTop);
@@ -306,7 +411,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 	assert.ok(Math.abs(fullscreen.barHeight - compactHeight) < 1);
 	assert.equal(fullscreen.sameFrame, true);
 	assert.equal(fullscreen.sameDocument, true);
-	assert.equal(fullscreen.background, "rgb(0, 0, 0)");
+	assert.equal(fullscreen.background, evaluate("getComputedStyle(document.querySelector('[data-miniplayer-bar]')).backgroundColor"));
 	assert.equal(fullscreen.heartHidden, true);
 	assert.equal(fullscreen.fullscreenHeartVisible, true);
 	assert.equal(fullscreen.djsVisible, true);
@@ -339,7 +444,16 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);
 	}
 	browser("click", '[data-miniplayer] button[aria-label="Close player"]');
+	if (width > 600) {
+		browser("mouse", "move", "400", String(height - 20));
+	}
 	browser("wait", '[data-presentation="compact"]');
+	if (width > 600) {
+		assert.equal(evaluate("document.querySelector('[data-miniplayer] button[class*=\"expand-handle\"]').getBoundingClientRect().height"), 0, "Click dismissal must not immediately reveal the mound under the pointer");
+		browser("mouse", "move", "400", "200");
+		assert.equal(evaluate("document.querySelector('[data-miniplayer]').hasAttribute('data-mound-dismissed')"), false);
+	}
+	browser("wait", "50");
 	browser("wait", "--fn", "document.body.style.position !== 'fixed'");
 	assert.equal(evaluate("window.scrollY"), savedScrollY);
 	assert.equal(evaluate("document.body.style.cssText"), savedBodyStyles);
@@ -404,16 +518,30 @@ for (const width of [390, 1440]) {
 		browser("wait", "button[aria-label^='Play ']");
 		playShowWithDetails();
 		browser("wait", "[data-miniplayer] iframe");
+		evaluate(`(() => {
+			Object.defineProperty(document.documentElement, 'moveBefore', { value: undefined, configurable: true });
+			window.scrollTo(0, 200);
+			return true;
+		})()`);
 		const expand = width <= 600
 			? '[data-miniplayer] > button[aria-label="Expand player"]'
 			: '[data-miniplayer] div > button[aria-label="Expand player"]';
 		browser("click", expand);
 		browser("wait", '[data-presentation="fullscreen"]');
+		browser("wait", "550");
 		const destination = evaluate(`new URL(document.querySelector(${JSON.stringify(selector)}).href).pathname`);
 		markDocument();
 		// Exercise bubbling from nested TagView/DJ content.
-		evaluate(`(() => { const link = document.querySelector(${JSON.stringify(selector)}); (link.lastElementChild ?? link).click(); return true; })()`);
+		assert.equal(evaluate(`(() => {
+			const link = document.querySelector(${JSON.stringify(selector)});
+			(link.lastElementChild ?? link).click();
+			return document.querySelector('[data-miniplayer]').dataset.presentation === 'compact'
+				&& document.body.style.position !== 'fixed'
+				&& getComputedStyle(document.documentElement).overflow !== 'hidden';
+		})()`), true, "Navigation must synchronously close the player and release scroll lock");
 		verifyClientNavigation(destination);
+		browser("wait", "600");
+		assert.equal(evaluate("window.scrollY"), 0, "Dismiss cleanup must not restore source scroll on the destination");
 	}
 }
 console.log("Fullscreen tag, DJ and show links preserve the document and playback and release scroll lock.");

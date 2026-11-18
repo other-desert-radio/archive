@@ -6,6 +6,7 @@ import { useAudioState } from "../../stores/audio";
 import MixcloudWidget from "../mixcloud";
 import PlaylistModal from "../playlists/PlaylistModal";
 import { DesktopActions, MobileExpand } from "./CompactActions";
+import ExpandHandle from "./ExpandHandle";
 import {
 	FullscreenDJs,
 	FullscreenHeart,
@@ -43,8 +44,14 @@ function ActiveMiniplayer({
 	const tags = stores.tagStore.getMap();
 	const playlistModal = useRef<HTMLDialogElement>(null);
 	const openFavorites = () => playlistModal.current?.showModal();
-	const { presentation, compactHeight, playerRef, expand, close } =
-		usePlayerPresentation();
+	const {
+		presentation,
+		compactHeight,
+		playerRef,
+		expand,
+		close,
+		closeImmediately,
+	} = usePlayerPresentation();
 
 	switch (track.source.kind) {
 		case "mixcloud":
@@ -64,11 +71,15 @@ function ActiveMiniplayer({
 						{presentation === "fullscreen" && (
 							<FullscreenNav base={base} onClose={close} />
 						)}
-						<MobileExpand
-							hidden={presentation === "fullscreen"}
-							onExpand={expand}
+						<MobileExpand onExpand={expand} />
+						<ExpandHandle
+							playerRef={playerRef}
+							compactHeight={compactHeight}
+							fullscreen={presentation === "fullscreen"}
+							expand={expand}
+							close={closeImmediately}
 						/>
-						<div className={styles["controls"]}>
+						<div className={styles["controls"]} data-miniplayer-scroll>
 							<div
 								className={styles["fullscreen-artwork"]}
 								hidden={presentation !== "fullscreen"}
@@ -80,7 +91,7 @@ function ActiveMiniplayer({
 							<TrackTitle
 								show={track.show}
 								base={base}
-								hidden={presentation === "fullscreen"}
+								inert={presentation === "fullscreen"}
 							/>
 							<div className={styles["fullscreen-content"]}>
 								<div
@@ -92,7 +103,7 @@ function ActiveMiniplayer({
 											className={styles["fullscreen-title"]}
 											href={`${base}/shows/${track.show.id}`}
 											aria-label={`View ${track.show.title}`}
-											onClick={close}
+											onClick={closeImmediately}
 										>
 											{track.show.title}
 										</a>
@@ -102,7 +113,7 @@ function ActiveMiniplayer({
 											show={track.show}
 											base={base}
 											tags={tags}
-											onNavigate={close}
+											onNavigate={closeImmediately}
 										/>
 									)}
 								</div>
@@ -134,7 +145,7 @@ function ActiveMiniplayer({
 											<FullscreenDJs
 												show={track.show}
 												base={base}
-												onNavigate={close}
+												onNavigate={closeImmediately}
 											/>
 										)}
 									</div>
