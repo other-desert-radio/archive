@@ -13,6 +13,7 @@ const session = "archive-playlist-creation";
 const bundle = await build({
 	entrypoints: ["tests/res/playlist-creation.tsx"],
 	target: "browser",
+	external: ["/archive/*"],
 	define: { "import.meta.env.BASE_URL": JSON.stringify("/") },
 });
 assert.ok(bundle.success, bundle.logs.join("\n"));
@@ -20,6 +21,7 @@ const server = serve({
 	port: 0,
 	fetch(request) {
 		const path = new URL(request.url).pathname;
+		if (path.startsWith("/archive/")) return new Response(file(`public/${path.slice("/archive/".length)}`));
 		const output = bundle.outputs.find((item) => path === `/${item.path.split("/").pop()}`);
 		if (output) return new Response(output);
 		if (path.startsWith("/assets/")) return new Response(file(`public${path}`));
@@ -135,9 +137,12 @@ try {
 	assert.match(await evaluate(`document.querySelector('${button("Save to Playlist")} use').getAttribute('href')`), /\/bookmark\.svg#bookmark$/);
 	await browser("click", button("Save to Playlist"));
 	await wait(`!document.querySelector('${saveDialog} ${button("New playlist")}').disabled`);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[name="playlists"]').getAttribute('aria-label')`), "Liked Shows");
 	assert.equal(await evaluate(`document.querySelector('${saveDialog} h1').textContent`), "Save Show");
 	assert.equal(await evaluate(`document.querySelector('${saveDialog} textarea').getAttribute('aria-label')`), "Add a note");
-	assert.equal(await evaluate(`document.querySelector('${saveDialog} ${button("Save playlist")}').disabled`), true);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), true);
+	assert.equal(await evaluate('playlistFixture.stores.playlistStore.getAll().some(p => p.shows.some(entry => entry.showId === 42))'), false);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} ${button("Save playlist")}').disabled`), false);
 	// Clean backdrop dismisses; changed selections and notes require confirmation.
 	await browser("mouse", "move", "1", "1");
 	await browser("mouse", "down");
@@ -145,13 +150,13 @@ try {
 	await wait(`!document.querySelector('${saveDialog}')`);
 	await browser("click", button("Save to Playlist"));
 	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
-	assert.equal(await evaluate(`document.querySelector('${saveDialog} ${button("Save playlist")}').disabled`), false);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} ${button("Save playlist")}').disabled`), true);
 	await browser("mouse", "move", "1", "1");
 	await browser("mouse", "down");
 	await browser("mouse", "up");
 	await browser("wait", discardDialog);
 	await browser("click", `${discardDialog} ${button("Keep editing")}`);
-	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), true);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), false);
 	await browser("press", "Escape");
 	await browser("wait", discardDialog);
 	await browser("press", "Escape");
@@ -160,7 +165,7 @@ try {
 	await browser("click", `${discardDialog} ${button("Discard changes")}`);
 	await wait(`!document.querySelector('${saveDialog}')`);
 	await browser("click", button("Save to Playlist"));
-	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), false);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), true);
 	await browser("fill", `${saveDialog} textarea`, "Draft note");
 	await browser("press", "Escape");
 	await browser("wait", discardDialog);
@@ -182,7 +187,6 @@ try {
 	await browser("press", "Escape");
 	await wait(`!document.querySelector('${saveDialog}')`);
 	await browser("click", button("Save to Playlist"));
-	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
 	await browser("fill", `${saveDialog} textarea`, "Keep my note");
 	await openNew();
 	await browser("fill", `${newDialog} input`, "   ");
