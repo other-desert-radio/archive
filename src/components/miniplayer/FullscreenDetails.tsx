@@ -65,7 +65,7 @@ export function FullscreenDJs({
 	);
 }
 
-export function FullscreenHeart({
+export function FullscreenBookmark({
 	base,
 	onFavorite,
 }: {
@@ -77,10 +77,10 @@ export function FullscreenHeart({
 			type="button"
 			aria-label="Favorite show"
 			onClick={onFavorite}
-			className={styles["fullscreen-heart-button"]}
+			className={styles["fullscreen-bookmark-button"]}
 		>
-			<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-				<use href={`${base}/assets/icons/heart.svg#heart`} />
+			<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+				<use href={`${base}/assets/icons/bookmark.svg#bookmark`} />
 			</svg>
 		</button>
 	);

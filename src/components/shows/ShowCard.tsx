@@ -81,11 +81,15 @@ export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
 					<div className={styles["playlist-save"]}>
 						<button
 							type="button"
-							className={styles["playlist-heart"]}
+							className={styles["playlist-bookmark"]}
 							aria-label="Save to Playlist"
 							onClick={openPlaylistModal}
 						>
-							<span aria-hidden="true">♥</span>
+							<svg viewBox="0 0 24 24" aria-hidden="true">
+								<use
+									href={`${detailBase}/assets/icons/bookmark-filled.svg#bookmark`}
+								/>
+							</svg>
 						</button>
 						<span className={styles["playlist-titles"]}>
 							{playlistSaves.map(({ playlistId, title }, index) => (

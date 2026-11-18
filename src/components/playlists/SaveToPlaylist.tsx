@@ -13,8 +13,8 @@ export default function SaveToPlaylist({ showId }: { showId: number }) {
 				aria-label="Save to Playlist"
 				onClick={() => modal.current?.showModal()}
 			>
-				<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-					<use href={`${getBasePath()}/assets/icons/heart.svg#heart`} />
+				<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+					<use href={`${getBasePath()}/assets/icons/bookmark.svg#bookmark`} />
 				</svg>
 				Save to Playlist
 			</button>

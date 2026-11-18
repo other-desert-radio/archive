@@ -368,7 +368,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 		const artwork = player.querySelector('[class*="fullscreen-artwork"] img');
 		const title = player.querySelector('[class*="fullscreen-title"]');
 		const tagLinks = [...player.querySelectorAll('[class*="fullscreen-tags"] a')];
-		const heart = player.querySelector('[class*="fullscreen-heart"] button');
+		const bookmark = player.querySelector('[class*="fullscreen-bookmark"] button');
 		const djLinks = [...player.querySelectorAll('[class*="fullscreen-djs"] a')];
 		return {
 			x: rect.x, y: rect.y, width: rect.width, height: rect.height,
@@ -378,8 +378,8 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 			sameDocument: frame.contentDocument === window.fullscreenDocument,
 			frameBottom: frame.getBoundingClientRect().bottom,
 			background: getComputedStyle(player).backgroundColor,
-			heartHidden: getComputedStyle(player.querySelector('[class*="desktop-actions"]')).display === 'none',
-			fullscreenHeartVisible: heart.getBoundingClientRect().width > 0,
+			bookmarkHidden: getComputedStyle(player.querySelector('[class*="desktop-actions"]')).display === 'none',
+			fullscreenBookmarkVisible: bookmark.getBoundingClientRect().width > 0,
 			djsVisible: djLinks.length > 0 && djLinks.every(link => link.getBoundingClientRect().width > 0),
 			djDestinations: djLinks.every(link => link.getAttribute('href').startsWith('/archive/djs/')),
 			closeVisible: player.querySelector('[aria-label="Close player"]').getBoundingClientRect().width > 0,
@@ -412,8 +412,8 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 	assert.equal(fullscreen.sameFrame, true);
 	assert.equal(fullscreen.sameDocument, true);
 	assert.equal(fullscreen.background, evaluate("getComputedStyle(document.querySelector('[data-miniplayer-bar]')).backgroundColor"));
-	assert.equal(fullscreen.heartHidden, true);
-	assert.equal(fullscreen.fullscreenHeartVisible, true);
+	assert.equal(fullscreen.bookmarkHidden, true);
+	assert.equal(fullscreen.fullscreenBookmarkVisible, true);
 	assert.equal(fullscreen.djsVisible, true);
 	assert.equal(fullscreen.djDestinations, true);
 	assert.equal(fullscreen.closeVisible, true);

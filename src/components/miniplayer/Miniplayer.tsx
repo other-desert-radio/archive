@@ -8,8 +8,8 @@ import PlaylistModal from "../playlists/PlaylistModal";
 import { DesktopActions, MobileExpand } from "./CompactActions";
 import ExpandHandle from "./ExpandHandle";
 import {
+	FullscreenBookmark,
 	FullscreenDJs,
-	FullscreenHeart,
 	FullscreenTags,
 } from "./FullscreenDetails";
 import FullscreenNav from "./FullscreenNav";
@@ -130,11 +130,14 @@ function ActiveMiniplayer({
 								</div>
 								<div className={styles["fullscreen-actions"]}>
 									<div
-										className={styles["fullscreen-heart"]}
+										className={styles["fullscreen-bookmark"]}
 										hidden={presentation !== "fullscreen"}
 									>
 										{presentation === "fullscreen" && (
-											<FullscreenHeart base={base} onFavorite={openFavorites} />
+											<FullscreenBookmark
+												base={base}
+												onFavorite={openFavorites}
+											/>
 										)}
 									</div>
 									<div
