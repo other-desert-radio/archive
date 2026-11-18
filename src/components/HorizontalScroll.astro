@@ -1,0 +1,69 @@
+---
+type Props = {
+  label: string;
+  class?: string;
+};
+
+const { label, class: className } = Astro.props;
+---
+
+<div class:list={["horizontal-scroll", className]} role="region" aria-label={label} tabindex="0">
+  <slot />
+</div>
+
+<script>
+  import { setupHorizontalScroll } from "./horizontal-scroll";
+
+  let cleanups: (() => void)[] = [];
+  function cleanup() {
+    for (const dispose of cleanups) {
+      dispose();
+    }
+    cleanups = [];
+  }
+  function setup() {
+    cleanup();
+    cleanups = Array.from(
+      document.querySelectorAll<HTMLElement>(".horizontal-scroll"),
+      setupHorizontalScroll,
+    );
+  }
+  setup();
+  document.addEventListener("astro:page-load", setup);
+  document.addEventListener("astro:before-swap", cleanup);
+</script>
+
+<style>
+  .horizontal-scroll {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--space-xs);
+    min-width: 0;
+    overflow-x: auto;
+    padding-bottom: var(--space-sm);
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+
+  .horizontal-scroll > :global(*) {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .horizontal-scroll:is(:hover, :active, :focus-within) {
+    scrollbar-color: currentColor transparent;
+  }
+
+  .horizontal-scroll::-webkit-scrollbar {
+    height: 0.5rem;
+  }
+
+  .horizontal-scroll::-webkit-scrollbar-track,
+  .horizontal-scroll::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+
+  .horizontal-scroll:is(:hover, :active, :focus-within)::-webkit-scrollbar-thumb {
+    background: currentColor;
+  }
+</style>

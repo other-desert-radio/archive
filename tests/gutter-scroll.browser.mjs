@@ -100,7 +100,24 @@ try {
 		const s = document.querySelector('.gutter-scroll').getBoundingClientRect();
 		return r.left >= s.left && r.right <= s.right + 1;
 	})()`), true);
-    console.log("Full-width row boundaries, alignment, sizing and focus passed at six viewport widths.");
+	browser("open", `${base}/djs/37`);
+	browser("wait", ".dj-tags .tag");
+	for (const width of [320, 332, 750, 1440, 2000, 2560]) {
+		browser("set", "viewport", String(width), "1000");
+		const tags = evaluate(`(() => {
+			const row = document.querySelector('.dj-tags');
+			row.focus();
+			row.scrollLeft = 0;
+			const tops = [...row.children].map(tag => tag.getBoundingClientRect().top);
+			row.scrollLeft = row.scrollWidth;
+			return {tops, scrolled:row.scrollLeft,
+				pageWidth:document.documentElement.scrollWidth, viewport:innerWidth};
+		})()`);
+		assert.ok(tags.tops.every(top => Math.abs(top - tags.tops[0]) < 1), "tags stay on one line");
+		assert.ok(tags.scrolled > 0, "tags scroll horizontally");
+		assert.ok(tags.pageWidth <= tags.viewport, "tags do not overflow the document");
+	}
+    console.log("Scroll row boundaries, alignment, focus and single-line DJ tags passed at six viewport widths.");
 } finally {
 	browser("close");
 }

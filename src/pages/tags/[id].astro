@@ -2,6 +2,7 @@
 import { hydrateTags } from "../../utils/hydrate-tags";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import LargeTagHeader from "../../components/explore/LargeTagHeader.astro";
+import HorizontalScroll from "../../components/HorizontalScroll.astro";
 import DJExploreCard from "../../components/explore/DJExploreCard.astro";
 import { SquareShowCards } from "../../components/shows/SquareShowCard";
 import { fetchShows, type Show } from "../../utils/fetch-shows";
@@ -52,11 +53,11 @@ const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
         <div class="page-inset">
           <h2 id="tag-djs-heading">DJs</h2>
         </div>
-        <div class="gutter-scroll dj-row">
+        <HorizontalScroll class="gutter-scroll dj-row" label="DJs">
           {djs.map((dj) => (
             <DJExploreCard dj={dj} fromTag={tag.id} />
           ))}
-        </div>
+        </HorizontalScroll>
       </section>
     )
   }
@@ -86,22 +87,6 @@ const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
   }
 </BaseLayout>
 
-<script>
-  import { setupDJRowScroll } from "../../components/explore/dj-row-scroll";
-
-  let cleanup: (() => void) | undefined;
-  function setup() {
-    cleanup?.();
-    const row = document.querySelector<HTMLElement>(".dj-row");
-    if (row) {
-      cleanup = setupDJRowScroll(row);
-    }
-  }
-  setup();
-  document.addEventListener("astro:page-load", setup);
-  document.addEventListener("astro:before-swap", () => cleanup?.());
-</script>
-
 <style>
   section {
     margin-top: var(--space-lg);
@@ -114,29 +99,8 @@ const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
   }
 
   .dj-row {
-    display: flex;
     gap: calc(var(--space-lg) * 2);
     min-height: var(--space-lg);
-    padding-bottom: var(--space-sm);
-    scrollbar-width: thin;
-    scrollbar-color: transparent transparent;
-  }
-
-  .dj-row:is(:hover, :active, :focus-within) {
-    scrollbar-color: currentColor transparent;
-  }
-
-  .dj-row::-webkit-scrollbar {
-    height: 0.5rem;
-  }
-
-  .dj-row::-webkit-scrollbar-track,
-  .dj-row::-webkit-scrollbar-thumb {
-    background: transparent;
-  }
-
-  .dj-row:is(:hover, :active, :focus-within)::-webkit-scrollbar-thumb {
-    background: currentColor;
   }
 
   .shows-grid {

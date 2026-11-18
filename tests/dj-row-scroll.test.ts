@@ -4,7 +4,7 @@ import test from "node:test";
 import { runInNewContext } from "node:vm";
 import { transpileModule } from "typescript";
 
-test("DJ scrolling eases, reverses, pauses for interaction and cleans up", () => {
+test("Horizontal scrolling eases, reverses, pauses for interaction and cleans up", () => {
 	let callback: (time: number) => void = () => {};
 	let cancelled = false;
 	let reduced = false;
@@ -17,12 +17,9 @@ test("DJ scrolling eases, reverses, pauses for interaction and cleans up", () =>
 		clientWidth: 100,
 		matches: (selector: string) => (selector === ":hover" ? hovered : focused),
 	});
-	const source = readFileSync(
-		"src/components/explore/dj-row-scroll.ts",
-		"utf8",
-	);
+	const source = readFileSync("src/components/horizontal-scroll.ts", "utf8");
 	const setup = runInNewContext(
-		`${transpileModule(source.replace("export function", "function"), { compilerOptions: {} }).outputText}\nsetupDJRowScroll`,
+		`${transpileModule(source.replace("export function", "function"), { compilerOptions: {} }).outputText}\nsetupHorizontalScroll`,
 		{
 			AbortController,
 			window: events,
