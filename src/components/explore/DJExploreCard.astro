@@ -67,7 +67,12 @@ const query = fromTag === undefined ? "" : `?fromTag=${fromTag}`;
 
   @media (hover: hover) and (pointer: fine) {
     .dj-explore-card:hover {
-      text-decoration: underline;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .dj-explore-card:hover .artwork {
+      border: 4px solid black;
     }
   }
 
