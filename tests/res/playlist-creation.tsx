@@ -12,11 +12,26 @@ stores.initialize = async () => {};
 const originalCreate = stores.playlistStore.create.bind(stores.playlistStore);
 const controls = {
 	stores,
+	resumeLoading: () => {},
 	fail: false,
 	pause: false,
 	resume: () => {},
 	createCalls: 0,
 };
+const playlistLoad = new URLSearchParams(location.search).get("playlistLoad");
+if (playlistLoad) {
+	const initialize = stores.playlistStore.initialize.bind(stores.playlistStore);
+	const gate = new Promise<void>((resolve) => {
+		controls.resumeLoading = resolve;
+	});
+	stores.playlistStore.initialize = () =>
+		gate.then(() => {
+			if (playlistLoad === "error") {
+				throw new Error("Test playlist loading failure");
+			}
+			return initialize();
+		});
+}
 stores.playlistStore.create = async (input) => {
 	controls.createCalls++;
 	if (controls.pause) {

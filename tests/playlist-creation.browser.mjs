@@ -46,6 +46,21 @@ async function openNew() {
 }
 
 try {
+	for (const state of ["delay", "error"]) {
+		await browser("open", `${server.url.href}?playlistLoad=${state}`);
+		await browser("wait", '[role="status"][aria-label="Loading playlists"]');
+		assert.equal(await evaluate(`!!document.querySelector('${button("Save to Playlist")}')`), false);
+		await browser("click", button("Create standalone playlist"));
+		await browser("wait", newDialog);
+		await browser("press", "Escape");
+		await evaluate("playlistFixture.resumeLoading(); true");
+		await browser("wait", button("Save to Playlist"));
+		assert.equal(await evaluate('!!document.querySelector(\'[aria-label="Loading playlists"]\')'), false);
+		if (state === "error") {
+			await browser("click", button("Save to Playlist"));
+			await wait(`document.querySelector('${saveDialog} [role="alert"]')?.textContent.includes('Could not load playlists')`);
+		}
+	}
 	await browser("open", server.url.href);
 	await browser("click", button("Save to Playlist"));
 	await wait(`!document.querySelector('${saveDialog} ${button("New playlist")}').disabled`);
