@@ -39,7 +39,7 @@ The shared sticky header contains navigation and a full-width player bar fixed
 to the viewport bottom using `--miniplayer-background`. The idle bar collapses; the active player supplies its
 height. Metadata aligns with navigation text. Above 1023px, linked DJ names, a
 decorative divider and the linked show title sit alongside the widget, followed
-by text heart and fullscreen buttons. Each DJ has its own link; shows without
+by outline bookmark and fullscreen buttons. Each DJ has its own link; shows without
 DJs omit the divider. Metadata uses a single line with ellipsis; the iframe has
 a maximum width of 40rem.
 
@@ -48,7 +48,7 @@ the available width underneath alongside the desktop controls on the right.
 
 At 600px and below, metadata and desktop actions are hidden. A borderless,
 content-width “expand ↑” button sits immediately above the widget at its right
-edge, without a full-width background strip. The button supports tap-to-expand and upward dragging with inertia. It stays labeled expand throughout the upward movement and disappears once fullscreen is reached. At phone widths it is the only upward drag target; the mound is hidden. Fullscreen has no mobile collapse button; use X to dismiss. The heart remains unwired.
+edge, without a full-width background strip. The button supports tap-to-expand and upward dragging with inertia. It stays labeled expand throughout the upward movement and disappears once fullscreen is reached. At phone widths it is the only upward drag target; the mound is hidden. Fullscreen has no mobile collapse button; use X to dismiss. The bookmark remains unwired.
 
 Safe-area padding stays inside the active bar. A border-box ResizeObserver
 publishes its height as `--miniplayer-height`; BaseLayout reserves that height in
@@ -68,7 +68,7 @@ its original position in the React tree: at the viewport bottom on mobile and
 in the right-hand content area on desktop.
 
 Fullscreen controls use a grid with large show artwork, a wrapping linked
-title, colored tag links, an unwired outline heart button and linked DJ portraits
+title, colored tag links, an unwired outline bookmark button and linked DJ portraits
 and names. All DJs render; shows without DJs omit their content and missing
 portrait references omit the image. Tags use the existing large TagView inside
 archive links and
@@ -77,12 +77,12 @@ colors, and link to archive tag pages. Missing IDs use hydrateTags' existing
 logging/omission behavior. Above 1023px, artwork
 spans the left column and the other slots
 occupy the right. At 1023px and below, the slots stack as artwork, metadata,
-a shared row with heart left and DJs right, then the bottom widget. Desktop
+a shared row with bookmark left and DJs right, then the bottom widget. Desktop
 artwork occupies a 1:1 square bounded by column
 width and the content area's height, without cropping. Desktop content is
 centered vertically; artwork is bounded by 80% of viewport height and 52rem.
 The artwork determines the row height, with right-hand metadata aligned to its top. The two equal desktop columns share a centered 100rem maximum-width container.
-Metadata, widget and the heart/DJ flex row stretch to the same right-column width. The
+Metadata, widget and the bookmark/DJ flex row stretch to the same right-column width. The
 stacked layout caps square artwork at 45% of viewport height and places metadata
 one medium spacing token below it; remaining height belongs to the content column. Content can scroll when it exceeds its height, with the
 widget sticky at the bottom. Detail slots are hidden in compact mode; artwork/title mount only

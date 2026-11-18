@@ -35,12 +35,12 @@ export function DesktopActions({
 		<div className={styles["desktop-actions"]} hidden={hidden}>
 			<button type="button" aria-label="Favorite show" onClick={onFavorite}>
 				<svg
-					className={styles["heart-icon"]}
-					viewBox="0 0 64 64"
+					className={styles["bookmark-icon"]}
+					viewBox="0 0 24 24"
 					fill="none"
 					aria-hidden="true"
 				>
-					<use href={`${base}/assets/icons/heart.svg#heart`} />
+					<use href={`${base}/assets/icons/bookmark.svg#bookmark`} />
 				</svg>
 			</button>
 			<button type="button" aria-label="Expand player" onClick={onExpand}>

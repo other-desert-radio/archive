@@ -63,7 +63,7 @@ test("show details include each associated DJ's profile and biography", {
 			"Tracklists must not be serialized into island props",
 		);
 		assert.ok(html.includes('aria-label="Save to Playlist"'));
-		assert.ok(html.includes("/archive/assets/icons/heart.svg#heart"));
+		assert.ok(html.includes("/archive/assets/icons/bookmark.svg#bookmark"));
 		assert.ok(html.includes('aria-label="Playlist"'));
 		assert.ok(
 			html.indexOf('aria-label="Save to Playlist"') <

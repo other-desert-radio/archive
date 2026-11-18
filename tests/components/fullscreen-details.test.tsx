@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import {
+	FullscreenBookmark,
 	FullscreenDJs,
-	FullscreenHeart,
 	FullscreenTags,
 } from "../../src/components/miniplayer/FullscreenDetails";
 import type { TagMap } from "../../src/utils/fetch-tags";
@@ -88,13 +88,15 @@ test("fullscreen DJs omit absent DJs and missing portraits", () => {
 	assert.equal(html.includes("<img"), false);
 });
 
-test("fullscreen heart renders a labeled outline button", () => {
+test("fullscreen bookmark renders a labeled outline button", () => {
 	const html = renderToStaticMarkup(
-		<FullscreenHeart base="/archive" onFavorite={() => {}} />,
+		<FullscreenBookmark base="/archive" onFavorite={() => {}} />,
 	);
 	assert.ok(html.includes('aria-label="Favorite show"'));
 	assert.ok(html.includes('fill="none"'));
-	assert.ok(html.includes('href="/archive/assets/icons/heart.svg#heart"'));
+	assert.ok(
+		html.includes('href="/archive/assets/icons/bookmark.svg#bookmark"'),
+	);
 });
 
 test("shows without tags render no tag links", () => {

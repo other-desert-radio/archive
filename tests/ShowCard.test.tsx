@@ -20,7 +20,7 @@ test("renders a tags container only when the show has tags", () => {
 	}
 });
 
-test("saved playlist links follow DJ links and display hearts with titles", () => {
+test("saved playlist links follow DJ links and display bookmarks with titles", () => {
 	const show = fixture.data[0];
 	assert.ok(show);
 	const render = (
@@ -33,7 +33,7 @@ test("saved playlist links follow DJ links and display hearts with titles", () =
 				playlistSaves={playlistSaves}
 			/>,
 		);
-	assert.doesNotMatch(render([]), /View playlist/);
+	assert.doesNotMatch(render([]), /View playlist|bookmark-filled/);
 	const html = render([
 		{ playlistId: "liked", title: "Liked Shows" },
 		{ playlistId: "empty", title: "Empty note" },
@@ -45,7 +45,7 @@ test("saved playlist links follow DJ links and display hearts with titles", () =
 	assert.equal((html.match(/aria-label="View playlist /g) ?? []).length, 3);
 	assert.match(html, /href="\/playlists\/\?id=custom"/);
 	assert.match(html, /<b>Favorites<\/b>/);
-	assert.equal((html.match(/aria-hidden="true">♥/g) ?? []).length, 1);
+	assert.equal((html.match(/bookmark-filled\.svg#bookmark/g) ?? []).length, 1);
 	assert.equal(
 		(html.match(/<button[^>]+aria-label="Save to Playlist"/g) ?? []).length,
 		1,

@@ -57,7 +57,7 @@
 .playlist-save {
 	display: flex;
 	flex-direction: row;
-	align-items: baseline;
+	align-items: center;
 	gap: var(--space-xs);
 	align-self: flex-start;
 	max-width: 100%;
@@ -70,7 +70,7 @@
 	touch-action: manipulation;
 }
 
-.playlist-heart {
+.playlist-bookmark {
 	flex-shrink: 0;
 	border: 0;
 	padding: 0;
@@ -79,6 +79,12 @@
 	font: inherit;
 	cursor: pointer;
 	touch-action: manipulation;
+}
+
+.playlist-bookmark svg {
+	display: block;
+	width: var(--space-sm);
+	height: var(--space-sm);
 }
 
 .playlist-titles {
@@ -91,7 +97,7 @@
 	touch-action: manipulation;
 }
 
-.playlist-heart:focus-visible,
+.playlist-bookmark:focus-visible,
 .playlist-title:focus-visible {
 	outline: 2px solid black;
 	outline-offset: 2px;

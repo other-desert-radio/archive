@@ -141,9 +141,6 @@ textarea {
 
 .tag:hover {
 	transform: scale(1.125);
-	outline: 2px solid black;
-	border-color: transparent;
-	font-weight: bold;
 	font-style: italic;
 }
 
