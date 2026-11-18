@@ -99,8 +99,7 @@
 	flex-grow: 0;
 
 	align-items: center;
-	padding: calc(var(--density-unit) * 0.3125);
-	border: 1px solid transparent;
+	padding: calc(var(--density-unit) * 0.3125) 0;
 	max-width: 100%;
 
 	flex-direction: row;
@@ -116,9 +115,9 @@
 		opacity: 1;
 	}
 
-	.dj-container:hover {
-		border-color: black;
-		background-color: white;
+	.dj-name-title:hover {
+		font-style: italic;
+		font-weight: bold;
 	}
 }
 
@@ -140,10 +139,12 @@
 		width: min(40%, var(--show-artwork-min));
 	}
 }
+
 @media (max-width: 300px) {
 	.show-card {
 		flex-direction: column;
 	}
+
 	.artwork {
 		width: 100%;
 	}

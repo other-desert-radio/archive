@@ -29,7 +29,7 @@ const renderDJs = (djs: Show["djs"], base: string) =>
 			className={styles["dj-container"]}
 			aria-label={`View ${dj.title}`}
 		>
-			{dj.image_small && (
+			{false && dj.image_small && (
 				<img
 					className={`${styles["dj-image"]}`}
 					src={`${base}/${dj.image_small}`}
