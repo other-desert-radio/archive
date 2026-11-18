@@ -27,6 +27,9 @@ export function setupHorizontalScroll(row: HTMLElement) {
 		window.addEventListener(
 			event,
 			() => {
+				if (!touching) {
+					return;
+				}
 				touching = false;
 				nativeScrollUntil = (previousTime ?? 0) + NATIVE_SCROLL_IDLE_MS;
 			},

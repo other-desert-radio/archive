@@ -11,6 +11,7 @@ test("Horizontal scrolling eases, reverses, pauses for interaction and cleans up
 	let focused = false;
 	let hovered = false;
 	const events = new EventTarget();
+	const windowEvents = new EventTarget();
 	const row = Object.assign(events, {
 		scrollLeft: 0,
 		scrollWidth: 200,
@@ -22,7 +23,7 @@ test("Horizontal scrolling eases, reverses, pauses for interaction and cleans up
 		`${transpileModule(source.replaceAll("export function", "function"), { compilerOptions: {} }).outputText}\nsetupHorizontalScroll`,
 		{
 			AbortController,
-			window: events,
+			window: windowEvents,
 			document: { hidden: false },
 			matchMedia: (query: string) => ({
 				get matches() {
@@ -56,6 +57,14 @@ test("Horizontal scrolling eases, reverses, pauses for interaction and cleans up
 	for (let i = 0; i < 20; i++) {
 		tick();
 	}
+	const beforePageTouchEnd = row.scrollLeft;
+	windowEvents.dispatchEvent(new Event("touchend"));
+	tick();
+	assert.ok(
+		row.scrollLeft > beforePageTouchEnd,
+		"vertical page gestures outside the row do not pause auto-scroll",
+	);
+
 	hovered = true;
 	const beforeHover = row.scrollLeft;
 	tick();
@@ -97,19 +106,19 @@ test("Horizontal scrolling eases, reverses, pauses for interaction and cleans up
 		tick();
 		assert.equal(row.scrollLeft, before, pause);
 	}
-	events.dispatchEvent(new Event("pointerup"));
+	windowEvents.dispatchEvent(new Event("pointerup"));
 	row.scrollWidth = 400;
 	row.scrollLeft = 100;
 	events.dispatchEvent(new Event("touchstart"));
 	events.dispatchEvent(new Event("pointerdown"));
 	tick();
-	events.dispatchEvent(new Event("pointercancel"));
+	windowEvents.dispatchEvent(new Event("pointercancel"));
 	row.scrollLeft = 150;
 	for (let i = 0; i < 6; i++) {
 		tick();
 		assert.equal(row.scrollLeft, 150, "native pan stays paused while touching");
 	}
-	events.dispatchEvent(new Event("touchend"));
+	windowEvents.dispatchEvent(new Event("touchend"));
 	for (const position of [170, 180, 185]) {
 		row.scrollLeft = position;
 		tick();
