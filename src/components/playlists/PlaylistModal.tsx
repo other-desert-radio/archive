@@ -47,8 +47,8 @@ export default function PlaylistModal({
 			.find((entry) => entry.showId === showId && entry.note)?.note ?? "";
 	const noteLabel = savedNote ? "Note" : "Add a note";
 	const dirty =
-		selectedIds.length !== initialIds.length ||
-		selectedIds.some((id) => !initialIds.includes(id)) ||
+		selectedIds.length !== savedIds.length ||
+		selectedIds.some((id) => !savedIds.includes(id)) ||
 		(note ?? savedNote) !== savedNote;
 
 	function requestClose() {

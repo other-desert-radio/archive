@@ -143,20 +143,22 @@ try {
 	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), true);
 	assert.equal(await evaluate('playlistFixture.stores.playlistStore.getAll().some(p => p.shows.some(entry => entry.showId === 42))'), false);
 	assert.equal(await evaluate(`document.querySelector('${saveDialog} ${button("Save playlist")}').disabled`), false);
-	// Clean backdrop dismisses; changed selections and notes require confirmation.
-	await browser("mouse", "move", "1", "1");
-	await browser("mouse", "down");
-	await browser("mouse", "up");
-	await wait(`!document.querySelector('${saveDialog}')`);
-	await browser("click", button("Save to Playlist"));
-	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
-	assert.equal(await evaluate(`document.querySelector('${saveDialog} ${button("Save playlist")}').disabled`), true);
+	// The preselected liked playlist is an unsaved change.
 	await browser("mouse", "move", "1", "1");
 	await browser("mouse", "down");
 	await browser("mouse", "up");
 	await browser("wait", discardDialog);
 	await browser("click", `${discardDialog} ${button("Keep editing")}`);
-	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), false);
+	// Removing the default restores the persisted empty selection.
+	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} ${button("Save playlist")}').disabled`), true);
+	await browser("press", "Escape");
+	await wait(`!document.querySelector('${saveDialog}')`);
+	await browser("click", button("Save to Playlist"));
+	await browser("press", "Escape");
+	await browser("wait", discardDialog);
+	await browser("click", `${discardDialog} ${button("Keep editing")}`);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), true);
 	await browser("press", "Escape");
 	await browser("wait", discardDialog);
 	await browser("press", "Escape");
@@ -181,8 +183,7 @@ try {
 	await browser("click", `${discardDialog} ${button("Discard changes")}`);
 	await browser("click", button("Save to Playlist"));
 	assert.equal(await evaluate(`document.querySelector('${saveDialog} textarea').value`), "");
-	// Reverting edits leaves the form clean.
-	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
+	// Removing the default leaves the form clean.
 	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
 	await browser("press", "Escape");
 	await wait(`!document.querySelector('${saveDialog}')`);
