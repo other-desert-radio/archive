@@ -53,7 +53,11 @@ const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
         <div class="page-inset dj-heading">
           <h2 id="tag-djs-heading">DJs</h2>
         </div>
-        <HorizontalScroll class="gutter-scroll dj-row" label="DJs" gap="calc(var(--space-lg) * 4)">
+        <HorizontalScroll
+          class="gutter-scroll dj-row"
+          label="DJs"
+          gap="calc(var(--space-lg) * 2)"
+        >
           {djs.map((dj) => (
             <DJExploreCard dj={dj} fromTag={tag.id} />
           ))}
