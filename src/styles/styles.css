@@ -37,7 +37,7 @@
 	--border-secondary: calc(var(--density-unit) * 0.125);
 	--border-primary: calc(var(--density-unit) * 0.1875);
 	--border-heavy: calc(var(--density-unit) * 0.375);
-	--miniplayer-background: #25292c;
+	--miniplayer-background: #121212;
 	--nav-height: calc(var(--density-unit) * 4.4375);
 	--container-grid-padding-bottom: calc(var(--density-unit) * 7.5);
 	--dj-artwork-size: calc(var(--density-unit) * 12.5);
@@ -193,6 +193,7 @@ textarea {
 	from {
 		opacity: 0;
 	}
+
 	to {
 		opacity: 1;
 	}
@@ -206,6 +207,7 @@ textarea {
 	from {
 		opacity: 1;
 	}
+
 	to {
 		opacity: 0;
 	}
@@ -215,6 +217,7 @@ textarea {
 	.skeleton-fade {
 		animation: skeleton-enter 120ms ease-out both;
 	}
+
 	.skeleton-fade.skeleton-exit {
 		animation: skeleton-exit 120ms ease-in both;
 	}
