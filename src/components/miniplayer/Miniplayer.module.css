@@ -50,7 +50,13 @@
 
 @media (hover: hover) and (pointer: fine) {
 	.title a:hover {
-		text-decoration: underline;
+		font-weight: bold;
+		font-style: italic;
+	}
+
+	.fullscreen-dj:hover {
+		font-weight: bold;
+		font-style: italic;
 	}
 }
 
@@ -366,12 +372,6 @@
 .fullscreen-dj span {
 	min-width: 0;
 	overflow-wrap: anywhere;
-}
-
-@media (hover: hover) and (pointer: fine) {
-	.fullscreen-dj:hover {
-		text-decoration: underline;
-	}
 }
 
 .miniplayer[data-presentation="fullscreen"] .widget-slot {
