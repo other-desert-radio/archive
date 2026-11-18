@@ -460,9 +460,15 @@
 	position: relative;
 }
 
+.expand-handle,
+.mobile-expand {
+	-webkit-user-select: none;
+	user-select: none;
+}
+
 .expand-handle {
 	position: absolute;
-	bottom: 100%;
+	bottom: calc(100% - 0.125rem);
 	left: clamp(
 		0px,
 		calc(var(--mound-x, 50%) - 10rem),
