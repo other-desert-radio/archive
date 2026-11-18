@@ -83,13 +83,14 @@ The fallback's fully expanded endpoint clears color transitions immediately, and
 settling frames retain the fast-scroll bypass to avoid a delayed fade on iOS.
 The text and active underline switch to white at 50% opacity so they
 remain fully opaque and readable. Reduced motion shows static compact
-tabs immediately. The sticky header reserves the expanded tab height to keep
+tabs immediately with half the usual reserved clearance beneath the strip. The sticky header reserves the expanded tab height to keep
 document geometry stable and lets clicks through the transparent remainder.
 Compression also reduces title-row bottom padding to leave approximately `1.5rem`
 between the title text and compact tab text when the desktop player row is absent.
 Tune this with `--tabs-title-gap` in `Navigation.astro`.
 Switching categories from a compact strip starts the destination at the
-compression threshold and seeds compact styling before the swap. Short compact
+compression threshold and seeds compact styling before the swap. Reduced-motion
+category navigation starts at the top because its tabs are already static. Short compact
 entries reserve one compression distance beyond the viewport so History can
 retain that state and still scroll back to expanded. Astro history state records
 the compact entry; range reservation runs before reload scroll restoration.
@@ -99,10 +100,14 @@ allow the navigation title to wrap within its own line on tiny screens.
 Hover effects are limited to `(hover: hover) and (pointer: fine)`; links and
 buttons use `touch-action: manipulation` to avoid waiting for double taps.
 The shared layout renders a decorative fixed background layer at z-index 0,
-with page content above it. Its height is `100dvh` (`100vh` fallback), so it
-tracks the visible viewport as mobile browser controls expand or collapse.
-Both layers tile `background2.avif` at its native size, switching to the 90°
-clockwise-rotated `background2-vertical.avif` at 600px and below. The root canvas uses
+with page content above it. Both the root canvas and background layer use `100lvh` (`100vh` fallback),
+so the image size stays stable as mobile browser controls expand or collapse.
+Content retains `100dvh` minimum sizing.
+Both layers center the background with `cover` sizing and no repetition,
+filling the viewport while preserving the image proportions. Explore and tag detail pages use `backgrounds/background-explore.webp`; all other pages
+use `backgrounds/background-white.webp`. At 600px and below, each switches to its
+`-vertical.webp` variant. Explore backgrounds use `rgb(205, 194, 187)`
+while the image loads. `BaseLayout` selects the background on the root element. The root canvas uses
 the same image, and `viewport-fit=cover` allows it to
 extend into safe areas; keep safe-area padding on content, not the image.
 Use neither fixed background attachment nor a negative-z-index pseudo-element.

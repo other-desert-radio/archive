@@ -111,9 +111,12 @@ and body transition animations disabled and an immediate swap fallback.
 Internal archive links use client routing to preserve playback.
 The site still builds to static HTML; initial visits load a full document.
 Tag pages return to Explore. Their show and DJ links carry `fromTag`; shared
-navigation resolves known tag IDs in the browser on initial load and
+navigation embeds tag IDs and titles during the build and resolves the query
+against that snapshot in the browser on initial load and
 `astro:page-load`, returning to the tag instead of the default listing.
 Missing or invalid IDs retain the default SHOWS or DJs return destination.
+Return-link resolution makes no catalog requests and does not depend on browser
+stores or IndexedDB.
 
 The shared header mounts a persisted React miniplayer backed by the audio store.
 Show selections carry the full Show and a validated playback source. The widget

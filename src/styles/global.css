@@ -31,7 +31,7 @@
 }
 
 :root {
-	--site-background-image: url("/archive/background2.avif");
+	--site-background-image: url("/archive/backgrounds/background-white.webp");
 	font-family: "Space Mono", monospace;
 	font-synthesis: none;
 	line-height: 1.5;
@@ -39,9 +39,17 @@
 	-webkit-tap-highlight-color: transparent;
 }
 
+:root[data-background="explore"] {
+	--site-background-image: url("/archive/backgrounds/background-explore.webp");
+}
+
 @media (max-width: 600px) {
 	:root {
-		--site-background-image: url("/archive/background2-vertical.avif");
+		--site-background-image: url("/archive/backgrounds/background-white-vertical.webp");
+	}
+
+	:root[data-background="explore"] {
+		--site-background-image: url("/archive/backgrounds/background-explore-vertical.webp");
 	}
 }
 
@@ -59,9 +67,9 @@ body {
 }
 
 html {
-	height: 100%;
+	height: 100vh;
 	/* Safari also samples the root canvas beneath its translucent controls. */
-	background: var(--site-background-image) left top / auto repeat;
+	background: var(--site-background-image) center / cover no-repeat;
 }
 
 body {
@@ -82,7 +90,12 @@ body[data-compact-category-entry] {
 	height: 100vh;
 	z-index: 0;
 	pointer-events: none;
-	background: var(--site-background-image) left top / auto repeat;
+	background: var(--site-background-image) center / cover no-repeat;
+}
+
+html[data-background="explore"],
+html[data-background="explore"] .site-background {
+	background-color: rgb(205, 194, 187);
 }
 
 @supports (height: 100dvh) {
@@ -93,9 +106,12 @@ body[data-compact-category-entry] {
 	body[data-compact-category-entry] {
 		min-height: calc(100dvh + var(--tabs-compression-scroll-px) * 1px);
 	}
+}
 
+@supports (height: 100lvh) {
+	html,
 	.site-background {
-		height: 100dvh;
+		height: 100lvh;
 	}
 }
 

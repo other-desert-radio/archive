@@ -23,6 +23,32 @@ async function browser(...args) {
 async function evaluate(code) {
 	return JSON.parse(await browser("eval", code));
 }
+async function verifyReducedMotionClearance() {
+	for (const width of [320, 750, 1440]) {
+		await browser("set", "viewport", String(width), "800");
+		const layout = await evaluate(`(() => {
+			const tabs = document.querySelector('[data-category-tabs]');
+			const strip = tabs.querySelector('.tabs-strip').getBoundingClientRect();
+			const main = document.querySelector('main').getBoundingClientRect();
+			return { clearance: main.top - strip.bottom, reserved: tabs.getBoundingClientRect().height, stripHeight: strip.height };
+		})()`);
+		assert.ok(layout.reserved > layout.stripHeight + 4, `${width}px reduced-motion tabs retain content spacing`);
+		assert.ok(layout.clearance > 4, `${width}px content clears the tab strip`);
+	}
+	await browser("set", "viewport", "1440", "800");
+}
+
+async function verifyReducedMotionEntry() {
+	const originalPath = await evaluate("location.pathname");
+	await evaluate("window.scrollTo(0, 0); true");
+	for (const path of ["/archive/djs", originalPath]) {
+		await browser("click", `[data-category-tabs] a[href='${path}']`);
+		await browser("wait", "--fn", `location.pathname.replace(/\\/$/, '') === ${JSON.stringify(path.replace(/\/$/, ""))} && !document.documentElement.hasAttribute('data-astro-transition')`);
+		assert.equal(await evaluate("scrollY"), 0, "reduced-motion category entry starts at the top");
+		assert.equal(await evaluate("!!history.state.categoryTabsCompactEntry"), false, "static compact tabs do not create an animated compact entry");
+	}
+}
+
 async function verifyProgress(y, progress) {
 	if (y > 0 && y < compressionScrollPx) {
 		// Small frame-by-frame moves exercise the slow path independently of flings.
@@ -146,6 +172,8 @@ try {
 	await verifyProgress(halfwayScroll, halfwayProgress);
 	await browser("set", "media", "light", "reduced-motion");
 	await verifyProgress(0, 1);
+	await verifyReducedMotionClearance();
+	await verifyReducedMotionEntry();
 	await browser("set", "media", "light");
 	await verifyProgress(0, 0);
 
@@ -334,6 +362,8 @@ try {
 	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
 	await browser("set", "media", "light", "reduced-motion");
 	await browser("wait", "--fn", "getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress').trim() === '1'");
+	await verifyReducedMotionClearance();
+	await verifyReducedMotionEntry();
 	assert.equal(await evaluate("getComputedStyle(document.querySelector('[data-site-header]')).animationName"), "none");
 	assert.equal(await evaluate("getComputedStyle(document.querySelector('.tabs-strip')).backgroundColor"), "rgb(0, 0, 0)");
 	await browser("set", "media", "light");

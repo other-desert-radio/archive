@@ -123,6 +123,10 @@ and checks query restoration after detail visits, fresh search on category-tab
 navigation, and playlist query restoration. It requires `agent-browser` and does
 not verify physical iOS focus zoom.
 
+For return-link independence from runtime catalogs, build first, then run
+`bun tests/tag-return.browser.mjs`. It verifies direct show/DJ visits with failed
+catalog requests and unavailable IndexedDB, plus invalid-tag fallback links.
+
 For player navigation and the viewport background, start `bun run preview`
 after building, then run `bun tests/player-navigation.browser.mjs` (requires
 `agent-browser`). The browser regression uses a same-origin iframe to verify

@@ -170,6 +170,7 @@ export function setupCategoryTabsScrollBehavior({
 				categoryEntryScroll = history.state.scrollY;
 			}
 		} else if (
+			!window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
 			tabs &&
 			event.sourceElement?.closest("[data-category-tabs] a") &&
 			Number.parseFloat(

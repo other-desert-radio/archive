@@ -1,5 +1,6 @@
 import { useRef } from "react";
-import tagCatalog from "../../../public/resources/tags.json";
+import { useInitialization } from "../../hooks/useInitialization";
+import { useStores } from "../../stores";
 import type { AudioTrack } from "../../stores/audio";
 import { useAudioState } from "../../stores/audio";
 import MixcloudWidget from "../mixcloud";
@@ -14,8 +15,6 @@ import FullscreenNav from "./FullscreenNav";
 import styles from "./Miniplayer.module.css";
 import TrackTitle from "./TrackTitle";
 import { usePlayerPresentation } from "./usePlayerPresentation";
-
-const tags = new Map(tagCatalog.data.map((tag) => [tag.id, tag]));
 
 export default function Miniplayer({ base }: { base: string }) {
 	const audio = useAudioState();
@@ -39,6 +38,9 @@ function ActiveMiniplayer({
 	track: AudioTrack;
 	base: string;
 }) {
+	const stores = useStores();
+	useInitialization(stores);
+	const tags = stores.tagStore.getMap();
 	const playlistModal = useRef<HTMLDialogElement>(null);
 	const openFavorites = () => playlistModal.current?.showModal();
 	const { presentation, compactHeight, playerRef, expand, close } =
@@ -95,7 +97,7 @@ function ActiveMiniplayer({
 											{track.show.title}
 										</a>
 									)}
-									{presentation === "fullscreen" && (
+									{presentation === "fullscreen" && tags.size > 0 && (
 										<FullscreenTags
 											show={track.show}
 											base={base}

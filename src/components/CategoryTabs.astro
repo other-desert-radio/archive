@@ -81,10 +81,11 @@ const { active } = Astro.props;
         var(--tabs-progress)
     );
     /* Reserve flow space so compression cannot change scroll position or page length. */
-    height: calc(
+    --tabs-reserved-height: calc(
       var(--space-sm) + max(2.75rem, var(--tabs-expanded-font) * 1.5) +
         var(--tabs-bottom-padding) + var(--tabs-title-lift, 0rem) * var(--tabs-progress)
     );
+    height: var(--tabs-reserved-height);
     pointer-events: none;
   }
 
@@ -241,7 +242,7 @@ const { active } = Astro.props;
   @media (prefers-reduced-motion: reduce) {
     .category-tabs {
       --tabs-progress: 1;
-      height: auto;
+      height: calc((var(--tabs-reserved-height) + 2.75rem) / 2);
     }
 
     .tabs-strip {
