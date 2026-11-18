@@ -88,6 +88,32 @@ try {
 	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), true);
 	await browser("press", "Escape");
 	await wait(`!document.querySelector('${saveDialog}')`);
+	const longTitle = "Long Playlist Name, Groovy music that I like ".repeat(5).trim();
+	await evaluate(`(async () => {
+		const store = playlistFixture.stores.playlistStore;
+		const playlist = await store.create({ title: ${JSON.stringify(longTitle)} });
+		await store.addShow({ playlistId: playlist.id, showId: 42 });
+		return true;
+	})()`);
+	const savedTitles = `Liked Shows, ${longTitle}`;
+	await wait(`document.querySelector('${button("Save to Playlist")}').textContent === ${JSON.stringify(savedTitles)}`);
+	for (const width of [320, 332, 750, 1440]) {
+		await browser("set", "viewport", String(width), "900");
+		assert.equal(await evaluate(`(() => {
+			const b = document.querySelector('${button("Save to Playlist")}');
+			return b.getBoundingClientRect().width <= b.parentElement.clientWidth && b.scrollWidth <= b.clientWidth;
+		})()`), true, `Saved playlist names fit at ${width}px`);
+	}
+	await browser("click", button("Save to Playlist"));
+	assert.equal(await evaluate(`Array.from(document.querySelectorAll('${saveDialog} input[name="playlists"]')).filter(input => input.checked).length`), 2);
+	await browser("press", "Escape");
+	await wait(`!document.querySelector('${saveDialog}')`);
+	await evaluate(`(async () => {
+		const store = playlistFixture.stores.playlistStore;
+		await store.delete({ playlistId: store.getAll().find(p => p.type === 'user').id });
+		return true;
+	})()`);
+	await wait(`document.querySelector('${button("Save to Playlist")}').textContent === 'Liked Shows'`);
 	await evaluate(`(async () => {
 		const store = playlistFixture.stores.playlistStore;
 		await store.removeShow({ playlistId: store.getAll().find(p => p.type === 'liked').id, showId: 42 });

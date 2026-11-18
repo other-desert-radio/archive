@@ -7,9 +7,10 @@ import { usePlaylists } from "./usePlaylists";
 export default function SaveToPlaylist({ showId }: { showId: number }) {
 	const modal = useRef<HTMLDialogElement>(null);
 	const { playlists, status } = usePlaylists();
-	const savedPlaylist = playlists.find((playlist) =>
+	const savedPlaylists = playlists.filter((playlist) =>
 		playlist.shows.some((entry) => entry.showId === showId),
 	);
+	const isSaved = savedPlaylists.length > 0;
 	return (
 		<>
 			{status === "loading" ? (
@@ -21,16 +22,20 @@ export default function SaveToPlaylist({ showId }: { showId: number }) {
 			) : (
 				<button
 					type="button"
-					className={`${styles["save-button"]} ${savedPlaylist ? styles["saved"] : ""}`}
+					className={`${styles["save-button"]} ${isSaved ? styles["saved"] : ""}`}
 					aria-label="Save to Playlist"
 					onClick={() => modal.current?.showModal()}
 				>
 					<svg viewBox="0 0 24 24" aria-hidden="true">
 						<use
-							href={`${getBasePath()}/assets/icons/${savedPlaylist ? "bookmark-filled" : "bookmark"}.svg#bookmark`}
+							href={`${getBasePath()}/assets/icons/${isSaved ? "bookmark-filled" : "bookmark"}.svg#bookmark`}
 						/>
 					</svg>
-					<span>{savedPlaylist?.title ?? "Save to Playlist"}</span>
+					<span>
+						{isSaved
+							? savedPlaylists.map((playlist) => playlist.title).join(", ")
+							: "Save to Playlist"}
+					</span>
 				</button>
 			)}
 			<PlaylistModal key={showId} ref={modal} showId={showId} />
