@@ -73,6 +73,7 @@ export function usePlayerPresentation(): PlayerPresentationState {
 		flushSync(() => setPresentation("compact"));
 		transition.current?.cancel();
 		playerRef.current?.removeAttribute("data-opening");
+		playerRef.current?.removeAttribute("data-closing");
 	}
 
 	function close() {
@@ -81,17 +82,22 @@ export function usePlayerPresentation(): PlayerPresentationState {
 			closeImmediately();
 			return;
 		}
+		player.setAttribute("data-closing", "");
+		const offset = new DOMMatrixReadOnly(getComputedStyle(player).transform)
+			.m42;
 		transition.current?.cancel();
 		transition.current = player.animate(
 			[
 				{
 					transform: getComputedStyle(player).transform,
+					"--player-offset": `${offset}px`,
 					"--player-open":
 						getComputedStyle(player).getPropertyValue("--player-open"),
 				},
 				{
 					transform: `translateY(${window.innerHeight - (compactHeight ?? 0)}px)`,
 					"--player-open": "0",
+					"--player-offset": `${window.innerHeight - (compactHeight ?? 0)}px`,
 				},
 			],
 			{

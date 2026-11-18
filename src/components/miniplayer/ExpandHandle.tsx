@@ -4,11 +4,14 @@ import styles from "./Miniplayer.module.css";
 type Props = {
 	playerRef: RefObject<HTMLDivElement | null>;
 	fullscreen: boolean;
+	/** Measured compact player height in pixels; collapse travel defaults to 60. */
 	compactHeight: number | undefined;
 	expand: () => void;
+	/** Leave fullscreen immediately; the handle finishes its own closing animation. */
 	close: () => void;
 };
 
+/** Controls player expansion with pointer gestures and keyboard button activation. */
 export default function ExpandHandle({
 	playerRef,
 	fullscreen,
@@ -128,9 +131,17 @@ export default function ExpandHandle({
 				player.setAttribute("data-opening", "");
 			}
 			player.style.transform = `translateY(${fullscreen ? 0 : travel}px)`;
+			if (fullscreen) {
+				player.setAttribute("data-closing", "");
+			}
+			player.style.setProperty(
+				"--player-offset",
+				`${fullscreen ? 0 : travel}px`,
+			);
 			player.style.setProperty("--player-open", fullscreen ? "1" : "0");
 			setDragging(fullscreen ? "down" : "up");
 			if (!fullscreen) {
+				// Mount fullscreen content before dragging it into view.
 				expand();
 			}
 		}
@@ -155,6 +166,7 @@ export default function ExpandHandle({
 			drag.current = undefined;
 			const velocity =
 				performance.now() - gesture.time < 100 ? gesture.velocity : 0;
+			// Taps commit; drags project recent velocity to allow a short flick to commit.
 			const commit =
 				!cancelled &&
 				(gesture.distance < 5 ||
@@ -163,14 +175,19 @@ export default function ExpandHandle({
 			const offset = gesture.closing
 				? gesture.distance
 				: gesture.travel - gesture.distance;
+			if (!open) {
+				player.setAttribute("data-closing", "");
+			}
 			animation.current = player.animate(
 				[
 					{
 						transform: `translateY(${offset}px)`,
+						"--player-offset": `${offset}px`,
 						"--player-open": String(1 - offset / gesture.travel),
 					},
 					{
 						transform: `translateY(${open ? 0 : gesture.travel}px)`,
+						"--player-offset": `${open ? 0 : gesture.travel}px`,
 						"--player-open": open ? "1" : "0",
 					},
 				],
@@ -188,6 +205,8 @@ export default function ExpandHandle({
 				}
 				player.style.removeProperty("transform");
 				player.style.removeProperty("--player-open");
+				player.style.removeProperty("--player-offset");
+				player.removeAttribute("data-closing");
 				animation.current?.cancel();
 				animation.current = undefined;
 				player.removeAttribute("data-opening");
@@ -218,6 +237,10 @@ export default function ExpandHandle({
 				),
 			);
 			player.style.transform = `translateY(${gesture.closing ? gesture.distance : gesture.travel - gesture.distance}px)`;
+			player.style.setProperty(
+				"--player-offset",
+				`${gesture.closing ? gesture.distance : gesture.travel - gesture.distance}px`,
+			);
 			player.style.setProperty(
 				"--player-open",
 				String(
@@ -254,6 +277,7 @@ export default function ExpandHandle({
 			data-dragging={dragging || undefined}
 			aria-label={fullscreen && !dragging ? "Collapse player" : "Expand player"}
 			onClick={(event) => {
+				// Pointer activation already settles through finish(); keyboard clicks do not.
 				if (event.detail === 0) {
 					if (fullscreen) {
 						close();

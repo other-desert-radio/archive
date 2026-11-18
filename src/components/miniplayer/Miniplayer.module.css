@@ -590,3 +590,19 @@
 		z-index: 2;
 	}
 }
+
+@property --player-offset {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 0px;
+}
+
+@media (max-width: 600px) {
+	.miniplayer[data-presentation="fullscreen"][data-closing] .widget-slot {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: calc(var(--player-offset) + env(safe-area-inset-bottom));
+		z-index: 2;
+	}
+}

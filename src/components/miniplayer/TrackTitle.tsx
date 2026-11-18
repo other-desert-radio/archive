@@ -6,6 +6,7 @@ type Props = {
 	show: Show;
 	base: string;
 	hidden?: boolean;
+	/** Disables interaction and hides the compact title from assistive technology while fullscreen. */
 	inert?: boolean;
 };
 

@@ -319,8 +319,21 @@ for (const [distance, expected] of [[0, "fullscreen"], [60, "compact"], [500, "f
 	assert.equal(evaluate("document.querySelector('[data-miniplayer]').dataset.presentation"), expected);
 	assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame"), true);
 	if (expected === "fullscreen") {
-		browser("click", '[data-miniplayer] button[aria-label="Close player"]');
+		evaluate(`(() => {
+			window.dismissFrameBounds = [];
+			function sample() {
+				const player = document.querySelector('[data-miniplayer]');
+				if (player.dataset.presentation !== 'fullscreen') { return; }
+				const frame = player.querySelector('iframe').getBoundingClientRect();
+				window.dismissFrameBounds.push({ bottom: frame.bottom, height: frame.height, viewport: innerHeight });
+				requestAnimationFrame(sample);
+			}
+			document.querySelector('[data-miniplayer] button[aria-label="Close player"]').click();
+			requestAnimationFrame(sample);
+			return true;
+		})()`);
 		browser("wait", '[data-presentation="compact"]');
+		assert.equal(evaluate("window.dismissFrameBounds.length > 0 && window.dismissFrameBounds.every(frame => frame.height > 0 && frame.bottom <= frame.viewport + 1 && frame.bottom >= frame.viewport - 100)"), true, "Mobile playback controls stay onscreen throughout dismissal");
 	}
 }
 for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [601, 844], [750, 844], [840, 782], [1440, 844], [2041, 1352], [2560, 844]]) {
