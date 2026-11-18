@@ -82,13 +82,7 @@ const hydratedTags = hydrateTags(show, tags);
         {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
       </div>
     </div>
-    <section
-      class:list={[
-        "show-grid",
-        { "has-description": Boolean(description || tracklist?.length) },
-      ]}
-      aria-labelledby="show-title"
-    >
+    <section class="show-grid" aria-labelledby="show-title">
       <div class="show-artwork">
         <SquareShowCard
           mode="playback"
@@ -100,7 +94,7 @@ const hydratedTags = hydrateTags(show, tags);
         />
         <SaveToPlaylist showId={show.id} client:load />
       </div>
-      <div class="show-description" hidden={!description && !tracklist?.length}>
+      <div class="show-description">
         {
           description && (
             <section aria-labelledby="description-title">
@@ -129,48 +123,53 @@ const hydratedTags = hydrateTags(show, tags);
             </section>
           )
         }
-      </div>
-      <div class="show-djs">
-        {
-          djs.map((dj) => (
-            <a
-              class="show-dj"
-              href={`${base}/djs/${dj.id}`}
-              aria-label={`View ${dj.title}`}
-              aria-labelledby={`dj-${dj.id}`}
-            >
-              {dj.image_large && (
-                <img
-                  class="dj-portrait"
-                  src={`${base}/${dj.image_large}`}
-                  alt={dj.title}
-                  loading="lazy"
-                  decoding="async"
-                />
-              )}
-              <div class="dj-profile">
-                <h2 id={`dj-${dj.id}`} class="dj-name">
-                  {dj.title}
-                </h2>
-                <div class="dj-bio" set:html={dj.bio} />
-              </div>
-            </a>
-          ))
-        }
+        <div class="show-djs">
+          {
+            djs.map((dj) => (
+              <a
+                class="show-dj"
+                href={`${base}/djs/${dj.id}`}
+                aria-label={`View ${dj.title}`}
+                aria-labelledby={`dj-${dj.id}`}
+              >
+                {dj.image_large && (
+                  <img
+                    class="dj-portrait"
+                    src={`${base}/${dj.image_large}`}
+                    alt={dj.title}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                <div class="dj-profile">
+                  <h2 id={`dj-${dj.id}`} class="dj-name">
+                    {dj.title}
+                  </h2>
+                  <div class="dj-bio" set:html={dj.bio} />
+                </div>
+              </a>
+            ))
+          }
+        </div>
       </div>
     </section>
   </div>
 </BaseLayout>
 
 <style>
+  .show-djs {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-column-gap);
+    min-width: 0;
+  }
+
   .show-dj {
     --dj-artwork-size: calc(var(--density-unit) * 5.5);
     display: flex;
     align-items: flex-start;
     gap: var(--space-sm);
     width: min(100%, calc(var(--density-unit) * 72));
-    padding: var(--space-sm);
-    border: 2px dashed transparent;
     color: black;
     text-decoration: none;
     cursor: pointer;
@@ -178,14 +177,12 @@ const hydratedTags = hydrateTags(show, tags);
 
   @media (hover: hover) and (pointer: fine) {
     .show-dj:hover {
-      background-color: white;
-      border-color: currentColor;
+      outline: var(--border-secondary) solid currentColor;
+      outline-offset: var(--space-xs);
     }
   }
 
   .show-dj:focus-visible {
-    background-color: white;
-    border-color: currentColor;
     outline: var(--border-secondary) solid currentColor;
     outline-offset: var(--space-xs);
   }
@@ -244,15 +241,11 @@ const hydratedTags = hydrateTags(show, tags);
     flex-direction: column;
     gap: var(--space-lg);
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1;
     min-width: 0;
     overflow-wrap: anywhere;
     border-left: var(--border-secondary) solid currentColor;
     padding-left: var(--space-lg);
-  }
-
-  .show-description[hidden] {
-    display: none;
   }
 
   .tracklist {
@@ -272,17 +265,6 @@ const hydratedTags = hydrateTags(show, tags);
 
   .description-content > :global(:last-child) {
     margin-bottom: 0;
-  }
-
-  .show-djs {
-    display: flex;
-    flex-direction: column;
-    gap: var(--grid-column-gap);
-    min-width: 0;
-  }
-
-  .has-description .show-djs {
-    grid-column: 1;
   }
 
   .show-artwork {
@@ -325,8 +307,7 @@ const hydratedTags = hydrateTags(show, tags);
       font-size: var(--font-title);
     }
 
-    .show-grid,
-    .show-grid.has-description {
+    .show-grid {
       grid-template-columns: minmax(0, 1fr);
       width: 100%;
     }
