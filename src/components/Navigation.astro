@@ -177,6 +177,18 @@ const title = (() => {
   }
 
   nav > span,
+  @media (max-width: 600px) {
+    .miniplayer-slot:has([data-miniplayer], iframe)::after {
+      content: "";
+      position: absolute;
+      inset-inline: 0;
+      top: 100%;
+      height: 100lvh;
+      background: var(--miniplayer-background);
+      pointer-events: none;
+    }
+  }
+
   .leading-box {
     padding-block: calc(var(--density-unit) * 1.5625);
   }

@@ -7,7 +7,7 @@ type Props = {
 	/** Measured compact player height in pixels; collapse travel defaults to 60. */
 	compactHeight: number | undefined;
 	expand: () => void;
-	/** Leave fullscreen immediately; the handle finishes its own closing animation. */
+	/** Leave fullscreen without another animation; called after the gesture settles. */
 	close: () => void;
 };
 
@@ -20,6 +20,7 @@ export default function ExpandHandle({
 	close,
 }: Props) {
 	const handleRef = useRef<HTMLButtonElement>(null);
+	// Keep pointer samples outside React state so movement does not trigger renders.
 	const drag = useRef<
 		| {
 				start: number;
@@ -28,6 +29,7 @@ export default function ExpandHandle({
 				velocity: number;
 				distance: number;
 				travel: number;
+				// Snapshot the starting mode: expand() changes fullscreen during the gesture.
 				closing: boolean;
 		  }
 		| undefined
@@ -35,6 +37,7 @@ export default function ExpandHandle({
 	const animation = useRef<Animation | undefined>(undefined);
 	const [dragging, setDragging] = useState<"up" | "down">();
 
+	// Make the desktop mound follow the cursor and flatten farther from the top edge.
 	useEffect(() => {
 		const player = playerRef.current;
 		if (!player) {
@@ -77,12 +80,14 @@ export default function ExpandHandle({
 			if (!(target instanceof Element) || !handle) {
 				return;
 			}
+			// Mobile gestures need an explicit handle to avoid stealing content scrolling.
 			if (
 				window.matchMedia("(max-width: 600px)").matches &&
 				!target.closest("[data-player-drag-handle]")
 			) {
 				return;
 			}
+			// Compact desktop whitespace also opens the player; controls and text stay usable.
 			if (
 				!handle.contains(target) &&
 				!target.closest("[data-player-drag-handle]")
@@ -108,6 +113,7 @@ export default function ExpandHandle({
 			if (event.button !== 0 || !player || dragging || animation.current) {
 				return;
 			}
+			// Translation spans the viewport minus the compact player's visible height.
 			const travel = Math.max(
 				1,
 				window.innerHeight -
@@ -164,9 +170,10 @@ export default function ExpandHandle({
 				return;
 			}
 			drag.current = undefined;
+			// Ignore an old movement sample when the user pauses before releasing.
 			const velocity =
 				performance.now() - gesture.time < 100 ? gesture.velocity : 0;
-			// Taps commit; drags project recent velocity to allow a short flick to commit.
+			// Taps commit; a 240 ms velocity projection must pass 35% travel for drags.
 			const commit =
 				!cancelled &&
 				(gesture.distance < 5 ||
@@ -199,6 +206,7 @@ export default function ExpandHandle({
 					fill: "forwards",
 				},
 			);
+			// Keep fullscreen content mounted until settling, then return styling to CSS.
 			animation.current.onfinish = () => {
 				if (!open) {
 					close();
@@ -221,6 +229,7 @@ export default function ExpandHandle({
 				return;
 			}
 			const now = performance.now();
+			// Normalize direction so positive pixels/ms always means the intended action.
 			gesture.velocity =
 				(gesture.closing
 					? event.clientY - gesture.last
@@ -236,6 +245,7 @@ export default function ExpandHandle({
 						: gesture.start - event.clientY,
 				),
 			);
+			// CSS uses offset for pinned controls and openness (0–1) for content crossfades.
 			player.style.transform = `translateY(${gesture.closing ? gesture.distance : gesture.travel - gesture.distance}px)`;
 			player.style.setProperty(
 				"--player-offset",

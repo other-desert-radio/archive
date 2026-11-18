@@ -344,6 +344,17 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 	const savedNavTop = evaluate("document.querySelector('[data-site-header] nav').getBoundingClientRect().top");
 	const savedTabsTop = evaluate("document.querySelector('[data-category-tabs]').getBoundingClientRect().top");
 	const compactHeight = evaluate("document.querySelector('[data-miniplayer-bar]').getBoundingClientRect().height");
+	if (width <= 600) {
+		assert.equal(evaluate(`(() => {
+			const bar = document.querySelector('[data-miniplayer-bar]');
+			const backing = getComputedStyle(bar, '::after');
+			return backing.content === '""'
+				&& backing.position === 'absolute'
+				&& backing.pointerEvents === 'none'
+				&& backing.backgroundColor === getComputedStyle(bar).backgroundColor
+				&& parseFloat(backing.height) >= innerHeight;
+		})()`), true, "Active phone player paints below the bar without increasing its measured height");
+	}
 	const expand = width <= 600
 		? '[data-miniplayer] > button[aria-label="Expand player"]'
 		: '[data-miniplayer] div > button[aria-label="Expand player"]';
