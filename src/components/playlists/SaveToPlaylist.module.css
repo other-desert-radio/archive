@@ -7,7 +7,7 @@
 	max-width: 100%;
 	margin-top: var(--space-sm);
 	padding: var(--space-sm);
-	border: var(--border-primary) solid currentColor;
+	border: var(--border-secondary) solid currentColor;
 	background: transparent;
 	color: black;
 	font: inherit;
@@ -19,6 +19,13 @@
 @media (hover: hover) and (pointer: fine) {
 	.save-button:hover {
 		background: white;
+		border: var(--border-primary) solid currentColor;
+		/* prevent jumping */
+		padding: calc(
+			var(--space-sm) +
+			var(--border-secondary) -
+			var(--border-primary)
+		);
 	}
 }
 
