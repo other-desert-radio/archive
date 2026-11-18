@@ -51,6 +51,8 @@ const { label, class: className, gap = "var(--space-xs)" } = Astro.props;
 
   .horizontal-scroll {
     position: sticky;
+    /* Keep the sticky scroller on its own layer during iOS page scrolling. */
+    will-change: transform;
     /* Overlap the header to avoid a seam from fractional-pixel rounding. */
     top: calc(var(--scroll-sticky-top, 0px) - 1px);
     z-index: 2;
