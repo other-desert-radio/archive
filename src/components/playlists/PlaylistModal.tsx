@@ -213,7 +213,7 @@ export default function PlaylistModal({
 					{error && <p role="alert">{error}</p>}
 
 					<button
-						className={styles["save"]}
+						className={`button-primary ${styles["save"]}`}
 						type="submit"
 						aria-label="Save playlist"
 						disabled={saving || status !== "ready" || !canSave}

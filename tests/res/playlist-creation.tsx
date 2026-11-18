@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { createRoot } from "react-dom/client";
+import "../../src/styles/global.css";
 import "../../src/styles/styles.css";
 import Miniplayer from "../../src/components/miniplayer/Miniplayer";
 import NewPlaylistModal from "../../src/components/playlists/NewPlaylistModal";

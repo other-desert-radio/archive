@@ -113,7 +113,7 @@ export default function NewPlaylistModal({
 						Cancel
 					</button>
 					<button
-						className={modalStyles["save"]}
+						className={`button-primary ${modalStyles["save"]}`}
 						type="submit"
 						aria-label="Create playlist"
 						disabled={saving || !title.trim()}
