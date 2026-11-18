@@ -20,7 +20,7 @@ test("renders a tags container only when the show has tags", () => {
 	}
 });
 
-test("saved playlist links follow DJ links and display bookmarks with titles", () => {
+test("shared playlist button follows DJ links and displays all saved titles", () => {
 	const show = fixture.data[0];
 	assert.ok(show);
 	const render = (
@@ -42,18 +42,17 @@ test("saved playlist links follow DJ links and display bookmarks with titles", (
 			title: "Favorites",
 		},
 	]);
-	assert.equal((html.match(/aria-label="View playlist /g) ?? []).length, 3);
-	assert.match(html, /href="\/playlists\/\?id=custom"/);
-	assert.match(html, /<b>Favorites<\/b>/);
+	assert.match(html, /Liked Shows, Empty note, Favorites/);
 	assert.equal((html.match(/bookmark-filled\.svg#bookmark/g) ?? []).length, 1);
 	assert.equal(
 		(html.match(/<button[^>]+aria-label="Save to Playlist"/g) ?? []).length,
 		1,
 	);
-	assert.match(html, /<\/a><\/span><span>, <a/g);
-	assert.doesNotMatch(html, /<a[^>]*>[^<]*<button/);
-	assert.doesNotMatch(html, /saved in|playlist-note/);
-	assert.ok(html.lastIndexOf("View Test DJ") < html.indexOf("View playlist"));
+	assert.doesNotMatch(html, /View playlist|<dialog|playlist-note/);
+	assert.ok(
+		html.lastIndexOf("View Test DJ") <
+			html.indexOf('aria-label="Save to Playlist"'),
+	);
 });
 
 test("formats a show date in UTC", () => {

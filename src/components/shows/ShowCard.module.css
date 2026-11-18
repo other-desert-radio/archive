@@ -54,62 +54,12 @@
 	font-weight: bold;
 }
 
-.playlist-save {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	gap: var(--space-xs);
-	align-self: flex-start;
-	max-width: 100%;
-	border: 1px solid black;
-	padding: var(--space-xs);
-	background: white;
-	color: black;
-	font-size: inherit;
-	text-decoration: none;
-	touch-action: manipulation;
-}
-
-.playlist-bookmark {
-	flex-shrink: 0;
-	border: 0;
-	padding: 0;
-	background: transparent;
-	color: inherit;
-	font: inherit;
-	cursor: pointer;
-	touch-action: manipulation;
-}
-
-.playlist-bookmark svg {
-	display: block;
-	width: var(--space-sm);
-	height: var(--space-sm);
-}
-
-.playlist-titles {
-	min-width: 0;
-}
-
-.playlist-title {
-	color: inherit;
-	text-decoration: none;
-	touch-action: manipulation;
-}
-
-.playlist-bookmark:focus-visible,
-.playlist-title:focus-visible {
-	outline: 2px solid black;
-	outline-offset: 2px;
-}
-
 @media (hover: hover) and (pointer: fine) {
 	.show-card:hover :global([data-show-playback]) {
 		opacity: 1;
 	}
 
 	.show-title:hover,
-	.playlist-title:hover,
 	.dj-name-title:hover {
 		text-decoration: underline;
 	}
