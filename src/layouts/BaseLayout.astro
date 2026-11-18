@@ -47,7 +47,7 @@ import Navigation from "../components/Navigation.astro";
     <Navigation page={page} returning_page={returning_page}>
       <slot name="category-tabs" slot="category-tabs" />
     </Navigation>
-    <main class:list={{ "full-width": page.name === "history" || page.name === "tag_page" }}>
+    <main class:list={{ "full-width": page.name === "history" || page.name === "tag_page" || page.name === "dj_page" }}>
       <slot />
     </main>
   </body>

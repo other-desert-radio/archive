@@ -119,6 +119,7 @@ try {
 	browser("wait", ".dj-tags .tag");
 	for (const width of [320, 332, 750, 1440, 2000, 2560]) {
 		browser("set", "viewport", String(width), "1000");
+		verifyRow('.dj-tags', '.dj-header', false, true);
 		const tags = evaluate(`(() => {
 			const row = document.querySelector('.dj-tags');
 			row.focus();

@@ -48,10 +48,12 @@ const hydratedTags = hydrateTags(dj, tags);
 >
   <div class="page-inset">
     <h1 class="dj-header">{dj.title}</h1>
-    <HorizontalScroll class="dj-tags" label="DJ tags">
-      {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
-    </HorizontalScroll>
+  </div>
+  <HorizontalScroll class="gutter-scroll dj-tags" label="DJ tags">
+    {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
+  </HorizontalScroll>
 
+  <div class="page-inset">
     <div class="dj-grid">
       <div class="dj-column">
         {
