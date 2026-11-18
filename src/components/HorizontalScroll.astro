@@ -1,0 +1,101 @@
+---
+type Props = {
+  label: string;
+  class?: string;
+  gap?: string;
+};
+
+const { label, class: className, gap = "var(--space-xs)", ...rest } = Astro.props;
+---
+
+<div class="scroll-anchor" aria-hidden="true"></div>
+<div {...rest} class:list={["horizontal-scroll", className]} style={{ gap }} role="region" aria-label={label} tabindex="0">
+  <slot />
+</div>
+
+<script>
+  import { setupHorizontalScroll, setupStickyRow } from "./horizontal-scroll";
+
+  let cleanups: (() => void)[] = [];
+  function cleanup() {
+    for (const dispose of cleanups) {
+      dispose();
+    }
+    cleanups = [];
+  }
+  function setup() {
+    cleanup();
+    cleanups = Array.from(
+      document.querySelectorAll<HTMLElement>(".horizontal-scroll"),
+      (row) => {
+        const stopScroll = setupHorizontalScroll(row);
+        const stopSticky = setupStickyRow(row);
+        return () => {
+          stopScroll();
+          stopSticky();
+        };
+      },
+    );
+  }
+  setup();
+  document.addEventListener("astro:page-load", setup);
+  document.addEventListener("astro:before-swap", cleanup);
+</script>
+
+<style>
+  .scroll-anchor {
+    height: 1px;
+    margin-bottom: -1px;
+    pointer-events: none;
+  }
+
+  .horizontal-scroll {
+    position: sticky;
+    /* Keep the sticky scroller on its own layer during iOS page scrolling. */
+    will-change: transform;
+    /* Overlap the header to avoid a seam from fractional-pixel rounding. */
+    top: calc(var(--scroll-sticky-top, 0px) - 1px);
+    z-index: 2;
+    background-color: transparent;
+    transition: background-color 200ms ease;
+    display: flex;
+    flex-wrap: nowrap;
+    min-width: 0;
+    overflow-x: auto;
+    padding-block: var(--space-sm);
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+
+  .horizontal-scroll.is-stuck {
+    background-color: white;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .horizontal-scroll {
+      transition: none;
+    }
+  }
+
+  .horizontal-scroll > :global(*) {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .horizontal-scroll:is(:hover, :active, :focus-within) {
+    scrollbar-color: currentColor transparent;
+  }
+
+  .horizontal-scroll::-webkit-scrollbar {
+    height: 0.5rem;
+  }
+
+  .horizontal-scroll::-webkit-scrollbar-track,
+  .horizontal-scroll::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+
+  .horizontal-scroll:is(:hover, :active, :focus-within)::-webkit-scrollbar-thumb {
+    background: currentColor;
+  }
+</style>

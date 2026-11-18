@@ -2,6 +2,7 @@
 import { getBasePath } from "../../utils/get-base-path";
 import { pathToFileURL } from "node:url";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import HorizontalScroll from "../../components/HorizontalScroll.astro";
 import TagView from "../../components/TagView.astro";
 import { fetchDJ, type HydratedDJ } from "../../utils/fetch-dj";
 import { fetchDJs } from "../../utils/fetch-djs";
@@ -36,6 +37,7 @@ type Props = {
 const { dj, djShows } = Astro.props as Props;
 const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
 
+// TODO: Sort DJ tags by popularity.
 const hydratedTags = hydrateTags(dj, tags);
 ---
 
@@ -46,10 +48,12 @@ const hydratedTags = hydrateTags(dj, tags);
 >
   <div class="page-inset">
     <h1 class="dj-header">{dj.title}</h1>
-    <div class="tag-container">
-      {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
-    </div>
+  </div>
+  <HorizontalScroll class="gutter-scroll dj-tags" label="DJ tags">
+    {hydratedTags.map((tag) => <TagView tag={tag} size="large" />)}
+  </HorizontalScroll>
 
+  <div class="page-inset">
     <div class="dj-grid">
       <div class="dj-column">
         {
@@ -132,7 +136,7 @@ const hydratedTags = hydrateTags(dj, tags);
     line-height: 1.3;
   }
 
-  .tag-container {
+  .dj-tags {
     margin-bottom: var(--space-md);
   }
 

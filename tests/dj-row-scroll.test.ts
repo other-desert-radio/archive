@@ -4,28 +4,26 @@ import test from "node:test";
 import { runInNewContext } from "node:vm";
 import { transpileModule } from "typescript";
 
-test("DJ scrolling eases, reverses, pauses for interaction and cleans up", () => {
+test("Horizontal scrolling eases, reverses, pauses for interaction and cleans up", () => {
 	let callback: (time: number) => void = () => {};
 	let cancelled = false;
 	let reduced = false;
 	let focused = false;
 	let hovered = false;
 	const events = new EventTarget();
+	const windowEvents = new EventTarget();
 	const row = Object.assign(events, {
 		scrollLeft: 0,
 		scrollWidth: 200,
 		clientWidth: 100,
 		matches: (selector: string) => (selector === ":hover" ? hovered : focused),
 	});
-	const source = readFileSync(
-		"src/components/explore/dj-row-scroll.ts",
-		"utf8",
-	);
+	const source = readFileSync("src/components/horizontal-scroll.ts", "utf8");
 	const setup = runInNewContext(
-		`${transpileModule(source.replace("export function", "function"), { compilerOptions: {} }).outputText}\nsetupDJRowScroll`,
+		`${transpileModule(source.replaceAll("export function", "function"), { compilerOptions: {} }).outputText}\nsetupHorizontalScroll`,
 		{
 			AbortController,
-			window: events,
+			window: windowEvents,
 			document: { hidden: false },
 			matchMedia: (query: string) => ({
 				get matches() {
@@ -59,6 +57,14 @@ test("DJ scrolling eases, reverses, pauses for interaction and cleans up", () =>
 	for (let i = 0; i < 20; i++) {
 		tick();
 	}
+	const beforePageTouchEnd = row.scrollLeft;
+	windowEvents.dispatchEvent(new Event("touchend"));
+	tick();
+	assert.ok(
+		row.scrollLeft > beforePageTouchEnd,
+		"vertical page gestures outside the row do not pause auto-scroll",
+	);
+
 	hovered = true;
 	const beforeHover = row.scrollLeft;
 	tick();
@@ -100,19 +106,19 @@ test("DJ scrolling eases, reverses, pauses for interaction and cleans up", () =>
 		tick();
 		assert.equal(row.scrollLeft, before, pause);
 	}
-	events.dispatchEvent(new Event("pointerup"));
+	windowEvents.dispatchEvent(new Event("pointerup"));
 	row.scrollWidth = 400;
 	row.scrollLeft = 100;
 	events.dispatchEvent(new Event("touchstart"));
 	events.dispatchEvent(new Event("pointerdown"));
 	tick();
-	events.dispatchEvent(new Event("pointercancel"));
+	windowEvents.dispatchEvent(new Event("pointercancel"));
 	row.scrollLeft = 150;
 	for (let i = 0; i < 6; i++) {
 		tick();
 		assert.equal(row.scrollLeft, 150, "native pan stays paused while touching");
 	}
-	events.dispatchEvent(new Event("touchend"));
+	windowEvents.dispatchEvent(new Event("touchend"));
 	for (const position of [170, 180, 185]) {
 		row.scrollLeft = position;
 		tick();
@@ -133,4 +139,71 @@ test("DJ scrolling eases, reverses, pauses for interaction and cleans up", () =>
 	assert.equal(row.scrollLeft, before, "no overflow stays still");
 	cleanup();
 	assert.equal(cancelled, true);
+});
+
+test("sticky rows follow header height, switch background at the anchor and clean up", () => {
+	let intersect: (entries: { boundingClientRect: { top: number } }[]) => void =
+		() => {};
+	let resize: () => void = () => {};
+	let height = 80;
+	let offset = "";
+	let stuck = false;
+	let disconnected = 0;
+	const anchor = {};
+	const source = readFileSync("src/components/horizontal-scroll.ts", "utf8");
+	const setup = runInNewContext(
+		`${transpileModule(source.replaceAll("export function", "function"), { compilerOptions: {} }).outputText}\nsetupStickyRow`,
+		{
+			document: {
+				querySelector: () => ({ getBoundingClientRect: () => ({ height }) }),
+			},
+			ResizeObserver: class {
+				constructor(callback: () => void) {
+					resize = callback;
+				}
+				observe() {}
+				disconnect() {
+					disconnected++;
+				}
+			},
+			IntersectionObserver: class {
+				constructor(
+					callback: typeof intersect,
+					options: { rootMargin: string },
+				) {
+					intersect = callback;
+					assert.equal(options.rootMargin, `-${height}px 0px 0px 0px`);
+				}
+				observe(target: unknown) {
+					assert.equal(target, anchor);
+				}
+				disconnect() {
+					disconnected++;
+				}
+			},
+		},
+	);
+	const cleanup = setup({
+		previousElementSibling: anchor,
+		style: {
+			setProperty: (_name: string, value: string) => {
+				offset = value;
+			},
+		},
+		classList: {
+			toggle: (_name: string, value: boolean) => {
+				stuck = value;
+			},
+		},
+	});
+	assert.equal(offset, "80px");
+	intersect([{ boundingClientRect: { top: 79 } }]);
+	assert.equal(stuck, true);
+	intersect([{ boundingClientRect: { top: 100 } }]);
+	assert.equal(stuck, false);
+	height = 120;
+	resize();
+	assert.equal(offset, "120px");
+	cleanup();
+	assert.equal(disconnected, 3);
 });

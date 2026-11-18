@@ -1,8 +1,8 @@
-const DJ_SCROLL_PIXELS_PER_SECOND = 60;
-const DJ_SCROLL_EASE_SECONDS = 0.16;
+const SCROLL_PIXELS_PER_SECOND = 60;
+const SCROLL_EASE_SECONDS = 0.16;
 const NATIVE_SCROLL_IDLE_MS = 200;
 
-export function setupDJRowScroll(row: HTMLElement) {
+export function setupHorizontalScroll(row: HTMLElement) {
 	const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
 	const finePointer = matchMedia("(hover: hover) and (pointer: fine)");
 	const controller = new AbortController();
@@ -27,6 +27,9 @@ export function setupDJRowScroll(row: HTMLElement) {
 		window.addEventListener(
 			event,
 			() => {
+				if (!touching) {
+					return;
+				}
 				touching = false;
 				nativeScrollUntil = (previousTime ?? 0) + NATIVE_SCROLL_IDLE_MS;
 			},
@@ -85,13 +88,10 @@ export function setupDJRowScroll(row: HTMLElement) {
 			const target = hovered
 				? 0
 				: direction *
-					Math.min(
-						DJ_SCROLL_PIXELS_PER_SECOND,
-						distance / DJ_SCROLL_EASE_SECONDS,
-					);
+					Math.min(SCROLL_PIXELS_PER_SECOND, distance / SCROLL_EASE_SECONDS);
 			velocity +=
 				(target - velocity) *
-				(1 - Math.exp(-elapsed / (DJ_SCROLL_EASE_SECONDS * 1000)));
+				(1 - Math.exp(-elapsed / (SCROLL_EASE_SECONDS * 1000)));
 			if (hovered && Math.abs(velocity) < 0.5) {
 				velocity = 0;
 			}
@@ -115,5 +115,36 @@ export function setupDJRowScroll(row: HTMLElement) {
 	return () => {
 		cancelAnimationFrame(frame);
 		controller.abort();
+	};
+}
+
+export function setupStickyRow(row: HTMLElement) {
+	const anchor = row.previousElementSibling;
+	const header = document.querySelector<HTMLElement>("[data-site-header]");
+	let observer: IntersectionObserver | undefined;
+	function update() {
+		const top = header?.getBoundingClientRect().height ?? 0;
+		row.style.setProperty("--scroll-sticky-top", `${top}px`);
+		observer?.disconnect();
+		observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry) {
+					row.classList.toggle("is-stuck", entry.boundingClientRect.top < top);
+				}
+			},
+			{ rootMargin: `-${top}px 0px 0px 0px`, threshold: [0, 1] },
+		);
+		if (anchor) {
+			observer.observe(anchor);
+		}
+	}
+	const resize = new ResizeObserver(update);
+	if (header) {
+		resize.observe(header);
+	}
+	update();
+	return () => {
+		observer?.disconnect();
+		resize.disconnect();
 	};
 }

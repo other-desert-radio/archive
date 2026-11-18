@@ -17,7 +17,7 @@
   so cards can scroll through both gutters while preserving first/last alignment.
   Both reuse safe-area-aware `--page-inset-left` and `--page-inset-right` tokens.
   Rows normally stay within the centered main container on screens wider than
-  its cap. History and tag details use a full-width main: `.page-inset` keeps
+  its cap. History, DJ and tag details use a full-width main: `.page-inset` keeps
   tabs, headings and ordinary content capped, while scrolling rows reach both
   device edges. Their internal padding includes the centered content offset so
   end cards still align with the headings.
