@@ -267,9 +267,14 @@ for (const [distance, expected] of [[60, "compact"], [500, "fullscreen"]]) {
 		assert.equal(evaluate("getComputedStyle(document.querySelector('[aria-label=\"Collapse player\"] span')).display"), "none");
 		browser("mouse", "down");
 		browser("mouse", "move", "600", "600", "--duration", "800", "--steps", "20");
+		assert.equal(evaluate("getComputedStyle(document.querySelector('[data-miniplayer] button[class*=\"expand-handle\"] svg')).display"), "none", "Grabber stays hidden during downward dragging and settling");
 		browser("mouse", "up");
+		assert.equal(evaluate("getComputedStyle(document.querySelector('[data-miniplayer] button[class*=\"expand-handle\"] svg')).display"), "none", "Grabber stays hidden during downward dragging and settling");
+		browser("mouse", "move", "600", "820");
 		browser("wait", "600");
 		assert.equal(evaluate("document.querySelector('[data-miniplayer]').dataset.presentation"), "compact");
+		browser("mouse", "move", "600", "400");
+		browser("wait", "50");
 		assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame"), true);
 	}
 }

@@ -30,7 +30,7 @@ export default function ExpandHandle({
 		| undefined
 	>(undefined);
 	const animation = useRef<Animation | undefined>(undefined);
-	const [dragging, setDragging] = useState(false);
+	const [dragging, setDragging] = useState<"up" | "down">();
 
 	useEffect(() => {
 		const player = playerRef.current;
@@ -117,7 +117,7 @@ export default function ExpandHandle({
 			}
 			player.style.transform = `translateY(${fullscreen ? 0 : travel}px)`;
 			player.style.setProperty("--player-open", fullscreen ? "1" : "0");
-			setDragging(true);
+			setDragging(fullscreen ? "down" : "up");
 			if (!fullscreen) {
 				expand();
 			}
@@ -179,7 +179,7 @@ export default function ExpandHandle({
 				animation.current?.cancel();
 				animation.current = undefined;
 				player.removeAttribute("data-opening");
-				setDragging(false);
+				setDragging(undefined);
 			};
 		}
 
@@ -238,7 +238,7 @@ export default function ExpandHandle({
 			ref={handleRef}
 			type="button"
 			className={styles["expand-handle"]}
-			data-direction={fullscreen && !dragging ? "down" : "up"}
+			data-direction={dragging ?? (fullscreen ? "down" : "up")}
 			data-dragging={dragging || undefined}
 			aria-label={fullscreen && !dragging ? "Collapse player" : "Expand player"}
 			onClick={(event) => {
