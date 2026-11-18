@@ -142,7 +142,11 @@ const hydratedTags = hydrateTags(show, tags);
                   />
                 )}
                 <div class="dj-profile">
-                  <h2 id={`dj-${dj.id}`} class="dj-name">
+                  <h2
+                    id={`dj-${dj.id}`}
+                    class="dj-name"
+                    style={{ marginBottom: dj.bio?.trim() ? undefined : 0 }}
+                  >
                     {dj.title}
                   </h2>
                   <div class="dj-bio" set:html={dj.bio} />
