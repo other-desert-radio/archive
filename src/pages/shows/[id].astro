@@ -142,14 +142,10 @@ const hydratedTags = hydrateTags(show, tags);
                   />
                 )}
                 <div class="dj-profile">
-                  <h2
-                    id={`dj-${dj.id}`}
-                    class="dj-name"
-                    style={{ marginBottom: dj.bio?.trim() ? undefined : 0 }}
-                  >
+                  <h2 id={`dj-${dj.id}`} class="dj-name">
                     {dj.title}
                   </h2>
-                  <div class="dj-bio" set:html={dj.bio} />
+                  <div class="dj-bio" set:html={dj.bio?.trim()} />
                 </div>
               </a>
             ))
@@ -197,6 +193,10 @@ const hydratedTags = hydrateTags(show, tags);
     font-size: calc(var(--font-body) * 1.25);
     font-weight: 700;
     overflow-wrap: anywhere;
+  }
+
+  .dj-name:has(+ .dj-bio:empty) {
+    margin-bottom: 0;
   }
 
   .dj-profile {
