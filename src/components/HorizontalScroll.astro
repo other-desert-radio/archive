@@ -5,11 +5,11 @@ type Props = {
   gap?: string;
 };
 
-const { label, class: className, gap = "var(--space-xs)" } = Astro.props;
+const { label, class: className, gap = "var(--space-xs)", ...rest } = Astro.props;
 ---
 
 <div class="scroll-anchor" aria-hidden="true"></div>
-<div class:list={["horizontal-scroll", className]} style={{ gap }} role="region" aria-label={label} tabindex="0">
+<div {...rest} class:list={["horizontal-scroll", className]} style={{ gap }} role="region" aria-label={label} tabindex="0">
   <slot />
 </div>
 
