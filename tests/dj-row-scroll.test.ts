@@ -19,7 +19,7 @@ test("Horizontal scrolling eases, reverses, pauses for interaction and cleans up
 	});
 	const source = readFileSync("src/components/horizontal-scroll.ts", "utf8");
 	const setup = runInNewContext(
-		`${transpileModule(source.replace("export function", "function"), { compilerOptions: {} }).outputText}\nsetupHorizontalScroll`,
+		`${transpileModule(source.replaceAll("export function", "function"), { compilerOptions: {} }).outputText}\nsetupHorizontalScroll`,
 		{
 			AbortController,
 			window: events,
@@ -130,4 +130,71 @@ test("Horizontal scrolling eases, reverses, pauses for interaction and cleans up
 	assert.equal(row.scrollLeft, before, "no overflow stays still");
 	cleanup();
 	assert.equal(cancelled, true);
+});
+
+test("sticky rows follow header height, switch background at the anchor and clean up", () => {
+	let intersect: (entries: { boundingClientRect: { top: number } }[]) => void =
+		() => {};
+	let resize: () => void = () => {};
+	let height = 80;
+	let offset = "";
+	let stuck = false;
+	let disconnected = 0;
+	const anchor = {};
+	const source = readFileSync("src/components/horizontal-scroll.ts", "utf8");
+	const setup = runInNewContext(
+		`${transpileModule(source.replaceAll("export function", "function"), { compilerOptions: {} }).outputText}\nsetupStickyRow`,
+		{
+			document: {
+				querySelector: () => ({ getBoundingClientRect: () => ({ height }) }),
+			},
+			ResizeObserver: class {
+				constructor(callback: () => void) {
+					resize = callback;
+				}
+				observe() {}
+				disconnect() {
+					disconnected++;
+				}
+			},
+			IntersectionObserver: class {
+				constructor(
+					callback: typeof intersect,
+					options: { rootMargin: string },
+				) {
+					intersect = callback;
+					assert.equal(options.rootMargin, `-${height}px 0px 0px 0px`);
+				}
+				observe(target: unknown) {
+					assert.equal(target, anchor);
+				}
+				disconnect() {
+					disconnected++;
+				}
+			},
+		},
+	);
+	const cleanup = setup({
+		previousElementSibling: anchor,
+		style: {
+			setProperty: (_name: string, value: string) => {
+				offset = value;
+			},
+		},
+		classList: {
+			toggle: (_name: string, value: boolean) => {
+				stuck = value;
+			},
+		},
+	});
+	assert.equal(offset, "80px");
+	intersect([{ boundingClientRect: { top: 79 } }]);
+	assert.equal(stuck, true);
+	intersect([{ boundingClientRect: { top: 100 } }]);
+	assert.equal(stuck, false);
+	height = 120;
+	resize();
+	assert.equal(offset, "120px");
+	cleanup();
+	assert.equal(disconnected, 3);
 });

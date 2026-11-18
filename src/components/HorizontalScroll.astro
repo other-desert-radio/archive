@@ -7,12 +7,13 @@ type Props = {
 const { label, class: className } = Astro.props;
 ---
 
+<div class="scroll-anchor" aria-hidden="true"></div>
 <div class:list={["horizontal-scroll", className]} role="region" aria-label={label} tabindex="0">
   <slot />
 </div>
 
 <script>
-  import { setupHorizontalScroll } from "./horizontal-scroll";
+  import { setupHorizontalScroll, setupStickyRow } from "./horizontal-scroll";
 
   let cleanups: (() => void)[] = [];
   function cleanup() {
@@ -25,7 +26,14 @@ const { label, class: className } = Astro.props;
     cleanup();
     cleanups = Array.from(
       document.querySelectorAll<HTMLElement>(".horizontal-scroll"),
-      setupHorizontalScroll,
+      (row) => {
+        const stopScroll = setupHorizontalScroll(row);
+        const stopSticky = setupStickyRow(row);
+        return () => {
+          stopScroll();
+          stopSticky();
+        };
+      },
     );
   }
   setup();
@@ -34,7 +42,18 @@ const { label, class: className } = Astro.props;
 </script>
 
 <style>
+  .scroll-anchor {
+    height: 1px;
+    margin-bottom: -1px;
+    pointer-events: none;
+  }
+
   .horizontal-scroll {
+    position: sticky;
+    top: var(--scroll-sticky-top, 0px);
+    z-index: 2;
+    background-color: transparent;
+    transition: background-color 200ms ease;
     display: flex;
     flex-wrap: nowrap;
     gap: var(--space-xs);
@@ -43,6 +62,16 @@ const { label, class: className } = Astro.props;
     padding-bottom: var(--space-sm);
     scrollbar-width: thin;
     scrollbar-color: transparent transparent;
+  }
+
+  .horizontal-scroll.is-stuck {
+    background-color: white;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .horizontal-scroll {
+      transition: none;
+    }
   }
 
   .horizontal-scroll > :global(*) {

@@ -114,3 +114,34 @@ export function setupHorizontalScroll(row: HTMLElement) {
 		controller.abort();
 	};
 }
+
+export function setupStickyRow(row: HTMLElement) {
+	const anchor = row.previousElementSibling;
+	const header = document.querySelector<HTMLElement>("[data-site-header]");
+	let observer: IntersectionObserver | undefined;
+	function update() {
+		const top = header?.getBoundingClientRect().height ?? 0;
+		row.style.setProperty("--scroll-sticky-top", `${top}px`);
+		observer?.disconnect();
+		observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry) {
+					row.classList.toggle("is-stuck", entry.boundingClientRect.top < top);
+				}
+			},
+			{ rootMargin: `-${top}px 0px 0px 0px`, threshold: [0, 1] },
+		);
+		if (anchor) {
+			observer.observe(anchor);
+		}
+	}
+	const resize = new ResizeObserver(update);
+	if (header) {
+		resize.observe(header);
+	}
+	update();
+	return () => {
+		observer?.disconnect();
+		resize.disconnect();
+	};
+}

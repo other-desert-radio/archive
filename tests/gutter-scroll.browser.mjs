@@ -60,6 +60,20 @@ function verifyRow(selector, heading, nested = false, fullWidth = false) {
 	near(layout.cardWidth, oldWidth, "unchanged card width");
 }
 
+function verifyStickyRow(selector) {
+	const layout = evaluate(`(async () => {
+		const row = document.querySelector(${JSON.stringify(selector)});
+		window.scrollTo(0, row.getBoundingClientRect().top + scrollY + 200);
+		await new Promise(resolve => setTimeout(resolve, 350));
+		return {top:row.getBoundingClientRect().top,
+			header:document.querySelector('[data-site-header]').getBoundingClientRect().bottom,
+			background:getComputedStyle(row).backgroundColor};
+	})()`);
+	near(layout.top, layout.header, "row sticks below navigation");
+	assert.equal(layout.background, "rgb(255, 255, 255)", "stuck row has a white background");
+	evaluate("window.scrollTo(0, 0); true");
+}
+
 try {
 	browser("open", `${base}/history`);
 	browser("wait", '[aria-label="View playlist Liked Shows"]');
@@ -93,6 +107,7 @@ try {
 		browser("set", "viewport", String(width), "1000");
         verifyRow('.gutter-scroll', '#tag-djs-heading', false, true);
 	}
+	verifyStickyRow(".dj-row");
 	// Focus must bring the final link into the scroll viewport.
 	evaluate(`document.querySelector('.dj-row').lastElementChild.focus(); true`);
 	assert.equal(evaluate(`(() => {
@@ -117,6 +132,7 @@ try {
 		assert.ok(tags.scrolled > 0, "tags scroll horizontally");
 		assert.ok(tags.pageWidth <= tags.viewport, "tags do not overflow the document");
 	}
+	verifyStickyRow(".dj-tags");
     console.log("Scroll row boundaries, alignment, focus and single-line DJ tags passed at six viewport widths.");
 } finally {
 	browser("close");
