@@ -83,13 +83,14 @@ The fallback's fully expanded endpoint clears color transitions immediately, and
 settling frames retain the fast-scroll bypass to avoid a delayed fade on iOS.
 The text and active underline switch to white at 50% opacity so they
 remain fully opaque and readable. Reduced motion shows static compact
-tabs immediately. The sticky header reserves the expanded tab height to keep
+tabs immediately with half the usual reserved clearance beneath the strip. The sticky header reserves the expanded tab height to keep
 document geometry stable and lets clicks through the transparent remainder.
 Compression also reduces title-row bottom padding to leave approximately `1.5rem`
 between the title text and compact tab text when the desktop player row is absent.
 Tune this with `--tabs-title-gap` in `Navigation.astro`.
 Switching categories from a compact strip starts the destination at the
-compression threshold and seeds compact styling before the swap. Short compact
+compression threshold and seeds compact styling before the swap. Reduced-motion
+category navigation starts at the top because its tabs are already static. Short compact
 entries reserve one compression distance beyond the viewport so History can
 retain that state and still scroll back to expanded. Astro history state records
 the compact entry; range reservation runs before reload scroll restoration.

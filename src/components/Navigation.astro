@@ -71,7 +71,7 @@ const title = (() => {
 </header>
 
 <script>
-  import tags from "../../public/resources/tags.json";
+  import { stores } from "../stores/stores";
   import { getTagReturn } from "../utils/tag-return";
 
   // Publishes the bar's full height (including bottom safe-area padding) as
@@ -110,17 +110,30 @@ const title = (() => {
   initializeMiniplayerHeight();
   document.addEventListener("astro:page-load", initializeMiniplayerHeight);
 
-  function updateTagReturn() {
+  async function updateTagReturn() {
     const link = document.querySelector<HTMLAnchorElement>("[data-tag-return]");
     const label = link?.querySelector("b");
     if (!link || !label) {
       return;
     }
 
+    if (!new URLSearchParams(location.search).has("fromTag")) {
+      return;
+    }
+    try {
+      await stores.initialize();
+    } catch (error) {
+      console.error("[Navigation] Cannot load return tag", error);
+      return;
+    }
+    if (!link.isConnected) {
+      return;
+    }
+
     const destination = getTagReturn(
       location.search,
       import.meta.env.BASE_URL,
-      tags.data,
+      stores.tagStore.getAll(),
     );
     const href = destination?.href ?? link.dataset["returnHref"];
     const text = destination?.label ?? link.dataset["returnLabel"];
