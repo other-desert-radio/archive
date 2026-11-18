@@ -148,23 +148,37 @@ export default function PlaylistModal({
 						disabled={saving || status !== "ready"}
 					>
 						{playlists.map((playlist) => (
-							<label key={playlist.id}>
-								<input
-									type="checkbox"
-									name="playlists"
-									value={playlist.id}
-									aria-label={playlist.title}
-									checked={selectedIds.includes(playlist.id)}
-									onChange={(event) =>
-										setSelected(
-											event.currentTarget.checked
-												? [...selectedIds, playlist.id]
-												: selectedIds.filter((id) => id !== playlist.id),
-										)
-									}
-								/>
-								{playlist.title}
-							</label>
+							<div key={playlist.id} className={styles["playlist-row"]}>
+								<label>
+									<input
+										type="checkbox"
+										name="playlists"
+										value={playlist.id}
+										aria-label={playlist.title}
+										checked={selectedIds.includes(playlist.id)}
+										onChange={(event) =>
+											setSelected(
+												event.currentTarget.checked
+													? [...selectedIds, playlist.id]
+													: selectedIds.filter((id) => id !== playlist.id),
+											)
+										}
+									/>
+									{playlist.title}
+								</label>
+								<a
+									className={styles["playlist-link"]}
+									href={`${getBasePath()}/playlists/?id=${encodeURIComponent(playlist.id)}`}
+									target="_blank"
+									rel="noopener noreferrer"
+									aria-label={`Open playlist ${playlist.title} in a new tab`}
+								>
+									<svg viewBox="0 0 24 24" fill="none">
+										<title>Open playlist in a new tab</title>
+										<path d="M7 17 17 7M7 7h10v10" />
+									</svg>
+								</a>
+							</div>
 						))}
 					</fieldset>
 
