@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import type { PlaybackRecord } from "../../stores/playback/types";
 import type { PlaylistSave } from "../../stores/playlists/types";
 import type { Show } from "../../utils/fetch-shows";
@@ -18,8 +19,6 @@ type Props = {
 
 /**
  * Renders the compact DJ links associated with a show.
- *
- * TODO: dj.image_tiny ?
  */
 const renderDJs = (djs: Show["djs"], base: string) =>
 	djs.map((dj) => (
@@ -29,15 +28,6 @@ const renderDJs = (djs: Show["djs"], base: string) =>
 			className={styles["dj-container"]}
 			aria-label={`View ${dj.title}`}
 		>
-			{dj.image_small && (
-				<img
-					className={`${styles["dj-image"]} image-border-secondary`}
-					src={`${base}/${dj.image_small}`}
-					alt={dj.title}
-					loading="lazy"
-					decoding="async"
-				/>
-			)}
 			<span className={styles["dj-name-title"]}>{dj.title}</span>
 		</a>
 	));
@@ -83,7 +73,9 @@ export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
 				<time className={styles["show-date"]} dateTime={show.date}>
 					{formatDate(show.date)}
 				</time>
-				<TagContainer tagIds={show.tagIds} tags={tags} size="large" />
+				{show.tagIds.length > 0 && (
+					<TagContainer tagIds={show.tagIds} tags={tags} size="large" />
+				)}
 				{renderDJs(show.djs, detailBase)}
 				{playlistSaves.length > 0 && (
 					<div className={styles["playlist-save"]}>
@@ -118,5 +110,3 @@ export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
 		</article>
 	);
 }
-
-import { useEffect, useRef, useState } from "react";
