@@ -18,6 +18,7 @@ export default function FullscreenNav({ base, onClose }: Props): ReactElement {
 				onClick={onClose}
 			>
 				<svg
+					className="close-icon"
 					viewBox="0 0 24 24"
 					fill="none"
 					stroke="currentColor"

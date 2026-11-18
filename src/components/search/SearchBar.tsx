@@ -25,6 +25,7 @@ const emptyHistory: readonly SearchEntry[] = [];
 function Cross() {
 	return (
 		<svg
+			className="close-icon"
 			width="20"
 			height="20"
 			viewBox="0 0 24 24"

@@ -127,6 +127,7 @@ export default function PlaylistModal({
 							onClick={requestClose}
 						>
 							<svg
+								className="close-icon"
 								viewBox="0 0 24 24"
 								fill="none"
 								stroke="currentColor"
