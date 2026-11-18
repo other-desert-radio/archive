@@ -63,9 +63,12 @@
 }
 
 .widget-slot {
-	flex: 0 1 40rem;
+	flex: 0 1 30rem;
 	margin-inline-start: auto;
 	min-width: 0;
+	/** HACKy!!!! to remove mixcloud's white border */
+	outline: 1px solid var(--miniplayer-background);
+	outline-offset: -1px;
 }
 
 .progress-track {
