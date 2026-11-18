@@ -72,6 +72,10 @@
 	resize: vertical;
 }
 
+.modal textarea:focus {
+	outline: none;
+}
+
 .header {
 	display: flex;
 	align-items: center;

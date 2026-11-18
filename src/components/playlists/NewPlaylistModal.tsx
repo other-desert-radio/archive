@@ -95,7 +95,7 @@ export default function NewPlaylistModal({
 						name="title"
 						autoComplete="off"
 						aria-label="Playlist name"
-						placeholder="name"
+						placeholder="Playlist name"
 						required
 						value={title}
 						disabled={saving}
