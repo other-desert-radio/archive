@@ -159,7 +159,7 @@
 		background: var(--miniplayer-background);
 		color: inherit;
 		font-size: var(--font-body);
-		touch-action: manipulation;
+		touch-action: none;
 	}
 
 	.widget-slot {
@@ -476,10 +476,11 @@
 	color: inherit;
 	cursor: grab;
 	touch-action: none;
-	opacity: 0;
-	transform: scaleY(0.15);
+	transform: scaleY(0);
 	transform-origin: bottom;
-	transition: left 100ms ease-out;
+	transition:
+		transform 220ms ease-out,
+		left 100ms ease-out;
 }
 
 .expand-handle svg {
@@ -500,14 +501,12 @@
 
 @media (hover: hover) and (pointer: fine) {
 	.miniplayer[data-presentation="compact"]:hover > .expand-handle {
-		opacity: 1;
 		transform: scaleY(1);
 	}
 }
 
 .expand-handle:focus-visible,
 .expand-handle[data-dragging] {
-	opacity: 1;
 	transform: scaleY(1);
 }
 
@@ -561,4 +560,27 @@
 	right: 3.5rem;
 	opacity: calc(1 - var(--player-open));
 	pointer-events: none;
+}
+
+@media (max-width: 600px) {
+	.expand-handle,
+	.expand-handle[data-direction="down"] {
+		width: 0;
+		height: 0;
+		pointer-events: none;
+	}
+
+	.expand-handle svg,
+	.expand-handle span {
+		display: none;
+	}
+
+	.miniplayer[data-presentation="fullscreen"] .mobile-expand {
+		display: none;
+	}
+
+	.miniplayer[data-presentation="fullscreen"][data-opening] .mobile-expand {
+		display: flex;
+		z-index: 2;
+	}
 }

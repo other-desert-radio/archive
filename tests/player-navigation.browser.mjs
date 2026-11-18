@@ -261,7 +261,7 @@ for (const [distance, expected] of [[60, "compact"], [500, "fullscreen"]]) {
 	if (expected === "fullscreen") {
 		browser("mouse", "move", "600", "400");
 		browser("wait", "250");
-		assert.equal(evaluate("getComputedStyle(document.querySelector('[aria-label=\"Collapse player\"]')).opacity"), "0");
+		assert.equal(evaluate("getComputedStyle(document.querySelector('[aria-label=\"Collapse player\"] svg')).display"), "none");
 		browser("mouse", "move", "600", "30");
 		browser("wait", "250");
 		assert.equal(evaluate("getComputedStyle(document.querySelector('[aria-label=\"Collapse player\"] span')).display"), "none");
@@ -271,6 +271,28 @@ for (const [distance, expected] of [[60, "compact"], [500, "fullscreen"]]) {
 		browser("wait", "600");
 		assert.equal(evaluate("document.querySelector('[data-miniplayer]').dataset.presentation"), "compact");
 		assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame"), true);
+	}
+}
+// The visible mobile expand button shares pointer capture and settling behavior.
+browser("set", "viewport", "390", "844");
+for (const [distance, expected] of [[0, "fullscreen"], [60, "compact"], [500, "fullscreen"]]) {
+	const button = evaluate(`(() => {
+		const rect = document.querySelector('[data-player-drag-handle]').getBoundingClientRect();
+		return { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 };
+	})()`);
+	browser("mouse", "move", String(button.x), String(button.y));
+	browser("mouse", "down");
+	assert.equal(evaluate("getComputedStyle(document.querySelector('[data-player-drag-handle]')).display"), "flex");
+	assert.equal(evaluate("document.querySelector('[data-player-drag-handle]').textContent.trim()"), "expand ↑");
+	browser("mouse", "move", String(button.x), String(button.y - distance), "--duration", "800", "--steps", "20");
+	browser("wait", "150");
+	browser("mouse", "up");
+	browser("wait", "600");
+	assert.equal(evaluate("document.querySelector('[data-miniplayer]').dataset.presentation"), expected);
+	assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame"), true);
+	if (expected === "fullscreen") {
+		browser("click", '[data-miniplayer] button[aria-label="Close player"]');
+		browser("wait", '[data-presentation="compact"]');
 	}
 }
 for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [601, 844], [750, 844], [840, 782], [1440, 844], [2041, 1352], [2560, 844]]) {
@@ -439,17 +461,30 @@ for (const width of [390, 1440]) {
 		browser("wait", "button[aria-label^='Play ']");
 		playShowWithDetails();
 		browser("wait", "[data-miniplayer] iframe");
+		evaluate(`(() => {
+			Object.defineProperty(document.documentElement, 'moveBefore', { value: undefined, configurable: true });
+			window.scrollTo(0, 200);
+			return true;
+		})()`);
 		const expand = width <= 600
 			? '[data-miniplayer] > button[aria-label="Expand player"]'
 			: '[data-miniplayer] div > button[aria-label="Expand player"]';
 		browser("click", expand);
 		browser("wait", '[data-presentation="fullscreen"]');
-	browser("wait", "550");
+		browser("wait", "550");
 		const destination = evaluate(`new URL(document.querySelector(${JSON.stringify(selector)}).href).pathname`);
 		markDocument();
 		// Exercise bubbling from nested TagView/DJ content.
-		evaluate(`(() => { const link = document.querySelector(${JSON.stringify(selector)}); (link.lastElementChild ?? link).click(); return true; })()`);
+		assert.equal(evaluate(`(() => {
+			const link = document.querySelector(${JSON.stringify(selector)});
+			(link.lastElementChild ?? link).click();
+			return document.querySelector('[data-miniplayer]').dataset.presentation === 'compact'
+				&& document.body.style.position !== 'fixed'
+				&& getComputedStyle(document.documentElement).overflow !== 'hidden';
+		})()`), true, "Navigation must synchronously close the player and release scroll lock");
 		verifyClientNavigation(destination);
+		browser("wait", "600");
+		assert.equal(evaluate("window.scrollY"), 0, "Dismiss cleanup must not restore source scroll on the destination");
 	}
 }
 console.log("Fullscreen tag, DJ and show links preserve the document and playback and release scroll lock.");

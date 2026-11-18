@@ -26,7 +26,7 @@ export function usePlayerPresentation(): PlayerPresentationState {
 	const [compactHeight, setCompactHeight] = useState<number>();
 	const playerRef = useRef<HTMLDivElement>(null);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (presentation !== "fullscreen") {
 			return;
 		}
@@ -56,9 +56,14 @@ export function usePlayerPresentation(): PlayerPresentationState {
 				easing: "cubic-bezier(.2,.8,.2,1)",
 			},
 		);
+		transition.current.onfinish = () => player.removeAttribute("data-opening");
 	}, [presentation, compactHeight]);
 
 	function expand() {
+		if (presentation === "fullscreen") {
+			return;
+		}
+		playerRef.current?.setAttribute("data-opening", "");
 		setCompactHeight(playerRef.current?.getBoundingClientRect().height);
 		setPresentation("fullscreen");
 	}
@@ -67,6 +72,7 @@ export function usePlayerPresentation(): PlayerPresentationState {
 		// Commit compact layout before removing the animation that holds fullscreen offscreen.
 		flushSync(() => setPresentation("compact"));
 		transition.current?.cancel();
+		playerRef.current?.removeAttribute("data-opening");
 	}
 
 	function close() {

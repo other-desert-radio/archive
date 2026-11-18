@@ -7,12 +7,16 @@ type Props = {
 };
 
 // Both controls delegate presentation changes to the parent hook.
-export function MobileExpand({ hidden, onExpand }: Props): ReactElement {
+export function MobileExpand({
+	onExpand,
+}: {
+	onExpand: () => void;
+}): ReactElement {
 	return (
 		<button
 			type="button"
 			className={styles["mobile-expand"]}
-			hidden={hidden}
+			data-player-drag-handle
 			onClick={onExpand}
 			aria-label="Expand player"
 		>

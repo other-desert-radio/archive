@@ -48,7 +48,7 @@ the available width underneath alongside the desktop controls on the right.
 
 At 600px and below, metadata and desktop actions are hidden. A borderless,
 content-width “expand ↑” button sits immediately above the widget at its right
-edge, without a full-width background strip. The heart remains unwired.
+edge, without a full-width background strip. The button supports tap-to-expand and upward dragging with inertia. It stays labeled expand throughout the upward movement and disappears once fullscreen is reached. At phone widths it is the only upward drag target; the mound is hidden. Fullscreen has no mobile collapse button; use X to dismiss. The heart remains unwired.
 
 Safe-area padding stays inside the active bar. A border-box ResizeObserver
 publishes its height as `--miniplayer-height`; BaseLayout reserves that height in
@@ -61,7 +61,7 @@ The compact player also has a curved hover mound that follows the mouse, with an
 
 Both expand controls switch local presentation state to fullscreen; the close
 button restores compact presentation. Activating fullscreen show, tag or DJ
-links closes fullscreen and releases scroll locking before client navigation while playback continues. The same player container becomes fixed
+links uses the immediate-close path and releases scroll locking synchronously before client navigation while playback continues. The X button retains its animated dismissal. The same player container becomes fixed
 and fills the viewport with the miniplayer background, a station header and a close SVG.
 Compact metadata and actions are hidden. The existing iframe stays mounted in
 its original position in the React tree: at the viewport bottom on mobile and

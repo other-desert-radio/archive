@@ -62,7 +62,16 @@ export default function ExpandHandle({
 			if (!(target instanceof Element) || !handle) {
 				return;
 			}
-			if (!handle.contains(target)) {
+			if (
+				window.matchMedia("(max-width: 600px)").matches &&
+				!target.closest("[data-player-drag-handle]")
+			) {
+				return;
+			}
+			if (
+				!handle.contains(target) &&
+				!target.closest("[data-player-drag-handle]")
+			) {
 				if (
 					fullscreen ||
 					target.closest(
@@ -100,7 +109,12 @@ export default function ExpandHandle({
 				travel,
 				closing: fullscreen,
 			};
-			handleRef.current?.setPointerCapture(event.pointerId);
+			(
+				target.closest<HTMLElement>("[data-player-drag-handle]") ?? handle
+			).setPointerCapture(event.pointerId);
+			if (!fullscreen) {
+				player.setAttribute("data-opening", "");
+			}
 			player.style.transform = `translateY(${fullscreen ? 0 : travel}px)`;
 			player.style.setProperty("--player-open", fullscreen ? "1" : "0");
 			setDragging(true);
@@ -114,53 +128,110 @@ export default function ExpandHandle({
 
 	useEffect(() => () => animation.current?.cancel(), []);
 
-	function finish(cancelled: boolean) {
-		const gesture = drag.current;
+	useEffect(() => {
 		const player = playerRef.current;
-		if (!gesture || !player) {
+		if (!player) {
 			return;
 		}
-		drag.current = undefined;
-		const velocity =
-			performance.now() - gesture.time < 100 ? gesture.velocity : 0;
-		const commit =
-			!cancelled &&
-			(gesture.distance < 5 ||
-				gesture.distance + velocity * 240 > gesture.travel * 0.35);
-		const open = gesture.closing ? !commit : commit;
-		const offset = gesture.closing
-			? gesture.distance
-			: gesture.travel - gesture.distance;
-		animation.current = player.animate(
-			[
-				{
-					transform: `translateY(${offset}px)`,
-					"--player-open": String(1 - offset / gesture.travel),
-				},
-				{
-					transform: `translateY(${open ? 0 : gesture.travel}px)`,
-					"--player-open": open ? "1" : "0",
-				},
-			],
-			{
-				duration: matchMedia("(prefers-reduced-motion: reduce)").matches
-					? 0
-					: 480,
-				easing: "cubic-bezier(.2,.8,.2,1)",
-				fill: "forwards",
-			},
-		);
-		animation.current.onfinish = () => {
-			if (!open) {
-				close();
+
+		function finish(cancelled: boolean) {
+			const gesture = drag.current;
+			const player = playerRef.current;
+			if (!gesture || !player) {
+				return;
 			}
-			player.style.removeProperty("transform");
-			player.style.removeProperty("--player-open");
-			animation.current?.cancel();
-			animation.current = undefined;
-			setDragging(false);
+			drag.current = undefined;
+			const velocity =
+				performance.now() - gesture.time < 100 ? gesture.velocity : 0;
+			const commit =
+				!cancelled &&
+				(gesture.distance < 5 ||
+					gesture.distance + velocity * 240 > gesture.travel * 0.35);
+			const open = gesture.closing ? !commit : commit;
+			const offset = gesture.closing
+				? gesture.distance
+				: gesture.travel - gesture.distance;
+			animation.current = player.animate(
+				[
+					{
+						transform: `translateY(${offset}px)`,
+						"--player-open": String(1 - offset / gesture.travel),
+					},
+					{
+						transform: `translateY(${open ? 0 : gesture.travel}px)`,
+						"--player-open": open ? "1" : "0",
+					},
+				],
+				{
+					duration: matchMedia("(prefers-reduced-motion: reduce)").matches
+						? 0
+						: 480,
+					easing: "cubic-bezier(.2,.8,.2,1)",
+					fill: "forwards",
+				},
+			);
+			animation.current.onfinish = () => {
+				if (!open) {
+					close();
+				}
+				player.style.removeProperty("transform");
+				player.style.removeProperty("--player-open");
+				animation.current?.cancel();
+				animation.current = undefined;
+				player.removeAttribute("data-opening");
+				setDragging(false);
+			};
+		}
+
+		function move(event: PointerEvent) {
+			const gesture = drag.current;
+			const player = playerRef.current;
+			if (!gesture || !player) {
+				return;
+			}
+			const now = performance.now();
+			gesture.velocity =
+				(gesture.closing
+					? event.clientY - gesture.last
+					: gesture.last - event.clientY) / Math.max(1, now - gesture.time);
+			gesture.last = event.clientY;
+			gesture.time = now;
+			gesture.distance = Math.max(
+				0,
+				Math.min(
+					gesture.travel,
+					gesture.closing
+						? event.clientY - gesture.start
+						: gesture.start - event.clientY,
+				),
+			);
+			player.style.transform = `translateY(${gesture.closing ? gesture.distance : gesture.travel - gesture.distance}px)`;
+			player.style.setProperty(
+				"--player-open",
+				String(
+					gesture.closing
+						? 1 - gesture.distance / gesture.travel
+						: gesture.distance / gesture.travel,
+				),
+			);
+		}
+		function release() {
+			finish(false);
+		}
+		function cancel() {
+			finish(true);
+		}
+		player.addEventListener("pointermove", move);
+		player.addEventListener("pointerup", release);
+		player.addEventListener("pointercancel", cancel);
+		player.addEventListener("lostpointercapture", cancel);
+		return () => {
+			player.removeEventListener("pointermove", move);
+			player.removeEventListener("pointerup", release);
+			player.removeEventListener("pointercancel", cancel);
+			player.removeEventListener("lostpointercapture", cancel);
 		};
-	}
+	}, [playerRef, close]);
 
 	return (
 		<button
@@ -179,41 +250,6 @@ export default function ExpandHandle({
 					}
 				}
 			}}
-			onPointerMove={(event) => {
-				const gesture = drag.current;
-				const player = playerRef.current;
-				if (!gesture || !player) {
-					return;
-				}
-				const now = performance.now();
-				gesture.velocity =
-					(gesture.closing
-						? event.clientY - gesture.last
-						: gesture.last - event.clientY) / Math.max(1, now - gesture.time);
-				gesture.last = event.clientY;
-				gesture.time = now;
-				gesture.distance = Math.max(
-					0,
-					Math.min(
-						gesture.travel,
-						gesture.closing
-							? event.clientY - gesture.start
-							: gesture.start - event.clientY,
-					),
-				);
-				player.style.transform = `translateY(${gesture.closing ? gesture.distance : gesture.travel - gesture.distance}px)`;
-				player.style.setProperty(
-					"--player-open",
-					String(
-						gesture.closing
-							? 1 - gesture.distance / gesture.travel
-							: gesture.distance / gesture.travel,
-					),
-				);
-			}}
-			onPointerUp={() => finish(false)}
-			onPointerCancel={() => finish(true)}
-			onLostPointerCapture={() => finish(true)}
 		>
 			<svg viewBox="0 0 320 32" preserveAspectRatio="none" aria-hidden="true">
 				<path d="M0 32 C70 32 100 2 160 2 S250 32 320 32Z" />

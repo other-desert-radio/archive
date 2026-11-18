@@ -71,10 +71,7 @@ function ActiveMiniplayer({
 						{presentation === "fullscreen" && (
 							<FullscreenNav base={base} onClose={close} />
 						)}
-						<MobileExpand
-							hidden={presentation === "fullscreen"}
-							onExpand={expand}
-						/>
+						<MobileExpand onExpand={expand} />
 						<ExpandHandle
 							playerRef={playerRef}
 							compactHeight={compactHeight}
@@ -106,7 +103,7 @@ function ActiveMiniplayer({
 											className={styles["fullscreen-title"]}
 											href={`${base}/shows/${track.show.id}`}
 											aria-label={`View ${track.show.title}`}
-											onClick={close}
+											onClick={closeImmediately}
 										>
 											{track.show.title}
 										</a>
@@ -116,7 +113,7 @@ function ActiveMiniplayer({
 											show={track.show}
 											base={base}
 											tags={tags}
-											onNavigate={close}
+											onNavigate={closeImmediately}
 										/>
 									)}
 								</div>
@@ -148,7 +145,7 @@ function ActiveMiniplayer({
 											<FullscreenDJs
 												show={track.show}
 												base={base}
-												onNavigate={close}
+												onNavigate={closeImmediately}
 											/>
 										)}
 									</div>
