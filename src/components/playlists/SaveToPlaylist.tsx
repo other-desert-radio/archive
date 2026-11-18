@@ -11,6 +11,9 @@ export default function SaveToPlaylist({ showId }: { showId: number }) {
 		playlist.shows.some((entry) => entry.showId === showId),
 	);
 	const isSaved = savedPlaylists.length > 0;
+	const note = savedPlaylists
+		.flatMap((playlist) => playlist.shows)
+		.find((entry) => entry.showId === showId && entry.note)?.note;
 	return (
 		<>
 			{status === "loading" ? (
@@ -36,6 +39,7 @@ export default function SaveToPlaylist({ showId }: { showId: number }) {
 							? savedPlaylists.map((playlist) => playlist.title).join(", ")
 							: "Save to Playlist"}
 					</span>
+					{note && <span className={styles["note"]}>{note}</span>}
 				</button>
 			)}
 			<PlaylistModal key={showId} ref={modal} showId={showId} />

@@ -97,6 +97,16 @@ try {
 	})()`);
 	const savedTitles = `Liked Shows, ${longTitle}`;
 	await wait(`document.querySelector('${button("Save to Playlist")}').textContent === ${JSON.stringify(savedTitles)}`);
+	const sharedNote = "I liked this song\n" + "smooth".repeat(60);
+	await evaluate(`(async () => {
+		const store = playlistFixture.stores.playlistStore;
+		for (const playlist of store.getAll()) {
+			await store.setNote({ playlistId: playlist.id, showId: 42, note: ${JSON.stringify(sharedNote)} });
+		}
+		return true;
+	})()`);
+	await wait(`document.querySelector('${button("Save to Playlist")}').textContent === ${JSON.stringify(savedTitles + sharedNote)}`);
+	assert.equal(await evaluate(`document.querySelector('${button("Save to Playlist")} time')`), null);
 	for (const width of [320, 332, 750, 1440]) {
 		await browser("set", "viewport", String(width), "900");
 		assert.equal(await evaluate(`(() => {
@@ -106,11 +116,13 @@ try {
 	}
 	await browser("click", button("Save to Playlist"));
 	assert.equal(await evaluate(`Array.from(document.querySelectorAll('${saveDialog} input[name="playlists"]')).filter(input => input.checked).length`), 2);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} textarea').value`), sharedNote);
 	await browser("press", "Escape");
 	await wait(`!document.querySelector('${saveDialog}')`);
 	await evaluate(`(async () => {
 		const store = playlistFixture.stores.playlistStore;
 		await store.delete({ playlistId: store.getAll().find(p => p.type === 'user').id });
+		await store.setNote({ playlistId: store.getAll().find(p => p.type === 'liked').id, showId: 42, note: undefined });
 		return true;
 	})()`);
 	await wait(`document.querySelector('${button("Save to Playlist")}').textContent === 'Liked Shows'`);
@@ -198,6 +210,7 @@ try {
 	assert.equal(await evaluate('playlistFixture.stores.playlistStore.getAll().find(p => p.title === "Road trip").shows.length'), 0);
 	await browser("click", `${saveDialog} ${button("Save playlist")}`);
 	await wait(`!document.querySelector('${saveDialog}')`);
+	await wait(`document.querySelector('${button("Save to Playlist")}').textContent === 'Liked Shows, Road tripKeep my note'`);
 	await browser("reload");
 	await browser("click", button("Save to Playlist"));
 	await wait(`!!document.querySelector('${saveDialog} input[aria-label="Road trip"]')`);

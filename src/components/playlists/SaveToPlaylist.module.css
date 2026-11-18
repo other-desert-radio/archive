@@ -8,7 +8,8 @@
 }
 
 .save-button {
-	display: inline-flex;
+	display: inline-grid;
+	grid-template-columns: auto minmax(0, 1fr);
 	align-self: flex-start;
 	align-items: center;
 	gap: var(--space-sm);
@@ -53,4 +54,12 @@
 .saved span {
 	min-width: 0;
 	overflow-wrap: anywhere;
+}
+
+.note {
+	grid-column: 1 / -1;
+	border-top: var(--border-secondary) solid currentColor;
+	padding-top: var(--space-sm);
+	font-weight: 400;
+	white-space: pre-wrap;
 }
