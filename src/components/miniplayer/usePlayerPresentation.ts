@@ -1,4 +1,11 @@
-import { type RefObject, useEffect, useRef, useState } from "react";
+import {
+	type RefObject,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react";
+import { flushSync } from "react-dom";
 import { lockBackgroundScroll } from "./scroll-lock";
 
 export type PlayerPresentation = "compact" | "fullscreen";
@@ -9,6 +16,7 @@ type PlayerPresentationState = {
 	playerRef: RefObject<HTMLDivElement | null>;
 	expand: () => void;
 	close: () => void;
+	closeImmediately: () => void;
 };
 
 // Owns presentation, compact-height measurement, and scroll-lock lifecycle.
@@ -26,14 +34,77 @@ export function usePlayerPresentation(): PlayerPresentationState {
 		return lockBackgroundScroll();
 	}, [presentation]);
 
+	const transition = useRef<Animation | undefined>(undefined);
+	useEffect(() => () => transition.current?.cancel(), []);
+	useLayoutEffect(() => {
+		const player = playerRef.current;
+		if (presentation !== "fullscreen" || !player || player.style.transform) {
+			return;
+		}
+		transition.current = player.animate(
+			[
+				{
+					transform: `translateY(${window.innerHeight - (compactHeight ?? 0)}px)`,
+					"--player-open": "0",
+				},
+				{ transform: "translateY(0)", "--player-open": "1" },
+			],
+			{
+				duration: matchMedia("(prefers-reduced-motion: reduce)").matches
+					? 0
+					: 480,
+				easing: "cubic-bezier(.2,.8,.2,1)",
+			},
+		);
+	}, [presentation, compactHeight]);
+
 	function expand() {
 		setCompactHeight(playerRef.current?.getBoundingClientRect().height);
 		setPresentation("fullscreen");
 	}
 
-	function close() {
-		setPresentation("compact");
+	function closeImmediately() {
+		// Commit compact layout before removing the animation that holds fullscreen offscreen.
+		flushSync(() => setPresentation("compact"));
+		transition.current?.cancel();
 	}
 
-	return { presentation, compactHeight, playerRef, expand, close };
+	function close() {
+		const player = playerRef.current;
+		if (!player) {
+			closeImmediately();
+			return;
+		}
+		transition.current?.cancel();
+		transition.current = player.animate(
+			[
+				{
+					transform: getComputedStyle(player).transform,
+					"--player-open":
+						getComputedStyle(player).getPropertyValue("--player-open"),
+				},
+				{
+					transform: `translateY(${window.innerHeight - (compactHeight ?? 0)}px)`,
+					"--player-open": "0",
+				},
+			],
+			{
+				duration: matchMedia("(prefers-reduced-motion: reduce)").matches
+					? 0
+					: 480,
+				easing: "cubic-bezier(.2,.8,.2,1)",
+				fill: "forwards",
+			},
+		);
+		transition.current.onfinish = closeImmediately;
+	}
+
+	return {
+		presentation,
+		compactHeight,
+		playerRef,
+		expand,
+		close,
+		closeImmediately,
+	};
 }

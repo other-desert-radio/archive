@@ -179,7 +179,7 @@
 	padding-left: env(safe-area-inset-left);
 	padding-right: env(safe-area-inset-right);
 	gap: 0;
-	background: black;
+	background: var(--miniplayer-background);
 	color: white;
 }
 
@@ -189,6 +189,8 @@
 }
 
 .fullscreen-header > span {
+	opacity: var(--player-open);
+	pointer-events: none;
 	font-weight: 700;
 }
 
@@ -452,4 +454,111 @@
 
 .player-shell {
 	min-width: 0;
+}
+
+.miniplayer[data-presentation="compact"] {
+	position: relative;
+}
+
+.expand-handle {
+	position: absolute;
+	bottom: 100%;
+	left: clamp(
+		0px,
+		calc(var(--mound-x, 50%) - 10rem),
+		max(0px, calc(100% - 20rem))
+	);
+	width: min(20rem, 100%);
+	height: 2rem;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	cursor: grab;
+	touch-action: none;
+	opacity: 0;
+	transform: scaleY(0.15);
+	transform-origin: bottom;
+	transition: left 100ms ease-out;
+}
+
+.expand-handle svg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	fill: var(--miniplayer-background);
+}
+
+.expand-handle span {
+	position: relative;
+}
+
+.expand-handle[hidden] {
+	display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.miniplayer[data-presentation="compact"]:hover > .expand-handle {
+		opacity: 1;
+		transform: scaleY(1);
+	}
+}
+
+.expand-handle:focus-visible,
+.expand-handle[data-dragging] {
+	opacity: 1;
+	transform: scaleY(1);
+}
+
+.expand-handle[data-dragging] {
+	cursor: grabbing;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.expand-handle {
+		transition: none;
+	}
+}
+
+.expand-handle[data-direction="down"] {
+	inset: 0 0 auto;
+	width: 100%;
+	height: 3.5rem;
+	z-index: 1;
+	transform: none;
+}
+
+.expand-handle[data-direction="down"] svg,
+.expand-handle[data-direction="down"] span {
+	display: none;
+}
+
+.fullscreen-header {
+	position: relative;
+}
+
+.fullscreen-header .close-button {
+	opacity: var(--player-open);
+	position: relative;
+	z-index: 2;
+}
+
+@property --player-open {
+	syntax: "<number>";
+	inherits: true;
+	initial-value: 0;
+}
+
+.miniplayer[data-presentation="fullscreen"] {
+	--player-open: 1;
+}
+
+.miniplayer[data-presentation="fullscreen"] .title {
+	position: absolute;
+	top: var(--space-sm);
+	left: 0;
+	right: 3.5rem;
+	opacity: calc(1 - var(--player-open));
+	pointer-events: none;
 }

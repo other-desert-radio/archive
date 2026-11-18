@@ -57,10 +57,12 @@ outside the measured bar above its top edge.
 
 ## Fullscreen presentation
 
+The compact player also has a curved hover mound that follows the mouse, with an up arrow at its crest. Clicking the mound opens fullscreen; dragging it reveals the fullscreen player directly. Release distance and recent pointer velocity determine whether it settles open or returns to compact. The fullscreen nav accepts downward drags without a hover nudge or arrow. The station name and close control fade in as the compact title fades out; pulling down reverses that swap. Pulling down reverses the gesture; X slides down and the fullscreen button slides up. Empty compact-player space also accepts upward drags, excluding text and interactive controls. Reduced motion disables the settling animation. Pointer tracking applies to the player surface; the cross-origin Mixcloud iframe does not forward pointer movement.
+
 Both expand controls switch local presentation state to fullscreen; the close
 button restores compact presentation. Activating fullscreen show, tag or DJ
 links closes fullscreen and releases scroll locking before client navigation while playback continues. The same player container becomes fixed
-and fills the viewport with a black background, a station header and a close SVG.
+and fills the viewport with the miniplayer background, a station header and a close SVG.
 Compact metadata and actions are hidden. The existing iframe stays mounted in
 its original position in the React tree: at the viewport bottom on mobile and
 in the right-hand content area on desktop.

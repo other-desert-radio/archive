@@ -240,6 +240,39 @@ evaluate(`(() => {
 })()`);
 browser("wait", "--fn", "window.fullscreenFrame.contentDocument?.body.textContent.includes('Fullscreen playback fixture')");
 evaluate("window.fullscreenDocument = window.fullscreenFrame.contentDocument; true");
+// Drag the mound with real pointer capture; a short pull returns, a long pull opens.
+browser("set", "viewport", "1440", "844");
+for (const [distance, expected] of [[60, "compact"], [500, "fullscreen"]]) {
+	browser("mouse", "move", "400", "820");
+	browser("wait", "250");
+	const handle = evaluate(`(() => {
+		const button = document.querySelector('[data-miniplayer] button[class*="expand-handle"]');
+		const rect = button.getBoundingClientRect();
+		return { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 };
+	})()`);
+	browser("mouse", "move", String(handle.x), String(handle.y));
+	browser("mouse", "down");
+	browser("mouse", "move", String(handle.x), String(handle.y - distance), "--duration", "800", "--steps", "20");
+	browser("wait", "150");
+	browser("mouse", "up");
+	browser("wait", "600");
+	assert.equal(evaluate("document.querySelector('[data-miniplayer]').dataset.presentation"), expected);
+	assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame && window.fullscreenFrame.contentDocument === window.fullscreenDocument"), true);
+	if (expected === "fullscreen") {
+		browser("mouse", "move", "600", "400");
+		browser("wait", "250");
+		assert.equal(evaluate("getComputedStyle(document.querySelector('[aria-label=\"Collapse player\"]')).opacity"), "0");
+		browser("mouse", "move", "600", "30");
+		browser("wait", "250");
+		assert.equal(evaluate("getComputedStyle(document.querySelector('[aria-label=\"Collapse player\"] span')).display"), "none");
+		browser("mouse", "down");
+		browser("mouse", "move", "600", "600", "--duration", "800", "--steps", "20");
+		browser("mouse", "up");
+		browser("wait", "600");
+		assert.equal(evaluate("document.querySelector('[data-miniplayer]').dataset.presentation"), "compact");
+		assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame"), true);
+	}
+}
 for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [601, 844], [750, 844], [840, 782], [1440, 844], [2041, 1352], [2560, 844]]) {
 	browser("set", "viewport", String(width), String(height));
 	evaluate("window.scrollTo(0, 200); true");
@@ -251,6 +284,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 		: '[data-miniplayer] div > button[aria-label="Expand player"]';
 	browser("click", expand);
 	browser("wait", '[data-presentation="fullscreen"]');
+	browser("wait", "550");
 	browser("wait", "--fn", "document.body.style.position === 'fixed'");
 	const lockedTop = evaluate("document.body.getBoundingClientRect().top");
 	browser("scroll", "down", "400");
@@ -306,7 +340,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 	assert.ok(Math.abs(fullscreen.barHeight - compactHeight) < 1);
 	assert.equal(fullscreen.sameFrame, true);
 	assert.equal(fullscreen.sameDocument, true);
-	assert.equal(fullscreen.background, "rgb(0, 0, 0)");
+	assert.equal(fullscreen.background, evaluate("getComputedStyle(document.querySelector('[data-miniplayer-bar]')).backgroundColor"));
 	assert.equal(fullscreen.heartHidden, true);
 	assert.equal(fullscreen.fullscreenHeartVisible, true);
 	assert.equal(fullscreen.djsVisible, true);
@@ -340,6 +374,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 	}
 	browser("click", '[data-miniplayer] button[aria-label="Close player"]');
 	browser("wait", '[data-presentation="compact"]');
+	browser("wait", "50");
 	browser("wait", "--fn", "document.body.style.position !== 'fixed'");
 	assert.equal(evaluate("window.scrollY"), savedScrollY);
 	assert.equal(evaluate("document.body.style.cssText"), savedBodyStyles);
@@ -409,6 +444,7 @@ for (const width of [390, 1440]) {
 			: '[data-miniplayer] div > button[aria-label="Expand player"]';
 		browser("click", expand);
 		browser("wait", '[data-presentation="fullscreen"]');
+	browser("wait", "550");
 		const destination = evaluate(`new URL(document.querySelector(${JSON.stringify(selector)}).href).pathname`);
 		markDocument();
 		// Exercise bubbling from nested TagView/DJ content.
