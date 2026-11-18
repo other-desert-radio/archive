@@ -57,7 +57,7 @@
 .playlist-save {
 	display: flex;
 	flex-direction: row;
-	align-items: baseline;
+	align-items: center;
 	gap: var(--space-xs);
 	align-self: flex-start;
 	max-width: 100%;
@@ -83,8 +83,8 @@
 
 .playlist-bookmark svg {
 	display: block;
-	width: var(--space-lg);
-	height: var(--space-lg);
+	width: var(--space-sm);
+	height: var(--space-sm);
 }
 
 .playlist-titles {
