@@ -67,6 +67,7 @@ export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
 						showId={show.id}
 						playlistSaves={playlistSaves}
 						showNote={false}
+						compact
 					/>
 				)}
 			</div>

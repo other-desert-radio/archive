@@ -43,11 +43,13 @@ export function SaveToPlaylistButton({
 	playlistSaves,
 	note,
 	showNote = true,
+	compact = false,
 }: {
 	showId: number;
 	playlistSaves: readonly PlaylistSave[];
 	note?: string | undefined;
 	showNote?: boolean;
+	compact?: boolean;
 }) {
 	const isSaved = playlistSaves.length > 0;
 	const modal = useRef<HTMLDialogElement>(null);
@@ -68,7 +70,7 @@ export function SaveToPlaylistButton({
 		<>
 			<button
 				type="button"
-				className={`${styles["save-button"]} ${isSaved ? styles["saved"] : ""}`}
+				className={`${styles["save-button"]} ${isSaved ? styles["saved"] : ""} ${compact ? styles["compact"] : ""}`}
 				aria-label="Save to Playlist"
 				onClick={openModal}
 			>

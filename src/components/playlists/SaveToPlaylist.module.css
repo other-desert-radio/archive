@@ -8,6 +8,7 @@
 }
 
 .save-button {
+	--button-padding: var(--space-sm);
 	display: inline-grid;
 	grid-template-columns: auto minmax(0, 1fr);
 	align-self: flex-start;
@@ -16,7 +17,7 @@
 	min-height: 2.75rem;
 	max-width: 100%;
 	margin-top: var(--space-sm);
-	padding: var(--space-sm);
+	padding: var(--button-padding);
 	border: var(--border-secondary) solid currentColor;
 	background: transparent;
 	color: black;
@@ -32,7 +33,7 @@
 		border: var(--border-primary) solid currentColor;
 		/* prevent jumping */
 		padding: calc(
-			var(--space-sm) +
+			var(--button-padding) +
 			var(--border-secondary) -
 			var(--border-primary)
 		);
@@ -44,6 +45,18 @@
 	width: var(--space-md);
 	height: var(--space-md);
 	fill: none;
+}
+
+.compact {
+	--button-padding: var(--space-xs);
+	gap: var(--space-xs);
+	min-height: 0;
+	margin-top: 0;
+}
+
+.compact svg {
+	width: var(--space-sm);
+	height: var(--space-sm);
 }
 
 .saved {
