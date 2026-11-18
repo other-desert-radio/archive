@@ -63,6 +63,7 @@ export function usePlayerPresentation(): PlayerPresentationState {
 		if (presentation === "fullscreen") {
 			return;
 		}
+		playerRef.current?.removeAttribute("data-mound-dismissed");
 		playerRef.current?.setAttribute("data-opening", "");
 		const height = playerRef.current?.getBoundingClientRect().height;
 		setCompactHeight(height);
@@ -73,6 +74,7 @@ export function usePlayerPresentation(): PlayerPresentationState {
 	}
 
 	function closeImmediately() {
+		playerRef.current?.setAttribute("data-mound-dismissed", "");
 		// Commit compact layout before removing the animation that holds fullscreen offscreen.
 		flushSync(() => setPresentation("compact"));
 		transition.current?.cancel();

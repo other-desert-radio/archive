@@ -50,7 +50,7 @@ At 600px and below, metadata and desktop actions are hidden. A borderless,
 content-width “expand ↑” button sits immediately above the widget at its right
 edge, without a full-width background strip. The button supports tap-to-expand and upward dragging with inertia. It stays labeled expand throughout the upward movement and disappears once fullscreen is reached. At phone widths it is the only upward drag target; the mound is hidden. Fullscreen has no mobile collapse button; use X to dismiss. The heart remains unwired.
 
-Safe-area padding stays inside the active bar. On phones, a decorative background extension below the active bar covers temporary gaps while iOS browser chrome changes during momentum scrolling; it adds no measured bar height or touch target. A border-box ResizeObserver
+Safe-area padding stays inside the active bar. A border-box ResizeObserver
 publishes its height as `--miniplayer-height`; BaseLayout reserves that height in
 main padding, using the bottom safe-area inset when idle. The expand button sits
 outside the measured bar above its top edge.

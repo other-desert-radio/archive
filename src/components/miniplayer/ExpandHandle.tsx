@@ -12,6 +12,29 @@ type Props = {
 };
 
 /** Controls player expansion with pointer gestures and keyboard button activation. */
+function canGrabPlayer(
+	target: Element,
+	handle: HTMLButtonElement,
+	fullscreen: boolean,
+): boolean {
+	const mobileHandle = target.closest("[data-player-drag-handle]");
+	if (window.matchMedia("(max-width: 600px)").matches && !mobileHandle) {
+		return false;
+	}
+	if (handle.contains(target) || mobileHandle) {
+		return true;
+	}
+	return (
+		!fullscreen &&
+		!target.closest(
+			"a, button, iframe, input, select, textarea, [contenteditable]",
+		) &&
+		!Array.from(target.childNodes).some(
+			(node) => node.nodeType === Node.TEXT_NODE && node.textContent?.trim(),
+		)
+	);
+}
+
 export default function ExpandHandle({
 	playerRef,
 	fullscreen,
@@ -47,6 +70,20 @@ export default function ExpandHandle({
 			if (event.pointerType !== "mouse" || !player) {
 				return;
 			}
+			const target = event.target;
+			const handle = handleRef.current;
+			if (target instanceof Element && handle) {
+				player.style.cursor =
+					drag.current || animation.current
+						? "grabbing"
+						: canGrabPlayer(
+									target,
+									handle,
+									player.dataset["presentation"] === "fullscreen",
+								)
+							? "grab"
+							: "";
+			}
 			const bounds = player.getBoundingClientRect();
 			const distance = Math.max(
 				0,
@@ -61,11 +98,18 @@ export default function ExpandHandle({
 				`${event.clientX - bounds.left}px`,
 			);
 		}
+		function leave() {
+			if (player?.dataset["presentation"] === "compact") {
+				player.removeAttribute("data-mound-dismissed");
+			}
+		}
 		player.addEventListener("pointerenter", follow);
 		player.addEventListener("pointermove", follow);
+		player.addEventListener("pointerleave", leave);
 		return () => {
 			player.removeEventListener("pointerenter", follow);
 			player.removeEventListener("pointermove", follow);
+			player.removeEventListener("pointerleave", leave);
 		};
 	}, [playerRef]);
 
@@ -80,34 +124,8 @@ export default function ExpandHandle({
 			if (!(target instanceof Element) || !handle) {
 				return;
 			}
-			// Mobile gestures need an explicit handle to avoid stealing content scrolling.
-			if (
-				window.matchMedia("(max-width: 600px)").matches &&
-				!target.closest("[data-player-drag-handle]")
-			) {
+			if (!canGrabPlayer(target, handle, fullscreen)) {
 				return;
-			}
-			// Compact desktop whitespace also opens the player; controls and text stay usable.
-			if (
-				!handle.contains(target) &&
-				!target.closest("[data-player-drag-handle]")
-			) {
-				if (
-					fullscreen ||
-					target.closest(
-						"a, button, iframe, input, select, textarea, [contenteditable]",
-					)
-				) {
-					return;
-				}
-				if (
-					Array.from(target.childNodes).some(
-						(node) =>
-							node.nodeType === Node.TEXT_NODE && node.textContent?.trim(),
-					)
-				) {
-					return;
-				}
 			}
 			const player = playerRef.current;
 			if (event.button !== 0 || !player || dragging || animation.current) {
@@ -136,6 +154,7 @@ export default function ExpandHandle({
 			if (!fullscreen) {
 				player.setAttribute("data-opening", "");
 			}
+			player.style.cursor = "grabbing";
 			player.style.transform = `translateY(${fullscreen ? 0 : travel}px)`;
 			if (fullscreen) {
 				player.setAttribute("data-closing", "");
@@ -211,6 +230,7 @@ export default function ExpandHandle({
 				if (!open) {
 					close();
 				}
+				player.style.removeProperty("cursor");
 				player.style.removeProperty("transform");
 				player.style.removeProperty("--player-open");
 				player.style.removeProperty("--player-offset");

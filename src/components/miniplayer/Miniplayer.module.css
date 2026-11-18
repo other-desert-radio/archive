@@ -66,6 +66,7 @@
 
 .mobile-expand {
 	display: none;
+	cursor: grab;
 }
 
 .widget-slot {
@@ -619,4 +620,14 @@
 		);
 		z-index: 3;
 	}
+}
+
+.miniplayer[data-presentation="compact"][data-mound-dismissed]
+	> .expand-handle:not(:focus-visible) {
+	transform: scaleY(0);
+	transition: none;
+}
+
+.miniplayer:has(.expand-handle[data-dragging]) .mobile-expand {
+	cursor: grabbing;
 }

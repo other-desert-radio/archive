@@ -243,6 +243,8 @@ evaluate("window.fullscreenDocument = window.fullscreenFrame.contentDocument; tr
 // Drag the mound with real pointer capture; a short pull returns, a long pull opens.
 browser("set", "viewport", "1440", "844");
 const compactBounds = evaluate("document.querySelector('[data-miniplayer]').getBoundingClientRect().toJSON()");
+browser("mouse", "move", "2", String(compactBounds.bottom - 2));
+assert.equal(evaluate("getComputedStyle(document.elementFromPoint(2, innerHeight - 2)).cursor"), "grab", "Compact whitespace advertises dragging");
 browser("mouse", "move", "400", String(compactBounds.bottom - 2));
 browser("wait", "250");
 const smallMoundHeight = evaluate("document.querySelector('[data-miniplayer] button[class*=\"expand-handle\"]').getBoundingClientRect().height");
@@ -344,17 +346,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 	const savedNavTop = evaluate("document.querySelector('[data-site-header] nav').getBoundingClientRect().top");
 	const savedTabsTop = evaluate("document.querySelector('[data-category-tabs]').getBoundingClientRect().top");
 	const compactHeight = evaluate("document.querySelector('[data-miniplayer-bar]').getBoundingClientRect().height");
-	if (width <= 600) {
-		assert.equal(evaluate(`(() => {
-			const bar = document.querySelector('[data-miniplayer-bar]');
-			const backing = getComputedStyle(bar, '::after');
-			return backing.content === '""'
-				&& backing.position === 'absolute'
-				&& backing.pointerEvents === 'none'
-				&& backing.backgroundColor === getComputedStyle(bar).backgroundColor
-				&& parseFloat(backing.height) >= innerHeight;
-		})()`), true, "Active phone player paints below the bar without increasing its measured height");
-	}
+
 	const expand = width <= 600
 		? '[data-miniplayer] > button[aria-label="Expand player"]'
 		: '[data-miniplayer] div > button[aria-label="Expand player"]';
@@ -452,7 +444,15 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);
 	}
 	browser("click", '[data-miniplayer] button[aria-label="Close player"]');
+	if (width > 600) {
+		browser("mouse", "move", "400", String(height - 20));
+	}
 	browser("wait", '[data-presentation="compact"]');
+	if (width > 600) {
+		assert.equal(evaluate("document.querySelector('[data-miniplayer] button[class*=\"expand-handle\"]').getBoundingClientRect().height"), 0, "Click dismissal must not immediately reveal the mound under the pointer");
+		browser("mouse", "move", "400", "200");
+		assert.equal(evaluate("document.querySelector('[data-miniplayer]').hasAttribute('data-mound-dismissed')"), false);
+	}
 	browser("wait", "50");
 	browser("wait", "--fn", "document.body.style.position !== 'fixed'");
 	assert.equal(evaluate("window.scrollY"), savedScrollY);
