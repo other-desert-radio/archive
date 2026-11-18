@@ -73,7 +73,7 @@
 	flex: 0 1 30rem;
 	margin-inline-start: auto;
 	min-width: 0;
-	/** HACKy!!!! to remove mixcloud's white border */
+	/** HACKy!!!! to remove white border */
 	outline: 1px solid var(--miniplayer-background);
 	outline-offset: -1px;
 }
@@ -288,10 +288,6 @@
 
 @media (hover: hover) and (pointer: fine) {
 	.fullscreen-title:hover {
-		text-decoration: underline;
-	}
-
-	.fullscreen-tags a:hover {
 		text-decoration: underline;
 	}
 }
