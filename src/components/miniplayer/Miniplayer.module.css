@@ -397,6 +397,7 @@
 		grid-template-rows: auto minmax(min-content, 1fr);
 		gap: var(--space-md);
 		overflow-y: auto;
+		overscroll-behavior-y: contain;
 		padding: 0;
 	}
 
@@ -604,5 +605,18 @@
 		right: 0;
 		bottom: calc(var(--player-offset) + env(safe-area-inset-bottom));
 		z-index: 2;
+	}
+}
+
+@media (max-width: 600px) {
+	.miniplayer[data-presentation="fullscreen"][data-closing] .mobile-expand {
+		display: flex;
+		position: fixed;
+		bottom: calc(
+			var(--player-offset) +
+			var(--compact-height, 3.75rem) +
+			env(safe-area-inset-bottom)
+		);
+		z-index: 3;
 	}
 }

@@ -61,7 +61,7 @@ The compact player also has a curved hover mound that follows the mouse, with an
 
 Both expand controls switch local presentation state to fullscreen; the close
 button restores compact presentation. Activating fullscreen show, tag or DJ
-links uses the immediate-close path and releases scroll locking synchronously before client navigation while playback continues. The X button retains its animated dismissal. During phone dismissal, the existing widget stays anchored above the bottom safe area while the fullscreen panel moves down, avoiding an empty bar before the compact layout returns. The same player container becomes fixed
+links uses the immediate-close path and releases scroll locking synchronously before client navigation while playback continues. The X button retains its animated dismissal. During phone dismissal, the existing widget stays anchored above the bottom safe area while the fullscreen panel moves down, avoiding an empty bar before the compact layout returns. The mobile expand button is also visible in its compact position during dismissal. The same player container becomes fixed
 and fills the viewport with the miniplayer background, a station header and a close SVG.
 Compact metadata and actions are hidden. The existing iframe stays mounted in
 its original position in the React tree: at the viewport bottom on mobile and
@@ -90,8 +90,7 @@ in fullscreen. The widget retains its existing parent in both modes.
 
 A player-shell wrapper reserves the compact height measured on expand, so the
 bar's resize observer does not turn fullscreen height into page clearance.
-Fullscreen fixes the body at its current scroll offset and hides root overflow to
-lock background scrolling, including iOS touch scrolling. Closing or unmounting
+Fullscreen hides root overflow without fixing the body or creating a body scroll container, preserving sticky navigation and the category tabs’ scroll timeline. A touch guard blocks background gestures while the fullscreen controls retain contained scrolling. Closing or unmounting
 restores prior inline styles and scroll position. Scrollbar space is compensated
 to avoid shifting page content.
 

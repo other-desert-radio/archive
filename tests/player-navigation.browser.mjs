@@ -341,6 +341,8 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 	evaluate("window.scrollTo(0, 200); true");
 	const savedScrollY = evaluate("window.scrollY");
 	const savedBodyStyles = evaluate("document.body.style.cssText");
+	const savedNavTop = evaluate("document.querySelector('[data-site-header] nav').getBoundingClientRect().top");
+	const savedTabsTop = evaluate("document.querySelector('[data-category-tabs]').getBoundingClientRect().top");
 	const compactHeight = evaluate("document.querySelector('[data-miniplayer-bar]').getBoundingClientRect().height");
 	const expand = width <= 600
 		? '[data-miniplayer] > button[aria-label="Expand player"]'
@@ -348,7 +350,10 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 	browser("click", expand);
 	browser("wait", '[data-presentation="fullscreen"]');
 	browser("wait", "550");
-	browser("wait", "--fn", "document.body.style.position === 'fixed'");
+	browser("wait", "--fn", "getComputedStyle(document.documentElement).overflow === 'hidden'");
+	assert.equal(evaluate("window.scrollY"), savedScrollY, "Opening must preserve the background scroll timeline");
+	assert.equal(evaluate("document.querySelector('[data-site-header] nav').getBoundingClientRect().top"), savedNavTop);
+	assert.equal(evaluate("document.querySelector('[data-category-tabs]').getBoundingClientRect().top"), savedTabsTop);
 	const lockedTop = evaluate("document.body.getBoundingClientRect().top");
 	browser("scroll", "down", "400");
 	assert.equal(evaluate("document.body.getBoundingClientRect().top"), lockedTop);

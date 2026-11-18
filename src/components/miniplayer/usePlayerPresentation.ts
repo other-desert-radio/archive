@@ -64,7 +64,11 @@ export function usePlayerPresentation(): PlayerPresentationState {
 			return;
 		}
 		playerRef.current?.setAttribute("data-opening", "");
-		setCompactHeight(playerRef.current?.getBoundingClientRect().height);
+		const height = playerRef.current?.getBoundingClientRect().height;
+		setCompactHeight(height);
+		if (height !== undefined) {
+			playerRef.current?.style.setProperty("--compact-height", `${height}px`);
+		}
 		setPresentation("fullscreen");
 	}
 

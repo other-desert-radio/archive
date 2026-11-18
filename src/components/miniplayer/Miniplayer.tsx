@@ -79,7 +79,7 @@ function ActiveMiniplayer({
 							expand={expand}
 							close={closeImmediately}
 						/>
-						<div className={styles["controls"]}>
+						<div className={styles["controls"]} data-miniplayer-scroll>
 							<div
 								className={styles["fullscreen-artwork"]}
 								hidden={presentation !== "fullscreen"}
