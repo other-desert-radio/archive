@@ -35,7 +35,7 @@ const query = fromTag === undefined ? "" : `?fromTag=${fromTag}`;
 <style>
   .dj-explore-card {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: var(--space-sm);
     flex: 0 0 auto;
     font-size: var(--font-title);
@@ -63,6 +63,14 @@ const query = fromTag === undefined ? "" : `?fromTag=${fromTag}`;
     margin: 0;
     font: inherit;
     white-space: nowrap;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    @media (max-width: 600px) {
+      h3 {
+        font-size: var(--font-small-title);
+      }
+    }
   }
 
   @media (hover: hover) and (pointer: fine) {
