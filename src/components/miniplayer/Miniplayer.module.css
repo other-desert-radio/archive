@@ -50,7 +50,13 @@
 
 @media (hover: hover) and (pointer: fine) {
 	.title a:hover {
-		text-decoration: underline;
+		font-weight: bold;
+		font-style: italic;
+	}
+
+	.fullscreen-dj:hover {
+		font-weight: bold;
+		font-style: italic;
 	}
 }
 
@@ -63,9 +69,12 @@
 }
 
 .widget-slot {
-	flex: 0 1 40rem;
+	flex: 0 1 30rem;
 	margin-inline-start: auto;
 	min-width: 0;
+	/** HACKy!!!! to remove mixcloud's white border */
+	outline: 1px solid var(--miniplayer-background);
+	outline-offset: -1px;
 }
 
 .progress-track {
@@ -363,12 +372,6 @@
 .fullscreen-dj span {
 	min-width: 0;
 	overflow-wrap: anywhere;
-}
-
-@media (hover: hover) and (pointer: fine) {
-	.fullscreen-dj:hover {
-		text-decoration: underline;
-	}
 }
 
 .miniplayer[data-presentation="fullscreen"] .widget-slot {
