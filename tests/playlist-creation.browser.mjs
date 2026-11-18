@@ -62,6 +62,39 @@ try {
 		}
 	}
 	await browser("open", server.url.href);
+	await browser("wait", button("Save to Playlist"));
+	await evaluate(`(async () => {
+		const store = playlistFixture.stores.playlistStore;
+		for (const playlist of store.getAll()) {
+			if (playlist.type === 'user') {
+				await store.delete({ playlistId: playlist.id });
+			} else {
+				for (const entry of playlist.shows) {
+					await store.removeShow({ playlistId: playlist.id, showId: entry.showId });
+				}
+			}
+		}
+		return true;
+	})()`);
+	await evaluate(`(async () => {
+		const store = playlistFixture.stores.playlistStore;
+		const liked = store.getAll().find(p => p.type === 'liked');
+		await store.addShow({ playlistId: liked.id, showId: 42 });
+		return true;
+	})()`);
+	await wait(`document.querySelector('${button("Save to Playlist")}').textContent === 'Liked Shows'`);
+	assert.match(await evaluate(`document.querySelector('${button("Save to Playlist")} use').getAttribute('href')`), /bookmark-filled\.svg#bookmark$/);
+	await browser("click", button("Save to Playlist"));
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), true);
+	await browser("press", "Escape");
+	await wait(`!document.querySelector('${saveDialog}')`);
+	await evaluate(`(async () => {
+		const store = playlistFixture.stores.playlistStore;
+		await store.removeShow({ playlistId: store.getAll().find(p => p.type === 'liked').id, showId: 42 });
+		return true;
+	})()`);
+	await wait(`document.querySelector('${button("Save to Playlist")}').textContent === 'Save to Playlist'`);
+	assert.match(await evaluate(`document.querySelector('${button("Save to Playlist")} use').getAttribute('href')`), /\/bookmark\.svg#bookmark$/);
 	await browser("click", button("Save to Playlist"));
 	await wait(`!document.querySelector('${saveDialog} ${button("New playlist")}').disabled`);
 	assert.equal(await evaluate(`document.querySelector('${saveDialog} h1').textContent`), "Save Show");

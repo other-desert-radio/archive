@@ -6,7 +6,10 @@ import { usePlaylists } from "./usePlaylists";
 
 export default function SaveToPlaylist({ showId }: { showId: number }) {
 	const modal = useRef<HTMLDialogElement>(null);
-	const { status } = usePlaylists();
+	const { playlists, status } = usePlaylists();
+	const savedPlaylist = playlists.find((playlist) =>
+		playlist.shows.some((entry) => entry.showId === showId),
+	);
 	return (
 		<>
 			{status === "loading" ? (
@@ -18,14 +21,16 @@ export default function SaveToPlaylist({ showId }: { showId: number }) {
 			) : (
 				<button
 					type="button"
-					className={styles["save-button"]}
+					className={`${styles["save-button"]} ${savedPlaylist ? styles["saved"] : ""}`}
 					aria-label="Save to Playlist"
 					onClick={() => modal.current?.showModal()}
 				>
-					<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-						<use href={`${getBasePath()}/assets/icons/bookmark.svg#bookmark`} />
+					<svg viewBox="0 0 24 24" aria-hidden="true">
+						<use
+							href={`${getBasePath()}/assets/icons/${savedPlaylist ? "bookmark-filled" : "bookmark"}.svg#bookmark`}
+						/>
 					</svg>
-					Save to Playlist
+					<span>{savedPlaylist?.title ?? "Save to Playlist"}</span>
 				</button>
 			)}
 			<PlaylistModal key={showId} ref={modal} showId={showId} />
