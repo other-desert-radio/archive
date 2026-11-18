@@ -1,4 +1,6 @@
 ---
+import { pathToFileURL } from "node:url";
+import { fetchTags } from "../utils/fetch-tags";
 import { getBasePath } from "../utils/get-base-path";
 import Miniplayer from "./miniplayer";
 import type { Page } from "../types/page";
@@ -10,6 +12,10 @@ type Props = {
 
 const { page, returning_page } = Astro.props;
 const base = getBasePath();
+const hasTagReturn = page.name === "show_page" || page.name === "dj_page";
+const returnTags = hasTagReturn
+  ? [...(await fetchTags(pathToFileURL("public/resources/tags.json"))).values()].map(({ id, title }) => ({ id, title }))
+  : undefined;
 const returnHref = (() => {
   switch (returning_page) {
     case "shows": {
@@ -54,7 +60,8 @@ const title = (() => {
       title={`Return to ${returning_page}`}
       aria-label={`Return to ${returning_page}`}
       href={returnHref}
-      data-tag-return={page.name === "show_page" || page.name === "dj_page" ? "" : undefined}
+      data-tag-return={hasTagReturn ? "" : undefined}
+      data-return-tags={returnTags ? JSON.stringify(returnTags) : undefined}
       data-return-href={returnHref}
       data-return-label={returning_page.toUpperCase()}
     >
@@ -71,7 +78,7 @@ const title = (() => {
 </header>
 
 <script>
-  import { stores } from "../stores/stores";
+  import type { Tag } from "../utils/fetch-tags";
   import { getTagReturn } from "../utils/tag-return";
 
   // Publishes the bar's full height (including bottom safe-area padding) as
@@ -110,30 +117,19 @@ const title = (() => {
   initializeMiniplayerHeight();
   document.addEventListener("astro:page-load", initializeMiniplayerHeight);
 
-  async function updateTagReturn() {
+  function updateTagReturn() {
     const link = document.querySelector<HTMLAnchorElement>("[data-tag-return]");
     const label = link?.querySelector("b");
     if (!link || !label) {
       return;
     }
 
-    if (!new URLSearchParams(location.search).has("fromTag")) {
-      return;
-    }
-    try {
-      await stores.initialize();
-    } catch (error) {
-      console.error("[Navigation] Cannot load return tag", error);
-      return;
-    }
-    if (!link.isConnected) {
-      return;
-    }
+    const tags: Pick<Tag, "id" | "title">[] = JSON.parse(link.dataset["returnTags"] ?? "[]");
 
     const destination = getTagReturn(
       location.search,
       import.meta.env.BASE_URL,
-      stores.tagStore.getAll(),
+      tags,
     );
     const href = destination?.href ?? link.dataset["returnHref"];
     const text = destination?.label ?? link.dataset["returnLabel"];
