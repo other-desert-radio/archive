@@ -60,7 +60,7 @@ test("formats a show date in UTC", () => {
 	assert.equal(formatDate("2026-05-25T00:00:00.000Z"), "May 25, 2026");
 });
 
-test("renders default-base detail links, large show artwork, and small DJ artwork", () => {
+test("renders default-base detail links, large show artwork, and text-only DJ links", () => {
 	const markup = renderToStaticMarkup(
 		<ShowCard
 			show={{
@@ -92,11 +92,11 @@ test("renders default-base detail links, large show artwork, and small DJ artwor
 		markup,
 		/<img[^>]+src="images\/shows\/1_large.jpg"[^>]+alt="Test Show"/,
 	);
-	assert.match(markup, /<img[^>]+src="\/images\/djs\/2.jpg"[^>]+alt="Test DJ"/);
+	assert.doesNotMatch(markup, /<img[^>]+alt="Test DJ"/);
 	const artwork = (markup.match(/<img\b[^>]*>/g) ?? []).filter(
 		(image) => !image.includes('alt=""'),
 	);
-	assert.equal(artwork.length, 2);
+	assert.equal(artwork.length, 1);
 	for (const image of artwork) {
 		assert.match(image, /loading="lazy"/);
 		assert.match(image, /decoding="async"/);

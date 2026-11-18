@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import type { PlaybackRecord } from "../../stores/playback/types";
 import type { PlaylistSave } from "../../stores/playlists/types";
 import type { Show } from "../../utils/fetch-shows";
@@ -18,8 +19,6 @@ type Props = {
 
 /**
  * Renders the compact DJ links associated with a show.
- *
- * TODO: dj.image_tiny ?
  */
 const renderDJs = (djs: Show["djs"], base: string) =>
 	djs.map((dj) => (
@@ -29,15 +28,6 @@ const renderDJs = (djs: Show["djs"], base: string) =>
 			className={styles["dj-container"]}
 			aria-label={`View ${dj.title}`}
 		>
-			{false && dj.image_small && (
-				<img
-					className={`${styles["dj-image"]}`}
-					src={`${base}/${dj.image_small}`}
-					alt={dj.title}
-					loading="lazy"
-					decoding="async"
-				/>
-			)}
 			<span className={styles["dj-name-title"]}>{dj.title}</span>
 		</a>
 	));
@@ -120,5 +110,3 @@ export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
 		</article>
 	);
 }
-
-import { useEffect, useRef, useState } from "react";
