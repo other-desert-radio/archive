@@ -5,6 +5,21 @@ import { ShowCard } from "../src/components/shows";
 import { formatDate } from "../src/utils/format-date";
 import fixture from "./res/shows.json";
 
+test("renders a tags container only when the show has tags", () => {
+	const show = fixture.data[0];
+	assert.ok(show);
+	for (const tagIds of [[], [1]]) {
+		const markup = renderToStaticMarkup(
+			<ShowCard
+				show={{ ...show, tagIds }}
+				tags={new Map([[1, { id: 1, title: "Ambient", color: "#000000" }]])}
+				playlistSaves={[]}
+			/>,
+		);
+		assert.equal(markup.includes('class="tag-container"'), tagIds.length > 0);
+	}
+});
+
 test("saved playlist links follow DJ links and display hearts with titles", () => {
 	const show = fixture.data[0];
 	assert.ok(show);
