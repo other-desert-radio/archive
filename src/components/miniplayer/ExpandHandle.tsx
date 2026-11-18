@@ -42,13 +42,25 @@ export default function ExpandHandle({
 				return;
 			}
 			const bounds = player.getBoundingClientRect();
+			const distance = Math.max(
+				0,
+				Math.min(1, (event.clientY - bounds.top) / Math.max(1, bounds.height)),
+			);
+			handleRef.current?.style.setProperty(
+				"--mound-scale",
+				String(1 - distance * 0.7),
+			);
 			handleRef.current?.style.setProperty(
 				"--mound-x",
 				`${event.clientX - bounds.left}px`,
 			);
 		}
+		player.addEventListener("pointerenter", follow);
 		player.addEventListener("pointermove", follow);
-		return () => player.removeEventListener("pointermove", follow);
+		return () => {
+			player.removeEventListener("pointerenter", follow);
+			player.removeEventListener("pointermove", follow);
+		};
 	}, [playerRef]);
 
 	useEffect(() => {

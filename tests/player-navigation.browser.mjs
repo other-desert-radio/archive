@@ -242,6 +242,14 @@ browser("wait", "--fn", "window.fullscreenFrame.contentDocument?.body.textConten
 evaluate("window.fullscreenDocument = window.fullscreenFrame.contentDocument; true");
 // Drag the mound with real pointer capture; a short pull returns, a long pull opens.
 browser("set", "viewport", "1440", "844");
+const compactBounds = evaluate("document.querySelector('[data-miniplayer]').getBoundingClientRect().toJSON()");
+browser("mouse", "move", "400", String(compactBounds.bottom - 2));
+browser("wait", "250");
+const smallMoundHeight = evaluate("document.querySelector('[data-miniplayer] button[class*=\"expand-handle\"]').getBoundingClientRect().height");
+browser("mouse", "move", "400", String(compactBounds.top + 1));
+browser("wait", "250");
+const largeMoundHeight = evaluate("document.querySelector('[data-miniplayer] button[class*=\"expand-handle\"]').getBoundingClientRect().height");
+assert.ok(largeMoundHeight > smallMoundHeight * 2, "Mound grows as the pointer approaches its crest");
 for (const [distance, expected] of [[60, "compact"], [500, "fullscreen"]]) {
 	browser("mouse", "move", "400", "820");
 	browser("wait", "250");

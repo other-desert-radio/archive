@@ -501,7 +501,7 @@
 
 @media (hover: hover) and (pointer: fine) {
 	.miniplayer[data-presentation="compact"]:hover > .expand-handle {
-		transform: scaleY(1);
+		transform: scaleY(var(--mound-scale, 0.3));
 	}
 }
 
