@@ -165,7 +165,7 @@ const hydratedTags = hydrateTags(show, tags);
   }
 
   .show-dj {
-    --dj-artwork-size: calc(var(--density-unit) * 5.5);
+    --dj-artwork-size: calc(var(--density-unit) * 4.5);
     display: flex;
     align-items: flex-start;
     gap: var(--space-sm);
@@ -180,6 +180,7 @@ const hydratedTags = hydrateTags(show, tags);
     .show-dj:hover {
       outline: var(--border-secondary) solid currentColor;
       outline-offset: var(--space-xs);
+      font-style: italic;
     }
   }
 

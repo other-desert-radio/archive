@@ -31,7 +31,7 @@ const renderDJs = (djs: Show["djs"], base: string) =>
 		>
 			{dj.image_small && (
 				<img
-					className={`${styles["dj-image"]} image-border-secondary`}
+					className={`${styles["dj-image"]}`}
 					src={`${base}/${dj.image_small}`}
 					alt={dj.title}
 					loading="lazy"
