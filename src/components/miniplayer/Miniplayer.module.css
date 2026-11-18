@@ -189,7 +189,7 @@
 }
 
 .fullscreen-header > span {
-	opacity: var(--player-open);
+	opacity: clamp(0, calc((var(--player-open) - 0.55) / 0.45), 1);
 	pointer-events: none;
 	font-weight: 700;
 }
@@ -538,7 +538,7 @@
 }
 
 .fullscreen-header .close-button {
-	opacity: var(--player-open);
+	opacity: clamp(0, calc((var(--player-open) - 0.55) / 0.45), 1);
 	position: relative;
 	z-index: 2;
 }
@@ -558,7 +558,7 @@
 	top: var(--space-sm);
 	left: 0;
 	right: 3.5rem;
-	opacity: calc(1 - var(--player-open));
+	opacity: clamp(0, calc(1 - var(--player-open) / 0.45), 1);
 	pointer-events: none;
 }
 

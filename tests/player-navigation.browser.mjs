@@ -259,6 +259,21 @@ for (const [distance, expected] of [[60, "compact"], [500, "fullscreen"]]) {
 	assert.equal(evaluate("document.querySelector('[data-miniplayer]').dataset.presentation"), expected);
 	assert.equal(evaluate("document.querySelector('[data-miniplayer] iframe') === window.fullscreenFrame && window.fullscreenFrame.contentDocument === window.fullscreenDocument"), true);
 	if (expected === "fullscreen") {
+		assert.equal(evaluate(`(() => {
+			const player = document.querySelector('[data-miniplayer]');
+			const title = player.querySelector('[class*="controls"] > [class*="title"]');
+			const station = player.querySelector('[data-fullscreen-nav] > span');
+			try {
+				return [0, .2, .44, .45, .5, .55, .56, .8, 1].every(progress => {
+					player.style.setProperty('--player-open', String(progress));
+					const titleOpacity = Number(getComputedStyle(title).opacity);
+					const stationOpacity = Number(getComputedStyle(station).opacity);
+					return titleOpacity === 0 || stationOpacity === 0;
+				});
+			} finally {
+				player.style.removeProperty('--player-open');
+			}
+		})()`), true, "Title and station labels must never overlap during either transition direction");
 		browser("mouse", "move", "600", "400");
 		browser("wait", "250");
 		assert.equal(evaluate("getComputedStyle(document.querySelector('[aria-label=\"Collapse player\"] svg')).display"), "none");
