@@ -434,7 +434,9 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 			const previous = details.dataset.hasTracklist;
 			details.dataset.hasTracklist = 'false';
 			const rows = [...details.querySelectorAll('[class*="marquee-row"]')];
+			const bounds = details.querySelector('[class*="fullscreen-marquee"]').getBoundingClientRect();
 			const result = {
+				fullWidth: Math.abs(bounds.left) < 1 && Math.abs(bounds.right - document.documentElement.clientWidth) < 1,
 				rows: rows.length,
 				visible: rows.every(row => row.getBoundingClientRect().height > 0),
 				moving: rows.every(row => getComputedStyle(row).animationName !== 'none'),
@@ -444,6 +446,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 			return result;
 		})()`);
 		assert.equal(marquee.rows, 3);
+		assert.equal(marquee.fullWidth, true, "Marquee spans the viewport width");
 		assert.equal(marquee.visible, true);
 		assert.equal(marquee.moving, true);
 		assert.deepEqual(marquee.shades, [1, 0.3, 0.15]);

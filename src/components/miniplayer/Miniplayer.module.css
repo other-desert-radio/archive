@@ -602,7 +602,7 @@
 
 	.fullscreen-details[data-has-tracklist="false"] .fullscreen-marquee {
 		position: absolute;
-		inset: 0 0 auto;
+		inset: 0 calc(-1 * var(--nav-inline-padding)) auto;
 		font-size: clamp(var(--font-title), 4vw, 4rem);
 		line-height: 1.2;
 		white-space: nowrap;
