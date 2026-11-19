@@ -188,6 +188,6 @@
 	gap: var(--space-xs);
 }
 
-.discard-actions button {
+.discard-actions :global(.button-primary) {
 	border: 1px solid currentColor;
 }

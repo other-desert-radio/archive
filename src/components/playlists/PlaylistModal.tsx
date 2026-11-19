@@ -248,6 +248,7 @@ export default function PlaylistModal({
 					<button
 						type="button"
 						aria-label="Keep editing"
+						className="button-primary"
 						onClick={() => discardModal.current?.close()}
 					>
 						Keep editing
@@ -255,6 +256,7 @@ export default function PlaylistModal({
 					<button
 						type="button"
 						aria-label="Discard changes"
+						className="button-primary"
 						onClick={() => {
 							discardModal.current?.close();
 							dialogRef.current?.close();
