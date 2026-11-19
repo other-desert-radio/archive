@@ -1,10 +1,9 @@
-import { useRef } from "react";
 import { useInitialization } from "../../hooks/useInitialization";
 import { useStores } from "../../stores";
 import type { AudioTrack } from "../../stores/audio";
 import { useAudioState } from "../../stores/audio";
 import MixcloudWidget from "../mixcloud";
-import PlaylistModal from "../playlists/PlaylistModal";
+import SaveToPlaylist from "../playlists/SaveToPlaylist";
 import { DesktopActions, MobileExpand } from "./CompactActions";
 import ExpandHandle from "./ExpandHandle";
 import FullscreenDetails from "./FullscreenDetails";
@@ -37,8 +36,6 @@ function ActiveMiniplayer({
 }) {
 	const stores = useStores();
 	useInitialization(stores);
-	const playlistModal = useRef<HTMLDialogElement>(null);
-	const openFavorites = () => playlistModal.current?.showModal();
 	const {
 		presentation,
 		compactHeight,
@@ -86,7 +83,16 @@ function ActiveMiniplayer({
 								show={track.show}
 								base={base}
 								inert={presentation === "fullscreen"}
-							/>
+							>
+								<div className={styles["compact-save"]}>
+									<SaveToPlaylist
+										key={track.show.id}
+										showId={track.show.id}
+										showNote={false}
+										minimal
+									/>
+								</div>
+							</TrackTitle>
 							<div className={styles["fullscreen-content"]}>
 								<div className={styles["widget-slot"]}>
 									<MixcloudWidget
@@ -101,18 +107,11 @@ function ActiveMiniplayer({
 								</div>
 							</div>
 							<DesktopActions
-								onFavorite={openFavorites}
-								base={base}
 								hidden={presentation === "fullscreen"}
 								onExpand={expand}
 							/>
 						</div>
 					</div>
-					<PlaylistModal
-						key={track.show.id}
-						ref={playlistModal}
-						showId={track.show.id}
-					/>
 				</div>
 			);
 		case "samcast": {

@@ -1,8 +1,9 @@
-import type { ReactElement } from "react";
+import type { ReactElement, ReactNode } from "react";
 import type { Show } from "../../utils/fetch-shows";
 import styles from "./Miniplayer.module.css";
 
 type Props = {
+	children?: ReactNode;
 	show: Show;
 	base: string;
 	hidden?: boolean;
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export default function TrackTitle({
+	children,
 	show,
 	base,
 	hidden = false,
@@ -18,6 +20,7 @@ export default function TrackTitle({
 }: Props): ReactElement {
 	return (
 		<div className={styles["title"]} hidden={hidden} inert={inert}>
+			{children}
 			<span className={styles["desktop-title"]}>
 				{show.djs.map((dj, index) => (
 					<span key={dj.id}>

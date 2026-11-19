@@ -28,6 +28,9 @@
 }
 
 .title {
+	display: flex;
+	align-items: center;
+	gap: var(--space-sm);
 	flex: 1;
 	min-width: 0;
 	box-sizing: border-box;
@@ -35,6 +38,7 @@
 }
 
 .desktop-title {
+	min-width: 0;
 	display: block;
 	overflow: hidden;
 	white-space: nowrap;
@@ -85,9 +89,14 @@
 	padding-inline-end: var(--space-sm);
 }
 
-.bookmark-icon {
-	width: 0.6em;
-	height: 0.6em;
+.compact-save {
+	flex: 0 1 auto;
+	min-width: 0;
+	max-width: 50%;
+}
+
+.compact-save > div {
+	margin: 0;
 }
 
 .desktop-actions button {

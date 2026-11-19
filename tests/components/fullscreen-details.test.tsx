@@ -38,3 +38,22 @@ test("playlist control reflects unsaved and saved membership", () => {
 	assert.ok(saved.includes("bookmark-filled.svg"));
 	assert.ok(saved.includes("Favorites"));
 });
+
+test("minimal playlist control hides the unsaved label and keeps saved names", () => {
+	const render = (playlistSaves: { playlistId: string; title: string }[]) =>
+		renderToStaticMarkup(
+			<SaveToPlaylistButton
+				showId={1}
+				playlistSaves={playlistSaves}
+				minimal
+				showNote={false}
+			/>,
+		);
+	const unsaved = render([]);
+	assert.ok(unsaved.includes('aria-label="Save to Playlist"'));
+	assert.ok(unsaved.includes("bookmark.svg#bookmark"));
+	assert.equal(unsaved.includes("<span>Save to Playlist</span>"), false);
+	const saved = render([{ playlistId: "test", title: "Favorites" }]);
+	assert.ok(saved.includes("<span>Favorites</span>"));
+	assert.ok(saved.includes("bookmark-filled.svg#bookmark"));
+});
