@@ -1,87 +1,89 @@
-import type { ReactElement } from "react";
+import { useSyncExternalStore } from "react";
+import { useInitialization } from "../../hooks/useInitialization";
+import { useStores } from "../../stores";
+import type { ShowDetailEntry } from "../../stores/show-details/types";
 import type { Show } from "../../utils/fetch-shows";
-import type { TagMap } from "../../utils/fetch-tags";
-import { hydrateTags } from "../../utils/hydrate-tags";
-import TagView from "../TagView";
+import SaveToPlaylist from "../playlists/SaveToPlaylist";
 import styles from "./Miniplayer.module.css";
 
-type ShowProps = {
-	show: Show;
-	base: string;
-	onNavigate?: () => void;
-};
-
-type TagsProps = ShowProps & {
-	tags: TagMap;
-};
-
-// The caller supplies the catalog; this section resolves the show's tag IDs.
-export function FullscreenTags({
-	show,
-	base,
-	tags,
-	onNavigate,
-}: TagsProps): ReactElement {
-	return (
-		<div className={`tag-container ${styles["fullscreen-tags"]}`}>
-			{hydrateTags(show, tags).map((tag) => (
-				<a
-					key={tag.id}
-					href={`${base}/tags/${tag.id}`}
-					aria-label={`Explore ${tag.title}`}
-					onClick={onNavigate}
-				>
-					<TagView tag={tag} size="large" />
-				</a>
-			))}
-		</div>
-	);
-}
-
-// Render all DJ links/portraits; shows without DJs have no DJ section.
-export function FullscreenDJs({
-	show,
-	base,
-	onNavigate,
-}: ShowProps): ReactElement | null {
-	if (show.djs.length === 0) {
+export function FullscreenTracklist({
+	entries,
+}: {
+	entries: readonly ShowDetailEntry[];
+}) {
+	if (entries.length === 0) {
 		return null;
 	}
+	const occurrences = new Map<string, number>();
 	return (
-		<div className={styles["fullscreen-dj-list"]}>
-			{show.djs.map((dj) => (
-				<a
-					key={dj.id}
-					href={`${base}/djs/${dj.id}`}
-					aria-label={`View ${dj.title}`}
-					onClick={onNavigate}
-					className={styles["fullscreen-dj"]}
-				>
-					{dj.image_small && <img src={`${base}/${dj.image_small}`} alt="" />}
-					<span>{dj.title}</span>
-				</a>
-			))}
-		</div>
+		<section className={styles["fullscreen-tracklist"]} aria-label="Tracklist">
+			<h2>TRACKLIST</h2>
+			<ol>
+				{entries.map((entry) => {
+					const value = JSON.stringify(entry);
+					const occurrence = occurrences.get(value) ?? 0;
+					occurrences.set(value, occurrence + 1);
+					return (
+						<li key={`${value}:${occurrence}`}>
+							{"chapter" in entry
+								? entry.chapter
+								: `${entry.artist} — ${entry.song}`}
+						</li>
+					);
+				})}
+			</ol>
+		</section>
 	);
 }
 
-export function FullscreenBookmark({
+export default function FullscreenDetails({
+	show,
 	base,
-	onFavorite,
+	onNavigate,
 }: {
+	show: Show;
 	base: string;
-	onFavorite: () => void;
-}): ReactElement {
+	onNavigate: () => void;
+}) {
+	const { showDetailStore } = useStores();
+	const { status, retry } = useInitialization(showDetailStore);
+	const detail = useSyncExternalStore(
+		showDetailStore.subscribe,
+		() => showDetailStore.get(show.id),
+		() => undefined,
+	);
+	const entries = detail?.tracklist ?? [];
 	return (
-		<button
-			type="button"
-			aria-label="Favorite show"
-			onClick={onFavorite}
-			className={styles["fullscreen-bookmark-button"]}
-		>
-			<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-				<use href={`${base}/assets/icons/bookmark.svg#bookmark`} />
-			</svg>
-		</button>
+		<div className={styles["fullscreen-details"]}>
+			<a
+				className={styles["fullscreen-title"]}
+				href={`${base}/shows/${show.id}`}
+				aria-label={`View ${show.title}`}
+				onClick={onNavigate}
+			>
+				{show.title}
+			</a>
+			<div
+				className={styles["fullscreen-body"]}
+				data-has-tracklist={entries.length > 0}
+			>
+				<div className={styles["fullscreen-artwork"]}>
+					<img src={show.image_large} alt={show.title} />
+					<div className={styles["fullscreen-save"]}>
+						<SaveToPlaylist key={show.id} showId={show.id} showNote={false} />
+					</div>
+				</div>
+				<FullscreenTracklist entries={entries} />
+			</div>
+			{status === "error" && (
+				<button
+					type="button"
+					aria-label="Retry loading tracklist"
+					onClick={retry}
+				>
+					Retry loading tracklist
+				</button>
+			)}
+		</div>
 	);
 }

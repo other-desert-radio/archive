@@ -7,11 +7,7 @@ import MixcloudWidget from "../mixcloud";
 import PlaylistModal from "../playlists/PlaylistModal";
 import { DesktopActions, MobileExpand } from "./CompactActions";
 import ExpandHandle from "./ExpandHandle";
-import {
-	FullscreenBookmark,
-	FullscreenDJs,
-	FullscreenTags,
-} from "./FullscreenDetails";
+import FullscreenDetails from "./FullscreenDetails";
 import FullscreenNav from "./FullscreenNav";
 import styles from "./Miniplayer.module.css";
 import TrackTitle from "./TrackTitle";
@@ -41,7 +37,6 @@ function ActiveMiniplayer({
 }) {
 	const stores = useStores();
 	useInitialization(stores);
-	const tags = stores.tagStore.getMap();
 	const playlistModal = useRef<HTMLDialogElement>(null);
 	const openFavorites = () => playlistModal.current?.showModal();
 	const {
@@ -80,43 +75,19 @@ function ActiveMiniplayer({
 							close={closeImmediately}
 						/>
 						<div className={styles["controls"]} data-miniplayer-scroll>
-							<div
-								className={styles["fullscreen-artwork"]}
-								hidden={presentation !== "fullscreen"}
-							>
-								{presentation === "fullscreen" && (
-									<img src={track.show.image_large} alt={track.show.title} />
-								)}
-							</div>
+							{presentation === "fullscreen" && (
+								<FullscreenDetails
+									show={track.show}
+									base={base}
+									onNavigate={closeImmediately}
+								/>
+							)}
 							<TrackTitle
 								show={track.show}
 								base={base}
 								inert={presentation === "fullscreen"}
 							/>
 							<div className={styles["fullscreen-content"]}>
-								<div
-									className={styles["fullscreen-metadata"]}
-									hidden={presentation !== "fullscreen"}
-								>
-									{presentation === "fullscreen" && (
-										<a
-											className={styles["fullscreen-title"]}
-											href={`${base}/shows/${track.show.id}`}
-											aria-label={`View ${track.show.title}`}
-											onClick={closeImmediately}
-										>
-											{track.show.title}
-										</a>
-									)}
-									{presentation === "fullscreen" && tags.size > 0 && (
-										<FullscreenTags
-											show={track.show}
-											base={base}
-											tags={tags}
-											onNavigate={closeImmediately}
-										/>
-									)}
-								</div>
 								<div className={styles["widget-slot"]}>
 									<MixcloudWidget
 										initialCloudcastKey={track.source.cloudcastKey}
@@ -127,31 +98,6 @@ function ActiveMiniplayer({
 											light: false,
 										}}
 									/>
-								</div>
-								<div className={styles["fullscreen-actions"]}>
-									<div
-										className={styles["fullscreen-bookmark"]}
-										hidden={presentation !== "fullscreen"}
-									>
-										{presentation === "fullscreen" && (
-											<FullscreenBookmark
-												base={base}
-												onFavorite={openFavorites}
-											/>
-										)}
-									</div>
-									<div
-										className={styles["fullscreen-djs"]}
-										hidden={presentation !== "fullscreen"}
-									>
-										{presentation === "fullscreen" && (
-											<FullscreenDJs
-												show={track.show}
-												base={base}
-												onNavigate={closeImmediately}
-											/>
-										)}
-									</div>
 								</div>
 							</div>
 							<DesktopActions

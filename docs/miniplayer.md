@@ -48,7 +48,7 @@ the available width underneath alongside the desktop controls on the right.
 
 At 600px and below, metadata and desktop actions are hidden. A borderless,
 content-width “expand ↑” button sits immediately above the widget at its right
-edge, without a full-width background strip. The button supports tap-to-expand and upward dragging with inertia. It stays labeled expand throughout the upward movement and disappears once fullscreen is reached. At phone widths it is the only upward drag target; the mound is hidden. Fullscreen has no mobile collapse button; use X to dismiss. The bookmark remains unwired.
+edge, without a full-width background strip. The button supports tap-to-expand and upward dragging with inertia. It stays labeled expand throughout the upward movement and disappears once fullscreen is reached. At phone widths it is the only upward drag target; the mound is hidden. Fullscreen has no mobile collapse button; use X to dismiss. The compact bookmark opens the playlist modal.
 
 Safe-area padding stays inside the active bar. A border-box ResizeObserver
 publishes its height as `--miniplayer-height`; BaseLayout reserves that height in
@@ -60,33 +60,26 @@ outside the measured bar above its top edge.
 The compact player also has a curved hover mound that follows the mouse, with an up arrow at its crest. It starts small and grows smoothly as the pointer approaches the top edge, reaching full height at the mound. Clicking the mound opens fullscreen; dragging it reveals the fullscreen player directly. Release distance and recent pointer velocity determine whether it settles open or returns to compact. The fullscreen nav accepts downward drags without a hover nudge or arrow. The compact title fades out before the station name and close control fade in, with a brief gap between labels; pulling down reverses that sequence. Pulling down reverses the gesture; X slides down and the fullscreen button slides up. Empty compact-player space also accepts upward drags, excluding text and interactive controls. Reduced motion disables the settling animation. Pointer tracking applies to the player surface; the cross-origin Mixcloud iframe does not forward pointer movement.
 
 Both expand controls switch local presentation state to fullscreen; the close
-button restores compact presentation. Activating fullscreen show, tag or DJ
-links uses the immediate-close path and releases scroll locking synchronously before client navigation while playback continues. The X button retains its animated dismissal. During phone dismissal, the existing widget stays anchored above the bottom safe area while the fullscreen panel moves down, avoiding an empty bar before the compact layout returns. The mobile expand button is also visible in its compact position during dismissal. The same player container becomes fixed
+button restores compact presentation. Activating the fullscreen show
+link uses the immediate-close path and releases scroll locking synchronously before client navigation while playback continues. The X button retains its animated dismissal. During phone dismissal, the existing widget stays anchored above the bottom safe area while the fullscreen panel moves down, avoiding an empty bar before the compact layout returns. The mobile expand button is also visible in its compact position during dismissal. The same player container becomes fixed
 and fills the viewport with the miniplayer background, a station header and a close SVG.
 Compact metadata and actions are hidden. The existing iframe stays mounted in
-its original position in the React tree: at the viewport bottom on mobile and
-in the right-hand content area on desktop.
+its original position in the React tree: across the viewport bottom at every screen width.
 
-Fullscreen controls use a grid with large show artwork, a wrapping linked
-title, colored tag links, an unwired outline bookmark button and linked DJ portraits
-and names. All DJs render; shows without DJs omit their content and missing
-portrait references omit the image. Tags use the existing large TagView inside
-archive links and
-resolve show tag IDs against the existing catalog, preserving their order and
-colors, and link to archive tag pages. Missing IDs use hydrateTags' existing
-logging/omission behavior. Above 1023px, artwork
-spans the left column and the other slots
-occupy the right. At 1023px and below, the slots stack as artwork, metadata,
-a shared row with bookmark left and DJs right, then the bottom widget. Desktop
-artwork occupies a 1:1 square bounded by column
-width and the content area's height, without cropping. Desktop content is
-centered vertically; artwork is bounded by 80% of viewport height and 52rem.
-The artwork determines the row height, with right-hand metadata aligned to its top. The two equal desktop columns share a centered 100rem maximum-width container.
-Metadata, widget and the bookmark/DJ flex row stretch to the same right-column width. The
-stacked layout caps square artwork at 45% of viewport height and places metadata
-one medium spacing token below it; remaining height belongs to the content column. Content can scroll when it exceeds its height, with the
-widget sticky at the bottom. Detail slots are hidden in compact mode; artwork/title mount only
-in fullscreen. The widget retains its existing parent in both modes.
+Fullscreen uses flexbox stacks: a station/close header, a large linked show title,
+then artwork with a playlist save control beneath it. The title spans the full header
+width; only the artwork/tracklist row has a centered width cap. When a tracklist is available,
+it sits beside the artwork; without one, artwork and its save control are centered.
+At 750px and below, content stacks as artwork, title, save control, then tracklist. Artwork stays square without cropping,
+and long titles and tracks wrap. The content scrolls independently above the bottom
+widget, with safe-area space reserved. Tags and DJ portraits are omitted.
+
+The fullscreen detail component initializes and subscribes to the existing show-detail
+store, so cached and delayed tracklists update the current show. Songs render as
+artist — song and chapters retain their text. Detail failures offer a retry without
+interrupting playback. The shared playlist control shows an outline bookmark when
+unsaved and a filled bookmark with playlist names when saved; it opens the existing
+playlist modal. The iframe retains its original React parent in both presentations.
 
 A player-shell wrapper reserves the compact height measured on expand, so the
 bar's resize observer does not turn fullscreen height into page clearance.
