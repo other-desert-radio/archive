@@ -40,12 +40,7 @@ export default function ShowCard({ show, tags, record, playlistSaves }: Props) {
 	return (
 		<article className={styles["show-card"]}>
 			<div className={styles["artwork"]}>
-				<SquareShowCard
-					mode="playback"
-					show={show}
-					record={record}
-					base={detailBase}
-				/>
+				<SquareShowCard mode="playback" show={show} record={record} />
 			</div>
 			<div className={styles["trailing-content"]}>
 				<a

@@ -17,7 +17,7 @@ const server = serve({
 	hostname: "127.0.0.1",
 	port: 0,
 	async fetch(request) {
-		const path = new URL(request.url).pathname.replace(/^\/archive\/?/, "");
+		const path = new URL(request.url).pathname.replace(/^\//, "");
 		const assetPath = path && !path.split("/").at(-1).includes(".")
 			? `${path.replace(/\/$/, "")}/index.html` : path || "index.html";
 		const asset = file(`dist/${assetPath}`);
@@ -126,7 +126,7 @@ try {
 	const shows = (await file("public/resources/shows.json").json()).data;
 	const djs = (await file("public/resources/djs_brief.json").json()).data;
 	const tags = (await file("public/resources/tags.json").json()).data;
-	await browser("open", `http://127.0.0.1:${server.port}/archive/`);
+	await browser("open", `http://127.0.0.1:${server.port}/`);
 	await browser("wait", "--fn", "!document.querySelector('main astro-island').hasAttribute('ssr') && !document.querySelector('main [role=status]')");
 	await historyChecks();
 	console.log("Search history saves, deletion focus, white background, and outside dismissal pass.");

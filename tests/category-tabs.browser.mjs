@@ -41,7 +41,7 @@ async function verifyReducedMotionClearance() {
 async function verifyReducedMotionEntry() {
 	const originalPath = await evaluate("location.pathname");
 	await evaluate("window.scrollTo(0, 0); true");
-	for (const path of ["/archive/djs", originalPath]) {
+	for (const path of ["/djs", originalPath]) {
 		await browser("click", `[data-category-tabs] a[href='${path}']`);
 		await browser("wait", "--fn", `location.pathname.replace(/\\/$/, '') === ${JSON.stringify(path.replace(/\/$/, ""))} && !document.documentElement.hasAttribute('data-astro-transition')`);
 		assert.equal(await evaluate("scrollY"), 0, "reduced-motion category entry starts at the top");
@@ -85,8 +85,8 @@ async function verifyCompactCategorySwitch(driver, destination) {
 		}, { once: true });
 		return true;
 	})()`);
-	await browser("click", `[data-category-tabs] a[href='/archive/${destination}']`);
-	await browser("wait", "--fn", `location.pathname.replace(/\\/$/, '') === '/archive/${destination}' && document.querySelector('header[data-tabs-driver=${driver}]') !== null && scrollY >= ${compressionScrollPx} && Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) === 1`);
+	await browser("click", `[data-category-tabs] a[href='/${destination}']`);
+	await browser("wait", "--fn", `location.pathname.replace(/\\/$/, '') === '/${destination}' && document.querySelector('header[data-tabs-driver=${driver}]') !== null && scrollY >= ${compressionScrollPx} && Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) === 1`);
 	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
 	assert.deepEqual(await evaluate("window.categorySwapState"), { progress: 1, background: "rgb(0, 0, 0)" }, "the replacement strip must already be compact during the swap");
 }
@@ -96,7 +96,7 @@ const server = serve({
 	hostname: "127.0.0.1",
 	port: 0,
 	async fetch(request) {
-		const path = new URL(request.url).pathname.replace(/^\/archive\/?/, "");
+		const path = new URL(request.url).pathname.replace(/^\//, "");
 		const assetPath = path && !path.split("/").at(-1).includes(".")
 			? `${path.replace(/\/$/, "")}/index.html` : path || "index.html";
 		const asset = file(`dist/${assetPath}`);
@@ -112,7 +112,7 @@ const server = serve({
 		return (await asset.exists()) ? new Response(asset) : new Response("Missing", { status: 404 });
 	},
 });
-const base = `http://127.0.0.1:${server.port}/archive`;
+const base = `http://127.0.0.1:${server.port}`;
 try {
 	await browser("set", "viewport", "1440", "800");
 	await browser("open", `${base}/`);
@@ -183,15 +183,15 @@ try {
 	await browser("wait", "--fn", `Math.abs(scrollY - ${halfwayScroll}) < 2 && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === ${restoredProgress}`);
 	await verifyProgress(halfwayScroll, halfwayProgress);
 	await evaluate("window.outgoingTabs = document.querySelector('[data-category-tabs]'); true");
-	await browser("click", "[data-category-tabs] a[href='/archive/djs']");
-	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/djs' && document.querySelector('[data-category-tabs]') !== window.outgoingTabs && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === '0'");
+	await browser("click", "[data-category-tabs] a[href='/djs']");
+	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/djs' && document.querySelector('[data-category-tabs]') !== window.outgoingTabs && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === '0'");
 	await verifyProgress(compressionScrollPx, 1);
 	assert.equal(await evaluate("window.outgoingTabs.style.getPropertyValue('--tabs-progress')"), String(halfwayProgress));
 	await browser("back");
-	await browser("wait", "--fn", `location.pathname === '/archive/' && Math.abs(scrollY - ${halfwayScroll}) < 2 && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === ${restoredProgress}`);
+	await browser("wait", "--fn", `location.pathname === '/' && Math.abs(scrollY - ${halfwayScroll}) < 2 && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === ${restoredProgress}`);
 
-	await browser("click", "[data-category-tabs] a[href='/archive/djs']");
-	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/djs'");
+	await browser("click", "[data-category-tabs] a[href='/djs']");
+	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/djs'");
 	await evaluate("document.fonts.ready.then(() => true)");
 	for (const width of [320, 332, 750, 1440, 2000]) {
 		await browser("set", "viewport", String(width), "800");
@@ -288,15 +288,15 @@ try {
 	})`);
 	assert.deepEqual(topState, { expanded: true, background: "rgba(0, 0, 0, 0)", transition: "0s", animations: 0 }, "returning to the top must clear black immediately, including a settling scroll event");
 	// Empty history must stay usable without adding artificial scrolling to reach the endpoint.
-	await browser("click", "[data-category-tabs] a[href='/archive/history']");
-	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/history' && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === '0'");
+	await browser("click", "[data-category-tabs] a[href='/history']");
+	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/history' && document.querySelector('[data-category-tabs]')?.style.getPropertyValue('--tabs-progress') === '0'");
 	await browser("set", "media", "light", "reduced-motion");
 	await verifyProgress(0, 1);
 	assert.equal(await evaluate("getComputedStyle(document.querySelector('.tabs-strip')).backgroundColor"), "rgb(0, 0, 0)");
 	await browser("set", "media", "light");
 	await verifyProgress(0, 0);
-	await browser("click", "[data-category-tabs] a[href='/archive/djs']");
-	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/djs' && document.querySelector('header[data-tabs-driver=js]') !== null");
+	await browser("click", "[data-category-tabs] a[href='/djs']");
+	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/djs' && document.querySelector('header[data-tabs-driver=js]') !== null");
 	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
 	await verifyProgress(compressionScrollPx * 4, 1);
 	await verifyCompactCategorySwitch("js", "history");
@@ -354,11 +354,11 @@ try {
 		assert.deepEqual(expanded, reversed);
 		assert.ok(states.every(state => Math.abs(state.mainY - expanded.mainY) < 1));
 	}
-	await browser("click", "[data-category-tabs] a[href='/archive/explore']");
-	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/explore' && document.querySelector('header[data-tabs-driver=css]') !== null");
+	await browser("click", "[data-category-tabs] a[href='/explore']");
+	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/explore' && document.querySelector('header[data-tabs-driver=css]') !== null");
 	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
-	await browser("click", "[data-category-tabs] a[href='/archive/history']");
-	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/history' && document.querySelector('header[data-tabs-driver=css]') !== null");
+	await browser("click", "[data-category-tabs] a[href='/history']");
+	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/history' && document.querySelector('header[data-tabs-driver=css]') !== null");
 	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
 	await browser("set", "media", "light", "reduced-motion");
 	await browser("wait", "--fn", "getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress').trim() === '1'");
@@ -368,17 +368,17 @@ try {
 	assert.equal(await evaluate("getComputedStyle(document.querySelector('.tabs-strip')).backgroundColor"), "rgb(0, 0, 0)");
 	await browser("set", "media", "light");
 	await browser("wait", "--fn", "getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress').trim() === '0'");
-	await browser("click", "[data-category-tabs] a[href='/archive/djs']");
-	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/archive/djs' && document.querySelector('header[data-tabs-driver=css]') !== null");
+	await browser("click", "[data-category-tabs] a[href='/djs']");
+	await browser("wait", "--fn", "location.pathname.replace(/\\/$/, '') === '/djs' && document.querySelector('header[data-tabs-driver=css]') !== null");
 	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
 	await evaluate(`window.scrollTo(0, ${compressionScrollPx * 4}); true`);
 	await browser("wait", "--fn", "Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) === 1");
 	await verifyCompactCategorySwitch("css", "history");
 	await browser("back");
-	await browser("wait", "--fn", `location.pathname.replace(/\\/$/, '') === '/archive/djs' && scrollY === ${compressionScrollPx * 4} && Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) === 1`);
+	await browser("wait", "--fn", `location.pathname.replace(/\\/$/, '') === '/djs' && scrollY === ${compressionScrollPx * 4} && Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) === 1`);
 	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
 	await browser("forward");
-	await browser("wait", "--fn", `location.pathname.replace(/\\/$/, '') === '/archive/history' && scrollY >= ${compressionScrollPx} && Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) === 1`);
+	await browser("wait", "--fn", `location.pathname.replace(/\\/$/, '') === '/history' && scrollY >= ${compressionScrollPx} && Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) === 1`);
 	await browser("wait", "--fn", "!document.documentElement.hasAttribute('data-astro-transition')");
 	await browser("reload");
 	await browser("wait", "--fn", `document.querySelector('header[data-tabs-driver=css]') !== null && scrollY >= ${compressionScrollPx} && Number(getComputedStyle(document.querySelector('[data-category-tabs]')).getPropertyValue('--tabs-progress')) === 1`);

@@ -17,7 +17,6 @@ export default function HistoryShowCard({ show, record }: Props) {
 				mode="playback"
 				show={show}
 				record={record}
-				base={base}
 				alwaysShowProgress
 			/>
 			<a

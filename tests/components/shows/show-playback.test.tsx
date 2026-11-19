@@ -61,7 +61,6 @@ for (const mode of ["playback", "details"] as const) {
 				<SquareShowCard
 					{...(mode === "details" ? { mode, tags: [] } : { mode })}
 					show={show}
-					base=""
 					record={{ positionInSeconds, inProgress: true }}
 				/>,
 			);
@@ -81,12 +80,11 @@ for (const mode of ["playback", "details"] as const) {
 				<SquareShowCard
 					{...(mode === "details" ? { mode, tags: [] } : { mode })}
 					show={show}
-					base="/archive"
 					record={record}
 				/>,
 			);
 			assert.match(html, /PLAYED/);
-			assert.match(html, /\/archive\/assets\/icons\/check.svg#check/);
+			assert.match(html, /\/assets\/icons\/check.svg#check/);
 			assert.doesNotMatch(html, /role="progressbar"/);
 		}
 	});
@@ -96,7 +94,6 @@ for (const mode of ["playback", "details"] as const) {
 			<SquareShowCard
 				{...(mode === "details" ? { mode, tags: [] } : { mode })}
 				show={show}
-				base=""
 			/>,
 		);
 		assert.doesNotMatch(withoutRecord, /role="progressbar"/);
@@ -105,7 +102,6 @@ for (const mode of ["playback", "details"] as const) {
 				<SquareShowCard
 					{...(mode === "details" ? { mode, tags: [] } : { mode })}
 					show={{ ...show, duration }}
-					base=""
 					record={{ positionInSeconds: 15, inProgress: true }}
 				/>,
 			);
@@ -123,7 +119,6 @@ for (const mode of ["playback", "details"] as const) {
 				<SquareShowCard
 					{...(mode === "details" ? { mode, tags: [] } : { mode })}
 					show={{ ...show, duration: 125 }}
-					base=""
 					record={{ positionInSeconds, inProgress: true }}
 				/>,
 			);
@@ -205,7 +200,6 @@ test("detail artwork shares player state and loads its image eagerly", () => {
 				<SquareShowCard
 					mode="playback"
 					show={show}
-					base="/archive/"
 					loading="eager"
 					border="secondary"
 				/>
@@ -214,7 +208,7 @@ test("detail artwork shares player state and loads its image eagerly", () => {
 	assert.match(render(), /aria-label="Play Show"/);
 	assert.match(render(), /loading="eager"/);
 	assert.match(render(), /image-border-secondary/);
-	assert.doesNotMatch(render(), /\/archive\/\//);
+	assert.match(render(), /src="\/assets\/icons\/play.svg"/);
 	audioStore.select(mixcloudShowTrack(show));
 	assert.match(render(), /aria-label="Pause Show"/);
 	assert.match(render(), /data-selected="true"/);

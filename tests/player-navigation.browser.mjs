@@ -7,7 +7,7 @@ import process from "node:process";
 import { URL } from "node:url";
 
 const session = "archive-density";
-const base = process.env["ARCHIVE_PREVIEW_URL"] ?? "http://127.0.0.1:4321/archive";
+const base = process.env["ARCHIVE_PREVIEW_URL"] ?? "http://127.0.0.1:4321";
 function browser(...args) {
 	return execFileSync("agent-browser", ["--session", session, ...args], {
 		encoding: "utf8",
@@ -54,7 +54,7 @@ function verifyPlayerLayout(width) {
 
 browser("open", `${base}/`);
 browser("wait", "button[aria-label^='Play ']");
-const basePath = new URL(base).pathname;
+const basePath = new URL(base).pathname.replace(/\/$/, "");
 const catalog = JSON.parse(readFileSync("public/resources/shows.json", "utf8"));
 const showWithDetails = catalog.data.slice(0, 20).find((show) => show.tagIds.length > 0 && show.djs.length > 0);
 assert.ok(showWithDetails, "Fullscreen fixture needs a visible show with tags and DJs");
@@ -383,7 +383,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 			bookmarkHidden: getComputedStyle(player.querySelector('[class*="desktop-actions"]')).display === 'none',
 			fullscreenBookmarkVisible: bookmark.getBoundingClientRect().width > 0,
 			djsVisible: djLinks.length > 0 && djLinks.every(link => link.getBoundingClientRect().width > 0),
-			djDestinations: djLinks.every(link => link.getAttribute('href').startsWith('/archive/djs/')),
+			djDestinations: djLinks.every(link => link.getAttribute('href').startsWith('/djs/')),
 			closeVisible: player.querySelector('[aria-label="Close player"]').getBoundingClientRect().width > 0,
 			artworkVisible: artwork.getBoundingClientRect().width > 0 && artwork.getBoundingClientRect().height > 0,
 			artworkWidth: artwork.getBoundingClientRect().width,
@@ -392,9 +392,9 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 			artworkTop: artwork.getBoundingClientRect().top,
             titleBottom: title.getBoundingClientRect().bottom,
 			matchingTitle: artwork.alt === title.textContent && title.textContent.length > 0,
-			showLink: title.getAttribute('href').startsWith('/archive/shows/'),
+			showLink: title.getAttribute('href').startsWith('/shows/'),
 			tagsVisible: tagLinks.length > 0 && tagLinks.every(link => link.getBoundingClientRect().height > 0),
-			tagDestinations: tagLinks.every(link => link.getAttribute('href').startsWith('/archive/tags/')),
+			tagDestinations: tagLinks.every(link => link.getAttribute('href').startsWith('/tags/')),
 			overflow: document.documentElement.scrollWidth > innerWidth
 		};
 	})()`);

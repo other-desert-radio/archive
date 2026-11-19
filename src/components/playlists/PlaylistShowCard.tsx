@@ -30,12 +30,7 @@ export default function PlaylistShowCard({
 	const hasNote = entry.note !== undefined && entry.note !== "";
 	return (
 		<div className={styles["card"]}>
-			<SquareShowCard
-				mode="playback"
-				show={show}
-				record={record}
-				base={getBasePath()}
-			/>
+			<SquareShowCard mode="playback" show={show} record={record} />
 			<div className={styles["chin"]} data-has-note={hasNote}>
 				<a
 					className={styles["title"]}

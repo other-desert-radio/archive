@@ -16,7 +16,7 @@ const server = serve({
 	hostname: "127.0.0.1",
 	port: 0,
 	async fetch(request) {
-		const path = new URL(request.url).pathname.replace(/^\/archive\/?/, "");
+		const path = new URL(request.url).pathname.replace(/^\//, "");
 		if (path.startsWith("resources/")) {
 			return new Response("Catalog unavailable", { status: 503 });
 		}
@@ -38,12 +38,12 @@ try {
 	const dj = (await file("public/resources/djs_brief.json").json()).data[0];
 	for (const storageUnavailable of [false, true]) {
 		denyStorage = storageUnavailable;
-		for (const [kind, entity, fallback] of [["shows", show, "/archive/"], ["djs", dj, "/archive/djs"]]) {
+		for (const [kind, entity, fallback] of [["shows", show, "/"], ["djs", dj, "/djs"]]) {
 			for (const [query, href, label] of [
-				[`?fromTag=${tag.id}`, `/archive/tags/${tag.id}`, tag.title.toUpperCase()],
+				[`?fromTag=${tag.id}`, `/tags/${tag.id}`, tag.title.toUpperCase()],
 				["?fromTag=invalid", fallback, kind.toUpperCase()],
 			]) {
-				await browser("open", `http://127.0.0.1:${server.port}/archive/${kind}/${entity.id}${query}`);
+				await browser("open", `http://127.0.0.1:${server.port}/${kind}/${entity.id}${query}`);
 				await browser("wait", "--fn", `(() => {
 					const link = document.querySelector('[data-tag-return]');
 					return link?.pathname === ${JSON.stringify(href)} && link.querySelector('b').textContent === ${JSON.stringify(label)};

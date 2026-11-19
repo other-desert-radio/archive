@@ -81,7 +81,6 @@ const tags = await fetchTags(pathToFileURL("public/resources/tags.json"));
               image_large: show.image_large,
               tags: hydrateTags(show, tags),
             }))}
-            base={import.meta.env.BASE_URL}
             fromTag={tag.id}
             client:load
           />

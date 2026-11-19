@@ -55,7 +55,7 @@ test("built show and DJ detail pages render large artwork with alt text and page
 			const imageLarge = record.image_large;
 			const image = (html.match(/<img\b[^>]*>/g) ?? []).find((tag) =>
 				tag.includes(
-					`src="${category === "djs" ? "/archive/" : ""}${escapeAttribute(imageLarge)}"`,
+					`src="${category === "djs" ? "/" : ""}${escapeAttribute(imageLarge)}"`,
 				),
 			);
 			assert.ok(image, `${category}/${record.id} should render large artwork`);

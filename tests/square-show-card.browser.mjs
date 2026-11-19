@@ -17,12 +17,12 @@ assert.ok(show);
 const bundle = await build({
   entrypoints: ["tests/res/square-show-card.tsx"],
   target: "browser",
-  define: { "import.meta.env.BASE_URL": JSON.stringify("/archive/") },
+  define: { "import.meta.env.BASE_URL": JSON.stringify("/") },
 });
 assert.ok(bundle.success, bundle.logs.join("\n"));
 const markup = ["playback", "details"].map(mode =>
   `<div id="${mode}">${renderToString(createElement(SquareShowCard, {
-    mode, show, base: "/archive", ...(mode === "details" ? { fromTag: 7, tags: [{id: 1, title: "Ambient", color: "#ff0000"}] } : {}),
+    mode, show, ...(mode === "details" ? { fromTag: 7, tags: [{id: 1, title: "Ambient", color: "#ff0000"}] } : {}),
   }))}</div>`,
 ).join("");
 const server = serve({
@@ -32,9 +32,9 @@ const server = serve({
     const path = new URL(request.url).pathname;
     const output = bundle.outputs.find(item => path === `/${item.path.split("/").pop()}`);
     if (output) return new Response(output);
-    if (path.startsWith("/archive/assets/")) return new Response(file(`public${path.slice(8)}`));
-    if (path.startsWith("/archive/")) {
-      const relative = path.slice("/archive/".length);
+    if (path.startsWith("/assets/")) return new Response(file(`public${path}`));
+    if (path !== "/" && !path.startsWith("/square-show-card.")) {
+      const relative = path.slice("/".length);
       const asset = file(`dist/${relative}`);
       const page = await asset.exists() ? asset : file(`dist/${relative.replace(/\/$/, "")}/index.html`);
       return await page.exists() ? new Response(page) : new Response("Show detail fixture", { headers: { "Content-Type": "text/html" } });
@@ -97,14 +97,14 @@ try {
     return true;
   })()`);
   await browser("click", "#details a");
-  assert.equal(new URL(await browser("get", "url")).pathname, `/archive/shows/${show.id}`);
+  assert.equal(new URL(await browser("get", "url")).pathname, `/shows/${show.id}`);
   assert.equal(new URL(await browser("get", "url")).search, "?fromTag=7");
   for (const [page, suffix] of [
     [`djs/${realShow.djs[0].id}`, ""],
     [`tags/${realShow.tagIds[0]}`, `?fromTag=${realShow.tagIds[0]}`],
   ]) {
-    await browser("open", new URL(`/archive/${page}`, server.url).href);
-    const href = `/archive/shows/${realShow.id}${suffix}`;
+    await browser("open", new URL(`/${page}`, server.url).href);
+    const href = `/shows/${realShow.id}${suffix}`;
     const selector = `a[href="${href}"]`;
     await browser("wait", "--fn", `document.querySelector(${JSON.stringify(selector)})?.parentElement.querySelector('[aria-valuenow="25"]') !== null && !!document.querySelector(${JSON.stringify(selector)})`);
     assert.equal(await evaluate(`document.querySelector(${JSON.stringify(selector)}).parentElement.querySelector('button') === null`), true);
