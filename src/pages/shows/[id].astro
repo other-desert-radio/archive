@@ -301,6 +301,12 @@ const hydratedTags = hydrateTags(show, tags);
     margin: 0;
   }
 
+  @media (max-width: 1023px) {
+    .show-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
   @media (max-width: 750px) {
     .show-grid {
       gap: var(--space-lg);
