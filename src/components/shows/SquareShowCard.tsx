@@ -15,7 +15,6 @@ type DetailsShow = Pick<Show, "id" | "title" | "duration" | "image_large">;
 
 type Props = {
 	record?: Pick<PlaybackRecord, "positionInSeconds" | "inProgress"> | undefined;
-	base: string;
 	loading?: "lazy" | "eager";
 	border?: "primary" | "secondary";
 	alwaysShowProgress?: boolean;
@@ -32,11 +31,9 @@ type Props = {
 // Hydrate related-show grids once rather than creating an island per card.
 export function SquareShowCards({
 	shows,
-	base,
 	fromTag,
 }: {
 	shows: (DetailsShow & { tags: Tag[] })[];
-	base: string;
 	fromTag?: number;
 }) {
 	return shows.map((show) => (
@@ -45,7 +42,6 @@ export function SquareShowCards({
 			mode="details"
 			show={show}
 			tags={show.tags}
-			base={base}
 			fromTag={fromTag}
 		/>
 	));
@@ -56,12 +52,11 @@ export default function SquareShowCard(props: Props) {
 		show,
 		fromTag,
 		record,
-		base,
 		loading = "lazy",
 		border = "primary",
 		alwaysShowProgress = false,
 	} = props;
-	const detailBase = getBasePath(base);
+	const detailBase = getBasePath();
 	const { playbackStore } = useStores();
 	const subscribe = useCallback(
 		(notify: () => void) =>

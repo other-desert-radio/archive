@@ -8,7 +8,6 @@ test("links large show artwork to the show detail page with an accessible label"
 		<SquareShowCard
 			mode="details"
 			tags={[{ id: 1, title: "Ambient", color: "#ff0000" }]}
-			base="/archive/"
 			fromTag={7}
 			show={{
 				id: 1,
@@ -26,6 +25,6 @@ test("links large show artwork to the show detail page with an accessible label"
 	assert.match(markup, /loading="lazy"/);
 	assert.match(markup, /decoding="async"/);
 	assert.ok(markup.includes('alt="Test Show"'));
-	assert.ok(markup.includes('href="/archive/shows/1?fromTag=7"'));
+	assert.ok(markup.includes('href="/shows/1?fromTag=7"'));
 	assert.ok(markup.includes('aria-label="View Test Show"'));
 });

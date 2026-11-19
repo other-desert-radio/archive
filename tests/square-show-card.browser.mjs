@@ -22,7 +22,7 @@ const bundle = await build({
 assert.ok(bundle.success, bundle.logs.join("\n"));
 const markup = ["playback", "details"].map(mode =>
   `<div id="${mode}">${renderToString(createElement(SquareShowCard, {
-    mode, show, base: "", ...(mode === "details" ? { fromTag: 7, tags: [{id: 1, title: "Ambient", color: "#ff0000"}] } : {}),
+    mode, show, ...(mode === "details" ? { fromTag: 7, tags: [{id: 1, title: "Ambient", color: "#ff0000"}] } : {}),
   }))}</div>`,
 ).join("");
 const server = serve({
