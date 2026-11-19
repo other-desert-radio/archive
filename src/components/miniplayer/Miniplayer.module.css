@@ -563,7 +563,7 @@
 	display: none;
 }
 
-@media (min-width: 1023px) {
+@media (width > 750px) {
 	.fullscreen-details {
 		margin-block: auto;
 		flex-shrink: 0;

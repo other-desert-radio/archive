@@ -427,7 +427,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
     }
     assert.ok(Math.abs(fullscreen.artworkWidth - fullscreen.artworkHeight) < 1);
 	assert.equal(fullscreen.overflow, false);
-	if (width >= 1023) {
+	if (width > 750) {
 		assert.equal(fullscreen.titleFits, true, "Full title fits the desktop width");
 		const marquee = evaluate(`(() => {
 			const details = document.querySelector('[class*="fullscreen-details"]');
@@ -450,6 +450,12 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 		assert.equal(marquee.visible, true);
 		assert.equal(marquee.moving, true);
 		assert.deepEqual(marquee.shades, [1, 0.3, 0.15]);
+	} else {
+		assert.equal(evaluate(`(() => {
+			const marquee = document.querySelector('[class*="fullscreen-marquee"]');
+			return getComputedStyle(marquee).display === 'none' &&
+				[...marquee.children].every(row => getComputedStyle(row).animationName === 'none');
+		})()`), true, "Stacked titles have no marquee animation");
 	}
 
 	if (width <= 600) {

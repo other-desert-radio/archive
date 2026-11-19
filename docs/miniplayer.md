@@ -70,7 +70,7 @@ Fullscreen uses flexbox stacks: a station/close header, a large linked show titl
 then artwork with a playlist save control beneath it. The title spans the full header
 width; only the artwork/tracklist row has a centered width cap. When a tracklist is available,
 it sits beside the artwork; without one, artwork and its save control are centered.
-From 1023px, shows with tracklists use a single static title line that shrinks to
+Above 750px, shows with tracklists use a single static title line that shrinks to
 fit the available width. Desktop titles have extra space above the artwork row. Without a
 tracklist, three edge-to-edge staggered marquee rows replace the static title and extend behind
 the artwork, repeating the title in white and two progressively darker grays.
