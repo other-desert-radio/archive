@@ -21,8 +21,7 @@ dialog.creation {
 }
 
 .creation input:focus {
-	outline: 2px solid black;
-	outline-offset: 0;
+	outline: none;
 }
 
 .actions {

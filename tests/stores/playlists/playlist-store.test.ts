@@ -1,5 +1,6 @@
+import { mock, spyOn } from "bun:test";
 import assert from "node:assert/strict";
-import { mock, test } from "node:test";
+import { test } from "node:test";
 import { createIndexedDB } from "../../../src/database/indexed-db";
 import { PlaylistStore } from "../../../src/stores/playlists/playlist-store";
 import type { Playlist } from "../../../src/stores/playlists/types";
@@ -41,29 +42,23 @@ function setup() {
 	const database = createIndexedDB();
 	const objectStore = database.getObjectStore("playlists");
 	const records = [playlist(), likedPlaylist()];
-	const ensure = mock.method(
-		database,
-		"ensureLikedPlaylist",
+	const ensure = spyOn(database, "ensureLikedPlaylist").mockImplementation(
 		async ({ fallback }: { fallback: Playlist & { type: "liked" } }) => {
 			if (!records.some((item) => item.type === "liked")) {
 				records.push(fallback);
 			}
 		},
 	);
-	const read = mock.method(objectStore, "getAll", async () => records);
-	const write = mock.method(
-		objectStore,
-		"set",
+	const read = spyOn(objectStore, "getAll").mockImplementation(
+		async () => records,
+	);
+	const write = spyOn(objectStore, "set").mockImplementation(
 		async (_playlist: Playlist) => {},
 	);
-	const remove = mock.method(
-		objectStore,
-		"delete",
+	const remove = spyOn(objectStore, "delete").mockImplementation(
 		async (_playlistId: string) => {},
 	);
-	const getObjectStore = mock.method(
-		database,
-		"getObjectStore",
+	const getObjectStore = spyOn(database, "getObjectStore").mockImplementation(
 		() => objectStore,
 	);
 	return {
@@ -87,23 +82,23 @@ test("construction is SSR safe and reads are empty before initialization", () =>
 
 test("initialization shares one read and publishes a stable snapshot before notification", async () => {
 	const { store, read, getObjectStore } = setup();
-	assert.deepEqual(getObjectStore.mock.calls[0]?.arguments, ["playlists"]);
+	assert.deepEqual(getObjectStore.mock.calls[0], ["playlists"]);
 	const empty = store.getSnapshot();
-	const listener = mock.fn(() => {
+	const listener = mock(() => {
 		assert.deepEqual(store.getSnapshot(), [playlist(), likedPlaylist()]);
 	});
 	store.subscribe({ listener });
 	const loading = store.initialize();
 	assert.equal(loading, store.initialize());
 	await loading;
-	assert.equal(read.mock.callCount(), 1);
-	assert.equal(listener.mock.callCount(), 1);
+	assert.equal(read.mock.calls.length, 1);
+	assert.equal(listener.mock.calls.length, 1);
 	assert.notEqual(store.getSnapshot(), empty);
 	const loaded = store.getSnapshot();
 	await store.initialize();
 	assert.equal(store.getSnapshot(), loaded);
-	assert.equal(read.mock.callCount(), 1);
-	assert.equal(listener.mock.callCount(), 1);
+	assert.equal(read.mock.calls.length, 1);
+	assert.equal(listener.mock.calls.length, 1);
 });
 
 test("retrieval shares frozen records and isolates storage results", async () => {
@@ -155,27 +150,27 @@ test("retrieval preserves storage order and unavailable show references", async 
 
 test("failed initialization can retry and unsubscribed listeners are not notified", async () => {
 	const { store, read } = setup();
-	read.mock.mockImplementationOnce(async () => {
+	read.mockImplementationOnce(async () => {
 		throw new Error("Read failed");
 	});
-	const listener = mock.fn();
+	const listener = mock();
 	const unsubscribe = store.subscribe({ listener });
 	const empty = store.getSnapshot();
 	await assert.rejects(store.initialize(), /Read failed/);
 	assert.equal(store.getSnapshot(), empty);
 	assert.deepEqual(store.getAll(), []);
-	assert.equal(listener.mock.callCount(), 0);
+	assert.equal(listener.mock.calls.length, 0);
 	unsubscribe();
 	await store.initialize();
-	assert.equal(read.mock.callCount(), 2);
-	assert.equal(listener.mock.callCount(), 0);
+	assert.equal(read.mock.calls.length, 2);
+	assert.equal(listener.mock.calls.length, 0);
 	assert.deepEqual(store.getAll(), [playlist(), likedPlaylist()]);
 });
 
 test("create initializes storage, trims titles, and returns the frozen committed playlist", async () => {
 	const { store, read, write } = setup();
 	const created = await store.create({ title: "  Favorites  " });
-	assert.equal(read.mock.callCount(), 1);
+	assert.equal(read.mock.calls.length, 1);
 	assert.match(
 		created.id,
 		/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
@@ -185,7 +180,7 @@ test("create initializes storage, trims titles, and returns the frozen committed
 	assert.equal(new Date(created.createdAt).toISOString(), created.createdAt);
 	assert.equal(created.createdAt, created.updatedAt);
 	assert.deepEqual(created.shows, []);
-	assert.equal(write.mock.calls[0]?.arguments[0], created);
+	assert.equal(write.mock.calls[0]?.[0], created);
 	assert.equal(store.get({ playlistId: created.id }), created);
 	assert.ok(Object.isFrozen(created));
 	assert.ok(Object.isFrozen(created.shows));
@@ -198,11 +193,11 @@ test("lifecycle edits publish only after storage commits and preserve old snapsh
 	const before = store.getSnapshot();
 	const commit = Promise.withResolvers<void>();
 	const started = Promise.withResolvers<void>();
-	write.mock.mockImplementationOnce(async () => {
+	write.mockImplementationOnce(async () => {
 		started.resolve();
 		await commit.promise;
 	});
-	const listener = mock.fn();
+	const listener = mock();
 	store.subscribe({ listener });
 	const renaming = store.rename({
 		playlistId: "playlist-a",
@@ -210,7 +205,7 @@ test("lifecycle edits publish only after storage commits and preserve old snapsh
 	});
 	await started.promise;
 	assert.equal(store.getSnapshot(), before);
-	assert.equal(listener.mock.callCount(), 0);
+	assert.equal(listener.mock.calls.length, 0);
 	commit.resolve();
 	await renaming;
 	const updated = store.get({ playlistId: "playlist-a" });
@@ -220,10 +215,10 @@ test("lifecycle edits publish only after storage commits and preserve old snapsh
 	assert.deepEqual(updated.shows, playlist().shows);
 	assert.equal(new Date(updated.updatedAt).toISOString(), updated.updatedAt);
 	assert.deepEqual(before, [playlist(), likedPlaylist()]);
-	assert.equal(listener.mock.callCount(), 1);
+	assert.equal(listener.mock.calls.length, 1);
 	const deletion = Promise.withResolvers<void>();
 	const deleting = Promise.withResolvers<void>();
-	remove.mock.mockImplementationOnce(async () => {
+	remove.mockImplementationOnce(async () => {
 		deleting.resolve();
 		await deletion.promise;
 	});
@@ -234,14 +229,14 @@ test("lifecycle edits publish only after storage commits and preserve old snapsh
 	await pending;
 	assert.equal(store.get({ playlistId: "playlist-a" }), undefined);
 	assert.deepEqual(store.getAll(), [likedPlaylist()]);
-	assert.equal(listener.mock.callCount(), 2);
+	assert.equal(listener.mock.calls.length, 2);
 });
 
 test("invalid lifecycle edits reject and unchanged titles do not save or notify", async () => {
 	const { store, write, remove } = setup();
 	await store.initialize();
 	const before = store.getSnapshot();
-	const listener = mock.fn();
+	const listener = mock();
 	store.subscribe({ listener });
 	await assert.rejects(store.create({ title: " \n " }), /blank/);
 	await assert.rejects(
@@ -255,29 +250,29 @@ test("invalid lifecycle edits reject and unchanged titles do not save or notify"
 	await assert.rejects(store.delete({ playlistId: "missing" }), /not found/);
 	await store.rename({ playlistId: "playlist-a", title: " Favorites " });
 	assert.equal(store.getSnapshot(), before);
-	assert.equal(write.mock.callCount(), 0);
-	assert.equal(remove.mock.callCount(), 0);
-	assert.equal(listener.mock.callCount(), 0);
+	assert.equal(write.mock.calls.length, 0);
+	assert.equal(remove.mock.calls.length, 0);
+	assert.equal(listener.mock.calls.length, 0);
 });
 
 test("failed creates, renames and deletes preserve memory and allow later operations", async () => {
 	const { store, write, remove } = setup();
 	await store.initialize();
 	const before = store.getSnapshot();
-	const listener = mock.fn();
+	const listener = mock();
 	store.subscribe({ listener });
-	write.mock.mockImplementationOnce(async () => {
+	write.mockImplementationOnce(async () => {
 		throw new Error("Save failed");
 	});
 	await assert.rejects(store.create({ title: "New" }), /Save failed/);
-	write.mock.mockImplementationOnce(async () => {
+	write.mockImplementationOnce(async () => {
 		throw new Error("Save failed");
 	});
 	await assert.rejects(
 		store.rename({ playlistId: "playlist-a", title: "Changed" }),
 		/Save failed/,
 	);
-	remove.mock.mockImplementationOnce(async () => {
+	remove.mockImplementationOnce(async () => {
 		throw new Error("Delete failed");
 	});
 	await assert.rejects(
@@ -285,7 +280,7 @@ test("failed creates, renames and deletes preserve memory and allow later operat
 		/Delete failed/,
 	);
 	assert.equal(store.getSnapshot(), before);
-	assert.equal(listener.mock.callCount(), 0);
+	assert.equal(listener.mock.calls.length, 0);
 	await store.rename({ playlistId: "playlist-a", title: "Recovered" });
 	assert.equal(store.get({ playlistId: "playlist-a" })?.title, "Recovered");
 });
@@ -293,40 +288,40 @@ test("failed creates, renames and deletes preserve memory and allow later operat
 test("queued edits await initialization and execute against the latest committed state", async () => {
 	const { store, read, write, remove } = setup();
 	const loading = Promise.withResolvers<Playlist[]>();
-	read.mock.mockImplementationOnce(() => loading.promise);
+	read.mockImplementationOnce(() => loading.promise);
 	const first = store.rename({ playlistId: "playlist-a", title: "First" });
 	const second = store.rename({ playlistId: "playlist-a", title: "Second" });
 	const third = store.delete({ playlistId: "playlist-a" });
-	assert.equal(write.mock.callCount(), 0);
+	assert.equal(write.mock.calls.length, 0);
 	const commit = Promise.withResolvers<void>();
 	const started = Promise.withResolvers<void>();
-	write.mock.mockImplementationOnce(async () => {
+	write.mockImplementationOnce(async () => {
 		started.resolve();
 		await commit.promise;
 	});
 	loading.resolve([playlist(), likedPlaylist()]);
 	await started.promise;
-	assert.equal(write.mock.callCount(), 1);
-	assert.equal(remove.mock.callCount(), 0);
+	assert.equal(write.mock.calls.length, 1);
+	assert.equal(remove.mock.calls.length, 0);
 	commit.resolve();
 	await Promise.all([first, second, third]);
 	assert.deepEqual(
-		write.mock.calls.map((call) => call.arguments[0]?.title),
+		write.mock.calls.map((call) => call[0]?.title),
 		["First", "Second"],
 	);
-	assert.equal(remove.mock.callCount(), 1);
+	assert.equal(remove.mock.calls.length, 1);
 	assert.equal(store.get({ playlistId: "playlist-a" }), undefined);
 });
 
 test("mutation initialization failure rejects and a later mutation retries loading", async () => {
 	const { store, read, write } = setup();
-	read.mock.mockImplementationOnce(async () => {
+	read.mockImplementationOnce(async () => {
 		throw new Error("Read failed");
 	});
 	await assert.rejects(store.create({ title: "New" }), /Read failed/);
-	assert.equal(write.mock.callCount(), 0);
+	assert.equal(write.mock.calls.length, 0);
 	await store.create({ title: "New" });
-	assert.equal(read.mock.callCount(), 2);
+	assert.equal(read.mock.calls.length, 2);
 	assert.equal(store.getAll().length, 3);
 });
 
@@ -371,15 +366,15 @@ test("entry edits retain insertion order and timestamps without needing a catalo
 		[99],
 	);
 	assert.equal(remaining?.shows[0]?.addedAt, newEntry.addedAt);
-	assert.equal(write.mock.callCount(), 4);
-	assert.equal(write.mock.calls[3]?.arguments[0], remaining);
+	assert.equal(write.mock.calls.length, 4);
+	assert.equal(write.mock.calls[3]?.[0], remaining);
 });
 
 test("duplicate, invalid and missing entries reject without saving or notifying", async () => {
 	const { store, write } = setup();
 	await store.initialize();
 	const snapshot = store.getSnapshot();
-	const listener = mock.fn();
+	const listener = mock();
 	store.subscribe({ listener });
 	await assert.rejects(
 		store.addShow({ playlistId: "playlist-a", showId: 42 }),
@@ -417,19 +412,19 @@ test("duplicate, invalid and missing entries reject without saving or notifying"
 		note: "Listen again",
 	});
 	assert.equal(store.getSnapshot(), snapshot);
-	assert.equal(write.mock.callCount(), 0);
-	assert.equal(listener.mock.callCount(), 0);
+	assert.equal(write.mock.calls.length, 0);
+	assert.equal(listener.mock.calls.length, 0);
 });
 
 test("concurrent entry edits publish after commit and retain earlier edits", async () => {
 	const { store, write } = setup();
 	await store.initialize();
 	const snapshot = store.getSnapshot();
-	const listener = mock.fn();
+	const listener = mock();
 	store.subscribe({ listener });
 	const commit = Promise.withResolvers<void>();
 	const started = Promise.withResolvers<void>();
-	write.mock.mockImplementationOnce(async () => {
+	write.mockImplementationOnce(async () => {
 		started.resolve();
 		await commit.promise;
 	});
@@ -441,9 +436,9 @@ test("concurrent entry edits publish after commit and retain earlier edits", asy
 	});
 	const removing = store.removeShow({ playlistId: "playlist-a", showId: 42 });
 	await started.promise;
-	assert.equal(write.mock.callCount(), 1);
+	assert.equal(write.mock.calls.length, 1);
 	assert.equal(store.getSnapshot(), snapshot);
-	assert.equal(listener.mock.callCount(), 0);
+	assert.equal(listener.mock.calls.length, 0);
 	commit.resolve();
 	await Promise.all([adding, noting, removing]);
 	const final = store.get({ playlistId: "playlist-a" });
@@ -451,7 +446,7 @@ test("concurrent entry edits publish after commit and retain earlier edits", asy
 	assert.equal(final?.shows[0]?.showId, 99);
 	assert.equal(final?.shows[0]?.note, "New note");
 	assert.deepEqual(snapshot, [playlist(), likedPlaylist()]);
-	assert.equal(listener.mock.callCount(), 3);
+	assert.equal(listener.mock.calls.length, 3);
 	assert.ok(Object.isFrozen(final?.shows[0]));
 });
 
@@ -459,23 +454,23 @@ test("failed entry saves preserve snapshots and the queue recovers", async () =>
 	const { store, write } = setup();
 	await store.initialize();
 	const snapshot = store.getSnapshot();
-	const listener = mock.fn();
+	const listener = mock();
 	store.subscribe({ listener });
-	write.mock.mockImplementationOnce(async () => {
+	write.mockImplementationOnce(async () => {
 		throw new Error("Save failed");
 	});
 	await assert.rejects(
 		store.addShow({ playlistId: "playlist-a", showId: 99 }),
 		/Save failed/,
 	);
-	write.mock.mockImplementationOnce(async () => {
+	write.mockImplementationOnce(async () => {
 		throw new Error("Save failed");
 	});
 	await assert.rejects(
 		store.removeShow({ playlistId: "playlist-a", showId: 42 }),
 		/Save failed/,
 	);
-	write.mock.mockImplementationOnce(async () => {
+	write.mockImplementationOnce(async () => {
 		throw new Error("Save failed");
 	});
 	await assert.rejects(
@@ -483,7 +478,7 @@ test("failed entry saves preserve snapshots and the queue recovers", async () =>
 		/Save failed/,
 	);
 	assert.equal(store.getSnapshot(), snapshot);
-	assert.equal(listener.mock.callCount(), 0);
+	assert.equal(listener.mock.calls.length, 0);
 	await store.addShow({ playlistId: "playlist-a", showId: 0 });
 	assert.equal(store.get({ playlistId: "playlist-a" })?.shows[1]?.showId, 0);
 });
@@ -493,23 +488,23 @@ test("initialization creates a UUID default before reading and publishes only af
 	records.length = 0;
 	const commit = Promise.withResolvers<void>();
 	const started = Promise.withResolvers<void>();
-	ensure.mock.mockImplementationOnce(async ({ fallback }) => {
+	ensure.mockImplementationOnce(async ({ fallback }) => {
 		started.resolve();
 		await commit.promise;
 		records.push(fallback);
 	});
-	const listener = mock.fn();
+	const listener = mock();
 	store.subscribe({ listener });
 	const loading = store.initialize();
 	assert.equal(store.initialize(), loading);
 	await started.promise;
-	assert.equal(read.mock.callCount(), 0);
-	assert.equal(listener.mock.callCount(), 0);
+	assert.equal(read.mock.calls.length, 0);
+	assert.equal(listener.mock.calls.length, 0);
 	assert.deepEqual(store.getAll(), []);
 	commit.resolve();
 	await loading;
-	assert.equal(ensure.mock.callCount(), 1);
-	assert.equal(listener.mock.callCount(), 1);
+	assert.equal(ensure.mock.calls.length, 1);
+	assert.equal(listener.mock.calls.length, 1);
 	const liked = store.getAll()[0];
 	assert.ok(liked);
 	assert.match(
@@ -522,24 +517,24 @@ test("initialization creates a UUID default before reading and publishes only af
 	assert.equal(new Date(liked.createdAt).toISOString(), liked.createdAt);
 	assert.equal(liked.updatedAt, liked.createdAt);
 	await store.initialize();
-	assert.equal(ensure.mock.callCount(), 1);
+	assert.equal(ensure.mock.calls.length, 1);
 });
 
 test("failed default creation leaves initialization unpublished and can retry", async () => {
 	const { store, records, ensure, read } = setup();
 	records.length = 0;
-	ensure.mock.mockImplementationOnce(async () => {
+	ensure.mockImplementationOnce(async () => {
 		throw new Error("Storage full");
 	});
-	const listener = mock.fn();
+	const listener = mock();
 	store.subscribe({ listener });
 	const snapshot = store.getSnapshot();
 	await assert.rejects(store.initialize(), /Storage full/);
 	assert.equal(store.getSnapshot(), snapshot);
-	assert.equal(read.mock.callCount(), 0);
-	assert.equal(listener.mock.callCount(), 0);
+	assert.equal(read.mock.calls.length, 0);
+	assert.equal(listener.mock.calls.length, 0);
 	await store.initialize();
-	assert.equal(ensure.mock.callCount(), 2);
+	assert.equal(ensure.mock.calls.length, 2);
 	assert.equal(store.getAll().length, 1);
 	assert.equal(store.getAll()[0]?.type, "liked");
 });
@@ -557,8 +552,8 @@ test("liked playlists cannot be renamed or deleted and rejection does not block 
 		/cannot be deleted/,
 	);
 	assert.equal(store.getSnapshot(), snapshot);
-	assert.equal(write.mock.callCount(), 0);
-	assert.equal(remove.mock.callCount(), 0);
+	assert.equal(write.mock.calls.length, 0);
+	assert.equal(remove.mock.calls.length, 0);
 	await store.addShow({ playlistId: "liked-id", showId: 99 });
 	await store.setNote({ playlistId: "liked-id", showId: 99, note: "Favorite" });
 	assert.equal(
@@ -592,7 +587,9 @@ test("mutations preserve playlist order for callers to choose presentation", asy
 test("note changes timestamp the entry, including clearing, while unchanged notes do not write", async () => {
 	const { store, write } = setup();
 	let now = "2026-11-06T12:00:00.000Z";
-	const clock = mock.method(Date.prototype, "toISOString", () => now);
+	const clock = spyOn(Date.prototype, "toISOString").mockImplementation(
+		() => now,
+	);
 	try {
 		await store.setNote({
 			playlistId: "playlist-a",
@@ -602,7 +599,7 @@ test("note changes timestamp the entry, including clearing, while unchanged note
 		const changed = store.get({ playlistId: "playlist-a" })?.shows[0];
 		assert.equal(changed?.updatedAt, now);
 		assert.equal(changed?.addedAt, playlist().shows[0]?.addedAt);
-		assert.equal(write.mock.calls[0]?.arguments[0]?.shows[0]?.updatedAt, now);
+		assert.equal(write.mock.calls[0]?.[0]?.shows[0]?.updatedAt, now);
 		now = "2026-11-07T12:00:00.000Z";
 		await store.setNote({
 			playlistId: "playlist-a",
@@ -610,7 +607,7 @@ test("note changes timestamp the entry, including clearing, while unchanged note
 			note: "Changed",
 		});
 		assert.equal(store.get({ playlistId: "playlist-a" })?.shows[0], changed);
-		assert.equal(write.mock.callCount(), 1);
+		assert.equal(write.mock.calls.length, 1);
 		await store.setNote({
 			playlistId: "playlist-a",
 			showId: 42,
@@ -626,7 +623,7 @@ test("note changes timestamp the entry, including clearing, while unchanged note
 		);
 		assert.equal(changed?.updatedAt, "2026-11-06T12:00:00.000Z");
 	} finally {
-		clock.mock.restore();
+		clock.mockRestore();
 	}
 });
 
@@ -640,7 +637,7 @@ test("HTTP browsers without randomUUID can initialize and create playlists", asy
 		const { store, records, ensure } = setup();
 		records.splice(0);
 		await store.initialize();
-		const fallback = ensure.mock.calls[0]?.arguments[0].fallback;
+		const fallback = ensure.mock.calls[0]?.[0].fallback;
 		const created = await store.create({ title: "Phone playlist" });
 		const uuid =
 			/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;

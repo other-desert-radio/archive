@@ -33,7 +33,13 @@ export default function PlaylistModal({
 			playlist.shows.some((entry) => entry.showId === showId),
 		)
 		.map((playlist) => playlist.id);
-	const selectedIds = selected ?? savedIds;
+	const initialIds =
+		mode === "save" && savedIds.length === 0
+			? playlists
+					.filter((playlist) => playlist.type === "liked")
+					.map((playlist) => playlist.id)
+			: savedIds;
+	const selectedIds = selected ?? initialIds;
 	const canSave = selectedIds.length > 0 || savedIds.length > 0;
 	const savedNote =
 		playlists
@@ -127,6 +133,7 @@ export default function PlaylistModal({
 							onClick={requestClose}
 						>
 							<svg
+								className="close-icon"
 								viewBox="0 0 24 24"
 								fill="none"
 								stroke="currentColor"
@@ -147,25 +154,44 @@ export default function PlaylistModal({
 						aria-label="Playlists"
 						disabled={saving || status !== "ready"}
 					>
-						{playlists.map((playlist) => (
-							<label key={playlist.id}>
-								<input
-									type="checkbox"
-									name="playlists"
-									value={playlist.id}
-									aria-label={playlist.title}
-									checked={selectedIds.includes(playlist.id)}
-									onChange={(event) =>
-										setSelected(
-											event.currentTarget.checked
-												? [...selectedIds, playlist.id]
-												: selectedIds.filter((id) => id !== playlist.id),
-										)
-									}
-								/>
-								{playlist.title}
-							</label>
-						))}
+						{playlists
+							.toSorted(
+								(a, b) =>
+									Number(b.type === "liked") - Number(a.type === "liked"),
+							)
+							.map((playlist) => (
+								<div key={playlist.id} className={styles["playlist-row"]}>
+									<label>
+										<input
+											type="checkbox"
+											name="playlists"
+											value={playlist.id}
+											aria-label={playlist.title}
+											checked={selectedIds.includes(playlist.id)}
+											onChange={(event) =>
+												setSelected(
+													event.currentTarget.checked
+														? [...selectedIds, playlist.id]
+														: selectedIds.filter((id) => id !== playlist.id),
+												)
+											}
+										/>
+										{playlist.title}
+									</label>
+									<a
+										className={styles["playlist-link"]}
+										href={`${getBasePath()}/playlists/?id=${encodeURIComponent(playlist.id)}`}
+										target="_blank"
+										rel="noopener noreferrer"
+										aria-label={`Open playlist ${playlist.title} in a new tab`}
+									>
+										<svg viewBox="0 0 24 24" fill="none">
+											<title>Open playlist in a new tab</title>
+											<path d="M7 17 17 7M7 7h10v10" />
+										</svg>
+									</a>
+								</div>
+							))}
 					</fieldset>
 
 					{status === "ready" && playlists.length === 0 && (
@@ -199,7 +225,7 @@ export default function PlaylistModal({
 					{error && <p role="alert">{error}</p>}
 
 					<button
-						className={styles["save"]}
+						className={`button-primary ${styles["save"]}`}
 						type="submit"
 						aria-label="Save playlist"
 						disabled={saving || status !== "ready" || !canSave}
@@ -222,6 +248,7 @@ export default function PlaylistModal({
 					<button
 						type="button"
 						aria-label="Keep editing"
+						className="button-primary"
 						onClick={() => discardModal.current?.close()}
 					>
 						Keep editing
@@ -229,6 +256,7 @@ export default function PlaylistModal({
 					<button
 						type="button"
 						aria-label="Discard changes"
+						className="button-primary"
 						onClick={() => {
 							discardModal.current?.close();
 							dialogRef.current?.close();

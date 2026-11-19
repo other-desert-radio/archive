@@ -1,5 +1,6 @@
+import { mock, spyOn } from "bun:test";
 import assert from "node:assert/strict";
-import { afterEach, mock, test } from "node:test";
+import { afterEach, test } from "node:test";
 import { createIndexedDB } from "../../../src/database/indexed-db";
 import { ShowDetailStore } from "../../../src/stores/show-details/show-detail-store";
 import type {
@@ -30,14 +31,24 @@ const exported: ShowDetailsExport = {
 function setup(data = cached, revision: number | undefined = 3) {
 	const database = createIndexedDB();
 	const versions = new VersionsStore(database);
-	const initialize = mock.method(versions, "initialize", async () => {});
-	const published = mock.method(versions, "getPublished", () => 4);
-	const committed = mock.method(versions, "getCached", () => revision);
-	const refresh = mock.method(versions, "refreshCached", async () => {});
+	const initialize = spyOn(versions, "initialize").mockImplementation(
+		async () => {},
+	);
+	const published = spyOn(versions, "getPublished").mockImplementation(() => 4);
+	const committed = spyOn(versions, "getCached").mockImplementation(
+		() => revision,
+	);
+	const refresh = spyOn(versions, "refreshCached").mockImplementation(
+		async () => {},
+	);
 	const objectStore = database.getObjectStore("show_details");
-	const read = mock.method(objectStore, "getAll", async () => data);
-	mock.method(database, "getObjectStore", () => objectStore);
-	const write = mock.method(database, "transaction", async () => {});
+	const read = spyOn(objectStore, "getAll").mockImplementation(
+		async () => data,
+	);
+	spyOn(database, "getObjectStore").mockImplementation(() => objectStore);
+	const write = spyOn(database, "transaction").mockImplementation(
+		async () => {},
+	);
 	return {
 		store: new ShowDetailStore(database, versions),
 		versions,
@@ -60,11 +71,11 @@ test("concurrent initialization shares cache reads and one request; replacement 
 	const { store, read, write, refresh } = setup();
 	const commit = Promise.withResolvers<void>();
 	const started = Promise.withResolvers<void>();
-	write.mock.mockImplementation(() => {
+	write.mockImplementation(() => {
 		started.resolve();
 		return commit.promise;
 	});
-	const fetchMock = mock.fn(async () => Response.json(exported));
+	const fetchMock = mock(async () => Response.json(exported));
 	globalThis.fetch = fetchMock as unknown as typeof fetch;
 	const snapshots: (ShowDetail | undefined)[] = [];
 	const unsubscribe = store.subscribe(() => snapshots.push(store.get(1)));
@@ -72,18 +83,18 @@ test("concurrent initialization shares cache reads and one request; replacement 
 	assert.equal(loading, store.initialize("/archive/"));
 	await started.promise;
 	assert.deepEqual(store.get(1), cached[0]);
-	assert.equal(refresh.mock.callCount(), 0);
+	assert.equal(refresh.mock.calls.length, 0);
 	assert.deepEqual(snapshots, [cached[0]]);
 	commit.resolve();
 	await loading;
 	assert.deepEqual(store.get(1), { id: 1 });
 	assert.equal(store.get(2), undefined);
 	assert.deepEqual(snapshots, [cached[0], { id: 1 }]);
-	assert.equal(refresh.mock.callCount(), 1);
+	assert.equal(refresh.mock.calls.length, 1);
 	await store.initialize("/archive/");
-	assert.equal(read.mock.callCount(), 1);
-	assert.equal(fetchMock.mock.callCount(), 1);
-	assert.deepEqual(write.mock.calls[0]?.arguments[0], [
+	assert.equal(read.mock.calls.length, 1);
+	assert.equal(fetchMock.mock.calls.length, 1);
+	assert.deepEqual(write.mock.calls[0]?.[0], [
 		{ store: "show_details", action: "clear" },
 		{ store: "show_details", action: "set", value: { id: 1 } },
 		{
@@ -100,19 +111,19 @@ test("concurrent initialization shares cache reads and one request; replacement 
 
 test("warm matching revision loads cached records without downloading details", async () => {
 	const { store } = setup(cached, 4);
-	const fetchMock = mock.fn(async () => {
+	const fetchMock = mock(async () => {
 		throw new Error("Unexpected download");
 	});
 	globalThis.fetch = fetchMock as unknown as typeof fetch;
 	await store.initialize("/archive/");
 	assert.deepEqual(store.get(1), cached[0]);
-	assert.equal(fetchMock.mock.callCount(), 0);
+	assert.equal(fetchMock.mock.calls.length, 0);
 });
 
 test("cold initialization distinguishes unloaded records from a loaded empty record", async () => {
 	const { store } = setup([], undefined);
 	assert.equal(store.get(1), undefined);
-	globalThis.fetch = mock.fn(async () =>
+	globalThis.fetch = mock(async () =>
 		Response.json(exported),
 	) as unknown as typeof fetch;
 	await store.initialize("/archive/");
@@ -123,7 +134,7 @@ test("cached details are published before the manifest is available, including o
 	const { store, initialize, write } = setup();
 	const manifest = Promise.withResolvers<void>();
 	const started = Promise.withResolvers<void>();
-	initialize.mock.mockImplementation(() => {
+	initialize.mockImplementation(() => {
 		started.resolve();
 		return manifest.promise;
 	});
@@ -133,37 +144,37 @@ test("cached details are published before the manifest is available, including o
 	manifest.reject(new Error("Offline"));
 	await assert.rejects(loading, /Offline/);
 	assert.deepEqual(store.get(1), cached[0]);
-	assert.equal(write.mock.callCount(), 0);
+	assert.equal(write.mock.calls.length, 0);
 });
 
 test("failed downloads and transactions preserve cache and allow initialization retry", async () => {
 	const { store, write, refresh } = setup();
-	globalThis.fetch = mock.fn(async () => {
+	globalThis.fetch = mock(async () => {
 		throw new Error("Offline");
 	}) as unknown as typeof fetch;
 	await assert.rejects(store.initialize("/archive/"), /Offline/);
 	assert.deepEqual(store.get(1), cached[0]);
-	assert.equal(write.mock.callCount(), 0);
-	globalThis.fetch = mock.fn(async () =>
+	assert.equal(write.mock.calls.length, 0);
+	globalThis.fetch = mock(async () =>
 		Response.json(exported),
 	) as unknown as typeof fetch;
-	write.mock.mockImplementation(async () => {
+	write.mockImplementation(async () => {
 		throw new Error("Write failed");
 	});
 	await assert.rejects(store.initialize("/archive/"), /Write failed/);
 	assert.deepEqual(store.get(1), cached[0]);
-	assert.equal(refresh.mock.callCount(), 0);
-	write.mock.mockImplementation(async () => {});
+	assert.equal(refresh.mock.calls.length, 0);
+	write.mockImplementation(async () => {});
 	await store.initialize("/archive/");
 	assert.deepEqual(store.get(1), { id: 1 });
 });
 
 test("revision mismatch reloads the manifest and retries once", async () => {
 	const { store, initialize, published } = setup();
-	initialize.mock.mockImplementation(async () => {
-		published.mock.mockImplementation(() => 5);
+	initialize.mockImplementation(async () => {
+		published.mockImplementation(() => 5);
 	});
-	const fetchMock = mock.fn(async () =>
+	const fetchMock = mock(async () =>
 		Response.json({ ...exported, version: 5 }),
 	);
 	globalThis.fetch = fetchMock as unknown as typeof fetch;
@@ -171,22 +182,22 @@ test("revision mismatch reloads the manifest and retries once", async () => {
 		...exported,
 		version: 5,
 	});
-	assert.equal(initialize.mock.callCount(), 1);
-	assert.equal(fetchMock.mock.callCount(), 2);
+	assert.equal(initialize.mock.calls.length, 1);
+	assert.equal(fetchMock.mock.calls.length, 2);
 });
 
 test("persistent revision mismatch retains cache, stops after two downloads and permits retry", async () => {
 	const { store, initialize, write } = setup();
-	const fetchMock = mock.fn(async () =>
+	const fetchMock = mock(async () =>
 		Response.json({ ...exported, version: 5 }),
 	);
 	globalThis.fetch = fetchMock as unknown as typeof fetch;
 	await assert.rejects(store.initialize("/archive/"), /expected 4, received 5/);
 	assert.deepEqual(store.get(1), cached[0]);
-	assert.equal(fetchMock.mock.callCount(), 2);
-	assert.equal(initialize.mock.callCount(), 2);
-	assert.equal(write.mock.callCount(), 0);
-	globalThis.fetch = mock.fn(async () =>
+	assert.equal(fetchMock.mock.calls.length, 2);
+	assert.equal(initialize.mock.calls.length, 2);
+	assert.equal(write.mock.calls.length, 0);
+	globalThis.fetch = mock(async () =>
 		Response.json(exported),
 	) as unknown as typeof fetch;
 	await store.initialize("/archive/");
@@ -195,27 +206,21 @@ test("persistent revision mismatch retains cache, stops after two downloads and 
 
 test("detail-only revisions check the independent dataset", async () => {
 	const { store, published, committed } = setup();
-	globalThis.fetch = mock.fn(async () =>
+	globalThis.fetch = mock(async () =>
 		Response.json(exported),
 	) as unknown as typeof fetch;
 	await store.initialize("/archive/");
-	assert.deepEqual(
-		published.mock.calls.map((call) => call.arguments),
-		[["show_details"]],
-	);
-	assert.deepEqual(
-		committed.mock.calls.map((call) => call.arguments),
-		[["show_details"]],
-	);
+	assert.deepEqual(published.mock.calls, [["show_details"]]);
+	assert.deepEqual(committed.mock.calls, [["show_details"]]);
 });
 
 test("fetch uses the configured base and rejects HTTP, network, JSON and shape failures", async () => {
 	const { store, write } = setup();
 	for (const base of ["/archive", "/archive/"]) {
-		const fetchMock = mock.fn(async () => Response.json(exported));
+		const fetchMock = mock(async () => Response.json(exported));
 		globalThis.fetch = fetchMock as unknown as typeof fetch;
 		assert.deepEqual(await store.fetchDetails(base), exported);
-		assert.deepEqual(fetchMock.mock.calls[0]?.arguments, [
+		assert.deepEqual(fetchMock.mock.calls[0], [
 			"/archive/resources/show_details.json",
 			{ cache: "no-cache" },
 		]);
@@ -225,12 +230,12 @@ test("fetch uses the configured base and rejects HTTP, network, JSON and shape f
 		new Response("invalid JSON"),
 		Response.json({ version: 4, data: [] }),
 	]) {
-		globalThis.fetch = mock.fn(async () => response) as unknown as typeof fetch;
+		globalThis.fetch = mock(async () => response) as unknown as typeof fetch;
 		await assert.rejects(store.fetchDetails("/archive/"));
 	}
-	globalThis.fetch = mock.fn(async () => {
+	globalThis.fetch = mock(async () => {
 		throw new Error("Offline");
 	}) as unknown as typeof fetch;
 	await assert.rejects(store.fetchDetails("/archive/"), /Offline/);
-	assert.equal(write.mock.callCount(), 0);
+	assert.equal(write.mock.calls.length, 0);
 });

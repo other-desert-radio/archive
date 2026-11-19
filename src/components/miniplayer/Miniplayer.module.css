@@ -215,12 +215,6 @@
 	height: var(--space-lg);
 }
 
-@media (hover: hover) and (pointer: fine) {
-	.close-button:hover svg {
-		stroke-width: 3;
-	}
-}
-
 .miniplayer[data-presentation="fullscreen"] .controls {
 	display: grid;
 	flex: 0 1 auto;

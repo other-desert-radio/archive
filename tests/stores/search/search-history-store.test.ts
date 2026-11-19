@@ -1,5 +1,6 @@
+import { spyOn } from "bun:test";
 import assert from "node:assert/strict";
-import { mock, test } from "node:test";
+import { test } from "node:test";
 import { createIndexedDB } from "../../../src/database/indexed-db";
 import {
 	type SearchEntry,
@@ -11,7 +12,7 @@ function setup() {
 	const data = new Map<string, SearchEntry[]>();
 	const reads = new Map<string, () => Promise<SearchEntry[]>>();
 	let failWrite = false;
-	mock.method(database, "getObjectStore", (name: string) => ({
+	spyOn(database, "getObjectStore").mockImplementation((name: string) => ({
 		get: async (query: string) =>
 			data.get(name)?.find((entry) => entry.query === query),
 		getAll: async () =>
@@ -48,12 +49,12 @@ function setup() {
 
 test("history trims, ignores blanks, deduplicates by case, sorts and persists by category", async () => {
 	const { store, database } = setup();
-	const clock = mock.method(Date, "now", () => 100);
+	const clock = spyOn(Date, "now").mockImplementation(() => 100);
 	try {
 		await store.save("shows", "  jazz  ");
-		clock.mock.mockImplementation(() => 200);
+		clock.mockImplementation(() => 200);
 		await store.save("shows", "Jazz");
-		clock.mock.mockImplementation(() => 300);
+		clock.mockImplementation(() => 300);
 		await store.save("shows", "jazz");
 		await store.save("shows", "  ");
 		await store.save("djs", "dj");
@@ -71,7 +72,7 @@ test("history trims, ignores blanks, deduplicates by case, sorts and persists by
 		]);
 		assert.equal(store.getSnapshot("djs").length, 1);
 	} finally {
-		clock.mock.restore();
+		clock.mockRestore();
 	}
 });
 

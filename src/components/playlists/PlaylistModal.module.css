@@ -26,6 +26,8 @@
 
 .modal fieldset label {
 	display: flex;
+	flex: 1;
+	min-width: 0;
 	align-items: center;
 	gap: var(--space-sm);
 	min-height: 2.75rem;
@@ -68,6 +70,10 @@
 	color: inherit;
 	font: inherit;
 	resize: vertical;
+}
+
+.modal textarea:focus {
+	outline: none;
 }
 
 .header {
@@ -123,6 +129,49 @@
 	height: var(--space-lg);
 }
 
+.playlist-row {
+	display: flex;
+	align-items: center;
+	gap: var(--space-sm);
+}
+
+.playlist-link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 2.75rem;
+	height: 2.75rem;
+	color: #888;
+	touch-action: manipulation;
+}
+
+.modal .playlist-link svg {
+	width: var(--space-lg);
+	height: var(--space-lg);
+	stroke: currentColor;
+	stroke-width: 1.5;
+}
+
+.playlist-link:focus-visible {
+	color: black;
+	outline: var(--border-secondary) solid currentColor;
+}
+
+.playlist-link:focus-visible svg {
+	stroke-width: 2.5;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.playlist-link:hover {
+		color: black;
+	}
+
+	.playlist-link:hover svg {
+		stroke-width: 2.5;
+	}
+}
+
 .discard {
 	width: min(24rem, calc(100% - 2rem));
 	padding: var(--space-lg);
@@ -139,6 +188,6 @@
 	gap: var(--space-xs);
 }
 
-.discard-actions button {
+.discard-actions :global(.button-primary) {
 	border: 1px solid currentColor;
 }

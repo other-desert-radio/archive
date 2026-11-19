@@ -1,5 +1,6 @@
+import { spyOn } from "bun:test";
 import assert from "node:assert/strict";
-import { mock, test } from "node:test";
+import { test } from "node:test";
 import { saveShowToPlaylists } from "../src/components/playlists/save-show-to-playlists";
 import { createIndexedDB } from "../src/database/indexed-db";
 import { PlaylistStore } from "../src/stores/playlists/playlist-store";
@@ -26,14 +27,12 @@ function setup() {
 						},
 					],
 	}));
-	mock.method(database, "ensureLikedPlaylist", async () => {});
-	mock.method(objectStore, "getAll", async () => records);
-	const write = mock.method(
-		objectStore,
-		"set",
+	spyOn(database, "ensureLikedPlaylist").mockImplementation(async () => {});
+	spyOn(objectStore, "getAll").mockImplementation(async () => records);
+	const write = spyOn(objectStore, "set").mockImplementation(
 		async (_playlist: Playlist) => {},
 	);
-	mock.method(database, "getObjectStore", () => objectStore);
+	spyOn(database, "getObjectStore").mockImplementation(() => objectStore);
 	return { store: new PlaylistStore({ database }), write };
 }
 
@@ -74,9 +73,9 @@ test("edited notes apply to all selected playlists and empty text clears them", 
 
 test("a partial failure rejects and retry finishes without duplicating entries", async () => {
 	const { store, write } = setup();
-	write.mock.mockImplementationOnce(async () => {
+	write.mockResolvedValueOnce(undefined).mockImplementationOnce(async () => {
 		throw new Error("disk full");
-	}, 1);
+	});
 	const args = {
 		playlistStore: store,
 		showId: 42,
@@ -84,6 +83,9 @@ test("a partial failure rejects and retry finishes without duplicating entries",
 		note: "new note",
 	};
 	await assert.rejects(saveShowToPlaylists(args), /disk full/);
+	assert.equal(write.mock.calls.length, 2);
+	assert.equal(store.get({ playlistId: "a" })?.shows[0]?.note, "new note");
+	assert.deepEqual(store.get({ playlistId: "b" })?.shows, []);
 	await saveShowToPlaylists(args);
 	assert.equal(store.get({ playlistId: "b" })?.shows.length, 1);
 	assert.equal(store.get({ playlistId: "a" })?.shows[0]?.note, "new note");
@@ -96,7 +98,9 @@ test("saving an edited note timestamps the existing show in the persisted playli
 	const before = store.get({ playlistId: "a" })?.shows[0];
 	assert.ok(before);
 	const now = "2026-11-06T12:00:00.000Z";
-	const clock = mock.method(Date.prototype, "toISOString", () => now);
+	const clock = spyOn(Date.prototype, "toISOString").mockImplementation(
+		() => now,
+	);
 	try {
 		await saveShowToPlaylists({
 			playlistStore: store,
@@ -106,7 +110,7 @@ test("saving an edited note timestamps the existing show in the persisted playli
 		});
 		for (const playlistId of ["a", "c"]) {
 			const persisted = write.mock.calls
-				.map((call) => call.arguments[0])
+				.map((call) => call[0])
 				.find((playlist) => playlist?.id === playlistId);
 			const entry = persisted?.shows.find((entry) => entry.showId === 42);
 			assert.equal(entry?.note, "Edited after saving");
@@ -118,6 +122,6 @@ test("saving an edited note timestamps the existing show in the persisted playli
 		}
 		assert.equal(before.note, "note a");
 	} finally {
-		clock.mock.restore();
+		clock.mockRestore();
 	}
 });

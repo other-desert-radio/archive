@@ -13,6 +13,7 @@ const session = "archive-playlist-creation";
 const bundle = await build({
 	entrypoints: ["tests/res/playlist-creation.tsx"],
 	target: "browser",
+	external: ["/archive/*"],
 	define: { "import.meta.env.BASE_URL": JSON.stringify("/") },
 });
 assert.ok(bundle.success, bundle.logs.join("\n"));
@@ -20,6 +21,7 @@ const server = serve({
 	port: 0,
 	fetch(request) {
 		const path = new URL(request.url).pathname;
+		if (path.startsWith("/archive/")) return new Response(file(`public/${path.slice("/archive/".length)}`));
 		const output = bundle.outputs.find((item) => path === `/${item.path.split("/").pop()}`);
 		if (output) return new Response(output);
 		if (path.startsWith("/assets/")) return new Response(file(`public${path}`));
@@ -46,23 +48,114 @@ async function openNew() {
 }
 
 try {
+	for (const state of ["delay", "error"]) {
+		await browser("open", `${server.url.href}?playlistLoad=${state}`);
+		await browser("wait", '[role="status"][aria-label="Loading playlists"]');
+		assert.equal(await evaluate(`!!document.querySelector('${button("Save to Playlist")}')`), false);
+		await browser("click", button("Create standalone playlist"));
+		await browser("wait", newDialog);
+		await browser("press", "Escape");
+		await evaluate("playlistFixture.resumeLoading(); true");
+		await browser("wait", button("Save to Playlist"));
+		assert.equal(await evaluate('!!document.querySelector(\'[aria-label="Loading playlists"]\')'), false);
+		if (state === "error") {
+			await browser("click", button("Save to Playlist"));
+			await wait(`document.querySelector('${saveDialog} [role="alert"]')?.textContent.includes('Could not load playlists')`);
+		}
+	}
 	await browser("open", server.url.href);
+	await browser("wait", button("Save to Playlist"));
+	await evaluate(`(async () => {
+		const store = playlistFixture.stores.playlistStore;
+		for (const playlist of store.getAll()) {
+			if (playlist.type === 'user') {
+				await store.delete({ playlistId: playlist.id });
+			} else {
+				for (const entry of playlist.shows) {
+					await store.removeShow({ playlistId: playlist.id, showId: entry.showId });
+				}
+			}
+		}
+		return true;
+	})()`);
+	await evaluate(`(async () => {
+		const store = playlistFixture.stores.playlistStore;
+		const liked = store.getAll().find(p => p.type === 'liked');
+		await store.addShow({ playlistId: liked.id, showId: 42 });
+		return true;
+	})()`);
+	await wait(`document.querySelector('${button("Save to Playlist")}').textContent === 'Liked Shows'`);
+	assert.match(await evaluate(`document.querySelector('${button("Save to Playlist")} use').getAttribute('href')`), /bookmark-filled\.svg#bookmark$/);
+	await browser("click", button("Save to Playlist"));
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), true);
+	await browser("press", "Escape");
+	await wait(`!document.querySelector('${saveDialog}')`);
+	const longTitle = "Long Playlist Name, Groovy music that I like ".repeat(5).trim();
+	await evaluate(`(async () => {
+		const store = playlistFixture.stores.playlistStore;
+		const playlist = await store.create({ title: ${JSON.stringify(longTitle)} });
+		await store.addShow({ playlistId: playlist.id, showId: 42 });
+		return true;
+	})()`);
+	const savedTitles = `Liked Shows, ${longTitle}`;
+	await wait(`document.querySelector('${button("Save to Playlist")}').textContent === ${JSON.stringify(savedTitles)}`);
+	const sharedNote = "I liked this song\n" + "smooth".repeat(60);
+	await evaluate(`(async () => {
+		const store = playlistFixture.stores.playlistStore;
+		for (const playlist of store.getAll()) {
+			await store.setNote({ playlistId: playlist.id, showId: 42, note: ${JSON.stringify(sharedNote)} });
+		}
+		return true;
+	})()`);
+	await wait(`document.querySelector('${button("Save to Playlist")}').textContent === ${JSON.stringify(savedTitles + sharedNote)}`);
+	assert.equal(await evaluate(`document.querySelector('${button("Save to Playlist")} time')`), null);
+	for (const width of [320, 332, 750, 1440]) {
+		await browser("set", "viewport", String(width), "900");
+		assert.equal(await evaluate(`(() => {
+			const b = document.querySelector('${button("Save to Playlist")}');
+			return b.getBoundingClientRect().width <= b.parentElement.clientWidth && b.scrollWidth <= b.clientWidth;
+		})()`), true, `Saved playlist names fit at ${width}px`);
+	}
+	await browser("click", button("Save to Playlist"));
+	assert.equal(await evaluate(`Array.from(document.querySelectorAll('${saveDialog} input[name="playlists"]')).filter(input => input.checked).length`), 2);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} textarea').value`), sharedNote);
+	await browser("press", "Escape");
+	await wait(`!document.querySelector('${saveDialog}')`);
+	await evaluate(`(async () => {
+		const store = playlistFixture.stores.playlistStore;
+		await store.delete({ playlistId: store.getAll().find(p => p.type === 'user').id });
+		await store.setNote({ playlistId: store.getAll().find(p => p.type === 'liked').id, showId: 42, note: undefined });
+		return true;
+	})()`);
+	await wait(`document.querySelector('${button("Save to Playlist")}').textContent === 'Liked Shows'`);
+	await evaluate(`(async () => {
+		const store = playlistFixture.stores.playlistStore;
+		await store.removeShow({ playlistId: store.getAll().find(p => p.type === 'liked').id, showId: 42 });
+		return true;
+	})()`);
+	await wait(`document.querySelector('${button("Save to Playlist")}').textContent === 'Save to Playlist'`);
+	assert.match(await evaluate(`document.querySelector('${button("Save to Playlist")} use').getAttribute('href')`), /\/bookmark\.svg#bookmark$/);
 	await browser("click", button("Save to Playlist"));
 	await wait(`!document.querySelector('${saveDialog} ${button("New playlist")}').disabled`);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[name="playlists"]').getAttribute('aria-label')`), "Liked Shows");
 	assert.equal(await evaluate(`document.querySelector('${saveDialog} h1').textContent`), "Save Show");
 	assert.equal(await evaluate(`document.querySelector('${saveDialog} textarea').getAttribute('aria-label')`), "Add a note");
-	assert.equal(await evaluate(`document.querySelector('${saveDialog} ${button("Save playlist")}').disabled`), true);
-	// Clean backdrop dismisses; changed selections and notes require confirmation.
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), true);
+	assert.equal(await evaluate('playlistFixture.stores.playlistStore.getAll().some(p => p.shows.some(entry => entry.showId === 42))'), false);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} ${button("Save playlist")}').disabled`), false);
+	// The preselected liked playlist is an unsaved change.
 	await browser("mouse", "move", "1", "1");
 	await browser("mouse", "down");
 	await browser("mouse", "up");
+	await browser("wait", discardDialog);
+	await browser("click", `${discardDialog} ${button("Keep editing")}`);
+	// Removing the default restores the persisted empty selection.
+	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} ${button("Save playlist")}').disabled`), true);
+	await browser("press", "Escape");
 	await wait(`!document.querySelector('${saveDialog}')`);
 	await browser("click", button("Save to Playlist"));
-	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
-	assert.equal(await evaluate(`document.querySelector('${saveDialog} ${button("Save playlist")}').disabled`), false);
-	await browser("mouse", "move", "1", "1");
-	await browser("mouse", "down");
-	await browser("mouse", "up");
+	await browser("press", "Escape");
 	await browser("wait", discardDialog);
 	await browser("click", `${discardDialog} ${button("Keep editing")}`);
 	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), true);
@@ -74,7 +167,7 @@ try {
 	await browser("click", `${discardDialog} ${button("Discard changes")}`);
 	await wait(`!document.querySelector('${saveDialog}')`);
 	await browser("click", button("Save to Playlist"));
-	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), false);
+	assert.equal(await evaluate(`document.querySelector('${saveDialog} input[aria-label="Liked Shows"]').checked`), true);
 	await browser("fill", `${saveDialog} textarea`, "Draft note");
 	await browser("press", "Escape");
 	await browser("wait", discardDialog);
@@ -90,13 +183,11 @@ try {
 	await browser("click", `${discardDialog} ${button("Discard changes")}`);
 	await browser("click", button("Save to Playlist"));
 	assert.equal(await evaluate(`document.querySelector('${saveDialog} textarea').value`), "");
-	// Reverting edits leaves the form clean.
-	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
+	// Removing the default leaves the form clean.
 	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
 	await browser("press", "Escape");
 	await wait(`!document.querySelector('${saveDialog}')`);
 	await browser("click", button("Save to Playlist"));
-	await browser("click", `${saveDialog} input[aria-label="Liked Shows"]`);
 	await browser("fill", `${saveDialog} textarea`, "Keep my note");
 	await openNew();
 	await browser("fill", `${newDialog} input`, "   ");
@@ -124,6 +215,7 @@ try {
 	assert.equal(await evaluate('playlistFixture.stores.playlistStore.getAll().find(p => p.title === "Road trip").shows.length'), 0);
 	await browser("click", `${saveDialog} ${button("Save playlist")}`);
 	await wait(`!document.querySelector('${saveDialog}')`);
+	await wait(`document.querySelector('${button("Save to Playlist")}').textContent === 'Liked Shows, Road tripKeep my note'`);
 	await browser("reload");
 	await browser("click", button("Save to Playlist"));
 	await wait(`!!document.querySelector('${saveDialog} input[aria-label="Road trip"]')`);

@@ -1,5 +1,6 @@
+import { mock, spyOn } from "bun:test";
 import assert from "node:assert/strict";
-import { mock, test } from "node:test";
+import { test } from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { createIndexedDB } from "../../src/database/indexed-db";
 import type { StoreName } from "../../src/database/types";
@@ -102,92 +103,96 @@ test("injected playback does not change the idle server hydration snapshot", () 
 
 test("server rendering never initializes browser storage", () => {
 	const injected = createStores();
-	const initialize = mock.method(injected, "initialize", async () => {
-		throw new Error("Must not initialize during SSR");
-	});
-	const playlists = mock.method(
+	const initialize = spyOn(injected, "initialize").mockImplementation(
+		async () => {
+			throw new Error("Must not initialize during SSR");
+		},
+	);
+	const playlists = spyOn(
 		injected.playlistStore,
 		"initialize",
-		async () => {
-			throw new Error("Must not initialize playlists during SSR");
-		},
-	);
-	const details = mock.method(
+	).mockImplementation(async () => {
+		throw new Error("Must not initialize playlists during SSR");
+	});
+	const details = spyOn(
 		injected.showDetailStore,
 		"initialize",
-		async () => {
-			throw new Error("Must not initialize details during SSR");
-		},
-	);
+	).mockImplementation(async () => {
+		throw new Error("Must not initialize details during SSR");
+	});
 	renderToStaticMarkup(
 		<StoresProvider stores={injected}>
 			<ServerSnapshotProbe />
 		</StoresProvider>,
 	);
-	assert.equal(initialize.mock.callCount(), 0);
-	assert.equal(playlists.mock.callCount(), 0);
-	assert.equal(details.mock.callCount(), 0);
+	assert.equal(initialize.mock.calls.length, 0);
+	assert.equal(playlists.mock.calls.length, 0);
+	assert.equal(details.mock.calls.length, 0);
 });
 
 test("catalog readiness does not start or await details; direct consumers can start them independently", async () => {
 	const injected = createStores();
 	const catalog = Promise.withResolvers<void>();
 	const details = Promise.withResolvers<void>();
-	mock.method(injected.versionsStore, "initialize", () => catalog.promise);
-	mock.method(injected.showStore, "initialize", async () => {});
-	mock.method(injected.tagStore, "initialize", async () => {});
-	const initializeDetails = mock.method(
+	spyOn(injected.versionsStore, "initialize").mockImplementation(
+		() => catalog.promise,
+	);
+	spyOn(injected.showStore, "initialize").mockImplementation(async () => {});
+	spyOn(injected.tagStore, "initialize").mockImplementation(async () => {});
+	const initializeDetails = spyOn(
 		injected.showDetailStore,
 		"initialize",
-		() => details.promise,
-	);
+	).mockImplementation(() => details.promise);
 	const browsing = injected.initialize();
-	assert.equal(initializeDetails.mock.callCount(), 0);
+	assert.equal(initializeDetails.mock.calls.length, 0);
 	const direct = injected.showDetailStore.initialize();
 	catalog.resolve();
 	await browsing;
 	details.reject(new Error("Details offline"));
 	await assert.rejects(direct, /Details offline/);
 	await injected.initialize();
-	assert.equal(initializeDetails.mock.callCount(), 1);
+	assert.equal(initializeDetails.mock.calls.length, 1);
 });
 
 test("initialization loads shared versions before initializing ShowStore and TagStore", async () => {
 	const injected = createStores(createIndexedDB());
 	const order: string[] = [];
-	const versions = mock.method(
+	const versions = spyOn(
 		injected.versionsStore,
 		"initialize",
-		async () => {
-			order.push("versions");
+	).mockImplementation(async () => {
+		order.push("versions");
+	});
+	const shows = spyOn(injected.showStore, "initialize").mockImplementation(
+		() => {
+			order.push("shows");
 		},
 	);
-	const shows = mock.method(injected.showStore, "initialize", () => {
-		order.push("shows");
-	});
-	const tags = mock.method(injected.tagStore, "initialize", async () => {
-		order.push("tags");
-	});
+	const tags = spyOn(injected.tagStore, "initialize").mockImplementation(
+		async () => {
+			order.push("tags");
+		},
+	);
 	const first = injected.initialize();
 	assert.equal(first, injected.initialize());
 	await first;
 	await injected.initialize();
 	assert.deepEqual(order, ["versions", "shows", "tags"]);
-	assert.equal(versions.mock.callCount(), 1);
-	assert.equal(shows.mock.callCount(), 1);
-	assert.equal(tags.mock.callCount(), 1);
+	assert.equal(versions.mock.calls.length, 1);
+	assert.equal(shows.mock.calls.length, 1);
+	assert.equal(tags.mock.calls.length, 1);
 });
 
 test("failed initialization rejects and permits retry", async () => {
 	const injected = createStores();
 	let attempts = 0;
-	mock.method(injected.versionsStore, "initialize", async () => {
+	spyOn(injected.versionsStore, "initialize").mockImplementation(async () => {
 		if (++attempts === 1) {
 			throw new Error("Storage unavailable");
 		}
 	});
-	mock.method(injected.showStore, "initialize", () => {});
-	mock.method(injected.tagStore, "initialize", async () => {});
+	spyOn(injected.showStore, "initialize").mockImplementation(() => {});
+	spyOn(injected.tagStore, "initialize").mockImplementation(async () => {});
 	await assert.rejects(injected.initialize(), /Storage unavailable/);
 	await injected.initialize();
 	assert.equal(attempts, 2);
@@ -196,9 +201,11 @@ test("failed initialization rejects and permits retry", async () => {
 test("retry refreshes the manifest after a deployment revision mismatch", async () => {
 	const database = createIndexedDB();
 	const objectStore = database.getObjectStore("shows");
-	mock.method(objectStore, "getAll", async () => []);
-	mock.method(database, "getObjectStore", () => objectStore);
-	const write = mock.method(database, "transaction", async () => {});
+	spyOn(objectStore, "getAll").mockImplementation(async () => []);
+	spyOn(database, "getObjectStore").mockImplementation(() => objectStore);
+	const write = spyOn(database, "transaction").mockImplementation(
+		async () => {},
+	);
 	const injected = createStores(database);
 	const initializeVersions = injected.versionsStore.initialize.bind(
 		injected.versionsStore,
@@ -206,20 +213,20 @@ test("retry refreshes the manifest after a deployment revision mismatch", async 
 	const initializeShows = injected.showStore.initialize.bind(
 		injected.showStore,
 	);
-	mock.method(injected.versionsStore, "initialize", () =>
+	spyOn(injected.versionsStore, "initialize").mockImplementation(() =>
 		initializeVersions("/archive/"),
 	);
-	mock.method(injected.showStore, "initialize", () =>
+	spyOn(injected.showStore, "initialize").mockImplementation(() =>
 		initializeShows("/archive/"),
 	);
 	const initializeTags = injected.tagStore.initialize.bind(injected.tagStore);
-	mock.method(injected.tagStore, "initialize", () =>
+	spyOn(injected.tagStore, "initialize").mockImplementation(() =>
 		initializeTags("/archive/"),
 	);
 	let revision = 4;
 	let manifestFetches = 0;
 	const originalFetch = globalThis.fetch;
-	globalThis.fetch = mock.fn(async (url) => {
+	globalThis.fetch = mock(async (url) => {
 		if (String(url).endsWith("data_versions.json")) {
 			manifestFetches++;
 			const version = { id: revision, updatedAt: fixtureShows.updatedAt };
@@ -237,7 +244,7 @@ test("retry refreshes the manifest after a deployment revision mismatch", async 
 	}) as typeof fetch;
 	try {
 		await assert.rejects(injected.initialize(), /expected 4, received 5/);
-		assert.equal(write.mock.callCount(), 0);
+		assert.equal(write.mock.calls.length, 0);
 		revision = 5;
 		const retry = injected.initialize();
 		assert.equal(retry, injected.initialize());
@@ -245,7 +252,7 @@ test("retry refreshes the manifest after a deployment revision mismatch", async 
 		assert.equal(manifestFetches, 2);
 		assert.equal(injected.versionsStore.getPublished("shows"), 5);
 		assert.deepEqual(injected.showStore.getAll(), fixtureShows.data);
-		assert.equal(write.mock.callCount(), 2);
+		assert.equal(write.mock.calls.length, 2);
 		assert.deepEqual(injected.tagStore.getAll(), fixtureTags.data);
 	} finally {
 		globalThis.fetch = originalFetch;
@@ -254,9 +261,13 @@ test("retry refreshes the manifest after a deployment revision mismatch", async 
 
 test("shared initialization awaits ShowStore completion and propagates its errors", async () => {
 	const injected = createStores();
-	mock.method(injected.versionsStore, "initialize", async () => {});
+	spyOn(injected.versionsStore, "initialize").mockImplementation(
+		async () => {},
+	);
 	const loading = Promise.withResolvers<void>();
-	mock.method(injected.showStore, "initialize", () => loading.promise);
+	spyOn(injected.showStore, "initialize").mockImplementation(
+		() => loading.promise,
+	);
 	let settled = false;
 	const initialize = injected.initialize();
 	void initialize.then(
@@ -276,12 +287,12 @@ test("shared initialization awaits ShowStore completion and propagates its error
 
 test("shared initialization awaits tag completion and permits retry after tag failure", async () => {
 	const injected = createStores();
-	mock.method(injected.versionsStore, "initialize", async () => {});
-	mock.method(injected.showStore, "initialize", async () => {});
+	spyOn(injected.versionsStore, "initialize").mockImplementation(
+		async () => {},
+	);
+	spyOn(injected.showStore, "initialize").mockImplementation(async () => {});
 	const loading = Promise.withResolvers<void>();
-	const tags = mock.method(
-		injected.tagStore,
-		"initialize",
+	const tags = spyOn(injected.tagStore, "initialize").mockImplementation(
 		() => loading.promise,
 	);
 	let settled = false;
@@ -295,27 +306,27 @@ test("shared initialization awaits tag completion and permits retry after tag fa
 		},
 	);
 	await new Promise((resolve) => setImmediate(resolve));
-	assert.equal(tags.mock.callCount(), 1);
+	assert.equal(tags.mock.calls.length, 1);
 	assert.equal(settled, false);
 	loading.reject(new Error("Tag refresh failed"));
 	await assert.rejects(initialization, /Tag refresh failed/);
-	tags.mock.mockImplementation(async () => {});
+	tags.mockImplementation(async () => {});
 	await injected.initialize();
-	assert.equal(tags.mock.callCount(), 2);
+	assert.equal(tags.mock.calls.length, 2);
 });
 
 test("playlist initialization remains independent of a failed catalog refresh and is exposed by context", async () => {
 	const database = createIndexedDB();
-	mock.method(database, "ensureLikedPlaylist", async () => {});
+	spyOn(database, "ensureLikedPlaylist").mockImplementation(async () => {});
 	const objectStore = database.getObjectStore("playlists");
-	mock.method(objectStore, "getAll", async () => []);
-	mock.method(objectStore, "set", async () => {});
+	spyOn(objectStore, "getAll").mockImplementation(async () => []);
+	spyOn(objectStore, "set").mockImplementation(async () => {});
 	const getObjectStore = database.getObjectStore.bind(database);
-	mock.method(database, "getObjectStore", (name: StoreName) =>
+	spyOn(database, "getObjectStore").mockImplementation((name: StoreName) =>
 		name === "playlists" ? objectStore : getObjectStore(name),
 	);
 	const injected = createStores(database);
-	mock.method(injected.versionsStore, "initialize", async () => {
+	spyOn(injected.versionsStore, "initialize").mockImplementation(async () => {
 		throw new Error("Catalog offline");
 	});
 	const catalog = injected.initialize();

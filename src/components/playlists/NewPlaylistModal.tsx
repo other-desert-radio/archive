@@ -75,6 +75,7 @@ export default function NewPlaylistModal({
 						onClick={(event) => event.currentTarget.closest("dialog")?.close()}
 					>
 						<svg
+							className="close-icon"
 							viewBox="0 0 24 24"
 							fill="none"
 							stroke="currentColor"
@@ -95,7 +96,7 @@ export default function NewPlaylistModal({
 						name="title"
 						autoComplete="off"
 						aria-label="Playlist name"
-						placeholder="name"
+						placeholder="Playlist name"
 						required
 						value={title}
 						disabled={saving}
@@ -107,13 +108,14 @@ export default function NewPlaylistModal({
 					<button
 						type="button"
 						aria-label="Cancel new playlist"
+						className="button-secondary"
 						disabled={saving}
 						onClick={(event) => event.currentTarget.closest("dialog")?.close()}
 					>
 						Cancel
 					</button>
 					<button
-						className={modalStyles["save"]}
+						className={`button-primary ${modalStyles["save"]}`}
 						type="submit"
 						aria-label="Create playlist"
 						disabled={saving || !title.trim()}
