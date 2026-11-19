@@ -391,7 +391,8 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 			artworkBottom: artwork.getBoundingClientRect().bottom,
 			artworkTop: artwork.getBoundingClientRect().top,
             titleBottom: title.getBoundingClientRect().bottom,
-			matchingTitle: artwork.alt === title.textContent && title.textContent.length > 0,
+			titleFits: title.querySelector('[class*="fullscreen-title-text"]').getBoundingClientRect().width <= title.clientWidth + 1,
+			matchingTitle: artwork.alt === title.querySelector('[class*="fullscreen-title-text"]').textContent && artwork.alt.length > 0,
 			showLink: title.getAttribute('href').startsWith('/archive/shows/'),
 			tagsVisible: tagLinks.length > 0 && tagLinks.every(link => link.getBoundingClientRect().height > 0),
 			tagDestinations: tagLinks.every(link => link.getAttribute('href').startsWith('/archive/tags/')),
@@ -426,6 +427,37 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
     }
     assert.ok(Math.abs(fullscreen.artworkWidth - fullscreen.artworkHeight) < 1);
 	assert.equal(fullscreen.overflow, false);
+	if (width > 750) {
+		assert.equal(fullscreen.titleFits, true, "Full title fits the desktop width");
+		const marquee = evaluate(`(() => {
+			const details = document.querySelector('[class*="fullscreen-details"]');
+			const previous = details.dataset.hasTracklist;
+			details.dataset.hasTracklist = 'false';
+			const rows = [...details.querySelectorAll('[class*="marquee-row"]')];
+			const bounds = details.querySelector('[class*="fullscreen-marquee"]').getBoundingClientRect();
+			const result = {
+				fullWidth: Math.abs(bounds.left) < 1 && Math.abs(bounds.right - document.documentElement.clientWidth) < 1,
+				rows: rows.length,
+				visible: rows.every(row => row.getBoundingClientRect().height > 0),
+				moving: rows.every(row => getComputedStyle(row).animationName !== 'none'),
+				shades: [...rows[0].querySelector('[class*="marquee-group"]').children].map(span => Number(getComputedStyle(span).opacity))
+			};
+			details.dataset.hasTracklist = previous;
+			return result;
+		})()`);
+		assert.equal(marquee.rows, 3);
+		assert.equal(marquee.fullWidth, true, "Marquee spans the viewport width");
+		assert.equal(marquee.visible, true);
+		assert.equal(marquee.moving, true);
+		assert.deepEqual(marquee.shades, [1, 0.3, 0.15]);
+	} else {
+		assert.equal(evaluate(`(() => {
+			const marquee = document.querySelector('[class*="fullscreen-marquee"]');
+			return getComputedStyle(marquee).display === 'none' &&
+				[...marquee.children].every(row => getComputedStyle(row).animationName === 'none');
+		})()`), true, "Stacked titles have no marquee animation");
+	}
+
 	if (width <= 600) {
 		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);
 	}

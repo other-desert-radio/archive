@@ -70,6 +70,18 @@ Fullscreen uses flexbox stacks: a station/close header, a large linked show titl
 then artwork with a playlist save control beneath it. The title spans the full header
 width; only the artwork/tracklist row has a centered width cap. When a tracklist is available,
 it sits beside the artwork; without one, artwork and its save control are centered.
+Above 750px, shows with tracklists use a single static title line that shrinks to
+fit the available width. Desktop titles have extra space above the artwork row. Without a
+tracklist, three edge-to-edge staggered marquee rows replace the static title and extend behind
+the artwork, repeating the title in white and two progressively darker grays.
+Pausing restores the single fitted title; playback crossfades it into the marquee
+over two seconds. The rows move
+only while playback is active, fading in on playback and fading out on pause.
+They retain their animation position while paused. Desktop content is
+vertically centered when it fits, and remains scrollable when taller. Animated
+rows reduce from three to two, one and zero at viewport heights of 750px, 600px
+and 400px respectively. Decorative repeats are hidden
+from assistive technology, and reduced motion stops the marquee.
 At 750px and below, content stacks as artwork, title, save control, then tracklist. Artwork stays square without cropping,
 and long titles and tracks wrap. The content scrolls independently above the bottom
 widget, with safe-area space reserved. Tags and DJ portraits are omitted.
