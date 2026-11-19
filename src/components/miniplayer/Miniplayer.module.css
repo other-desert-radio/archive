@@ -122,6 +122,7 @@
 
 	.title {
 		flex: 0 0 100%;
+		padding-inline: 0;
 	}
 
 	.desktop-title {
