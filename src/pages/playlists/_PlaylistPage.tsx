@@ -1,5 +1,6 @@
 import { type SubmitEvent, useEffect, useRef, useState } from "react";
 import ConfirmationModal from "../../components/ConfirmationModal";
+import HistoryShowCardSkeleton from "../../components/history/HistoryShowCardSkeleton";
 import LoadingState from "../../components/LoadingState";
 import PlaylistModal from "../../components/playlists/PlaylistModal";
 import PlaylistShowCard from "../../components/playlists/PlaylistShowCard";
@@ -14,6 +15,20 @@ import { usePlaylistShows } from "./usePlaylistShows";
 // Keep the ref stable so playback rerenders don't refocus the title field.
 function focusTitle(input: HTMLTextAreaElement | null) {
 	input?.focus();
+}
+
+function PlaylistShowsSkeleton() {
+	return (
+		<section
+			className={styles["shows-grid"]}
+			aria-label="Loading playlist shows"
+			aria-busy="true"
+		>
+			{[0, 1, 2, 3].map((slot) => (
+				<HistoryShowCardSkeleton key={slot} />
+			))}
+		</section>
+	);
 }
 
 export default function PlaylistPage() {
@@ -184,69 +199,79 @@ export default function PlaylistPage() {
 			<p className={styles["disclaimer"]}>
 				Playlists are stored locally on this device.
 			</p>
-			{playlist && <SearchBar value={query} onChange={setQuery} />}
-			<LoadingState
-				status={status}
-				loading="Loading playlist..."
-				error="Could not load playlists. Reload the page to retry."
-			>
-				{playlist ? (
-					<LoadingState
-						status={showStatus}
-						loading="Loading shows..."
-						error={
-							<>
-								Could not load shows.{" "}
-								<button type="button" onClick={retry}>
-									Retry
-								</button>
-							</>
-						}
-					>
-						{shows.length === 0 ? (
-							<p>
-								{playlist.shows.length === 0
-									? "No shows in this playlist."
-									: "No shows found."}
-							</p>
+			{(status === "loading" || playlist) && (
+				<SearchBar value={query} onChange={setQuery} />
+			)}
+			{status === "loading" ? (
+				<PlaylistShowsSkeleton />
+			) : (
+				<LoadingState
+					status={status}
+					loading={null}
+					error="Could not load playlists. Reload the page to retry."
+				>
+					{playlist ? (
+						showStatus === "loading" ? (
+							<PlaylistShowsSkeleton />
 						) : (
-							<section
-								className={styles["shows-grid"]}
-								aria-label="Playlist shows"
+							<LoadingState
+								status={showStatus}
+								loading={null}
+								error={
+									<>
+										Could not load shows.{" "}
+										<button type="button" onClick={retry}>
+											Retry
+										</button>
+									</>
+								}
 							>
-								{shows.map(({ entry, show, record }) =>
-									show ? (
-										<PlaylistShowCard
-											key={entry.showId}
-											show={show}
-											tags={tags}
-											record={record}
-											onEdit={() => {
-												if (editingShowId === show.id) {
-													modal.current?.showModal();
-												} else {
-													setEditingShowId(show.id);
-												}
-											}}
-											entry={entry}
-										/>
-									) : (
-										<div key={entry.showId}>
-											Show unavailable — Show ID: {entry.showId}
-										</div>
-									),
+								{shows.length === 0 ? (
+									<p>
+										{playlist.shows.length === 0
+											? "No shows in this playlist."
+											: "No shows found."}
+									</p>
+								) : (
+									<section
+										className={styles["shows-grid"]}
+										aria-label="Playlist shows"
+									>
+										{shows.map(({ entry, show, record }) =>
+											show ? (
+												<PlaylistShowCard
+													key={entry.showId}
+													show={show}
+													tags={tags}
+													record={record}
+													onEdit={() => {
+														if (editingShowId === show.id) {
+															modal.current?.showModal();
+														} else {
+															setEditingShowId(show.id);
+														}
+													}}
+													entry={entry}
+												/>
+											) : (
+												<div key={entry.showId}>
+													Show unavailable — Show ID: {entry.showId}
+												</div>
+											),
+										)}
+									</section>
 								)}
-							</section>
-						)}
-					</LoadingState>
-				) : (
-					<p>
-						{playlistId
-							? "Playlist not found in this browser."
-							: "Choose a playlist from History."}
-					</p>
-				)}
-			</LoadingState>
+							</LoadingState>
+						)
+					) : (
+						<p>
+							{playlistId
+								? "Playlist not found in this browser."
+								: "Choose a playlist from History."}
+						</p>
+					)}
+				</LoadingState>
+			)}
 			<ConfirmationModal
 				ref={deleteModal}
 				title="Delete playlist?"

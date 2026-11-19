@@ -28,6 +28,10 @@ test("playlist card links the local ID and escapes its title", () => {
 
 test("playlist page renders safely before browser storage and location are available", () => {
 	const html = renderToStaticMarkup(<PlaylistPage />);
-	assert.ok(html.includes("Loading playlist..."));
+	assert.ok(html.includes('aria-label="Loading playlist shows"'));
+	assert.ok(html.includes('aria-busy="true"'));
+	assert.equal((html.match(/aria-hidden="true"/g) ?? []).length, 4);
+	assert.match(html, /<input[^>]*type="search"/);
+	assert.ok(!html.includes("Loading playlist..."));
 	assert.ok(!html.includes("Playlist not found"));
 });
