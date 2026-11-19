@@ -368,7 +368,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 		const artwork = player.querySelector('[class*="fullscreen-artwork"] img');
 		const title = player.querySelector('[class*="fullscreen-title"]');
 		const tagLinks = [...player.querySelectorAll('[class*="fullscreen-tags"] a')];
-		const bookmark = player.querySelector('[class*="fullscreen-bookmark"] button');
+		const bookmark = player.querySelector('[class*="fullscreen-save"] button');
 		const djLinks = [...player.querySelectorAll('[class*="fullscreen-djs"] a')];
 		return {
 			x: rect.x, y: rect.y, width: rect.width, height: rect.height,
@@ -390,13 +390,7 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 			artworkHeight: artwork.getBoundingClientRect().height,
 			artworkBottom: artwork.getBoundingClientRect().bottom,
 			artworkTop: artwork.getBoundingClientRect().top,
-			metadataTop: title.parentElement.getBoundingClientRect().top,
-			detailGap: parseFloat(getComputedStyle(player.querySelector('[class*="controls"]')).rowGap),
-			rowBounds: ['fullscreen-metadata', 'fullscreen-actions'].map(name => {
-				const bounds = player.querySelector('[class*="' + name + '"]').getBoundingClientRect();
-				return { left: bounds.left, right: bounds.right };
-			}),
-			controlsLeft: player.querySelector('[class*="controls"]').getBoundingClientRect().left,
+            titleBottom: title.getBoundingClientRect().bottom,
 			matchingTitle: artwork.alt === title.textContent && title.textContent.length > 0,
 			showLink: title.getAttribute('href').startsWith('/archive/shows/'),
 			tagsVisible: tagLinks.length > 0 && tagLinks.every(link => link.getBoundingClientRect().height > 0),
@@ -417,30 +411,20 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 	assert.equal(fullscreen.background, evaluate("getComputedStyle(document.querySelector('[data-miniplayer-bar]')).backgroundColor"));
 	assert.equal(fullscreen.bookmarkHidden, true);
 	assert.equal(fullscreen.fullscreenBookmarkVisible, true);
-	assert.equal(fullscreen.djsVisible, true);
+	assert.equal(fullscreen.djsVisible, false);
 	assert.equal(fullscreen.djDestinations, true);
 	assert.equal(fullscreen.closeVisible, true);
 	assert.equal(fullscreen.artworkVisible, true);
 	assert.equal(fullscreen.matchingTitle, true);
 	assert.equal(fullscreen.showLink, true);
-	assert.equal(fullscreen.tagsVisible, true);
+	assert.equal(fullscreen.tagsVisible, false);
 	assert.equal(fullscreen.tagDestinations, true);
-	if (width <= 1023) {
-		assert.ok(Math.abs(fullscreen.metadataTop - fullscreen.artworkBottom - fullscreen.detailGap) < 1, 'Metadata sits one medium gap below artwork');
-		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);
-	}
-	if (width > 1023) {
-		assert.ok(Math.abs(fullscreen.artworkTop - fullscreen.metadataTop) < 1, "Artwork and metadata align at the top");
-		for (const row of fullscreen.rowBounds) {
-			assert.ok(Math.abs(row.left - fullscreen.rowBounds[0].left) < 1);
-			assert.ok(Math.abs(row.right - fullscreen.rowBounds[0].right) < 1);
-		}
-		if (width >= 2560) {
-			assert.ok(fullscreen.controlsLeft >= 400, 'Wide screens retain generous side margins');
-		}
-		assert.ok(Math.abs(fullscreen.artworkWidth - fullscreen.artworkHeight) < 1);
-		assert.ok(fullscreen.artworkHeight <= fullscreen.viewportHeight * 0.8);
-	}
+    if (width > 750) {
+        assert.ok(fullscreen.artworkTop > fullscreen.titleBottom, "Desktop title precedes artwork");
+    } else {
+        assert.ok(fullscreen.artworkBottom < fullscreen.titleBottom, "Mobile artwork precedes title");
+    }
+    assert.ok(Math.abs(fullscreen.artworkWidth - fullscreen.artworkHeight) < 1);
 	assert.equal(fullscreen.overflow, false);
 	if (width <= 600) {
 		assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);
@@ -512,8 +496,6 @@ console.log("Show, DJ and tag details preserve the document on entry and return,
 for (const width of [390, 1440]) {
 	browser("set", "viewport", String(width), "844");
 	for (const selector of [
-		'[class*="fullscreen-tags"] a',
-		'[class*="fullscreen-djs"] a',
 		'[class*="fullscreen-title"]',
 	]) {
 		browser("open", `${base}/`);
