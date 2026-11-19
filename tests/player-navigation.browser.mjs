@@ -377,6 +377,8 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 			sameFrame: frame === window.fullscreenFrame,
 			sameDocument: frame.contentDocument === window.fullscreenDocument,
 			frameBottom: frame.getBoundingClientRect().bottom,
+			frameLeft: frame.getBoundingClientRect().left,
+			frameWidth: frame.getBoundingClientRect().width,
 			background: getComputedStyle(player).backgroundColor,
 			bookmarkHidden: getComputedStyle(player.querySelector('[class*="desktop-actions"]')).display === 'none',
 			fullscreenBookmarkVisible: bookmark.getBoundingClientRect().width > 0,
@@ -390,13 +392,11 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 			artworkTop: artwork.getBoundingClientRect().top,
 			metadataTop: title.parentElement.getBoundingClientRect().top,
 			detailGap: parseFloat(getComputedStyle(player.querySelector('[class*="controls"]')).rowGap),
-			rowBounds: ['fullscreen-metadata', 'widget-slot', 'fullscreen-actions'].map(name => {
+			rowBounds: ['fullscreen-metadata', 'fullscreen-actions'].map(name => {
 				const bounds = player.querySelector('[class*="' + name + '"]').getBoundingClientRect();
 				return { left: bounds.left, right: bounds.right };
 			}),
 			controlsLeft: player.querySelector('[class*="controls"]').getBoundingClientRect().left,
-			artworkCenterY: artwork.getBoundingClientRect().y + artwork.getBoundingClientRect().height / 2,
-			frameCenterY: frame.getBoundingClientRect().y + frame.getBoundingClientRect().height / 2,
 			matchingTitle: artwork.alt === title.textContent && title.textContent.length > 0,
 			showLink: title.getAttribute('href').startsWith('/archive/shows/'),
 			tagsVisible: tagLinks.length > 0 && tagLinks.every(link => link.getBoundingClientRect().height > 0),
@@ -409,6 +409,9 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 	assert.equal(fullscreen.width, fullscreen.viewportWidth);
 	assert.equal(fullscreen.height, fullscreen.viewportHeight);
 	assert.ok(Math.abs(fullscreen.barHeight - compactHeight) < 1);
+	assert.ok(Math.abs(fullscreen.frameBottom - fullscreen.viewportHeight) < 1);
+	assert.ok(Math.abs(fullscreen.frameLeft) < 1);
+	assert.ok(Math.abs(fullscreen.frameWidth - fullscreen.viewportWidth) < 1);
 	assert.equal(fullscreen.sameFrame, true);
 	assert.equal(fullscreen.sameDocument, true);
 	assert.equal(fullscreen.background, evaluate("getComputedStyle(document.querySelector('[data-miniplayer-bar]')).backgroundColor"));
@@ -437,7 +440,6 @@ for (const [width, height] of [[320, 844], [332, 844], [390, 844], [600, 844], [
 		}
 		assert.ok(Math.abs(fullscreen.artworkWidth - fullscreen.artworkHeight) < 1);
 		assert.ok(fullscreen.artworkHeight <= fullscreen.viewportHeight * 0.8);
-		assert.ok(Math.abs(fullscreen.artworkCenterY - fullscreen.frameCenterY) < 1);
 	}
 	assert.equal(fullscreen.overflow, false);
 	if (width <= 600) {

@@ -64,8 +64,7 @@ button restores compact presentation. Activating fullscreen show, tag or DJ
 links uses the immediate-close path and releases scroll locking synchronously before client navigation while playback continues. The X button retains its animated dismissal. During phone dismissal, the existing widget stays anchored above the bottom safe area while the fullscreen panel moves down, avoiding an empty bar before the compact layout returns. The mobile expand button is also visible in its compact position during dismissal. The same player container becomes fixed
 and fills the viewport with the miniplayer background, a station header and a close SVG.
 Compact metadata and actions are hidden. The existing iframe stays mounted in
-its original position in the React tree: at the viewport bottom on mobile and
-in the right-hand content area on desktop.
+its original position in the React tree: across the viewport bottom at every screen width.
 
 Fullscreen controls use a grid with large show artwork, a wrapping linked
 title, colored tag links, an unwired outline bookmark button and linked DJ portraits
@@ -82,10 +81,10 @@ artwork occupies a 1:1 square bounded by column
 width and the content area's height, without cropping. Desktop content is
 centered vertically; artwork is bounded by 80% of viewport height and 52rem.
 The artwork determines the row height, with right-hand metadata aligned to its top. The two equal desktop columns share a centered 100rem maximum-width container.
-Metadata, widget and the bookmark/DJ flex row stretch to the same right-column width. The
+Metadata and the bookmark/DJ flex row stretch to the same right-column width. The
 stacked layout caps square artwork at 45% of viewport height and places metadata
 one medium spacing token below it; remaining height belongs to the content column. Content can scroll when it exceeds its height, with the
-widget sticky at the bottom. Detail slots are hidden in compact mode; artwork/title mount only
+widget anchored full width at the bottom, with its height reserved outside the scrolling content. Detail slots are hidden in compact mode; artwork/title mount only
 in fullscreen. The widget retains its existing parent in both modes.
 
 A player-shell wrapper reserves the compact height measured on expand, so the

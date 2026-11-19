@@ -13,7 +13,7 @@
 	align-items: center;
 	gap: var(--space-xs);
 	min-width: 0;
-	min-height: 3.75rem;
+	min-height: 4rem;
 }
 
 .fullscreen-content,
@@ -74,8 +74,8 @@
 	margin-inline-start: auto;
 	min-width: 0;
 	/** HACKy!!!! to remove white border */
-	outline: 1px solid var(--miniplayer-background);
-	outline-offset: -1px;
+	outline: 2px solid var(--miniplayer-background);
+	outline-offset: -2px;
 }
 
 .progress-track {
@@ -176,7 +176,7 @@
 	height: 100vh;
 	box-sizing: border-box;
 	padding-top: env(safe-area-inset-top);
-	padding-bottom: env(safe-area-inset-bottom);
+	padding-bottom: calc(4rem + env(safe-area-inset-bottom));
 	padding-left: env(safe-area-inset-left);
 	padding-right: env(safe-area-inset-right);
 	gap: 0;
@@ -288,7 +288,7 @@
 
 .miniplayer[data-presentation="fullscreen"] .fullscreen-content {
 	display: grid;
-	grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr);
+	grid-template-rows: minmax(0, 1fr) auto;
 	align-self: stretch;
 	min-width: 0;
 	gap: var(--space-md);
@@ -368,8 +368,11 @@
 }
 
 .miniplayer[data-presentation="fullscreen"] .widget-slot {
-	flex: 0 0 auto;
-	width: 100%;
+	position: absolute;
+	left: env(safe-area-inset-left);
+	right: env(safe-area-inset-right);
+	bottom: env(safe-area-inset-bottom);
+	width: auto;
 	max-width: none;
 	margin: 0;
 }
@@ -406,13 +409,6 @@
 	.miniplayer[data-presentation="fullscreen"] .fullscreen-actions {
 		align-self: stretch;
 		margin-inline: var(--nav-inline-padding);
-	}
-
-	.miniplayer[data-presentation="fullscreen"] .widget-slot {
-		order: 1;
-		position: sticky;
-		bottom: 0;
-		margin-top: auto;
 	}
 }
 
@@ -605,7 +601,7 @@
 		position: fixed;
 		bottom: calc(
 			var(--player-offset) +
-			var(--compact-height, 3.75rem) +
+			var(--compact-height, 4rem) +
 			env(safe-area-inset-bottom)
 		);
 		z-index: 3;

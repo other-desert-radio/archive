@@ -4,7 +4,7 @@ import styles from "./Miniplayer.module.css";
 type Props = {
 	playerRef: RefObject<HTMLDivElement | null>;
 	fullscreen: boolean;
-	/** Measured compact player height in pixels; collapse travel defaults to 60. */
+	/** Measured compact player height in pixels; collapse travel defaults to 64. */
 	compactHeight: number | undefined;
 	expand: () => void;
 	/** Leave fullscreen without another animation; called after the gesture settles. */
@@ -136,7 +136,7 @@ export default function ExpandHandle({
 				1,
 				window.innerHeight -
 					(fullscreen
-						? (compactHeight ?? 60)
+						? (compactHeight ?? 64)
 						: player.getBoundingClientRect().height),
 			);
 			drag.current = {
