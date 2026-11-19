@@ -25,24 +25,9 @@ export function MobileExpand({
 	);
 }
 
-export function DesktopActions({
-	base,
-	onFavorite,
-	hidden,
-	onExpand,
-}: Props & { base: string; onFavorite: () => void }): ReactElement {
+export function DesktopActions({ hidden, onExpand }: Props): ReactElement {
 	return (
 		<div className={styles["desktop-actions"]} hidden={hidden}>
-			<button type="button" aria-label="Favorite show" onClick={onFavorite}>
-				<svg
-					className={styles["bookmark-icon"]}
-					viewBox="0 0 24 24"
-					fill="none"
-					aria-hidden="true"
-				>
-					<use href={`${base}/assets/icons/bookmark.svg#bookmark`} />
-				</svg>
-			</button>
 			<button type="button" aria-label="Expand player" onClick={onExpand}>
 				<span aria-hidden="true">{"\u26F6\uFE0E"}</span>
 			</button>

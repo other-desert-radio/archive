@@ -38,8 +38,9 @@ command completion alone does not. Events during loads are ignored.
 The shared sticky header contains navigation and a full-width player bar fixed
 to the viewport bottom using `--miniplayer-background`. The idle bar collapses; the active player supplies its
 height. Metadata aligns with navigation text. Above 1023px, linked DJ names, a
-decorative divider and the linked show title sit alongside the widget, followed
-by outline bookmark and fullscreen buttons. Each DJ has its own link; shows without
+decorative divider and the linked show title follow a minimal playlist button,
+then the widget and fullscreen button. The borderless playlist button shows only
+the bookmark icon when unsaved and includes playlist names when saved. Each DJ has its own link; shows without
 DJs omit the divider. Metadata uses a single line with ellipsis; the iframe has
 a maximum width of 40rem.
 
@@ -48,7 +49,7 @@ the available width underneath alongside the desktop controls on the right.
 
 At 600px and below, metadata and desktop actions are hidden. A borderless,
 content-width “expand ↑” button sits immediately above the widget at its right
-edge, without a full-width background strip. The button supports tap-to-expand and upward dragging with inertia. It stays labeled expand throughout the upward movement and disappears once fullscreen is reached. At phone widths it is the only upward drag target; the mound is hidden. Fullscreen has no mobile collapse button; use X to dismiss. The compact bookmark opens the playlist modal.
+edge, without a full-width background strip. The button supports tap-to-expand and upward dragging with inertia. It stays labeled expand throughout the upward movement and disappears once fullscreen is reached. At phone widths it is the only upward drag target; the mound is hidden. Fullscreen has no mobile collapse button; use X to dismiss. The compact playlist button opens the shared playlist modal.
 
 Safe-area padding stays inside the active bar. A border-box ResizeObserver
 publishes its height as `--miniplayer-height`; BaseLayout reserves that height in

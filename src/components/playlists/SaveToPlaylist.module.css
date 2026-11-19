@@ -28,7 +28,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-	.save-button:hover {
+	.save-button:not(.minimal):hover {
 		background: white;
 		border: var(--border-primary) solid currentColor;
 		/* prevent jumping */
@@ -76,4 +76,23 @@
 	padding-top: var(--space-sm);
 	font-weight: 400;
 	white-space: pre-wrap;
+}
+
+.minimal {
+	border: var(--border-secondary) solid transparent;
+	background: transparent;
+	color: inherit;
+	margin-top: 0;
+	padding: var(--button-padding);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.minimal:hover {
+		border-color: currentColor;
+	}
+}
+
+.minimal:not(.saved) {
+	grid-template-columns: auto;
+	gap: 0;
 }

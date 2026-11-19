@@ -8,9 +8,11 @@ import { usePlaylists } from "./usePlaylists";
 export default function SaveToPlaylist({
 	showId,
 	showNote = true,
+	minimal = false,
 }: {
 	showId: number;
 	showNote?: boolean;
+	minimal?: boolean;
 }) {
 	const { playlists, status } = usePlaylists();
 	const savedPlaylists = playlists.filter((playlist) =>
@@ -34,6 +36,7 @@ export default function SaveToPlaylist({
 			}))}
 			note={note}
 			showNote={showNote}
+			minimal={minimal}
 		/>
 	);
 }
@@ -44,12 +47,14 @@ export function SaveToPlaylistButton({
 	note,
 	showNote = true,
 	compact = false,
+	minimal = false,
 }: {
 	showId: number;
 	playlistSaves: readonly PlaylistSave[];
 	note?: string | undefined;
 	showNote?: boolean;
 	compact?: boolean;
+	minimal?: boolean;
 }) {
 	const isSaved = playlistSaves.length > 0;
 	const modal = useRef<HTMLDialogElement>(null);
@@ -70,7 +75,7 @@ export function SaveToPlaylistButton({
 		<>
 			<button
 				type="button"
-				className={`${styles["save-button"]} ${isSaved ? styles["saved"] : ""} ${compact ? styles["compact"] : ""}`}
+				className={`${styles["save-button"]} ${isSaved ? styles["saved"] : ""} ${compact ? styles["compact"] : ""} ${minimal ? styles["minimal"] : ""}`}
 				aria-label="Save to Playlist"
 				onClick={openModal}
 			>
@@ -79,11 +84,13 @@ export function SaveToPlaylistButton({
 						href={`${getBasePath()}/assets/icons/${isSaved ? "bookmark-filled" : "bookmark"}.svg#bookmark`}
 					/>
 				</svg>
-				<span>
-					{isSaved
-						? playlistSaves.map((playlist) => playlist.title).join(", ")
-						: "Save to Playlist"}
-				</span>
+				{(!minimal || isSaved) && (
+					<span>
+						{isSaved
+							? playlistSaves.map((playlist) => playlist.title).join(", ")
+							: "Save to Playlist"}
+					</span>
+				)}
 				{showNote && note && <span className={styles["note"]}>{note}</span>}
 			</button>
 			{modalMounted && (
