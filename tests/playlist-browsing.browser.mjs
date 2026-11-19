@@ -21,11 +21,11 @@ const server = serve({
   port: 0,
   async fetch(request) {
     const path = new URL(request.url).pathname;
-    if (path.startsWith("/archive/")) {
-      if (path === "/archive/history") {
+    if (/^\/(history|playlists)(\/|$)/.test(path) || path.startsWith("/_astro/")) {
+      if (path === "/history") {
         await new Promise((resolve) => globalThis.setTimeout(resolve, 300));
       }
-      const relative = path.slice("/archive/".length);
+      const relative = path.slice("/".length);
       const asset = file(`dist/${relative}`);
       return new Response(
         (await asset.exists())
@@ -239,8 +239,8 @@ try {
   await browser("open", `${server.url}?fail`);
   await browser("wait", 'section[aria-label="Playlists"] [role="alert"]');
   // Check the actual static Astro shell and its client router using the same storage.
-  await browser("open", `${server.url}archive/history`);
-  await browser("wait", `a[href="/archive/playlists/?id=${id}"]`);
+  await browser("open", `${server.url}history`);
+  await browser("wait", `a[href="/playlists/?id=${id}"]`);
   for (const width of [320, 1440]) {
     await browser("set", "viewport", String(width), "900");
     assert.equal(
@@ -252,7 +252,7 @@ try {
     `window.navigationMarker = {}; window.playerMarker = document.querySelector('[data-miniplayer]'); true`,
   );
   await evaluate(
-    `document.querySelector('a[href="/archive/playlists/?id=${id}"]').focus(); true`,
+    `document.querySelector('a[href="/playlists/?id=${id}"]').focus(); true`,
   );
   await browser("press", "Enter");
   await browser("wait", 'section[aria-label="Playlist shows"]');
@@ -271,7 +271,7 @@ try {
   // Query-only navigation must remount the island without reloading the player.
   await evaluate(`(() => {
     const link = document.createElement('a');
-    link.href = '/archive/playlists/?id=unknown';
+    link.href = '/playlists/?id=unknown';
     link.id = 'other-playlist';
     link.textContent = 'Other playlist';
     document.querySelector('main').append(link);
@@ -326,7 +326,7 @@ try {
     return true;
   })()`);
   await browser("back");
-  await browser("wait", `a[href="/archive/playlists/?id=${id}"]`);
+  await browser("wait", `a[href="/playlists/?id=${id}"]`);
   assert.equal(
     await evaluate("window.playlistDisappeared"),
     false,
@@ -335,7 +335,7 @@ try {
   await browser("forward");
   await browser("wait", 'section[aria-label="Playlist shows"]');
   await browser("click", 'a[aria-label="Return to history"]');
-  await browser("wait", `a[href="/archive/playlists/?id=${id}"]`);
+  await browser("wait", `a[href="/playlists/?id=${id}"]`);
   await browser("back");
   await browser("wait", 'section[aria-label="Playlist shows"]');
   await browser("reload");
@@ -374,11 +374,11 @@ try {
   }
   await browser("click", `${confirmation} button[aria-label="Delete playlist"]`);
   await browser("wait", 'section[aria-label="Playlists"]');
-  assert.equal(await evaluate(`!!document.querySelector('a[href="/archive/playlists/?id=${id}"]')`), false);
+  assert.equal(await evaluate(`!!document.querySelector('a[href="/playlists/?id=${id}"]')`), false);
   assert.equal(await evaluate('window.playerMarker === document.querySelector("[data-miniplayer]")'), true);
   await browser("reload");
   await browser("wait", 'a[aria-label="View playlist Liked Shows"]');
-  assert.equal(await evaluate(`!!document.querySelector('a[href="/archive/playlists/?id=${id}"]')`), false);
+  assert.equal(await evaluate(`!!document.querySelector('a[href="/playlists/?id=${id}"]')`), false);
   await browser("click", 'a[aria-label="View playlist Liked Shows"]');
   await browser("wait", "--fn", 'document.querySelector("h1")?.textContent === "Liked Shows"');
   assert.equal(await evaluate(`Array.from(document.querySelectorAll('button[aria-label="Delete playlist"], button[aria-label="Rename playlist"]')).some(button => !button.closest("dialog"))`), false);

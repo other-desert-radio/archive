@@ -52,7 +52,7 @@ async function touchClient() {
 	}
 	const { targetInfos } = await send("Target.getTargets");
 	const target = targetInfos.find(
-		(item) => item.type === "page" && item.url.includes("/archive/"),
+		(item) => item.type === "page" && item.url.startsWith("http://127.0.0.1:"),
 	);
 	assert.ok(target, "local archive tab exists");
 	const { sessionId } = await send("Target.attachToTarget", {
@@ -102,7 +102,7 @@ function fixtureServer({ warm = true, fallback = false, details = false }) {
 		hostname: "127.0.0.1",
 		async fetch(request) {
 			const path = new URL(request.url).pathname.replace(
-				/^\/archive\/?/,
+				/^\//,
 				"",
 			);
 			if (path.includes(".."))
@@ -174,7 +174,7 @@ async function scenario({ warm, fallback }) {
 		await browser("set", "device", "iPhone 12");
 		await browser(
 			"open",
-			`http://127.0.0.1:${server.port}/archive/explore`,
+			`http://127.0.0.1:${server.port}/explore`,
 		);
 		await browser("wait", ".tabs");
 		assert.equal(
@@ -193,11 +193,11 @@ async function scenario({ warm, fallback }) {
 				await browser(
 					"wait",
 					"--fn",
-					`performance.getEntriesByType('resource').some(r => new URL(r.name).pathname === '/archive/${destination}')`,
+					`performance.getEntriesByType('resource').some(r => new URL(r.name).pathname === '/${destination}')`,
 				);
 			}
 			const before = requests.filter(
-				(path) => path === `/archive/${destination}`,
+				(path) => path === `/${destination}`,
 			).length;
 			const point = await evaluate(`(() => {
 				window.navigationTiming = {};
@@ -215,7 +215,7 @@ async function scenario({ warm, fallback }) {
 						}));
 					});
 				}, { once: true });
-				const rect = document.querySelector('.tabs a[href="/archive/${destination}"]').getBoundingClientRect();
+				const rect = document.querySelector('.tabs a[href="/${destination}"]').getBoundingClientRect();
 				return { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 };
 			})()`);
 			await touch.tap(point.x, point.y);
@@ -244,7 +244,7 @@ async function scenario({ warm, fallback }) {
 			assert.ok(timing.tapToClick < 150, "touch does not wait for double tap");
 			if (warm) {
 				assert.equal(
-					requests.filter((path) => path === `/archive/${destination}`)
+					requests.filter((path) => path === `/${destination}`)
 						.length,
 					before,
 					"tap reuses prefetched HTML without a network round trip",
@@ -277,13 +277,13 @@ async function detailNavigation() {
 		await browser("set", "device", "iPhone 12");
 		const timings = [];
 		for (const [listing, selector] of [
-			["djs", "a[href^='/archive/djs/']"],
-			["", "a[href^='/archive/shows/']"],
-			["explore", "a[href^='/archive/tags/']"],
+			["djs", "a[href^='/djs/']"],
+			["", "a[href^='/shows/']"],
+			["explore", "a[href^='/tags/']"],
 		]) {
 			await browser(
 				"open",
-				`http://127.0.0.1:${server.port}/archive/${listing}`,
+				`http://127.0.0.1:${server.port}/${listing}`,
 			);
 			await browser("wait", selector);
 			touch ??= await touchClient();

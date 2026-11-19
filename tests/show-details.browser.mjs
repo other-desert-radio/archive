@@ -23,7 +23,7 @@ const server = serve({
 	hostname: "127.0.0.1",
 	port: 0,
 	async fetch(request) {
-		const path = new URL(request.url).pathname.replace(/^\/archive\/?/, "");
+		const path = new URL(request.url).pathname.replace(/^\//, "");
 		if (path === "resources/data_versions.json") {
 			return Response.json({ ...manifest, show_details: { ...manifest.show_details, id: revision } });
 		}
@@ -47,7 +47,7 @@ async function browser(...args) {
 async function evaluate(code) {
 	return JSON.parse(await browser("eval", code));
 }
-const base = `http://127.0.0.1:${server.port}/archive/`;
+const base = `http://127.0.0.1:${server.port}/`;
 const ready = "!document.querySelector('main [role=status]') && !document.querySelector('main [role=alert]') && !!document.querySelector('main article [data-show-playback]')";
 const readCache = `(async () => {
 	const db = await new Promise((resolve, reject) => {

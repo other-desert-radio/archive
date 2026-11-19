@@ -1,10 +1,10 @@
-// Run against Astro dev or preview: ARCHIVE_PREVIEW_URL=http://localhost:4321/archive bun tests/gutter-scroll.browser.mjs
+// Run against Astro dev or preview: ARCHIVE_PREVIEW_URL=http://localhost:4321 bun tests/gutter-scroll.browser.mjs
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import console from "node:console";
 import process from "node:process";
 
-const base = process.env["ARCHIVE_PREVIEW_URL"] ?? "http://localhost:4321/archive";
+const base = process.env["ARCHIVE_PREVIEW_URL"] ?? "http://localhost:4321";
 function browser(...args) {
 	return execFileSync("agent-browser", ["--session", "gutter-analysis", ...args], {
 		encoding: "utf8",

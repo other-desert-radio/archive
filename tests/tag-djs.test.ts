@@ -29,11 +29,9 @@ test("tag pages render only matching DJ cards with names, images and detail link
 	const shows = await fetchShows(pathToFileURL("public/resources/shows.json"));
 	for (const tag of tags.values()) {
 		const html = await readFile(`dist/tags/${tag.id}/index.html`, "utf8");
-		assert.ok(html.includes('href="/archive/explore"'));
+		assert.ok(html.includes('href="/explore"'));
 		for (const show of shows.filter((show) => show.tagIds.includes(tag.id))) {
-			assert.ok(
-				html.includes(`href="/archive/shows/${show.id}?fromTag=${tag.id}"`),
-			);
+			assert.ok(html.includes(`href="/shows/${show.id}?fromTag=${tag.id}"`));
 		}
 		assert.equal(
 			html.includes('aria-labelledby="tag-shows-heading"'),
@@ -52,13 +50,11 @@ test("tag pages render only matching DJ cards with names, images and detail link
 		for (const [index, dj] of matching.entries()) {
 			const card = cards[index];
 			assert.ok(card);
-			assert.ok(
-				card.includes(`href="/archive/djs/${dj.id}?fromTag=${tag.id}"`),
-			);
+			assert.ok(card.includes(`href="/djs/${dj.id}?fromTag=${tag.id}"`));
 			assert.ok(card.includes(`aria-label="View ${dj.title}"`));
 			assert.ok(card.includes('class="artwork"'));
 			if (dj.image_large) {
-				assert.ok(card.includes(`src="/archive/${dj.image_large}"`));
+				assert.ok(card.includes(`src="/${dj.image_large}"`));
 				assert.ok(card.includes(`alt="${dj.title}"`));
 			}
 			if (dj.bio) {

@@ -39,7 +39,7 @@ async function verifyHistoryReturn(index) {
 			y: scrollY,
 		};
 	}, { once: true }); history.back(); true`);
-	await browser("wait", "--fn", `location.pathname === '/archive/' && document.querySelectorAll('main article').length === ${saved.count} && Math.abs(scrollY - ${saved.y}) < 2`);
+	await browser("wait", "--fn", `location.pathname === '/' && document.querySelectorAll('main article').length === ${saved.count} && Math.abs(scrollY - ${saved.y}) < 2`);
 	assert.deepEqual(await evaluate("window.paginationFirstSwap"), { count: saved.count, y: saved.y });
 	assert.equal(await evaluate("window.paginationDocument"), true);
 	assert.equal(await evaluate("!window.paginationIframe || document.querySelector('[data-miniplayer] iframe') === window.paginationIframe"), true);
@@ -55,7 +55,7 @@ const server = serve({
 	hostname: "127.0.0.1",
 	port: 0,
 	async fetch(request) {
-		const path = new URL(request.url).pathname.replace(/^\/archive\/?/, "");
+		const path = new URL(request.url).pathname.replace(/^\//, "");
 		if (path === "resources/data_versions.json" && fail) {
 			await new Promise((resolve) => setTimeout(resolve, 2000));
 			return new Response("Unavailable", { status: 503 });
@@ -68,7 +68,7 @@ const server = serve({
 });
 try {
 	await browser("set", "viewport", "390", "844");
-	await browser("open", `http://127.0.0.1:${server.port}/archive/`);
+	await browser("open", `http://127.0.0.1:${server.port}/`);
 	await browser("wait", "main [role='status']");
 	assert.deepEqual(await evaluate(`(() => {
 		const status = document.querySelector('main [role="status"]');
@@ -82,7 +82,7 @@ try {
 	for (const width of [390, 1440]) {
 		await browser("set", "viewport", String(width), "844");
 		if (width === 1440) {
-			await browser("open", `http://127.0.0.1:${server.port}/archive/`);
+			await browser("open", `http://127.0.0.1:${server.port}/`);
 			await browser("wait", "--fn", "!document.querySelector('main [role=status]')");
 		}
 		let count = await evaluate("document.querySelectorAll('main article').length");
