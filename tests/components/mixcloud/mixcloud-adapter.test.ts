@@ -1,5 +1,6 @@
+import { spyOn } from "bun:test";
 import assert from "node:assert/strict";
-import { mock, test } from "node:test";
+import { test } from "node:test";
 import { setImmediate } from "node:timers/promises";
 import {
 	MixcloudAdapter,
@@ -31,9 +32,11 @@ function fixture() {
 	let elapsed = 0;
 	const database = createIndexedDB();
 	const objectStore = database.getObjectStore("playback");
-	mock.method(objectStore, "getAll", async () => []);
-	mock.method(database, "getObjectStore", () => objectStore);
-	const writes = mock.method(database, "transaction", async () => {});
+	spyOn(objectStore, "getAll").mockImplementation(async () => []);
+	spyOn(database, "getObjectStore").mockImplementation(() => objectStore);
+	const writes = spyOn(database, "transaction").mockImplementation(
+		async () => {},
+	);
 	const playback = new PlaybackStore(database, {
 		now: () => 100000 + elapsed,
 	});
@@ -154,7 +157,9 @@ test("serializes loads and skips superseded intermediate selections", async () =
 test("switches to another show by the same DJ while the old pause is pending", async () => {
 	const f = fixture();
 	const pausing = deferred<void>();
-	const pause = mock.method(f.widget, "pause", () => pausing.promise);
+	const pause = spyOn(f.widget, "pause").mockImplementation(
+		() => pausing.promise,
+	);
 	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.ready.resolve(f.widget);
 	f.select("first");
@@ -167,7 +172,7 @@ test("switches to another show by the same DJ while the old pause is pending", a
 	f.select("next", show.id + 1);
 	await setImmediate();
 	assert.equal(f.calls[1]?.key, "/dj/next/");
-	assert.equal(pause.mock.callCount(), 1);
+	assert.equal(pause.mock.calls.length, 1);
 	f.calls[1]?.result.resolve();
 	await setImmediate();
 	assert.deepEqual(f.commands(), ["play", "play"]);
@@ -484,7 +489,7 @@ test("disposal removes exact listeners and queued callbacks cannot update state"
 test("selection waits for local storage before loading the widget", async () => {
 	const f = fixture();
 	const storage = deferred<void>();
-	mock.method(f.playback, "initialize", () => storage.promise);
+	spyOn(f.playback, "initialize").mockImplementation(() => storage.promise);
 	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	f.select("first");
 	f.ready.resolve(f.widget);
@@ -711,7 +716,7 @@ test("latest pause or selection wins while resume seek is pending", async () => 
 });
 
 test("failed or refused seeking reports the problem and still allows playback", async () => {
-	const log = mock.method(console, "error", () => {});
+	const log = spyOn(console, "error").mockImplementation(() => {});
 	try {
 		for (const failure of ["refused", "rejected"] as const) {
 			const f = fixture();
@@ -741,18 +746,20 @@ test("failed or refused seeking reports the problem and still allows playback", 
 			assert.equal(f.playback.get(show.id)?.history[0]?.startPosition, 0);
 			adapter.dispose();
 		}
-		assert.equal(log.mock.callCount(), 2);
+		assert.equal(log.mock.calls.length, 2);
 	} finally {
-		log.mock.restore();
+		log.mockRestore();
 	}
 });
 
 test("failed storage initialization permits playback without overwriting unread history", async () => {
 	const f = fixture();
-	const initialize = mock.method(f.playback, "initialize", async () => {
-		throw new Error("Storage unavailable");
-	});
-	const log = mock.method(console, "error", () => {});
+	const initialize = spyOn(f.playback, "initialize").mockImplementation(
+		async () => {
+			throw new Error("Storage unavailable");
+		},
+	);
+	const log = spyOn(console, "error").mockImplementation(() => {});
 	const adapter = new MixcloudAdapter(f.store, f.ready.promise, f.playback);
 	try {
 		f.select("first");
@@ -765,9 +772,9 @@ test("failed storage initialization permits playback without overwriting unread 
 		f.events.progress.emit(0);
 		f.events.progress.emit(12);
 		assert.equal(f.playback.get(show.id), undefined);
-		assert.equal(initialize.mock.callCount(), 1);
+		assert.equal(initialize.mock.calls.length, 1);
 	} finally {
 		adapter.dispose();
-		log.mock.restore();
+		log.mockRestore();
 	}
 });

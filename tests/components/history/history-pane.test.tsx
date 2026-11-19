@@ -1,5 +1,6 @@
+import { spyOn } from "bun:test";
 import assert from "node:assert/strict";
-import { mock, test } from "node:test";
+import { test } from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import HistoryPane, {
 	historyPlaylists,
@@ -37,8 +38,8 @@ test("history puts Liked Shows first without changing user order or the snapshot
 
 test("history waits for catalog initialization before looking up shows", () => {
 	const stores = createStores();
-	const getShow = mock.method(stores.showStore, "get");
-	const initialize = mock.method(stores, "initialize");
+	const getShow = spyOn(stores.showStore, "get");
+	const initialize = spyOn(stores, "initialize");
 	const html = renderToStaticMarkup(
 		<StoresProvider stores={stores}>
 			<HistoryPane />
@@ -55,8 +56,8 @@ test("history waits for catalog initialization before looking up shows", () => {
 	assert.ok(!html.includes("<a "));
 	assert.ok(!html.includes("<button"));
 	assert.ok(!html.includes("missing show id"));
-	assert.equal(getShow.mock.callCount(), 0);
-	assert.equal(initialize.mock.callCount(), 0);
+	assert.equal(getShow.mock.calls.length, 0);
+	assert.equal(initialize.mock.calls.length, 0);
 });
 
 test("recently played includes completed shows, newest first, with at most ten", () => {
