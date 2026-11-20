@@ -1,6 +1,6 @@
 {
-	"version": 8,
-	"updatedAt": "2026-11-17T02:27:15.575Z",
+	"version": 9,
+	"updatedAt": "2026-11-20T22:21:23.235Z",
 	"data": [
 		{
 			"id": 99,
@@ -3721,6 +3721,17 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/kaylas-mix-april-26-2021/"
 		},
 		{
+			"id": 319,
+			"title": "Galecstasy Takeover",
+			"date": "2021-04-26T00:00:00.000Z",
+			"duration": 7013,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/4/6/9/7/a0c4-4b08-4a14-b9d6-aadeaf327466",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/4/6/9/7/a0c4-4b08-4a14-b9d6-aadeaf327466",
+			"djs": [],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/modular-monday-galecstasy-takeover-april-26-2021/"
+		},
+		{
 			"id": 190,
 			"title": "Armenian Reader's Digest III, Water Finds its Crack",
 			"date": "2021-04-19T00:00:00.000Z",
@@ -3827,6 +3838,17 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/k-sera-sarah-beyond-karaoke-episode-9-orphans-april-5-2021/"
 		},
 		{
+			"id": 320,
+			"title": "The Buchla",
+			"date": "2021-03-29T00:00:00.000Z",
+			"duration": 4669,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/e/c/e/fb60-05cf-493a-bffb-3bed0d43491b",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/e/c/e/fb60-05cf-493a-bffb-3bed0d43491b",
+			"djs": [],
+			"tagIds": [388, 389, 390, 391, 392],
+			"url": "https://www.mixcloud.com/otherdesertradio/modular-monday-the-buchla-march-29-2021/"
+		},
+		{
 			"id": 252,
 			"title": "Cybernetic Organisms: OVERDRIVE",
 			"date": "2021-03-15T00:00:00.000Z",
@@ -3859,6 +3881,17 @@
 			],
 			"tagIds": [61, 113, 117, 118, 119],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-episode-8-terry-riley-don-cherry-unreleased-march-8-2021/"
+		},
+		{
+			"id": 321,
+			"title": "Prance with the Plants",
+			"date": "2021-02-22T00:00:00.000Z",
+			"duration": 2758,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/3/b/3/f/e24f-3814-4543-8cc0-25bd8904bd94",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/3/b/3/f/e24f-3814-4543-8cc0-25bd8904bd94",
+			"djs": [],
+			"tagIds": [33, 37, 61, 393],
+			"url": "https://www.mixcloud.com/otherdesertradio/modular-monday-prance-with-the-plants-february-22-2021/"
 		},
 		{
 			"id": 78,
@@ -3963,6 +3996,17 @@
 			],
 			"tagIds": [61, 125, 126, 127, 128],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-episode-six-minimalism-january-26-2020/"
+		},
+		{
+			"id": 322,
+			"title": "The Trans-Millenia Consort, Ode to Pauline Anna Strom",
+			"date": "2021-01-25T00:00:00.000Z",
+			"duration": 2633,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/d/3/3/1b7e-d18f-4e8b-a30b-f32f32301f96",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/d/3/3/1b7e-d18f-4e8b-a30b-f32f32301f96",
+			"djs": [],
+			"tagIds": [61, 394, 395],
+			"url": "https://www.mixcloud.com/otherdesertradio/modular-monday-the-trans-millenia-consort-pauline-anna-strom-january-25-2021/"
 		},
 		{
 			"id": 302,
@@ -4073,6 +4117,17 @@
 			],
 			"tagIds": [61],
 			"url": "https://www.mixcloud.com/otherdesertradio/nathaniel-i-ober-orbits-played-by-the-orrery-harp-december-28-2020/"
+		},
+		{
+			"id": 323,
+			"title": "Thanks to the San Francisco Tape Music Center",
+			"date": "2020-12-28T00:00:00.000Z",
+			"duration": 3541,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/f/8/b/6/eecf-43d5-48c9-ae44-a18efe0c9600",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/f/8/b/6/eecf-43d5-48c9-ae44-a18efe0c9600",
+			"djs": [],
+			"tagIds": [61],
+			"url": "https://www.mixcloud.com/otherdesertradio/modular-monday-thanks-to-the-san-francisco-tape-music-center-december-28-2020/"
 		},
 		{
 			"id": 260,
@@ -4227,6 +4282,17 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/danielle-could-heaven-ever-be-like-this-november-30-2020/"
 		},
 		{
+			"id": 324,
+			"title": "If You Do Not Step on the Dog's Tail . . .",
+			"date": "2020-11-30T00:00:00.000Z",
+			"duration": 3611,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/1/d/3/9/5245-9224-4205-a870-cb079b910763",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/1/d/3/9/5245-9224-4205-a870-cb079b910763",
+			"djs": [],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/modular-monday-if-you-do-not-step-on-the-dogs-tail-november-30-2020/"
+		},
+		{
 			"id": 196,
 			"title": "No Surrender Without Butter",
 			"date": "2020-11-23T00:00:00.000Z",
@@ -4345,6 +4411,17 @@
 			],
 			"tagIds": [330, 337, 373, 374],
 			"url": "https://www.mixcloud.com/otherdesertradio/andrew-storrs-from-the-vault-4-sounds-from-6th-and-market-2012/"
+		},
+		{
+			"id": 325,
+			"title": "Super Blue Super Full Moon Synthesizer Special 2020",
+			"date": "2020-10-28T00:00:00.000Z",
+			"duration": 3696,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/a/9/a/4/b7d6-f225-4f67-b817-0c13d2914d14",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/a/9/a/4/b7d6-f225-4f67-b817-0c13d2914d14",
+			"djs": [],
+			"tagIds": [98, 396, 397, 398, 399],
+			"url": "https://www.mixcloud.com/otherdesertradio/modular-monday-halloween-themes-synthesizer-special-2020/"
 		},
 		{
 			"id": 307,

@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"updatedAt": "2026-11-20T22:21:23.235Z",
+	"data": [
+		{
+			"id": 1,
+			"title": "Modular Monday",
+			"createdAt": "2026-11-18T18:20:34.516Z",
+			"showIds": [319, 320, 321, 322, 323, 324, 325]
+		}
+	]
+}

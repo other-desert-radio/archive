@@ -1,6 +1,6 @@
 {
-	"version": 1,
-	"updatedAt": "2026-11-17T02:27:15.575Z",
+	"version": 2,
+	"updatedAt": "2026-11-20T22:21:23.235Z",
 	"data": [
 		{
 			"id": 99,
@@ -269,7 +269,7 @@
 		},
 		{
 			"id": 98,
-			"description": "<p>This world has been created and destroyed many times since we last spoke. We find ourselves amidst a new cycle of growth, nursing our various nectars and concoctions around the primordial petri dish open mic night we’ve ended up sticking around to see. It’s a two-drink minimum tonight, guys, and make sure to tip your mitochondria. You’ve been a great crowd.</p>"
+			"description": "<p>This world has been created and destroyed many times since we last spoke. We find ourselves amidst a new cycle of growth, nursing our various nectars and concoctions around the primordial petri dish open mic night we’ve ended up sticking around to see. It’s a two-drink minimum tonight, guys, and make sure to tip your mitochondria. You’ve been a great crowd.<br /><br />NO TRACKLIST PROVIDED FOR THIS SHOW.</p>"
 		},
 		{
 			"id": 8,
@@ -9877,6 +9877,9 @@
 			]
 		},
 		{
+			"id": 319
+		},
+		{
 			"id": 190,
 			"tracklist": [
 				{
@@ -10275,6 +10278,9 @@
 			]
 		},
 		{
+			"id": 320
+		},
+		{
 			"id": 252,
 			"tracklist": [
 				{
@@ -10346,6 +10352,9 @@
 					"artist": "x"
 				}
 			]
+		},
+		{
+			"id": 321
 		},
 		{
 			"id": 78,
@@ -10758,6 +10767,9 @@
 			]
 		},
 		{
+			"id": 322
+		},
+		{
 			"id": 302,
 			"tracklist": [
 				{
@@ -11155,6 +11167,9 @@
 		},
 		{
 			"id": 259
+		},
+		{
+			"id": 323
 		},
 		{
 			"id": 260,
@@ -11890,6 +11905,9 @@
 			]
 		},
 		{
+			"id": 324
+		},
+		{
 			"id": 196,
 			"tracklist": [
 				{
@@ -12367,6 +12385,9 @@
 		},
 		{
 			"id": 306
+		},
+		{
+			"id": 325
 		},
 		{
 			"id": 307

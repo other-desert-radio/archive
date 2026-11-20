@@ -1,6 +1,6 @@
 {
-	"version": 6,
-	"updatedAt": "2026-11-17T02:25:44.298Z",
+	"version": 7,
+	"updatedAt": "2026-11-20T22:21:23.235Z",
 	"data": [
 		{
 			"id": 4,
@@ -2516,6 +2516,90 @@
 			"color": "#f6d32d",
 			"mixcloud_key": "/genres/narrative/",
 			"mixcloud_url": "https://www.mixcloud.com/genres/narrative/"
+		},
+		{
+			"id": 388,
+			"title": "Buchla",
+			"color": "#5fbdf7",
+			"mixcloud_key": "/genres/buchla/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/buchla/"
+		},
+		{
+			"id": 389,
+			"title": "Ciani",
+			"color": "#f9e364",
+			"mixcloud_key": "/genres/ciani/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/ciani/"
+		},
+		{
+			"id": 390,
+			"title": "Don Buchla",
+			"color": "#f4795a",
+			"mixcloud_key": "/genres/don-buchla/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/don-buchla/"
+		},
+		{
+			"id": 391,
+			"title": "Kas",
+			"color": "#f47a8b",
+			"mixcloud_key": "/genres/kas/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/kas/"
+		},
+		{
+			"id": 392,
+			"title": "Modular monday",
+			"color": "#f888e1",
+			"mixcloud_key": "/genres/modular-monday/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/modular-monday/"
+		},
+		{
+			"id": 393,
+			"title": "Plants",
+			"color": "#c37ff9",
+			"mixcloud_key": "/genres/plants/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/plants/"
+		},
+		{
+			"id": 394,
+			"title": "Paulineannastrom",
+			"color": "#fa7aad",
+			"mixcloud_key": "/genres/paulineannastrom/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/paulineannastrom/"
+		},
+		{
+			"id": 395,
+			"title": "Transmilleniaconsort",
+			"color": "#af4af3",
+			"mixcloud_key": "/genres/transmilleniaconsort/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/transmilleniaconsort/"
+		},
+		{
+			"id": 396,
+			"title": "Carpenter",
+			"color": "#fa4978",
+			"mixcloud_key": "/genres/carpenter/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/carpenter/"
+		},
+		{
+			"id": 397,
+			"title": "Frizzi",
+			"color": "#c4f982",
+			"mixcloud_key": "/genres/frizzi/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/frizzi/"
+		},
+		{
+			"id": 398,
+			"title": "Goblin",
+			"color": "#6b7dfa",
+			"mixcloud_key": "/genres/goblin/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/goblin/"
+		},
+		{
+			"id": 399,
+			"title": "Synthesizers",
+			"color": "#e9f767",
+			"mixcloud_key": "/genres/synthesizers/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/synthesizers/"
 		}
 	]
 }
