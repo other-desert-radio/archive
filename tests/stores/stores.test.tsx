@@ -1,4 +1,4 @@
-import { mock, spyOn } from "bun:test";
+import { spyOn } from "bun:test";
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -164,7 +164,7 @@ test("initialization loads shared versions before initializing ShowStore and Tag
 		order.push("versions");
 	});
 	const shows = spyOn(injected.showStore, "initialize").mockImplementation(
-		() => {
+		async () => {
 			order.push("shows");
 		},
 	);
@@ -191,7 +191,7 @@ test("failed initialization rejects and permits retry", async () => {
 			throw new Error("Storage unavailable");
 		}
 	});
-	spyOn(injected.showStore, "initialize").mockImplementation(() => {});
+	spyOn(injected.showStore, "initialize").mockImplementation(async () => {});
 	spyOn(injected.tagStore, "initialize").mockImplementation(async () => {});
 	await assert.rejects(injected.initialize(), /Storage unavailable/);
 	await injected.initialize();
@@ -225,23 +225,27 @@ test("retry refreshes the manifest after a deployment revision mismatch", async 
 	);
 	let revision = 4;
 	let manifestFetches = 0;
-	const originalFetch = globalThis.fetch;
-	globalThis.fetch = mock(async (url) => {
-		if (String(url).endsWith("data_versions.json")) {
-			manifestFetches++;
-			const version = { id: revision, updatedAt: fixtureShows.updatedAt };
-			return Response.json({
-				shows: version,
-				show_details: version,
-				djs: version,
-				tags: version,
-			});
-		}
-		return Response.json({
-			...(String(url).endsWith("tags.json") ? fixtureTags : fixtureShows),
-			version: 5,
-		});
-	}) as typeof fetch;
+	const fetchSpy = spyOn(globalThis, "fetch").mockImplementation(
+		Object.assign(
+			async (url: Parameters<typeof fetch>[0]) => {
+				if (String(url).endsWith("data_versions.json")) {
+					manifestFetches++;
+					const version = { id: revision, updatedAt: fixtureShows.updatedAt };
+					return Response.json({
+						shows: version,
+						show_details: version,
+						djs: version,
+						tags: version,
+					});
+				}
+				return Response.json({
+					...(String(url).endsWith("tags.json") ? fixtureTags : fixtureShows),
+					version: 5,
+				});
+			},
+			{ preconnect: globalThis.fetch.preconnect },
+		),
+	);
 	try {
 		await assert.rejects(injected.initialize(), /expected 4, received 5/);
 		assert.equal(write.mock.calls.length, 0);
@@ -255,7 +259,7 @@ test("retry refreshes the manifest after a deployment revision mismatch", async 
 		assert.equal(write.mock.calls.length, 2);
 		assert.deepEqual(injected.tagStore.getAll(), fixtureTags.data);
 	} finally {
-		globalThis.fetch = originalFetch;
+		fetchSpy.mockRestore();
 	}
 });
 

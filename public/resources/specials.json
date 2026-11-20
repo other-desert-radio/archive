@@ -1,0 +1,32 @@
+{
+	"version": 3,
+	"updatedAt": "2026-11-20T23:31:02.459Z",
+	"data": [
+		{
+			"id": 1,
+			"title": "Modular Monday",
+			"createdAt": "2026-11-18T18:20:34.516Z",
+			"showIds": [
+				319, 320, 321, 322, 323, 324, 325, 326, 327, 329, 330, 331, 332
+			]
+		},
+		{
+			"id": 2,
+			"title": "Mixtapes in the Mail",
+			"createdAt": "2026-11-20T23:09:34.272Z",
+			"showIds": [346]
+		},
+		{
+			"id": 3,
+			"title": "The Blank Tapes",
+			"createdAt": "2026-11-20T23:10:50.326Z",
+			"showIds": [345]
+		},
+		{
+			"id": 4,
+			"title": "The UFO Cover series",
+			"createdAt": "2026-11-20T23:11:01.506Z",
+			"showIds": [341, 342, 343, 344]
+		}
+	]
+}
