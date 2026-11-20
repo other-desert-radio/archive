@@ -65,10 +65,12 @@ test("show details include each associated DJ's profile and biography", {
 		assert.ok(html.includes('role="status" aria-label="Loading playlists"'));
 		assert.ok(!html.includes('aria-label="Save to Playlist"'));
 		assert.ok(!html.includes('aria-label="Playlist"'));
-		assert.ok(
-			html.indexOf('aria-label="Loading playlists"') <
-				html.indexOf('class="dj-name"'),
-		);
+		if (show.djs.length > 0) {
+			assert.ok(
+				html.indexOf('aria-label="Loading playlists"') <
+					html.indexOf('class="dj-name"'),
+			);
+		}
 		assert.equal(
 			(html.match(/class="show-dj"/g) ?? []).length,
 			show.djs.length,
