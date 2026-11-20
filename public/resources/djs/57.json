@@ -1,0 +1,52 @@
+{
+	"version": 11,
+	"updatedAt": "2026-11-20T23:31:02.459Z",
+	"data": {
+		"id": 57,
+		"title": "Colly Holiday",
+		"bio": null,
+		"shows": [
+			{
+				"id": 337,
+				"title": "Scorpion Walk",
+				"date": "2021-05-03T00:00:00.000Z",
+				"duration": 2974,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/b/5/1/ddaa-4b50-48e8-a052-567996f77dca",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/b/5/1/ddaa-4b50-48e8-a052-567996f77dca",
+				"tagIds": [40, 415],
+				"url": "https://www.mixcloud.com/otherdesertradio/colly-holiday-scorpion-walk-may-3-2021/"
+			},
+			{
+				"id": 338,
+				"title": "Happy Walk",
+				"date": "2021-01-25T00:00:00.000Z",
+				"duration": 4830,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/e/6/c/3daf-0d6d-472e-b1e7-45a72160aa4c",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/e/6/c/3daf-0d6d-472e-b1e7-45a72160aa4c",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/colly-holiday-happy-walk-january-26-2021/"
+			},
+			{
+				"id": 339,
+				"title": "Spanish Pipedream (for John Prine)",
+				"date": "2020-04-13T00:00:00.000Z",
+				"duration": 4353,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [264],
+				"url": "https://www.mixcloud.com/otherdesertradio/colin-and-danielle-spanish-pipedream-for-john-prine/"
+			},
+			{
+				"id": 340,
+				"title": "Camel Walk",
+				"date": "2020-04-06T00:00:00.000Z",
+				"duration": 4575,
+				"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+				"tagIds": [],
+				"url": "https://www.mixcloud.com/otherdesertradio/colin-camel-walk-april-6-2020/"
+			}
+		],
+		"tagIds": [40, 264, 415]
+	}
+}

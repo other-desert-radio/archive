@@ -1,6 +1,6 @@
 {
-	"version": 10,
-	"updatedAt": "2026-11-20T22:37:31.078Z",
+	"version": 11,
+	"updatedAt": "2026-11-20T23:31:02.459Z",
 	"data": [
 		{
 			"id": 99,
@@ -2095,6 +2095,17 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/peque%C3%B1a-cretina-volume-x-february-19-2024/"
 		},
 		{
+			"id": 346,
+			"title": "Jazz Protein Side B, Compiled by Kye Potter",
+			"date": "2024-02-12T00:00:00.000Z",
+			"duration": 2451,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/e/2/b/f3e3-c919-4305-92b5-d2e2274c51a6",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/e/2/b/f3e3-c919-4305-92b5-d2e2274c51a6",
+			"djs": [],
+			"tagIds": [35, 416],
+			"url": "https://www.mixcloud.com/otherdesertradio/mixtapes-in-the-mail-jazz-protein-side-b-compiled-by-kye-potter-february-12-2024/"
+		},
+		{
 			"id": 247,
 			"title": "Year of the Dragon",
 			"date": "2024-02-10T00:00:00.000Z",
@@ -3349,6 +3360,24 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/no-translation-live-at-furstwurld-joshua-tree-121121/"
 		},
 		{
+			"id": 335,
+			"title": "Live from Furstwurld, Joshua Tree",
+			"date": "2021-12-11T00:00:00.000Z",
+			"duration": 1704,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 32,
+					"title": "Dj Sensi",
+					"image_small": "assets/djs/32_small.webp",
+					"image_large": "assets/djs/32_large.webp"
+				}
+			],
+			"tagIds": [61, 161],
+			"url": "https://www.mixcloud.com/otherdesertradio/mtn-grl-live-from-furstwurld-joshua-tree-121121/"
+		},
+		{
 			"id": 297,
 			"title": "Live from Yucca Valley Material Lab",
 			"date": "2021-11-21T00:00:00.000Z",
@@ -3611,6 +3640,17 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/tara-jane-oneil/"
 		},
 		{
+			"id": 341,
+			"title": "The Greatest Political Scandal of All Time, Part 3",
+			"date": "2021-06-14T00:00:00.000Z",
+			"duration": 3553,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/5/7/0/b8bb-ac2b-4424-9863-038bae658f5b",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/5/7/0/b8bb-ac2b-4424-9863-038bae658f5b",
+			"djs": [],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/ufo-3/"
+		},
+		{
 			"id": 53,
 			"title": "Freedom Overspill Radio Hour Episode 12 - Moroccan Mix",
 			"date": "2021-06-07T00:00:00.000Z",
@@ -3627,6 +3667,28 @@
 			],
 			"tagIds": [88, 92, 93, 94],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-freedom-overspill-radio-hour-episode-12-moroccan-mix-week-of-june-7-2021/"
+		},
+		{
+			"id": 342,
+			"title": "The Greatest Political Scandal of All Time, Part 2 (2/2)",
+			"date": "2021-06-07T00:00:00.000Z",
+			"duration": 2832,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/b/8/3/dc1c-0e27-4abb-90cd-c9e5c93254c3",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/b/8/3/dc1c-0e27-4abb-90cd-c9e5c93254c3",
+			"djs": [],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/ufo-episode-2-part-2/"
+		},
+		{
+			"id": 343,
+			"title": "The Greatest Political Scandal of All Time, Part 2 (1/2)",
+			"date": "2021-06-07T00:00:00.000Z",
+			"duration": 2820,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/9/1/d/0d42-4ef8-42c5-a81b-570ab6a4092d",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/9/1/d/0d42-4ef8-42c5-a81b-570ab6a4092d",
+			"djs": [],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/ufo-chronicles-episode-2-part-1/"
 		},
 		{
 			"id": 73,
@@ -3745,6 +3807,22 @@
 			],
 			"tagIds": [],
 			"url": "https://www.mixcloud.com/otherdesertradio/sunny-its-only-loveget-free-may-3-2021/"
+		},
+		{
+			"id": 337,
+			"title": "Scorpion Walk",
+			"date": "2021-05-03T00:00:00.000Z",
+			"duration": 2974,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/b/5/1/ddaa-4b50-48e8-a052-567996f77dca",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/b/5/1/ddaa-4b50-48e8-a052-567996f77dca",
+			"djs": [
+				{
+					"id": 57,
+					"title": "Colly Holiday"
+				}
+			],
+			"tagIds": [40, 415],
+			"url": "https://www.mixcloud.com/otherdesertradio/colly-holiday-scorpion-walk-may-3-2021/"
 		},
 		{
 			"id": 301,
@@ -3893,6 +3971,22 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/modular-monday-the-buchla-march-29-2021/"
 		},
 		{
+			"id": 333,
+			"title": "The Corner Booth II",
+			"date": "2021-03-22T00:00:00.000Z",
+			"duration": 2493,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/5/f/4/5/9dc9-7e3f-4acf-a289-37b8bbc5cbc8",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/5/f/4/5/9dc9-7e3f-4acf-a289-37b8bbc5cbc8",
+			"djs": [
+				{
+					"id": 45,
+					"title": "Ethan Primason"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/the-corner-booth-ii-march-22-2021/"
+		},
+		{
 			"id": 252,
 			"title": "Cybernetic Organisms: OVERDRIVE",
 			"date": "2021-03-15T00:00:00.000Z",
@@ -3988,6 +4082,22 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/danielle-chinese-new-year-special-year-of-the-ox-february-8-2021/"
 		},
 		{
+			"id": 334,
+			"title": "The Corner Booth - Episode I",
+			"date": "2021-02-08T00:00:00.000Z",
+			"duration": 4925,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/9/e/a/c/7c76-c151-4eac-8e85-df7e7c3f0ac8",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/9/e/a/c/7c76-c151-4eac-8e85-df7e7c3f0ac8",
+			"djs": [
+				{
+					"id": 45,
+					"title": "Ethan Primason"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/the-corner-booth-episode-i-february-8-2021/"
+		},
+		{
 			"id": 79,
 			"title": "Beyond Karaoke Episode VIII - Where is My Qualia?",
 			"date": "2021-02-01T00:00:00.000Z",
@@ -4051,6 +4161,22 @@
 			"djs": [],
 			"tagIds": [61, 394, 395],
 			"url": "https://www.mixcloud.com/otherdesertradio/modular-monday-the-trans-millenia-consort-pauline-anna-strom-january-25-2021/"
+		},
+		{
+			"id": 338,
+			"title": "Happy Walk",
+			"date": "2021-01-25T00:00:00.000Z",
+			"duration": 4830,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/e/e/6/c/3daf-0d6d-472e-b1e7-45a72160aa4c",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/e/e/6/c/3daf-0d6d-472e-b1e7-45a72160aa4c",
+			"djs": [
+				{
+					"id": 57,
+					"title": "Colly Holiday"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/colly-holiday-happy-walk-january-26-2021/"
 		},
 		{
 			"id": 302,
@@ -5116,6 +5242,17 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/ethan-primasons-15-minute-miracle-vol-3/"
 		},
 		{
+			"id": 344,
+			"title": "Up: The Greatest Political Scandal of All Time, Part 1",
+			"date": "2020-05-24T00:00:00.000Z",
+			"duration": 2764,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/extaudio/8/9/7/a/7a95-da10-4a9a-9e34-8fcbf8021203",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/extaudio/8/9/7/a/7a95-da10-4a9a-9e34-8fcbf8021203",
+			"djs": [],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/the-ufo-cover-up-part-1/"
+		},
+		{
 			"id": 206,
 			"title": "Fi Waja",
 			"date": "2020-05-18T00:00:00.000Z",
@@ -5266,6 +5403,35 @@
 			],
 			"tagIds": [113],
 			"url": "https://www.mixcloud.com/otherdesertradio/derek-monypeny-asedr/"
+		},
+		{
+			"id": 336,
+			"title": "Summer Eve Sightings",
+			"date": "2020-05-02T00:00:00.000Z",
+			"duration": 916,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 32,
+					"title": "Dj Sensi",
+					"image_small": "assets/djs/32_small.webp",
+					"image_large": "assets/djs/32_large.webp"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/mtn-girl-summer-eve-sightings/"
+		},
+		{
+			"id": 345,
+			"title": "All Summer's Eve",
+			"date": "2020-05-02T00:00:00.000Z",
+			"duration": 3032,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/the-blank-tapes-all-summers-eve/"
 		},
 		{
 			"id": 207,
@@ -5436,6 +5602,26 @@
 			"url": "https://www.mixcloud.com/otherdesertradio/escucha/"
 		},
 		{
+			"id": 339,
+			"title": "Spanish Pipedream (for John Prine)",
+			"date": "2020-04-13T00:00:00.000Z",
+			"duration": 4353,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 38,
+					"title": "Danielle"
+				},
+				{
+					"id": 57,
+					"title": "Colly Holiday"
+				}
+			],
+			"tagIds": [264],
+			"url": "https://www.mixcloud.com/otherdesertradio/colin-and-danielle-spanish-pipedream-for-john-prine/"
+		},
+		{
 			"id": 209,
 			"title": "Corona Qualm II",
 			"date": "2020-04-06T00:00:00.000Z",
@@ -5514,6 +5700,22 @@
 			],
 			"tagIds": [],
 			"url": "https://www.mixcloud.com/otherdesertradio/ethan-side-april-6-2020/"
+		},
+		{
+			"id": 340,
+			"title": "Camel Walk",
+			"date": "2020-04-06T00:00:00.000Z",
+			"duration": 4575,
+			"image_small": "https://thumbnailer.mixcloud.com/unsafe/300x300/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"image_large": "https://thumbnailer.mixcloud.com/unsafe/1024x1024/profile/d/d/c/7/1673-4d90-448d-a5e8-9ea9903c68d4",
+			"djs": [
+				{
+					"id": 57,
+					"title": "Colly Holiday"
+				}
+			],
+			"tagIds": [],
+			"url": "https://www.mixcloud.com/otherdesertradio/colin-camel-walk-april-6-2020/"
 		},
 		{
 			"id": 262,
