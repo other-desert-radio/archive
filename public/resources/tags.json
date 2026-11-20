@@ -1,6 +1,6 @@
 {
-	"version": 7,
-	"updatedAt": "2026-11-20T22:21:23.235Z",
+	"version": 8,
+	"updatedAt": "2026-11-20T22:37:31.078Z",
 	"data": [
 		{
 			"id": 4,
@@ -2600,6 +2600,111 @@
 			"color": "#e9f767",
 			"mixcloud_key": "/genres/synthesizers/",
 			"mixcloud_url": "https://www.mixcloud.com/genres/synthesizers/"
+		},
+		{
+			"id": 400,
+			"title": "Modularmondaysa",
+			"color": "#73f156",
+			"mixcloud_key": "/genres/modularmondaysa/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/modularmondaysa/"
+		},
+		{
+			"id": 401,
+			"title": "Moog",
+			"color": "#5c47fa",
+			"mixcloud_key": "/genres/moog/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/moog/"
+		},
+		{
+			"id": 402,
+			"title": "Switchedon",
+			"color": "#72f6ac",
+			"mixcloud_key": "/genres/switchedon/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/switchedon/"
+		},
+		{
+			"id": 403,
+			"title": "Theremin",
+			"color": "#77e2f7",
+			"mixcloud_key": "/genres/theremin/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/theremin/"
+		},
+		{
+			"id": 404,
+			"title": "Female",
+			"color": "#ddf552",
+			"mixcloud_key": "/genres/female/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/female/"
+		},
+		{
+			"id": 405,
+			"title": "Modular",
+			"color": "#d17bf4",
+			"mixcloud_key": "/genres/modular/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/modular/"
+		},
+		{
+			"id": 406,
+			"title": "60s",
+			"color": "#f7d280",
+			"mixcloud_key": "/genres/60s/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/60s/"
+		},
+		{
+			"id": 407,
+			"title": "70s",
+			"color": "#a07df7",
+			"mixcloud_key": "/genres/70s/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/70s/"
+		},
+		{
+			"id": 408,
+			"title": "Eliane Radigue",
+			"color": "#658afb",
+			"mixcloud_key": "/genres/eliane-radigue/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/eliane-radigue/"
+		},
+		{
+			"id": 409,
+			"title": "Waves",
+			"color": "#80f57a",
+			"mixcloud_key": "/genres/waves/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/waves/"
+		},
+		{
+			"id": 410,
+			"title": "Synthesizer",
+			"color": "#f5814b",
+			"mixcloud_key": "/genres/synthesizer/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/synthesizer/"
+		},
+		{
+			"id": 411,
+			"title": "Electronicmusic",
+			"color": "#78f8c4",
+			"mixcloud_key": "/genres/electronicmusic/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/electronicmusic/"
+		},
+		{
+			"id": 412,
+			"title": "Zene",
+			"color": "#73f9a3",
+			"mixcloud_key": "/genres/zene/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/zene/"
+		},
+		{
+			"id": 413,
+			"title": "Arp",
+			"color": "#a882f5",
+			"mixcloud_key": "/genres/arp/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/arp/"
+		},
+		{
+			"id": 414,
+			"title": "Modular synthesizer",
+			"color": "#f2fb86",
+			"mixcloud_key": "/genres/modular-synthesizer/",
+			"mixcloud_url": "https://www.mixcloud.com/genres/modular-synthesizer/"
 		}
 	]
 }
